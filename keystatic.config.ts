@@ -1,10 +1,12 @@
 import { config, fields, collection } from '@keystatic/core'
 
 export default config({
+  // `project` is not a known typed property on CloudStorageConfig in this SDK version.
+  // Cast to `any` here so the build doesn't fail while still passing the runtime value.
   storage:
     process.env.NODE_ENV === 'development'
       ? { kind: 'local' }
-      : { kind: 'cloud', project: process.env.NEXT_PUBLIC_KEYSTATIC_PROJECT || 'your-cloud-project-name' },
+      : ({ kind: 'cloud', project: process.env.NEXT_PUBLIC_KEYSTATIC_PROJECT || 'your-cloud-project-name' } as any),
   collections: {
     news: collection({
       label: 'News Updates',
