@@ -19,12 +19,21 @@ export async function GET() {
   })
 
   allItems.forEach((item) => {
+    const title =
+      'title' in item.entry && item.entry.title
+        ? item.entry.title
+        : 'name' in item.entry && (item.entry as any).name
+        ? (item.entry as any).name
+        : 'Update'
+
+    const description =
+      item.type === 'event'
+        ? `Upcoming Event on ${item.entry.eventDate} at ${item.entry.location}`
+        : (item.entry.content && item.entry.content[0] && item.entry.content[0].children && item.entry.content[0].children.map((c: any) => c.text).join('')) || 'Latest news from The Ship Inn.'
+
     feed.item({
-      title: item.entry.title || item.entry.name || 'Update',
-      description:
-        item.type === 'event'
-          ? `Upcoming Event on ${item.entry.eventDate} at ${item.entry.location}`
-          : (item.entry.content && item.entry.content[0] && item.entry.content[0].children && item.entry.content[0].children.map(c=>c.text).join('')) || 'Latest news from The Ship Inn.',
+      title,
+      description,
       url: `https://shipinnporlockweir.com/news-events`,
       date: item.date,
     })
