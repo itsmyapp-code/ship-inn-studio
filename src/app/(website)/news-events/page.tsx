@@ -1,9 +1,9 @@
 import { createReader } from '@keystatic/core/reader'
-import config from '../../../keystatic.config'
+import config from '../../../../keystatic.config'
 import fs from 'fs'
 import path from 'path'
 import { DocumentRenderer } from '@keystatic/core/renderer'
-import NewsletterForm from '../../../components/NewsletterForm'
+import NewsletterForm from '@/components/NewsletterForm'
 
 const reader = createReader(process.cwd(), config)
 
