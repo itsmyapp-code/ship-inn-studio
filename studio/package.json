@@ -1,0 +1,16 @@
+{
+  "name": "ship-inn-studio",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "sanity start",
+    "build": "sanity build",
+    "deploy": "sanity deploy"
+  },
+  "devDependencies": {
+    "sanity": "^3.0.0"
+  },
+  "dependencies": {
+    "styled-components": "^6.1.19"
+  }
+}
