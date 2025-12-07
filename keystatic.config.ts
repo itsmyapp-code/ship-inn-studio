@@ -2,7 +2,8 @@ import { config, fields, collection } from '@keystatic/core'
 
 export default config({
   storage:
-    process.env.NODE_ENV === 'development'
+    // Use local mode in dev OR if no cloud/github credentials are present (prevents build failure)
+    process.env.NODE_ENV === 'development' || (!process.env.NEXT_PUBLIC_KEYSTATIC_PROJECT && !process.env.KEYSTATIC_GITHUB_CLIENT_ID)
       ? { kind: 'local' }
       : (process.env.NEXT_PUBLIC_KEYSTATIC_PROJECT
         ? ({ kind: 'cloud', project: process.env.NEXT_PUBLIC_KEYSTATIC_PROJECT } as any)
