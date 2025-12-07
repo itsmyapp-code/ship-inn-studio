@@ -1,19 +1,11 @@
-/**
- * This route is responsible for the built-in authoring environment using Sanity Studio.
- * All routes under your studio path is handled by this file using Next.js' catch-all routes:
- * https://nextjs.org/docs/routing/dynamic-routes#catch-all-routes
- *
- * You can learn more about the next-sanity package here:
- * https://github.com/sanity-io/next-sanity
- */
-
-import { NextStudio } from 'next-sanity/studio'
-import config from '../../../../sanity.config'
-
-export const dynamic = 'force-static'
-
-export { metadata, viewport } from 'next-sanity/studio'
+import Link from 'next/link'
 
 export default function StudioPage() {
-  return <NextStudio config={config} />
+  return (
+    <div className="max-w-3xl mx-auto p-6">
+      <h1 className="text-2xl font-bold mb-4">Content Studio</h1>
+      <p className="mb-4">This project uses Keystatic Cloud for content editing. Open the cloud studio to manage News & Events while we keep the site stable.</p>
+      <p className="mb-6"><a className="text-blue-600 underline" href="https://keystatic.cloud/teams/ship-inn/project/ship-inn-news-events" target="_blank" rel="noreferrer">Open Keystatic Cloud — ship-inn-news-events</a></p>
+    </div>
+  )
 }
