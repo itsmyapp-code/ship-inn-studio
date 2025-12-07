@@ -1,5 +1,7 @@
 import { createReader } from '@keystatic/core/reader'
 import config from '../../keystatic.config'
+import fs from 'fs'
+import path from 'path'
 import { DocumentRenderer } from '@keystatic/core/renderer'
 import NewsletterForm from '../../components/NewsletterForm'
 
@@ -8,6 +10,42 @@ const reader = createReader(process.cwd(), config)
 export default async function Page() {
   const news = await reader.collections.news.all()
   const events = await reader.collections.events.all()
+
+  // Fallback: if Keystatic cloud/local reader returned no news, read local markdown files
+  let localNews: Array<any> = []
+  try {
+    const newsDir = path.join(process.cwd(), 'content', 'news')
+    if (news.length === 0 && fs.existsSync(newsDir)) {
+      const files = fs.readdirSync(newsDir).filter((f) => f.endsWith('.md'))
+      localNews = files.map((file) => {
+        const raw = fs.readFileSync(path.join(newsDir, file), 'utf8')
+        const fmMatch = raw.match(/^-{3}\s*([\s\S]*?)\s*-{3}\s*/)
+        let fm: any = {}
+        let body = raw
+        if (fmMatch) {
+          const fmRaw = fmMatch[1]
+          body = raw.slice(fmMatch[0].length)
+          fmRaw.split(/\r?\n/).forEach((line) => {
+            const kv = line.split(':')
+            const key = (kv.shift() || '').trim()
+            const val = kv.join(':').trim().replace(/^"|"$/g, '')
+            if (key) fm[key] = val
+          })
+        }
+        return {
+          slug: file.replace(/\.md$/, ''),
+          entry: {
+            title: fm.title || fm.name || file.replace(/\.md$/, ''),
+            publishedDate: fm.publishedDate || '',
+            coverImage: fm.coverImage || null,
+            body: body.trim(),
+          },
+        }
+      })
+    }
+  } catch (e) {
+    // ignore fallback errors
+  }
 
   const today = new Date()
   today.setHours(0,0,0,0)
@@ -36,6 +74,9 @@ export default async function Page() {
       return { ...n, resolvedContent: content }
     })
   )
+
+  // merge in localNews if reader returned none
+  const finalNews = resolvedNews.length > 0 ? resolvedNews : localNews
 
   return (
     <div className="max-w-6xl mx-auto p-6 grid md:grid-cols-3 gap-12">
