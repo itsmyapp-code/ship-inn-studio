@@ -7,7 +7,7 @@ const navigation = [
   { name: 'Our Rooms', href: '/rooms' },
   { name: 'Food & Drink', href: '/food-drink' },
   { name: 'Things to Do', href: '/things-to-do' },
-  { name: 'Events & News', href: '/events-news' },
+  { name: 'Events & News', href: '/news-events' },
   { name: 'Gallery', href: '/gallery' },
   { name: 'Contact', href: '/contact' },
 ]
