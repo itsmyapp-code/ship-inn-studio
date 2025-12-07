@@ -28,7 +28,7 @@ export async function GET() {
 
     const description =
       item.type === 'event'
-        ? `Upcoming Event on ${item.entry.eventDate} at ${item.entry.location}`
+        ? `Upcoming Event on ${(item.entry as any).eventDate} at ${(item.entry as any).location}`
         : (item.entry.content && item.entry.content[0] && item.entry.content[0].children && item.entry.content[0].children.map((c: any) => c.text).join('')) || 'Latest news from The Ship Inn.'
 
     feed.item({
