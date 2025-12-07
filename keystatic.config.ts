@@ -2,9 +2,13 @@ import { config, fields, collection } from '@keystatic/core'
 
 export default config({
   storage:
-    process.env.NODE_ENV === 'development'
+    // Use local mode in dev OR if any required GitHub credentials are missing (prevents build failure)
+    process.env.NODE_ENV === 'development' || 
+    (!process.env.NEXT_PUBLIC_KEYSTATIC_PROJECT && (!process.env.KEYSTATIC_GITHUB_CLIENT_ID || !process.env.KEYSTATIC_GITHUB_CLIENT_SECRET || !process.env.KEYSTATIC_SECRET))
       ? { kind: 'local' }
-      : { kind: 'github', repo: 'itsmyapp-code/ship-inn-studio' },
+      : (process.env.NEXT_PUBLIC_KEYSTATIC_PROJECT
+        ? ({ kind: 'cloud', project: process.env.NEXT_PUBLIC_KEYSTATIC_PROJECT } as any)
+        : { kind: 'github', repo: 'itsmyapp-code/ship-inn-studio' }),
   collections: {
     news: collection({
       label: 'News Updates',
