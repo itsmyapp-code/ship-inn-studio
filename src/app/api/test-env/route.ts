@@ -8,10 +8,11 @@ export async function GET() {
   const clientSecret = process.env.KEYSTATIC_GITHUB_CLIENT_SECRET || ''
   const secret = process.env.KEYSTATIC_SECRET || ''
 
-  const storageConfig = config.storage
+  // Get all environment keys to check for typos/whitespace
+  const allKeys = Object.keys(process.env).filter(key => !key.startsWith('npm_') && !key.startsWith('__'))
 
   return NextResponse.json({
-    timestamp: new Date().toISOString(), // Verify this changes on refresh
+    timestamp: new Date().toISOString(),
     environment: {
       NODE_ENV: process.env.NODE_ENV,
       hasClientId: !!clientId,
@@ -20,13 +21,8 @@ export async function GET() {
       clientSecretPrefix: clientSecret.substring(0, 5) + '...',
       hasSecret: !!secret,
       secretLength: secret.length,
-      // Debug: Show first 2 chars of secret if it exists, to verify it's not just whitespace
       secretHint: secret ? secret.substring(0, 2) + '...' : 'EMPTY',
     },
-    keystaticConfig: {
-      storageKind: storageConfig.kind,
-      // @ts-ignore
-      repo: storageConfig.repo,
-    }
+    availableEnvKeys: allKeys.sort(), // List all keys to check for " KEYSTATIC_SECRET" etc.
   }, { status: 200 })
 }
