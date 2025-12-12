@@ -11,6 +11,7 @@ export async function GET() {
   const storageConfig = config.storage
 
   return NextResponse.json({
+    timestamp: new Date().toISOString(), // Verify this changes on refresh
     environment: {
       NODE_ENV: process.env.NODE_ENV,
       hasClientId: !!clientId,
@@ -19,6 +20,8 @@ export async function GET() {
       clientSecretPrefix: clientSecret.substring(0, 5) + '...',
       hasSecret: !!secret,
       secretLength: secret.length,
+      // Debug: Show first 2 chars of secret if it exists, to verify it's not just whitespace
+      secretHint: secret ? secret.substring(0, 2) + '...' : 'EMPTY',
     },
     keystaticConfig: {
       storageKind: storageConfig.kind,
