@@ -1,18 +1,5 @@
 import { config, fields, collection } from '@keystatic/core'
 
-// HARDCODE ENV VARS FOR VERCEL (NUCLEAR OPTION)
-if (typeof window === 'undefined') {
-  if (!process.env.KEYSTATIC_GITHUB_CLIENT_ID) {
-    process.env.KEYSTATIC_GITHUB_CLIENT_ID = 'Ov23liJWu8geK8HsiyH0'
-  }
-  if (!process.env.KEYSTATIC_GITHUB_CLIENT_SECRET) {
-    process.env.KEYSTATIC_GITHUB_CLIENT_SECRET = 'ccb835f1ad02ca88ca80577a8b9089b02351a298'
-  }
-  if (!process.env.KEYSTATIC_SECRET) {
-    process.env.KEYSTATIC_SECRET = '3f664d8ac4622c86018c9ff4158d81f4e2b9a0c7d3e5f1g6h8i9j0k1l2m3n4o'
-  }
-}
-
 // Helper to determine storage mode
 const getStorageConfig = () => {
   // Development always uses local
@@ -20,21 +7,10 @@ const getStorageConfig = () => {
     return { kind: 'local' } as const
   }
 
-  // In Production:
-  // 1. Client-side (Browser): Always use GitHub mode so the Admin UI works
-  if (typeof window !== 'undefined') {
-    return { kind: 'github', repo: 'itsmyapp-code/ship-inn-studio' } as const
-  }
-
-  // 2. Server-side (API/Build):
-  // If we have credentials (Runtime), use GitHub.
-  // If we are missing credentials (Build time), fallback to local to prevent build errors.
-  if (process.env.KEYSTATIC_GITHUB_CLIENT_ID && process.env.KEYSTATIC_GITHUB_CLIENT_SECRET) {
-    return { kind: 'github', repo: 'itsmyapp-code/ship-inn-studio' } as const
-  }
-
-  // Fallback for build time
-  return { kind: 'local' } as const
+  // PRODUCTION: ALWAYS USE GITHUB MODE
+  // This ensures both Client (Admin UI) and Server (API Route) agree.
+  // Credentials are injected via the API route handler.
+  return { kind: 'github', repo: 'itsmyapp-code/ship-inn-studio' } as const
 }
 
 export default config({
