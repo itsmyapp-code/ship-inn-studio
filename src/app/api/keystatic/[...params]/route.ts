@@ -14,8 +14,3 @@ export const { GET, POST } = makeRouteHandler({
   clientId: FALLBACK_CLIENT_ID.trim(),
   clientSecret: FALLBACK_CLIENT_SECRET.trim(),
 })
-  config,
-  secret: FALLBACK_SECRET,
-  clientId: FALLBACK_CLIENT_ID,
-  clientSecret: FALLBACK_CLIENT_SECRET,
-})
