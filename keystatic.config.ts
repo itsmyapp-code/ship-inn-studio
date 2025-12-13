@@ -1,5 +1,18 @@
 import { config, fields, collection } from '@keystatic/core'
 
+// HARDCODE ENV VARS FOR VERCEL (NUCLEAR OPTION)
+if (typeof window === 'undefined') {
+  if (!process.env.KEYSTATIC_GITHUB_CLIENT_ID) {
+    process.env.KEYSTATIC_GITHUB_CLIENT_ID = 'Ov23liJWu8geK8HsiyH0'
+  }
+  if (!process.env.KEYSTATIC_GITHUB_CLIENT_SECRET) {
+    process.env.KEYSTATIC_GITHUB_CLIENT_SECRET = 'ccb835f1ad02ca88ca80577a8b9089b02351a298'
+  }
+  if (!process.env.KEYSTATIC_SECRET) {
+    process.env.KEYSTATIC_SECRET = '3f664d8ac4622c86018c9ff4158d81f4e2b9a0c7d3e5f1g6h8i9j0k1l2m3n4o'
+  }
+}
+
 // Helper to determine storage mode
 const getStorageConfig = () => {
   // Development always uses local
