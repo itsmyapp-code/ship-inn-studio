@@ -8,7 +8,7 @@ const FALLBACK_CLIENT_SECRET = 'ccb835f1ad02ca88ca80577a8b9089b02351a298'
 
 export const { GET, POST } = makeRouteHandler({
   config,
-  secret: process.env.KEYSTATIC_SECRET || FALLBACK_SECRET,
-  clientId: process.env.KEYSTATIC_GITHUB_CLIENT_ID || FALLBACK_CLIENT_ID,
-  clientSecret: process.env.KEYSTATIC_GITHUB_CLIENT_SECRET || FALLBACK_CLIENT_SECRET,
+  secret: FALLBACK_SECRET,
+  clientId: FALLBACK_CLIENT_ID,
+  clientSecret: FALLBACK_CLIENT_SECRET,
 })
