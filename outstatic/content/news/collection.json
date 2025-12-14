@@ -1,0 +1,25 @@
+{
+  "title": "News",
+  "slug": "news",
+  "schema": {
+    "title": {
+      "type": "String",
+      "title": "Title",
+      "required": true
+    },
+    "publishedDate": {
+      "type": "Date",
+      "title": "Published Date",
+      "required": true
+    },
+    "coverImage": {
+      "type": "Image",
+      "title": "Cover Image"
+    },
+    "content": {
+      "type": "String",
+      "title": "Content",
+      "richText": true
+    }
+  }
+}
