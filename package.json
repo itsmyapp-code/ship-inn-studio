@@ -21,7 +21,11 @@
   "dependencies": {
     "@keystatic/core": "^0.5.48",
     "@keystatic/next": "^5.0.4",
+    "@tanstack/query-sync-storage-persister": "^5.90.14",
+    "@tanstack/react-query": "^5.90.12",
+    "@tanstack/react-query-persist-client": "^5.90.14",
     "next": "14.2.15",
+    "next-themes": "^0.4.6",
     "outstatic": "^2.0.12",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
