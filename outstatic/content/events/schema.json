@@ -15,6 +15,13 @@
       "fieldType": "String",
       "dataType": "string",
       "title": "eventTime"
+    },
+    "location": {
+      "required": false,
+      "description": "Location",
+      "fieldType": "String",
+      "dataType": "string",
+      "title": "location"
     }
   }
 }
