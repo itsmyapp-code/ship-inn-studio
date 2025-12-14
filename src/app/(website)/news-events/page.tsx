@@ -92,7 +92,7 @@ export default async function Page() {
                     <img 
                       src={event.coverImage} 
                       alt={event.title}
-                      className="w-full h-48 object-cover rounded-lg my-4"
+                      className="w-32 h-24 object-cover rounded-lg float-right ml-4"
                     />
                   )}
                   {event.description && (
