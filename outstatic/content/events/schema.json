@@ -8,6 +8,13 @@
       "fieldType": "String",
       "dataType": "string",
       "title": "eventDate"
+    },
+    "eventTime": {
+      "required": true,
+      "description": "Event time",
+      "fieldType": "String",
+      "dataType": "string",
+      "title": "eventTime"
     }
   }
 }
