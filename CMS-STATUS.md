@@ -4,23 +4,36 @@
 
 ---
 
+## ⚠️ CURRENT STATE: PAUSED
+
+Outstatic CMS is installed but **not fully working on Vercel**. The environment variables are set but Outstatic is still not detecting them at runtime.
+
+**To resume:** Investigate why Vercel isn't passing `OST_GITHUB_ID` and `OST_GITHUB_SECRET` to the Outstatic client component despite being set in the dashboard.
+
+---
+
 ## ✅ What's Done
 
 ### Outstatic CMS Installation
 - **Version:** 1.4.14 (downgraded from 2.x for Tailwind v3 compatibility)
 - **Admin URL:** `https://ship-inn-website.vercel.app/outstatic`
 - **Authentication:** GitHub OAuth
+- **Local:** Works fine
+- **Vercel:** Environment variables not being detected ❌
 
-### Environment Variables (Required in Vercel)
-The following must be set in **Vercel Dashboard → Settings → Environment Variables**:
+### Environment Variables (Set in Vercel Dashboard)
+| Variable | Status in Vercel |
+|----------|-----------------|
+| `OST_GITHUB_ID` | ✅ Added |
+| `OST_GITHUB_SECRET` | ✅ Added |
+| `OST_REPO_SLUG` | ✅ Added |
+| `OST_REPO_OWNER` | ✅ Added |
+| `OST_TOKEN_SECRET` | ✅ Added |
 
-| Variable | Value | Status |
-|----------|-------|--------|
-| `OST_GITHUB_ID` | `Ov23liJWu8geK8HsiyH0` | ⚠️ Must add to Vercel |
-| `OST_GITHUB_SECRET` | `01a1223c25936d38e8c03dcbd67bdb4477596dfc` | ⚠️ Must add to Vercel |
-| `OST_REPO_SLUG` | `ship-inn-studio` | ⚠️ Must add to Vercel |
-| `OST_REPO_OWNER` | `itsmyapp-code` | ⚠️ Must add to Vercel |
-| `OST_TOKEN_SECRET` | `3f664d8ac4622c86018c9ff4158d81f4e2b9a0c7d3e5f1g6h8i9j0k1l2m3n4o` | ⚠️ Must add to Vercel |
+### Attempted Fixes
+1. ❌ Hardcoded credentials in page.tsx - didn't work on Vercel
+2. ❌ Added `env` block in next.config.js - didn't work
+3. ❌ Multiple redeploys - didn't work
 
 ### Collections Created
 - ✅ **News** - Created in Outstatic (`outstatic/content/news/`)
@@ -31,39 +44,20 @@ The following must be set in **Vercel Dashboard → Settings → Environment Var
 
 ### 1. Events Collection
 - Events collection does **not** exist yet in Outstatic
-- Need to create it via the Outstatic admin dashboard
+- Need to create it via the Outstatic admin dashboard (once working)
 
 ### 2. News & Events Page Integration
 - The `/news-events` page is using **placeholder data** (empty arrays)
 - It does **NOT** fetch from Outstatic yet
-- Needs code to:
-  - Import Outstatic's `getDocuments()` function
-  - Fetch news from `news` collection
-  - Fetch events from `events` collection (once created)
-  - Render the actual content
 
 ---
 
-## 📋 Next Steps
+## 🔍 Debugging Notes
 
-1. **Add Environment Variables to Vercel**
-   - Go to Vercel Dashboard → Project → Settings → Environment Variables
-   - Add all 5 variables listed above
-   - Redeploy
-
-2. **Create Events Collection in Outstatic**
-   - Log into `/outstatic`
-   - Click "New Collection"
-   - Name it "Events"
-   - Add fields: title, date, description, image (optional)
-
-3. **Update News & Events Page**
-   - Integrate Outstatic fetching
-   - Display actual news and events
-
-4. **Add Sample Content**
-   - Create a few test news articles
-   - Create a few test events
+The issue appears to be that Outstatic's client-side component cannot access environment variables set in Vercel. Possible causes:
+1. Outstatic may need `NEXT_PUBLIC_` prefixed variables for client-side access
+2. There may be a caching issue with Vercel's edge/serverless functions
+3. The Outstatic v1.x may have different environment variable requirements than documented
 
 ---
 
@@ -73,14 +67,5 @@ The following must be set in **Vercel Dashboard → Settings → Environment Var
 |------|---------|
 | `src/app/outstatic/[[...ost]]/page.tsx` | Outstatic admin UI |
 | `src/app/api/outstatic/[[...ost]]/route.ts` | Outstatic API handler |
-| `src/app/(website)/news-events/page.tsx` | Public news & events page |
+| `next.config.js` | Has `env` block for OST variables |
 | `outstatic/content/news/` | News content storage |
-| `outstatic/content/collections.json` | Collection definitions |
-
----
-
-## 🔧 Technical Notes
-
-- **Why v1.4.14?** Outstatic v2.x uses Tailwind CSS v4, which is incompatible with this project's Tailwind v3 setup.
-- **Content Storage:** All content is stored as markdown files in the `outstatic/content/` folder and committed to GitHub.
-- **No Database:** Outstatic is file-based, no external database required.
