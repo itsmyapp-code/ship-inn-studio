@@ -1,6 +1,6 @@
 ---
 title: 'Test'
-status: 'draft'
+status: 'published'
 author:
   name: 'Martin Cozens'
   picture: ''
