@@ -1,0 +1,28 @@
+{
+  "title": "Events",
+  "path": "outstatic/content/events",
+  "columns": ["title", "status", "publishedAt"],
+  "customFields": [
+    {
+      "fieldType": "Date",
+      "name": "eventDate",
+      "title": "Event Date",
+      "description": "When the event takes place",
+      "required": true
+    },
+    {
+      "fieldType": "String",
+      "name": "eventTime",
+      "title": "Event Time",
+      "description": "e.g. 7:00 PM - 10:00 PM",
+      "required": false
+    },
+    {
+      "fieldType": "String",
+      "name": "location",
+      "title": "Location",
+      "description": "Where the event is held",
+      "required": false
+    }
+  ]
+}

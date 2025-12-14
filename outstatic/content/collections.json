@@ -4,5 +4,11 @@
     "slug": "news",
     "path": "outstatic/content/news",
     "children": []
+  },
+  {
+    "title": "Events",
+    "slug": "events",
+    "path": "outstatic/content/events",
+    "children": []
   }
 ]
