@@ -21,33 +21,34 @@ type EventItem = {
   eventDate?: string
   eventTime?: string
   location?: string
+  displayDate?: string
 }
 
 async function getNews(): Promise<NewsItem[]> {
   try {
-    const news = getDocuments('news', ['title', 'slug', 'publishedAt', 'description', 'coverImage', 'content'])
+    const news = getDocuments('news', ['title', 'slug', 'publishedAt', 'description', 'coverImage', 'content', 'status'])
     return news.filter((item: any) => item.status === 'published') as NewsItem[]
-  } catch {
+  } catch (e) {
+    console.error('Error fetching news:', e)
     return []
   }
 }
 
 async function getEvents(): Promise<EventItem[]> {
   try {
-    const events = getDocuments('events', ['title', 'slug', 'publishedAt', 'description', 'coverImage', 'content', 'eventDate', 'eventTime', 'location'])
-    // Filter to only upcoming events
-    const now = new Date()
-    return (events as EventItem[])
+    const events = getDocuments('events', ['title', 'slug', 'publishedAt', 'description', 'coverImage', 'content', 'status', 'eventDate', 'eventTime', 'location'])
+    return (events as any[])
       .filter((event: any) => event.status === 'published')
-      .filter((event: EventItem) => {
-        if (!event.eventDate) return true
-        return new Date(event.eventDate) >= now
-      })
+      .map((event) => ({
+        ...event,
+        // Use eventDate if set, otherwise fall back to publishedAt
+        displayDate: event.eventDate || event.publishedAt
+      }))
       .sort((a, b) => {
-        if (!a.eventDate || !b.eventDate) return 0
-        return new Date(a.eventDate).getTime() - new Date(b.eventDate).getTime()
-      })
-  } catch {
+        return new Date(b.publishedAt).getTime() - new Date(a.publishedAt).getTime()
+      }) as EventItem[]
+  } catch (e) {
+    console.error('Error fetching events:', e)
     return []
   }
 }
@@ -77,11 +78,9 @@ export default async function Page() {
                 <article key={event.slug} className="border rounded-lg p-6 hover:shadow-lg transition-shadow">
                   <div className="flex justify-between items-start mb-2">
                     <h3 className="text-xl font-semibold">{event.title}</h3>
-                    {event.eventDate && (
-                      <span className="bg-amber-100 text-amber-800 px-3 py-1 rounded-full text-sm font-medium">
-                        {formatDate(event.eventDate)}
-                      </span>
-                    )}
+                    <span className="bg-amber-100 text-amber-800 px-3 py-1 rounded-full text-sm font-medium">
+                      {formatDate(event.displayDate || event.publishedAt)}
+                    </span>
                   </div>
                   {event.eventTime && (
                     <p className="text-gray-600 text-sm mb-2">🕐 {event.eventTime}</p>
@@ -89,9 +88,22 @@ export default async function Page() {
                   {event.location && (
                     <p className="text-gray-600 text-sm mb-2">📍 {event.location}</p>
                   )}
+                  {event.coverImage && (
+                    <img 
+                      src={event.coverImage} 
+                      alt={event.title}
+                      className="w-full h-48 object-cover rounded-lg my-4"
+                    />
+                  )}
                   {event.description && (
                     <p className="text-gray-700 mt-3">{event.description}</p>
                   )}
+                  <Link 
+                    href={`/events/${event.slug}`}
+                    className="text-amber-700 hover:text-amber-800 font-medium mt-3 inline-block"
+                  >
+                    View details →
+                  </Link>
                 </article>
               ))}
             </div>
