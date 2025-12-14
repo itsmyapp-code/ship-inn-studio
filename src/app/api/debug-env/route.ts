@@ -4,10 +4,12 @@ export const dynamic = 'force-dynamic'
 
 export async function GET() {
   return NextResponse.json({
+    OST_GITHUB_ID: process.env.OST_GITHUB_ID ? 'SET (' + process.env.OST_GITHUB_ID.substring(0, 8) + '...)' : 'NOT SET',
+    OST_GITHUB_SECRET: process.env.OST_GITHUB_SECRET ? 'SET (' + process.env.OST_GITHUB_SECRET.substring(0, 8) + '...)' : 'NOT SET',
+    OST_REPO_SLUG: process.env.OST_REPO_SLUG || 'NOT SET',
+    OST_REPO_OWNER: process.env.OST_REPO_OWNER || 'NOT SET',
+    OST_TOKEN_SECRET: process.env.OST_TOKEN_SECRET ? 'SET' : 'NOT SET',
+    VERCEL_GIT_REPO_SLUG: process.env.VERCEL_GIT_REPO_SLUG || 'NOT SET',
     NODE_ENV: process.env.NODE_ENV,
-    HAS_CLIENT_ID: !!process.env.KEYSTATIC_GITHUB_CLIENT_ID,
-    HAS_CLIENT_SECRET: !!process.env.KEYSTATIC_GITHUB_CLIENT_SECRET,
-    HAS_SECRET: !!process.env.KEYSTATIC_SECRET,
-    HAS_PROJECT: !!process.env.NEXT_PUBLIC_KEYSTATIC_PROJECT,
   })
 }
