@@ -2,6 +2,7 @@
 import { Outstatic } from 'outstatic'
 import { OstClient } from 'outstatic/client'
 
-export default function Page({ params }: { params: { ost: string[] } }) {
-  return <Outstatic params={params} />
+export default async function Page({ params }: { params: { ost: string[] } }) {
+  const outstatic = await Outstatic()
+  return <OstClient outstatic={outstatic} params={params} />
 }
