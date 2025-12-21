@@ -16,7 +16,7 @@ export default function HomePage() {
           <div className="text-center max-w-6xl mx-auto px-6">
             {/* Logo Overlay */}
             <img 
-              src="/images/logo/the_ship_inn.png" 
+              src="/images/logo/the_ship_inn2.png" 
               alt="The Ship Inn Logo" 
               className="w-48 md:w-64 mx-auto mb-6 drop-shadow-2xl"
             />

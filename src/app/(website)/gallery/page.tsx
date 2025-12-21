@@ -16,6 +16,18 @@ export default function GalleryPage() {
       category: 'Exterior',
       caption: 'The historic Ship Inn welcomes you to Porlock Weir'
     },
+    {
+      src: '/images/exterior/shipinn-003.jpg',
+      alt: 'The Ship Inn - Exterior View',
+      category: 'Exterior',
+      caption: 'The Ship Inn at Porlock Weir'
+    },
+    {
+      src: '/images/exterior/shipinn-017.jpg',
+      alt: 'The Ship Inn - Another View',
+      category: 'Exterior',
+      caption: 'Beautiful exterior of The Ship Inn'
+    },
     
     // Room Images  
     {
