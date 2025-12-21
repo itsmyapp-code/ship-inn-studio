@@ -6,7 +6,12 @@ module.exports = {
     './src/app/**/*.{js,ts,jsx,tsx,mdx}',
   ],
   theme: {
-    extend: {},
+    extend: {
+      fontFamily: {
+        'centaur': ['Centaur', 'Palatino Linotype', 'Book Antiqua', 'Palatino', 'Times New Roman', 'serif'],
+        'serif': ['Centaur', 'Palatino Linotype', 'Book Antiqua', 'Palatino', 'Times New Roman', 'serif'],
+      },
+    },
   },
   plugins: [],
 }

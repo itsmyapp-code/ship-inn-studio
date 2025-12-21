@@ -2,6 +2,25 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Centaur Font Family */
+@font-face {
+  font-family: 'Centaur';
+  src: local('Centaur'), local('Centaur MT');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Centaur';
+  src: local('Centaur Bold'), local('Centaur MT Bold');
+  font-weight: bold;
+  font-style: normal;
+}
+
+.font-centaur {
+  font-family: 'Centaur', 'Palatino Linotype', 'Book Antiqua', Palatino, 'Times New Roman', serif;
+}
+
 /* Custom styles for The Ship Inn */
 @layer utilities {
   .ship-text-shadow {
