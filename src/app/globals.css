@@ -2,19 +2,13 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Centaur Font Family */
+/* Centaur Font Family - loaded from local file */
 @font-face {
   font-family: 'Centaur';
-  src: local('Centaur'), local('Centaur MT');
+  src: url('/fonts/Centaur%20MT%20Regular.ttf') format('truetype');
   font-weight: normal;
   font-style: normal;
-}
-
-@font-face {
-  font-family: 'Centaur';
-  src: local('Centaur Bold'), local('Centaur MT Bold');
-  font-weight: bold;
-  font-style: normal;
+  font-display: swap;
 }
 
 .font-centaur {
