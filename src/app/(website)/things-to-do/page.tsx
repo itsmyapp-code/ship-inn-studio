@@ -3,6 +3,7 @@
 
 import Link from 'next/link'
 import TideTimes from '@/components/TideTimes'
+import WeatherWidget from '@/components/WeatherWidget'
 
 export const metadata = {
   title: 'Things to do - The Ship Inn Porlock Weir',
@@ -183,7 +184,8 @@ export default function ThingsToDoPage() {
                 />
               </div>
             </div>
-            <div className="lg:col-span-1">
+            <div className="lg:col-span-1 space-y-8">
+              <WeatherWidget />
               <TideTimes />
             </div>
           </div>

@@ -39,7 +39,7 @@ export default function Footer() {
           {/* About */}
           <div className="space-y-4 md:col-span-2">
             <h3 className="text-lg font-semibold">The Ship Inn</h3>
-            <p className="text-gray-300 text-sm">
+            <p className="text-gray-300 text-base">
               Historic pub and B&B in the heart of Porlock Weir, offering comfortable accommodation 
               and excellent food in one of Somerset's most beautiful coastal villages.
             </p>
@@ -57,17 +57,17 @@ export default function Footer() {
         {/* Bottom Bar */}
         <div className="mt-8 pt-8 border-t border-gray-800">
           <div className="flex flex-col md:flex-row justify-between items-center">
-            <p className="text-gray-400 text-sm">
+            <p className="text-gray-400 text-base">
               © 2025 The Ship Inn Porlock Weir, Website designed by <a href="https://itsmyapp.co.uk" target="_blank" rel="noopener noreferrer" className="hover:text-white transition-colors">itsmyapp.co.uk</a>
             </p>
             <div className="flex space-x-6 mt-4 md:mt-0">
-              <Link href="/legal" className="text-gray-400 hover:text-white text-sm transition-colors">
+              <Link href="/legal" className="text-gray-400 hover:text-white text-base transition-colors">
                 Privacy Policy
               </Link>
-              <Link href="/legal" className="text-gray-400 hover:text-white text-sm transition-colors">
+              <Link href="/legal" className="text-gray-400 hover:text-white text-base transition-colors">
                 Terms of Service
               </Link>
-              <Link href="/legal" className="text-gray-400 hover:text-white text-sm transition-colors">
+              <Link href="/legal" className="text-gray-400 hover:text-white text-base transition-colors">
                 Accessibility
               </Link>
             </div>

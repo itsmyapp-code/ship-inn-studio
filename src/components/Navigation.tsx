@@ -33,7 +33,7 @@ export default function Navigation() {
               <Link
                 key={item.name}
                 href={item.href}
-                className="text-gray-700 hover:text-blue-600 px-3 py-2 text-sm font-medium transition-colors duration-200"
+                className="text-gray-700 hover:text-blue-600 px-3 py-2 text-xl font-medium transition-colors duration-200"
               >
                 {item.name}
               </Link>
@@ -66,7 +66,7 @@ export default function Navigation() {
               <Link
                 key={item.name}
                 href={item.href}
-                className="text-gray-700 hover:text-blue-600 block px-3 py-2 text-base font-medium"
+                className="text-gray-700 hover:text-blue-600 block px-3 py-2 text-lg font-medium"
                 onClick={() => setIsOpen(false)}
               >
                 {item.name}

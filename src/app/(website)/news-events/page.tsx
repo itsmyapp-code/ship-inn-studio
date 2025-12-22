@@ -3,6 +3,7 @@ import { getDocuments } from 'outstatic/server'
 import Link from 'next/link'
 import { parseDate, formatDateShort } from '@/lib/dateUtils'
 import TideTimes from '@/components/TideTimes'
+import WeatherWidget from '@/components/WeatherWidget'
 
 export const metadata = {
   title: 'News and Events - The Ship Inn Porlock Weir',
@@ -168,6 +169,7 @@ export default async function Page() {
             <NewsletterForm />
           </div>
           
+          <WeatherWidget />
           <TideTimes />
         </div>
       </aside>

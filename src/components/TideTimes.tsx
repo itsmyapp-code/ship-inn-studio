@@ -17,8 +17,8 @@ export default async function TideTimes() {
         <div className="space-y-4">
           {feed.items.slice(0, 4).map((item, index) => (
             <div key={index} className="border-b border-gray-100 last:border-0 pb-3 last:pb-0">
-              <p className="text-sm font-medium text-ship-blue-800">{item.title}</p>
-              <p className="text-xs text-gray-500 mt-1">{item.contentSnippet || item.content}</p>
+              <p className="text-base font-medium text-ship-blue-800">{item.title}</p>
+              <p className="text-sm text-gray-500 mt-1">{item.contentSnippet || item.content}</p>
             </div>
           ))}
         </div>
@@ -27,11 +27,11 @@ export default async function TideTimes() {
             href="https://www.tidetimes.co.uk/porlock-bay-tide-times" 
             target="_blank" 
             rel="noopener noreferrer"
-            className="text-xs text-ship-blue-600 hover:underline flex items-center justify-center"
+            className="text-sm text-ship-blue-600 hover:underline flex items-center justify-center"
           >
             View full 7-day forecast →
           </a>
-          <p className="text-[10px] text-gray-400 text-center mt-2">
+          <p className="text-xs text-gray-400 text-center mt-2">
             Data provided by tidetimes.co.uk
           </p>
         </div>
