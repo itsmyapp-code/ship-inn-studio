@@ -1,6 +1,6 @@
 ---
 title: 'The Ship Inn'
-status: 'draft'
+status: 'published'
 author:
   name: ''
   picture: 'https://avatars.githubusercontent.com/u/220572112?v=4'
