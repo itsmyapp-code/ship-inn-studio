@@ -2,7 +2,7 @@
 
 
 export const metadata = {
-  title: 'Things to Do - The Ship Inn Porlock Weir',
+  title: 'Things to do - The Ship Inn Porlock Weir',
   description: 'Discover the best of Porlock Weir and Exmoor National Park. From coastal walks to historic villages, your guide to West Somerset adventures.',
 }
 
@@ -84,7 +84,7 @@ export default function ThingsToDoPage() {
       {/* Hero Section */}
       <section className="relative h-64 bg-ship-green-600 flex items-center justify-center">
         <div className="text-center text-white">
-          <h1 className="text-4xl md:text-5xl font-bold mb-4">Things to Do</h1>
+          <h1 className="text-4xl md:text-5xl font-bold mb-4">Things to do</h1>
           <p className="text-xl">Your gateway to Exmoor National Park and the Somerset coast</p>
         </div>
       </section>

@@ -2,7 +2,7 @@
 
 
 export const metadata = {
-  title: 'Food & Drink - The Ship Inn Porlock Weir',
+  title: 'From the Galley & Saloon - The Ship Inn Porlock Weir',
   description: 'Enjoy fresh local seafood, traditional pub classics, and fine ales at The Ship Inn. Our restaurant and bar offer the best of Somerset cuisine with stunning harbour views.',
 }
 
@@ -54,7 +54,7 @@ export default function FoodDrinkPage() {
       {/* Hero Section */}
       <section className="relative h-64 bg-ship-blue-600 flex items-center justify-center">
         <div className="text-center text-white">
-          <h1 className="text-4xl md:text-5xl font-bold mb-4">Food & Drink</h1>
+          <h1 className="text-4xl md:text-5xl font-bold mb-4">From the Galley & Saloon</h1>
           <p className="text-xl">Fresh local ingredients, traditional recipes, warm hospitality</p>
         </div>
       </section>
@@ -74,12 +74,6 @@ export default function FoodDrinkPage() {
                 Dine in our cozy restaurant with views over Porlock Weir's picturesque harbour, 
                 or enjoy a drink in our traditional bar with its warming log fire and maritime charm.
               </p>
-              <div className="space-y-2 text-gray-600">
-                <p><strong>Serving Hours:</strong></p>
-                <p>Lunch: 12:00 - 14:30 daily</p>
-                <p>Dinner: 18:00 - 21:00 daily</p>
-                <p>Bar: 11:00 - 23:00 daily</p>
-              </div>
             </div>
             <div className="h-96 bg-ship-blue-200 rounded-lg"></div>
           </div>
@@ -238,7 +232,7 @@ export default function FoodDrinkPage() {
               Call to Reserve: 01643 863753
             </a>
             <a
-              href="mailto:info@shipinnporlockweir.co.uk"
+              href="mailto:hello@theshipinnporlockweir.co.uk"
               className="bg-transparent border-2 border-white hover:bg-white hover:text-ship-blue-600 text-white px-8 py-3 rounded-lg font-semibold transition-colors"
             >
               Email Us

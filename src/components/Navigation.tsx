@@ -4,12 +4,12 @@ import Link from 'next/link'
 import { useState } from 'react'
 
 const navigation = [
-  { name: 'Our Rooms', href: '/rooms' },
-  { name: 'Food & Drink', href: '/food-drink' },
-  { name: 'Things to Do', href: '/things-to-do' },
-  { name: 'Events & News', href: '/news-events' },
+  { name: 'From the Cabins', href: '/rooms' },
+  { name: 'From the Galley & Saloon', href: '/food-drink' },
+  { name: 'Things to do', href: '/things-to-do' },
+  { name: 'News and Events', href: '/news-events' },
   { name: 'Gallery', href: '/gallery' },
-  { name: 'Contact', href: '/contact' },
+  { name: 'Contact us', href: '/contact' },
 ]
 
 export default function Navigation() {

@@ -1,5 +1,5 @@
 export const metadata = {
-  title: 'Contact & Find Us - The Ship Inn Porlock Weir',
+  title: 'Contact us - The Ship Inn Porlock Weir',
   description: 'Get in touch with The Ship Inn for bookings, enquiries, or directions. Located in the heart of Porlock Weir, Somerset. Phone: 01643 863753',
 }
 
@@ -12,7 +12,7 @@ export default function ContactPage() {
       {/* Hero Section */}
       <section className="relative h-64 bg-ship-blue-600 flex items-center justify-center">
         <div className="text-center text-white">
-          <h1 className="text-4xl md:text-5xl font-bold mb-4">Contact & Find Us</h1>
+          <h1 className="text-4xl md:text-5xl font-bold mb-4">Contact us</h1>
           <p className="text-xl">Get in touch or visit us in beautiful Porlock Weir</p>
         </div>
       </section>
@@ -35,7 +35,6 @@ export default function ContactPage() {
                   <div>
                     <h3 className="font-semibold text-gray-900 mb-1">Phone</h3>
                     <p className="text-gray-600">01643 863753</p>
-                    <p className="text-sm text-gray-500">Available 8am - 10pm daily</p>
                   </div>
                 </div>
 
@@ -47,7 +46,7 @@ export default function ContactPage() {
                   </div>
                   <div>
                     <h3 className="font-semibold text-gray-900 mb-1">Email</h3>
-                    <p className="text-gray-600">info@shipinnporlockweir.co.uk</p>
+                    <p className="text-gray-600">hello@theshipinnporlockweir.co.uk</p>
                     <p className="text-sm text-gray-500">We aim to respond within 4 hours</p>
                   </div>
                 </div>
@@ -66,22 +65,6 @@ export default function ContactPage() {
                       Porlock Weir<br />
                       Minehead, Somerset<br />
                       TA24 8PB
-                    </p>
-                  </div>
-                </div>
-
-                <div className="flex items-start">
-                  <div className="bg-ship-blue-100 p-3 rounded-full mr-4">
-                    <svg className="w-6 h-6 text-ship-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
-                    </svg>
-                  </div>
-                  <div>
-                    <h3 className="font-semibold text-gray-900 mb-1">Reception Hours</h3>
-                    <p className="text-gray-600">
-                      Daily: 8:00am - 10:00pm<br />
-                      Check-in: 3:00pm - 9:00pm<br />
-                      Check-out: 8:00am - 11:00am
                     </p>
                   </div>
                 </div>
@@ -106,16 +89,18 @@ export default function ContactPage() {
             <p className="text-lg text-gray-600">Located in the heart of Porlock Weir</p>
           </div>
 
-          {/* Map Placeholder */}
-          <div className="bg-gray-300 h-96 rounded-lg flex items-center justify-center mb-8">
-            <div className="text-center text-gray-600">
-              <svg className="w-12 h-12 mx-auto mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
-              </svg>
-              <p>Interactive map will be embedded here</p>
-              <p className="text-sm">Google Maps integration showing The Ship Inn location</p>
-            </div>
+          {/* Map Section */}
+          <div className="w-full h-96 rounded-lg overflow-hidden shadow-lg mb-12">
+            <iframe 
+              src="https://www.google.com/maps?q=The%20Ship%20Inn%20Porlock%20Weir%20TA24%208PB&output=embed" 
+              width="100%" 
+              height="100%" 
+              style={{ border: 0 }} 
+              allowFullScreen={true} 
+              loading="lazy" 
+              referrerPolicy="no-referrer-when-downgrade"
+              title="The Ship Inn Location"
+            ></iframe>
           </div>
 
           {/* Directions */}
@@ -177,7 +162,7 @@ export default function ContactPage() {
               Call Now: 01643 863753
             </a>
             <a
-              href="mailto:info@shipinnporlockweir.co.uk"
+              href="mailto:hello@theshipinnporlockweir.co.uk"
               className="bg-transparent border-2 border-white hover:bg-white hover:text-ship-blue-600 text-white px-8 py-3 rounded-lg font-semibold transition-colors"
             >
               Send Email

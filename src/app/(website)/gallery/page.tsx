@@ -120,7 +120,7 @@ export default function GalleryPage() {
               href="/rooms"
               className="bg-transparent border-2 border-white hover:bg-white hover:text-ship-blue-600 text-white px-8 py-3 rounded-lg font-semibold transition-colors"
             >
-              View Our Rooms
+              From the Cabins
             </a>
           </div>
         </div>

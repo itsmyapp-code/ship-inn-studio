@@ -59,7 +59,7 @@ export default function LegalPage() {
               <h3 className="text-xl font-semibold text-gray-900 mt-6 mb-3">Your Rights</h3>
               <p className="mb-4">
                 You have the right to access, correct, or delete your personal data. 
-                Contact us at info@shipinnporlockweir.co.uk to exercise these rights.
+                Contact us at hello@theshipinnporlockweir.co.uk to exercise these rights.
               </p>
             </div>
           </div>
@@ -175,7 +175,7 @@ export default function LegalPage() {
             </p>
             <div className="flex flex-col sm:flex-row gap-4">
               <a
-                href="mailto:info@shipinnporlockweir.co.uk"
+                href="mailto:hello@theshipinnporlockweir.co.uk"
                 className="bg-ship-blue-600 hover:bg-ship-blue-700 text-white px-6 py-2 rounded-lg font-semibold transition-colors text-center"
               >
                 Email Us

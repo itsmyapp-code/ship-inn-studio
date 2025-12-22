@@ -33,7 +33,7 @@ export default function HomePage() {
                 href="/rooms"
                 className="bg-white hover:bg-gray-100 text-blue-900 px-10 py-4 rounded-full text-xl font-bold transition-all duration-300 shadow-lg"
               >
-                View Our Rooms
+                From the Cabins
               </Link>
               <Link
                 href="/contact"
@@ -108,13 +108,13 @@ export default function HomePage() {
               href="/rooms"
               className="bg-white hover:bg-gray-100 text-blue-600 px-8 py-4 rounded-full text-lg font-bold transition-all duration-300"
             >
-              View Available Rooms
+              From the Cabins
             </Link>
             <Link
               href="/contact"
               className="border-2 border-white bg-transparent hover:bg-white text-white hover:text-blue-600 px-8 py-4 rounded-full text-lg font-bold transition-all duration-300"
             >
-              Contact Us
+              Contact us
             </Link>
           </div>
         </div>

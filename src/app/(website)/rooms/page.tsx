@@ -4,7 +4,7 @@ import Link from 'next/link'
 import RoomGallery from '@/components/RoomGallery'
 
 export const metadata = {
-  title: 'Our Rooms - The Ship Inn Porlock Weir',
+  title: 'From the Cabins - The Ship Inn Porlock Weir',
   description: 'Discover our five beautifully appointed guest rooms, each offering modern comfort with traditional charm in the heart of Porlock Weir.',
 }
 
@@ -68,7 +68,7 @@ export default function RoomsPage() {
       {/* Hero Section */}
       <section className="relative h-64 bg-ship-blue-600 flex items-center justify-center">
         <div className="text-center text-white">
-          <h1 className="text-4xl md:text-5xl font-bold mb-4">Our Rooms</h1>
+          <h1 className="text-4xl md:text-5xl font-bold mb-4">From the Cabins</h1>
           <p className="text-xl">Five unique rooms, each with its own character and charm</p>
         </div>
       </section>

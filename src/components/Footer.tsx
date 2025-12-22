@@ -7,13 +7,13 @@ export default function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
           {/* Contact Information */}
           <div className="space-y-4">
-            <h3 className="text-lg font-semibold">Contact Us</h3>
+            <h3 className="text-lg font-semibold">Contact us</h3>
             <div className="space-y-2 text-gray-300">
               <p>Porlock Weir</p>
               <p>Minehead, Somerset</p>
               <p>TA24 8PB</p>
               <p>Tel: 01643 863753</p>
-              <p>Email: info@shipinnporlockweir.co.uk</p>
+              <p>Email: hello@theshipinnporlockweir.co.uk</p>
             </div>
           </div>
 
@@ -22,35 +22,22 @@ export default function Footer() {
             <h3 className="text-lg font-semibold">Quick Links</h3>
             <div className="space-y-2">
               <Link href="/rooms" className="block text-gray-300 hover:text-white transition-colors">
-                Our Rooms
+                From the Cabins
               </Link>
               <Link href="/food-drink" className="block text-gray-300 hover:text-white transition-colors">
-                Food & Drink
+                From the Galley & Saloon
               </Link>
               <Link href="/things-to-do" className="block text-gray-300 hover:text-white transition-colors">
-                Things to Do
+                Things to do
               </Link>
               <Link href="/contact" className="block text-gray-300 hover:text-white transition-colors">
-                Contact & Bookings
+                Contact us
               </Link>
-            </div>
-          </div>
-
-          {/* Opening Hours */}
-          <div className="space-y-4">
-            <h3 className="text-lg font-semibold">Opening Hours</h3>
-            <div className="space-y-1 text-gray-300 text-sm">
-              <p><strong>Restaurant:</strong></p>
-              <p>Daily: 12:00 - 21:00</p>
-              <p><strong>Bar:</strong></p>
-              <p>Daily: 11:00 - 23:00</p>
-              <p><strong>Reception:</strong></p>
-              <p>Daily: 08:00 - 22:00</p>
             </div>
           </div>
 
           {/* About */}
-          <div className="space-y-4">
+          <div className="space-y-4 md:col-span-2">
             <h3 className="text-lg font-semibold">The Ship Inn</h3>
             <p className="text-gray-300 text-sm">
               Historic pub and B&B in the heart of Porlock Weir, offering comfortable accommodation 

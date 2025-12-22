@@ -2,6 +2,11 @@ import NewsletterForm from '@/components/NewsletterForm'
 import { getDocuments } from 'outstatic/server'
 import Link from 'next/link'
 
+export const metadata = {
+  title: 'News and Events - The Ship Inn Porlock Weir',
+  description: 'Stay up to date with the latest news and upcoming events at The Ship Inn, Porlock Weir.',
+}
+
 type NewsItem = {
   title: string
   slug: string
@@ -66,7 +71,16 @@ export default async function Page() {
   const latestNews = await getNews()
 
   return (
-    <div className="max-w-6xl mx-auto p-6 grid md:grid-cols-3 gap-12">
+    <div className="min-h-screen">
+      {/* Hero Section */}
+      <section className="relative h-64 bg-ship-blue-600 flex items-center justify-center mb-12">
+        <div className="text-center text-white">
+          <h1 className="text-4xl md:text-5xl font-bold mb-4">News and Events</h1>
+          <p className="text-xl">Stay updated with the latest from The Ship Inn</p>
+        </div>
+      </section>
+
+      <div className="max-w-6xl mx-auto p-6 grid md:grid-cols-3 gap-12">
       <div className="md:col-span-2 space-y-12">
         <section>
           <h2 className="text-3xl font-bold mb-6">Upcoming Events</h2>
