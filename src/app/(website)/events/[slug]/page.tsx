@@ -3,6 +3,7 @@ import { notFound } from 'next/navigation'
 import Link from 'next/link'
 import { remark } from 'remark'
 import html from 'remark-html'
+import { parseDate, formatDate } from '@/lib/dateUtils'
 
 type Props = {
   params: { slug: string }
@@ -25,15 +26,6 @@ export async function generateMetadata({ params }: Props) {
     title: `${event.title} | The Ship Inn`,
     description: event.description || '',
   }
-}
-
-function formatDate(dateString: string): string {
-  return new Date(dateString).toLocaleDateString('en-GB', {
-    weekday: 'long',
-    day: 'numeric',
-    month: 'long',
-    year: 'numeric'
-  })
 }
 
 export default async function EventPage({ params }: Props) {
@@ -71,7 +63,7 @@ export default async function EventPage({ params }: Props) {
           
           <div className="flex flex-wrap gap-4 text-gray-600 mb-4">
             <span className="bg-amber-100 text-amber-800 px-4 py-2 rounded-full font-medium">
-              📅 {formatDate(displayDate)}
+              📅 {formatDate(parseDate(displayDate))}
             </span>
             {(event as any).eventTime && (
               <span className="bg-gray-100 px-4 py-2 rounded-full">

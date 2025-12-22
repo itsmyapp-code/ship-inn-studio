@@ -3,6 +3,7 @@ import { notFound } from 'next/navigation'
 import Link from 'next/link'
 import { remark } from 'remark'
 import html from 'remark-html'
+import { parseDate, formatDateShort } from '@/lib/dateUtils'
 
 type Props = {
   params: { slug: string }
@@ -56,11 +57,7 @@ export default async function NewsArticlePage({ params }: Props) {
         <header className="mb-8">
           <h1 className="text-4xl font-bold mb-4">{post.title}</h1>
           <p className="text-gray-500">
-            {new Date(post.publishedAt).toLocaleDateString('en-GB', {
-              day: 'numeric',
-              month: 'long',
-              year: 'numeric'
-            })}
+            {formatDateShort(parseDate(post.publishedAt))}
             {post.author && ` • ${typeof post.author === 'object' ? post.author.name : post.author}`}
           </p>
         </header>

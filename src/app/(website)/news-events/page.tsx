@@ -1,6 +1,7 @@
 import NewsletterForm from '@/components/NewsletterForm'
 import { getDocuments } from 'outstatic/server'
 import Link from 'next/link'
+import { parseDate, formatDateShort } from '@/lib/dateUtils'
 
 export const metadata = {
   title: 'News and Events - The Ship Inn Porlock Weir',
@@ -42,6 +43,9 @@ async function getNews(): Promise<NewsItem[]> {
 async function getEvents(): Promise<EventItem[]> {
   try {
     const events = getDocuments('events', ['title', 'slug', 'publishedAt', 'description', 'coverImage', 'content', 'status', 'eventDate', 'eventTime', 'location'])
+    const now = new Date()
+    now.setHours(0, 0, 0, 0) // Start of today
+
     return (events as any[])
       .filter((event: any) => event.status === 'published')
       .map((event) => ({
@@ -49,21 +53,20 @@ async function getEvents(): Promise<EventItem[]> {
         // Use eventDate if set, otherwise fall back to publishedAt
         displayDate: event.eventDate || event.publishedAt
       }))
+      .filter((event) => {
+        const date = parseDate(event.displayDate)
+        // Keep events that are today or in the future
+        return date >= now
+      })
       .sort((a, b) => {
-        return new Date(b.publishedAt).getTime() - new Date(a.publishedAt).getTime()
+        const dateA = parseDate(a.displayDate)
+        const dateB = parseDate(b.displayDate)
+        return dateA.getTime() - dateB.getTime() // Soonest first
       }) as EventItem[]
   } catch (e) {
     console.error('Error fetching events:', e)
     return []
   }
-}
-
-function formatDate(dateString: string): string {
-  return new Date(dateString).toLocaleDateString('en-GB', {
-    day: 'numeric',
-    month: 'long',
-    year: 'numeric'
-  })
 }
 
 export default async function Page() {
@@ -93,7 +96,7 @@ export default async function Page() {
                   <div className="flex justify-between items-start mb-2">
                     <h3 className="text-xl font-semibold">{event.title}</h3>
                     <span className="bg-amber-100 text-amber-800 px-3 py-1 rounded-full text-sm font-medium">
-                      {formatDate(event.displayDate || event.publishedAt)}
+                      {formatDateShort(parseDate(event.displayDate))}
                     </span>
                   </div>
                   {event.eventTime && (
@@ -135,7 +138,7 @@ export default async function Page() {
                   <div className="flex justify-between items-start mb-2">
                     <h3 className="text-xl font-semibold">{news.title}</h3>
                     <span className="text-gray-500 text-sm">
-                      {formatDate(news.publishedAt)}
+                      {formatDateShort(parseDate(news.publishedAt))}
                     </span>
                   </div>
                   {news.description && (
