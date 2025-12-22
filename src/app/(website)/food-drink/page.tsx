@@ -97,7 +97,7 @@ export default function FoodDrinkPage() {
 
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
             <img 
-              src="/images/interior/bar-area.png" 
+              src="/images/interior/bar-area2.jpg" 
               alt="The Ship Inn Bar Area"
               className="h-96 w-full object-cover rounded-lg"
             />

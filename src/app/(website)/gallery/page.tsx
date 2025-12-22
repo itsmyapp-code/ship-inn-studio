@@ -45,7 +45,7 @@ export default function GalleryPage() {
     
     // Interior Images
     {
-      src: '/images/interior/bar-area.png',
+      src: '/images/interior/bar-area2.jpg',
       alt: 'The Ship Inn Bar Area',
       category: 'Interior',
       caption: 'Traditional bar area with maritime charm and local ales'
