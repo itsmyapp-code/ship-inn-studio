@@ -103,7 +103,7 @@ export default function ThingsToDoPage() {
               </p>
               <div className="pt-4">
                 <a 
-                  href="https://www.porlock.co.uk/walking/" 
+                  href="https://porlockweir.co/walks/" 
                   target="_blank" 
                   rel="noopener noreferrer"
                   className="inline-flex items-center text-ship-green-700 hover:text-ship-green-800 font-semibold underline decoration-2 underline-offset-4"
