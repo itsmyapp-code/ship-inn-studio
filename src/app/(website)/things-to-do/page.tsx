@@ -250,14 +250,6 @@ export default function ThingsToDoPage() {
             Our local knowledge is at your disposal. We're happy to provide maps, route suggestions, 
             and insider tips to make the most of your stay.
           </p>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <button className="bg-white hover:bg-gray-100 text-ship-blue-600 px-8 py-3 rounded-lg font-semibold transition-colors">
-              Download Walking Guide
-            </button>
-            <button className="bg-transparent border-2 border-white hover:bg-white hover:text-ship-blue-600 text-white px-8 py-3 rounded-lg font-semibold transition-colors">
-              Get Local Maps
-            </button>
-          </div>
         </div>
       </section>
     </div>
