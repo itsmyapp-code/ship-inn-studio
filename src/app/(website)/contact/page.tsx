@@ -1,6 +1,6 @@
 export const metadata = {
   title: 'Contact us - The Ship Inn Porlock Weir',
-  description: 'Get in touch with The Ship Inn for bookings, enquiries, or directions. Located in the heart of Porlock Weir, Somerset. Phone: 01643 863753',
+  description: 'Get in touch with The Ship Inn for bookings, enquiries, or directions. Located in the heart of Porlock Weir, Somerset. Phone: 01643 863288',
 }
 
 import ContactForm from '@/components/ContactForm'
@@ -34,7 +34,7 @@ export default function ContactPage() {
                   </div>
                   <div>
                     <h3 className="font-semibold text-gray-900 mb-1">Phone</h3>
-                    <p className="text-gray-600">01643 863753</p>
+                    <p className="text-gray-600">01643 863288</p>
                   </div>
                 </div>
 
@@ -47,7 +47,6 @@ export default function ContactPage() {
                   <div>
                     <h3 className="font-semibold text-gray-900 mb-1">Email</h3>
                     <p className="text-gray-600">hello@theshipinnporlockweir.co.uk</p>
-                    <p className="text-sm text-gray-500">We aim to respond within 4 hours</p>
                   </div>
                 </div>
 
@@ -156,10 +155,10 @@ export default function ContactPage() {
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <a
-              href="tel:01643863753"
+              href="tel:01643863288"
               className="bg-white hover:bg-gray-100 text-ship-blue-600 px-8 py-3 rounded-lg font-semibold transition-colors"
             >
-              Call Now: 01643 863753
+              Call Now: 01643 863288
             </a>
             <a
               href="mailto:hello@theshipinnporlockweir.co.uk"

@@ -43,12 +43,6 @@ export default function Navigation() {
                 {item.name}
               </Link>
             ))}
-            <Link
-              href="/contact"
-              className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 rounded-full text-sm font-medium transition-colors duration-200"
-            >
-              Book Now
-            </Link>
           </div>
 
           {/* Mobile menu button */}
@@ -83,13 +77,6 @@ export default function Navigation() {
                 {item.name}
               </Link>
             ))}
-            <Link
-              href="/contact"
-              className="bg-blue-600 hover:bg-blue-700 text-white block px-3 py-2 text-base font-medium rounded-md mt-4"
-              onClick={() => setIsOpen(false)}
-            >
-              Book Now
-            </Link>
           </div>
         </div>
       )}

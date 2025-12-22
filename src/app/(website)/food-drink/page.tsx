@@ -226,10 +226,10 @@ export default function FoodDrinkPage() {
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <a
-              href="tel:01643863753"
+              href="tel:01643863288"
               className="bg-white hover:bg-gray-100 text-ship-blue-600 px-8 py-3 rounded-lg font-semibold transition-colors"
             >
-              Call to Reserve: 01643 863753
+              Call to Reserve: 01643 863288
             </a>
             <a
               href="mailto:hello@theshipinnporlockweir.co.uk"

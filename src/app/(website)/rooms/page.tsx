@@ -111,12 +111,6 @@ export default function RoomsPage() {
                   
                   <div className="flex items-center justify-between">
                     <span className="text-2xl font-bold text-ship-blue-600">{room.price}</span>
-                    <Link
-                      href="/contact"
-                      className="bg-ship-blue-600 hover:bg-ship-blue-700 text-white px-6 py-2 rounded-lg font-semibold transition-colors"
-                    >
-                      Book Now
-                    </Link>
                   </div>
                 </div>
               </div>
@@ -186,16 +180,10 @@ export default function RoomsPage() {
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Link
-              href="/contact"
+              href="tel:01643863288"
               className="bg-white hover:bg-gray-100 text-ship-blue-600 px-8 py-3 rounded-lg font-semibold transition-colors"
             >
-              Book Now
-            </Link>
-            <Link
-              href="tel:01643863753"
-              className="bg-transparent border-2 border-white hover:bg-white hover:text-ship-blue-600 text-white px-8 py-3 rounded-lg font-semibold transition-colors"
-            >
-              Call Us: 01643 863753
+              Call Us: 01643 863288
             </Link>
           </div>
         </div>

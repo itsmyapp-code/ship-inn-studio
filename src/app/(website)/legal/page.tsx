@@ -181,10 +181,10 @@ export default function LegalPage() {
                 Email Us
               </a>
               <a
-                href="tel:01643863753"
+                href="tel:01643863288"
                 className="bg-transparent border-2 border-ship-blue-600 hover:bg-ship-blue-600 hover:text-white text-ship-blue-600 px-6 py-2 rounded-lg font-semibold transition-colors text-center"
               >
-                Call: 01643 863753
+                Call: 01643 863288
               </a>
             </div>
           </div>
