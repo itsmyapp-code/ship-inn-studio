@@ -13,7 +13,7 @@ export default function ContactForm() {
     const formData = new FormData(form)
     const data = Object.fromEntries(formData.entries())
 
-    const formspreeId = process.env.NEXT_PUBLIC_FORMSPREE_ID
+    const formspreeId = process.env.NEXT_PUBLIC_FORMSPREE_ID || 'xrezadnw'
 
     if (!formspreeId) {
       console.error('Formspree ID is not set in environment variables.')
