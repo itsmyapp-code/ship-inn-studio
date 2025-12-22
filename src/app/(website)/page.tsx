@@ -15,11 +15,11 @@ export default function HomePage() {
         <div className="relative z-10 flex items-center justify-center h-full">
           <div className="text-center max-w-6xl mx-auto px-6">
             {/* Logo Overlay */}
-            <div className="bg-white rounded-full p-8 w-48 h-48 md:w-64 md:h-64 mx-auto mb-8 flex items-center justify-center shadow-2xl">
+            <div className="bg-white rounded-full w-48 h-48 md:w-64 md:h-64 mx-auto mb-8 flex items-center justify-center shadow-2xl overflow-hidden p-6">
               <img 
                 src="/images/logo/the_ship_inn2.png" 
                 alt="The Ship Inn Logo" 
-                className="w-full h-auto"
+                className="max-w-full max-h-full object-contain"
               />
             </div>
             <h1 className="text-2xl md:text-4xl font-semibold mb-6 text-white">
