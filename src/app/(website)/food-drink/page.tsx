@@ -9,44 +9,19 @@ export const metadata = {
 export default function FoodDrinkPage() {
   const menuSections = [
     {
-      title: "Fresh From The Sea",
-      description: "Daily catch from local fishing boats",
+      title: "Seasonal Menu",
+      description: "Our menu changes regularly to feature the best local produce",
       items: [
-        { name: "Pan-fried Local Sole", description: "With samphire and lemon butter", price: "£18.95" },
-        { name: "Crab Cakes", description: "With mixed leaves and marie rose sauce", price: "£12.95" },
-        { name: "Fish & Chips", description: "Beer battered cod with triple-cooked chips", price: "£14.95" },
-        { name: "Seafood Platter", description: "Selection of local seafood for two", price: "£32.95" }
-      ]
-    },
-    {
-      title: "From The Land",
-      description: "Using the finest Exmoor and Somerset produce",
-      items: [
-        { name: "Exmoor Lamb", description: "Slow roasted with rosemary and garlic", price: "£19.95" },
-        { name: "Somerset Beef", description: "8oz sirloin with peppercorn sauce", price: "£22.95" },
-        { name: "Free-Range Chicken", description: "Pan-roasted with wild mushrooms", price: "£16.95" },
-        { name: "Vegetarian Wellington", description: "Seasonal vegetables in puff pastry", price: "£14.95" }
-      ]
-    },
-    {
-      title: "Traditional Pub Classics",
-      description: "Hearty comfort food done well",
-      items: [
-        { name: "Steak & Kidney Pie", description: "With buttery mashed potato", price: "£13.95" },
-        { name: "Bangers & Mash", description: "Local sausages with onion gravy", price: "£11.95" },
-        { name: "Ploughman's Lunch", description: "Local cheese, ham, and pickles", price: "£9.95" },
-        { name: "Somerset Burger", description: "With mature cheddar and bacon", price: "£12.95" }
+        { name: "Sample Dish", description: "A delicious example of our seasonal offerings", price: "£--" },
+        { name: "Sample Dish", description: "Freshly prepared using local ingredients", price: "£--" }
       ]
     }
   ]
 
   const drinks = [
-    { name: "Exmoor Ale", description: "Local brewery favorite", type: "Ale" },
-    { name: "Somerset Cider", description: "Traditional farmhouse cider", type: "Cider" },
-    { name: "Sharp's Doom Bar", description: "Cornwall's finest", type: "Ale" },
-    { name: "Guinness", description: "The black stuff", type: "Stout" },
-    { name: "House Wine", description: "Red, white, or rosé", type: "Wine" },
-    { name: "Champagne", description: "For special occasions", type: "Sparkling" }
+    { name: "Local Ales", description: "A selection of regional favorites", type: "Ale" },
+    { name: "West Country Ciders", description: "Traditional Somerset ciders", type: "Cider" },
+    { name: "Fine Wines", description: "Carefully chosen red, white, and rosé", type: "Wine" }
   ]
 
   return (
@@ -129,8 +104,8 @@ export default function FoodDrinkPage() {
             <div>
               <h3 className="text-2xl font-bold text-gray-900 mb-6">Our Selection</h3>
               <p className="text-lg text-gray-600 mb-6">
-                Our bar features a carefully curated selection of local ales, including favorites 
-                from Exmoor Brewery, alongside traditional Somerset ciders and a well-chosen wine list.
+                Our bar features a carefully curated selection of local and national drinks, 
+                including regional ales, traditional Somerset ciders, and a well-chosen wine list.
               </p>
               
               <div className="space-y-3">
@@ -161,7 +136,7 @@ export default function FoodDrinkPage() {
 
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
             <div>
-              <h3 className="text-2xl font-bold text-gray-900 mb-6">Full Somerset Breakfast</h3>
+              <h3 className="text-2xl font-bold text-gray-900 mb-6">Breakfast at The Ship Inn</h3>
               <p className="text-lg text-gray-600 mb-6">
                 Included with all room bookings, our hearty breakfast features the best local produce 
                 to fuel your Exmoor adventures.
@@ -172,43 +147,25 @@ export default function FoodDrinkPage() {
                   <svg className="w-5 h-5 text-ship-green-500 mr-2" fill="currentColor" viewBox="0 0 20 20">
                     <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
                   </svg>
-                  Local farm sausages and bacon
+                  Full English and Continental options
                 </div>
                 <div className="flex items-center">
                   <svg className="w-5 h-5 text-ship-green-500 mr-2" fill="currentColor" viewBox="0 0 20 20">
                     <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
                   </svg>
-                  Free-range eggs cooked to order
+                  Locally sourced ingredients
                 </div>
                 <div className="flex items-center">
                   <svg className="w-5 h-5 text-ship-green-500 mr-2" fill="currentColor" viewBox="0 0 20 20">
                     <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
                   </svg>
-                  Black pudding and grilled tomatoes
-                </div>
-                <div className="flex items-center">
-                  <svg className="w-5 h-5 text-ship-green-500 mr-2" fill="currentColor" viewBox="0 0 20 20">
-                    <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
-                  </svg>
-                  Baked beans and sautéed mushrooms
-                </div>
-                <div className="flex items-center">
-                  <svg className="w-5 h-5 text-ship-green-500 mr-2" fill="currentColor" viewBox="0 0 20 20">
-                    <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
-                  </svg>
-                  Fresh toast and preserves
-                </div>
-                <div className="flex items-center">
-                  <svg className="w-5 h-5 text-ship-green-500 mr-2" fill="currentColor" viewBox="0 0 20 20">
-                    <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
-                  </svg>
-                  Fresh fruit and cereal selection
+                  Freshly prepared to order
                 </div>
               </div>
               
               <p className="text-gray-600">
-                <strong>Serving Times:</strong> 08:00 - 09:30 daily<br/>
-                Continental options and dietary requirements catered for.
+                <strong>Serving Times:</strong> Please check with us for current serving times.<br/>
+                Dietary requirements catered for upon request.
               </p>
             </div>
             <div className="h-96 bg-ship-blue-200 rounded-lg"></div>

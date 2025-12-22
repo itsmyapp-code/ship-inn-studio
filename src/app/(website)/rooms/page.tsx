@@ -12,53 +12,32 @@ export default function RoomsPage() {
   const rooms = [
     {
       id: 1,
-      name: "The Harbour Room",
-      description: "Our largest room with spectacular harbour views and a comfortable king-size bed.",
-      features: ["King-size bed", "Harbour views", "En-suite bathroom", "Tea/coffee facilities", "Free Wi-Fi"],
-      price: "£120/night",
+      name: "Guest Room 1",
+      description: "A beautifully appointed en-suite room finished to a high, comfortable standard.",
+      features: ["En-suite bathroom", "Tea/coffee facilities", "Digital TV", "Free Wi-Fi"],
+      price: "Contact for rates",
       images: [
         {
           src: "/images/rooms/harbour-room-bed01.png",
-          alt: "The Harbour Room - Comfortable King-size Bed",
-          caption: "Spacious king-size bed with harbour views"
-        },
-        {
-          src: "/images/rooms/harbour-room-bed02.png",
-          alt: "The Harbour Room - Alternative View",
-          caption: "Another angle of the comfortable accommodation"
+          alt: "Guest Room - Comfortable Bed",
+          caption: "Comfortable accommodation at The Ship Inn"
         }
       ]
     },
     {
       id: 2,
-      name: "The Weir Room",
-      description: "Cozy double room overlooking the weir with traditional maritime décor.",
-      features: ["Double bed", "Weir views", "En-suite shower", "Tea/coffee facilities", "Free Wi-Fi"],
-      price: "£95/night",
+      name: "Guest Room 2",
+      description: "A beautifully appointed en-suite room finished to a high, comfortable standard.",
+      features: ["En-suite bathroom", "Tea/coffee facilities", "Digital TV", "Free Wi-Fi"],
+      price: "Contact for rates",
       images: []
     },
     {
       id: 3,
-      name: "The Cottage Room",
-      description: "Charming room with period features and a comfortable double bed.",
-      features: ["Double bed", "Garden views", "En-suite bathroom", "Tea/coffee facilities", "Free Wi-Fi"],
-      price: "£90/night",
-      images: []
-    },
-    {
-      id: 4,
-      name: "The Moor Room",
-      description: "Comfortable twin room perfect for friends or family members.",
-      features: ["Twin beds", "Countryside views", "En-suite shower", "Tea/coffee facilities", "Free Wi-Fi"],
-      price: "£85/night",
-      images: []
-    },
-    {
-      id: 5,
-      name: "The Captain's Room",
-      description: "Our most characterful room with maritime antiques and harbour glimpses.",
-      features: ["Double bed", "Period features", "En-suite bathroom", "Tea/coffee facilities", "Free Wi-Fi"],
-      price: "£100/night",
+      name: "Guest Room 3",
+      description: "A beautifully appointed en-suite room finished to a high, comfortable standard.",
+      features: ["En-suite bathroom", "Tea/coffee facilities", "Digital TV", "Free Wi-Fi"],
+      price: "Contact for rates",
       images: []
     }
   ]
