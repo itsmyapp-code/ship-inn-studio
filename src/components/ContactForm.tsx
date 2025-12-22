@@ -9,11 +9,37 @@ export default function ContactForm() {
     e.preventDefault()
     setStatus('submitting')
 
-    // Simulate API call
-    await new Promise(resolve => setTimeout(resolve, 1500))
+    const form = e.currentTarget
+    const formData = new FormData(form)
+    const data = Object.fromEntries(formData.entries())
 
-    // For now, just show success. In a real app, we'd send this to an API.
-    setStatus('success')
+    const formspreeId = process.env.NEXT_PUBLIC_FORMSPREE_ID
+
+    if (!formspreeId) {
+      console.error('Formspree ID is not set in environment variables.')
+      setStatus('error')
+      return
+    }
+
+    try {
+      const response = await fetch(`https://formspree.io/f/${formspreeId}`, {
+        method: 'POST',
+        body: JSON.stringify(data),
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json'
+        }
+      })
+
+      if (response.ok) {
+        setStatus('success')
+        form.reset()
+      } else {
+        setStatus('error')
+      }
+    } catch (error) {
+      setStatus('error')
+    }
   }
 
   if (status === 'success') {
@@ -126,6 +152,12 @@ export default function ContactForm() {
       >
         {status === 'submitting' ? 'Sending...' : 'Send Message'}
       </button>
+
+      {status === 'error' && (
+        <p className="text-red-600 text-center mt-4">
+          Oops! There was an error sending your message. Please try again or call us directly.
+        </p>
+      )}
     </form>
   )
 }
