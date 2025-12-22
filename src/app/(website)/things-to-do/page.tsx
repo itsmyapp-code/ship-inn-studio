@@ -1,6 +1,9 @@
 
 
 
+import Link from 'next/link'
+import TideTimes from '@/components/TideTimes'
+
 export const metadata = {
   title: 'Things to do - The Ship Inn Porlock Weir',
   description: 'Discover the best of Porlock Weir and Exmoor National Park. From coastal walks to historic villages, your guide to West Somerset adventures.',
@@ -148,13 +151,13 @@ export default function ThingsToDoPage() {
         </div>
       </section>
 
-      {/* Local Tips */}
+      {/* Local Tips & Tide Times */}
       <section className="py-16 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-            <div>
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-12">
+            <div className="lg:col-span-2">
               <h2 className="text-3xl font-bold text-gray-900 mb-6">Local Tips & Recommendations</h2>
-              <div className="space-y-4">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div className="border-l-4 border-ship-blue-500 pl-4">
                   <h3 className="font-semibold text-gray-900 mb-1">Best Time to Visit</h3>
                   <p className="text-gray-600">Early morning or late afternoon for the best light and fewer crowds on popular walks.</p>
@@ -172,12 +175,17 @@ export default function ThingsToDoPage() {
                   <p className="text-gray-600">We can provide details on parking locations and any seasonal restrictions.</p>
                 </div>
               </div>
+              <div className="mt-8">
+                <img 
+                  src="/images/location/porlock-weir-harbour.png" 
+                  alt="Porlock Weir Harbour"
+                  className="h-64 w-full object-cover rounded-lg"
+                />
+              </div>
             </div>
-            <img 
-              src="/images/location/porlock-weir-harbour.png" 
-              alt="Porlock Weir Harbour"
-              className="h-96 w-full object-cover rounded-lg"
-            />
+            <div className="lg:col-span-1">
+              <TideTimes />
+            </div>
           </div>
         </div>
       </section>

@@ -2,6 +2,7 @@ import NewsletterForm from '@/components/NewsletterForm'
 import { getDocuments } from 'outstatic/server'
 import Link from 'next/link'
 import { parseDate, formatDateShort } from '@/lib/dateUtils'
+import TideTimes from '@/components/TideTimes'
 
 export const metadata = {
   title: 'News and Events - The Ship Inn Porlock Weir',
@@ -159,11 +160,15 @@ export default async function Page() {
         </section>
       </div>
 
-      <aside className="md:col-span-1">
-        <div className="sticky top-10">
-          <h3 className="text-xl font-bold mb-4">Stay in the loop</h3>
-          <p className="mb-4 text-gray-600">Join our mailing list for exclusive offers and event announcements.</p>
-          <NewsletterForm />
+      <aside className="md:col-span-1 space-y-8">
+        <div className="sticky top-10 space-y-8">
+          <div>
+            <h3 className="text-xl font-bold mb-4">Stay in the loop</h3>
+            <p className="mb-4 text-gray-600">Join our mailing list for exclusive offers and event announcements.</p>
+            <NewsletterForm />
+          </div>
+          
+          <TideTimes />
         </div>
       </aside>
     </div>
