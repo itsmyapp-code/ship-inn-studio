@@ -220,9 +220,9 @@ export default function FoodDrinkPage() {
       {/* Reservation CTA */}
       <section className="py-16 bg-ship-blue-600">
         <div className="max-w-4xl mx-auto text-center px-4 sm:px-6 lg:px-8">
-          <h2 className="text-3xl font-bold text-white mb-4">Book Your Table</h2>
+          <h2 className="text-3xl font-bold text-white mb-4">Visit Us</h2>
           <p className="text-xl text-blue-100 mb-8">
-            Reserve your table for an unforgettable dining experience overlooking Porlock Weir harbour.
+            Contact us to reserve your table for an unforgettable dining experience overlooking Porlock Weir harbour.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <a

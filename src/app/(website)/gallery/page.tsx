@@ -107,14 +107,14 @@ export default function GalleryPage() {
         <div className="max-w-4xl mx-auto text-center px-4 sm:px-6 lg:px-8">
           <h2 className="text-3xl font-bold text-white mb-4">Experience It In Person</h2>
           <p className="text-xl text-blue-100 mb-8">
-            Pictures can only tell part of the story. Book your stay to experience The Ship Inn's unique charm yourself.
+            Pictures can only tell part of the story. Visit us to experience The Ship Inn's unique charm yourself.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <a
               href="/contact"
               className="bg-white hover:bg-gray-100 text-ship-blue-600 px-8 py-3 rounded-lg font-semibold transition-colors"
             >
-              Book Your Stay
+              Contact us
             </a>
             <a
               href="/rooms"

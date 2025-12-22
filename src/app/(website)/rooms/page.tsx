@@ -174,7 +174,7 @@ export default function RoomsPage() {
       {/* Booking CTA */}
       <section className="py-16 bg-ship-blue-600">
         <div className="max-w-4xl mx-auto text-center px-4 sm:px-6 lg:px-8">
-          <h2 className="text-3xl font-bold text-white mb-4">Ready to Book Your Stay?</h2>
+          <h2 className="text-3xl font-bold text-white mb-4">Ready to Visit Us?</h2>
           <p className="text-xl text-blue-100 mb-8">
             Contact us directly for the best rates and to check availability for your preferred dates.
           </p>

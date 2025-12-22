@@ -21,11 +21,6 @@ export default function Navigation() {
         <div className="flex justify-between items-center h-20">
           <div className="flex items-center">
             <Link href="/" className="flex items-center">
-              <img 
-                src="/images/logo/the-ship-inn-porlock-weir.jpg" 
-                alt="The Ship Inn Porlock Weir" 
-                className="h-12 w-auto mr-3 rounded-lg"
-              />
               <h1 className="text-2xl font-bold text-blue-900">
                 The Ship Inn
               </h1>

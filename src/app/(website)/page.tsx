@@ -39,7 +39,7 @@ export default function HomePage() {
                 href="/contact"
                 className="border-4 border-white bg-transparent hover:bg-white text-white hover:text-blue-900 px-10 py-4 rounded-full text-xl font-bold transition-all duration-300"
               >
-                Book Your Stay
+                Contact us
               </Link>
             </div>
           </div>
@@ -101,7 +101,7 @@ export default function HomePage() {
             Ready to Experience The Ship Inn?
           </h2>
           <p className="text-xl text-blue-100 mb-8">
-            Book your stay today and discover why guests return year after year to our coastal retreat.
+            Contact us today and discover why guests return year after year to our coastal retreat.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Link
