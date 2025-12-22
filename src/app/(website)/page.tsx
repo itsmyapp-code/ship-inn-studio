@@ -24,11 +24,10 @@ export default function HomePage() {
             </div>
             <h1 className="text-2xl md:text-4xl font-semibold mb-6 text-white">
               <span className="block">Welcome to</span>
-              <span className="block text-yellow-300">The Ship Inn</span>
+              <span className="block text-yellow-300">The Ship Inn Porlock Weir</span>
             </h1>
             <p className="text-xl md:text-3xl mb-12 text-white opacity-90">
-              Historic charm meets modern comfort in the heart of 
-              <span className="text-yellow-300 font-semibold"> Porlock Weir</span>
+              Historic charm meets modern comfort
             </p>
             <div className="flex flex-col sm:flex-row gap-6 justify-center">
               <Link
