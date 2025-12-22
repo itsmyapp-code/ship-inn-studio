@@ -50,13 +50,26 @@ export default function HomePage() {
       <section className="py-16 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
-            <h2 className="text-4xl font-bold text-gray-900 mb-4">
+            <h2 className="text-4xl font-bold text-gray-900 mb-8">
               Your Coastal Retreat in Porlock Weir
             </h2>
-            <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-              Nestled in one of Somerset's most picturesque coastal villages, The Ship Inn offers 
-              the perfect blend of traditional hospitality and modern comfort, just steps from the harbour.
-            </p>
+            <div className="text-xl text-gray-600 max-w-4xl mx-auto space-y-6 text-left md:text-center">
+              <p>
+                Nestled in the heart of the stunning Exmoor coast, The Ship Inn at Porlock Weir is more than just a pub—it's a destination, a retreat, and a warm welcome at the edge of the sea. With roots tracing back over 200 years, our historic inn has long been a haven for weary travellers, sailors, walkers, and locals alike.
+              </p>
+              <p>
+                Set against the dramatic backdrop of Porlock Bay and the ancient woodland of Exmoor National Park, The Ship Inn blends timeless charm with modern comfort. Whether you’re dropping in for a pint of local ale, a hearty meal or staying the night in one of our cosy rooms, you'll feel the character and history.
+              </p>
+              <p>
+                In the summertime, our outdoor tables offer some of the best views on the coast—perfect for enjoying a cold drink, a leisurely lunch, or simply watching the boats drift by as the sun sets over the harbour.
+              </p>
+              <p>
+                At our core, we’re all about relaxed hospitality. Log fires, sea views, good conversation, and great food, these are the ingredients we believe make a perfect visit. We’re proud to champion West Country suppliers and seasonal menus.
+              </p>
+              <p>
+                Whether you're exploring the South West Coast Path or simply soaking in the peaceful harbour setting, The Ship Inn is your home by the sea.
+              </p>
+            </div>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-12">

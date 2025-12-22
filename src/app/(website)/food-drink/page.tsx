@@ -55,7 +55,7 @@ export default function FoodDrinkPage() {
       <section className="relative h-64 bg-ship-blue-600 flex items-center justify-center">
         <div className="text-center text-white">
           <h1 className="text-4xl md:text-5xl font-bold mb-4">From the Galley & Saloon</h1>
-          <p className="text-xl">Fresh local ingredients, traditional recipes, warm hospitality</p>
+          <p className="text-xl">A true taste of the region in welcoming surroundings</p>
         </div>
       </section>
 
@@ -65,15 +65,14 @@ export default function FoodDrinkPage() {
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
             <div>
               <h2 className="text-3xl font-bold text-gray-900 mb-6">The Ship Inn Restaurant</h2>
-              <p className="text-lg text-gray-600 mb-6">
-                Our restaurant celebrates the finest that Somerset and the West Country have to offer. 
-                From fresh seafood landed at nearby harbours to premium meat from Exmoor farms, 
-                every dish tells the story of our beautiful region.
-              </p>
-              <p className="text-lg text-gray-600 mb-8">
-                Dine in our cozy restaurant with views over Porlock Weir's picturesque harbour, 
-                or enjoy a drink in our traditional bar with its warming log fire and maritime charm.
-              </p>
+              <div className="text-lg text-gray-600 space-y-4">
+                <p>
+                  We celebrate the very best of local and national drinks, alongside seasonal food. Enjoy a refreshing Hawkstone cider, a perfectly poured Guinness, or a classic 1664 while soaking up the coastal atmosphere.
+                </p>
+                <p>
+                  Our menu is built around fresh, seasonal ingredients, changing with the time of year to bring you honest, flavourful dishes. Whether it’s a relaxed drink at the bar or a leisurely meal, you’ll find welcoming surroundings and a true taste of the region.
+                </p>
+              </div>
             </div>
             <div className="h-96 bg-ship-blue-200 rounded-lg"></div>
           </div>

@@ -69,7 +69,7 @@ export default function RoomsPage() {
       <section className="relative h-64 bg-ship-blue-600 flex items-center justify-center">
         <div className="text-center text-white">
           <h1 className="text-4xl md:text-5xl font-bold mb-4">From the Cabins</h1>
-          <p className="text-xl">Five unique rooms, each with its own character and charm</p>
+          <p className="text-xl">A warm and welcoming place to unwind</p>
         </div>
       </section>
 
@@ -77,11 +77,18 @@ export default function RoomsPage() {
       <section className="py-16 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
-            <h2 className="text-3xl font-bold text-gray-900 mb-4">Comfortable Accommodation</h2>
-            <p className="text-lg text-gray-600 max-w-3xl mx-auto">
-              Each of our guest rooms has been thoughtfully designed to offer modern comfort 
-              while maintaining the historic character of this beautiful 18th-century inn.
-            </p>
+            <h2 className="text-3xl font-bold text-gray-900 mb-6">Comfortable Accommodation</h2>
+            <div className="text-lg text-gray-600 max-w-4xl mx-auto space-y-4">
+              <p>
+                We have three double/twin en-suite rooms, all recently refurbished and finished to a high, comfortable standard. Each room is thoughtfully equipped with tea and coffee facilities and digital TV, making them ideal for a relaxed overnight stay whether you’re passing through or planning a longer break. Well-behaved dogs are always welcome, so your four-legged companions can enjoy the adventure too.
+              </p>
+              <p>
+                We’re also in the process of refurbishing two additional rooms, meaning we’ll soon be able to offer five en-suite rooms in total.
+              </p>
+              <p>
+                Whether you’re here for the walking, the views, or simply the calm coastal atmosphere, The Ship Inn at Porlock Weir offers a warm and welcoming place to unwind.
+              </p>
+            </div>
           </div>
 
           {/* Room Cards */}

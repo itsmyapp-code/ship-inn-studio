@@ -77,9 +77,11 @@ export default async function Page() {
     <div className="min-h-screen">
       {/* Hero Section */}
       <section className="relative h-64 bg-ship-blue-600 flex items-center justify-center mb-12">
-        <div className="text-center text-white">
+        <div className="text-center text-white max-w-4xl px-6">
           <h1 className="text-4xl md:text-5xl font-bold mb-4">News and Events</h1>
-          <p className="text-xl">Stay updated with the latest from The Ship Inn</p>
+          <p className="text-xl">
+            At The Ship Inn at Porlock Weir, there’s always something happening! From live music events and pub quiz nights to our popular curry nights and pie & pint evenings, there’s plenty to enjoy. Keep an eye on our events, there’s always something fun around the corner!
+          </p>
         </div>
       </section>
 

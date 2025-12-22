@@ -93,12 +93,28 @@ export default function ThingsToDoPage() {
       <section className="py-16 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
-            <h2 className="text-3xl font-bold text-gray-900 mb-4">Explore Our Beautiful Corner of England</h2>
-            <p className="text-lg text-gray-600 max-w-4xl mx-auto">
-              From your base at The Ship Inn, you're perfectly positioned to explore some of England's most 
-              spectacular landscapes. Whether you prefer gentle coastal strolls, challenging moorland hikes, 
-              or discovering historic villages, there's something for everyone within easy reach.
-            </p>
+            <h2 className="text-3xl font-bold text-gray-900 mb-6">Explore Our Beautiful Corner of England</h2>
+            <div className="text-lg text-gray-600 max-w-4xl mx-auto space-y-6">
+              <p>
+                Porlock Weir is the perfect base for exploring the beauty of Exmoor and the surrounding coast. Enjoy scenic local walks, discover charming villages, or follow in the footsteps of Lorna Doone. For a different perspective, take a sea trip on one of the local boats, or get your adrenaline fix with Exmoor Adventures’ activities nearby.
+              </p>
+              <p>
+                Whether you prefer relaxing by the harbour, taking in the stunning views, or trying something more adventurous, there’s plenty to see and do for all ages.
+              </p>
+              <div className="pt-4">
+                <a 
+                  href="https://www.porlock.co.uk/walking/" 
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center text-ship-green-700 hover:text-ship-green-800 font-semibold underline decoration-2 underline-offset-4"
+                >
+                  <svg className="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.827a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1" />
+                  </svg>
+                  Discover local walks in and around Porlock
+                </a>
+              </div>
+            </div>
           </div>
         </div>
       </section>
