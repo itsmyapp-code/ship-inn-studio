@@ -5,9 +5,10 @@
 **Project Name**: The Ship Inn Porlock Weir Website  
 **Client**: The Ship Inn, Porlock Weir, Somerset  
 **Project Type**: 5-bedroom B&B with pub and restaurant website  
-**Technology Stack**: Next.js 16, TypeScript, Tailwind CSS, Vercel hosting  
+**Technology Stack**: Next.js 14, TypeScript, Tailwind CSS, Vercel hosting  
 **Design Inspiration**: The Residence Dartmouth (modern coastal hospitality)  
 **Current Status**: ✅ **LIVE & FUNCTIONAL**  
+**Last Updated**: December 24, 2025
 
 ## 🌐 Live Deployment
 
@@ -43,11 +44,13 @@
    - Local activity recommendations
    - Porlock Weir harbour location image
    - Seasonal activities and tips
+   - **Tide Times**: Updated to reliable tidetimes.org.uk source (Dec 24)
 
-5. **Events & News** (`/events-news`)
-   - Blog-style layout ready for content
+5. **Events & News** (`/news-events`)
+   - Dynamic content powered by Outstatic CMS
    - Event listings and news updates
    - Newsletter integration
+   - **Tide Times**: Updated to reliable tidetimes.org.uk source (Dec 24)
 
 6. **Gallery** (`/gallery`)
    - **NEW**: Comprehensive photo gallery with all uploaded images
