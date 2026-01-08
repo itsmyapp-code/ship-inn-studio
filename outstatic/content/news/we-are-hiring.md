@@ -1,14 +1,16 @@
 ---
-title: 'We are hiring'
+title: 'The Ship Inn'
 status: 'published'
 author:
   name: ''
   picture: 'https://avatars.githubusercontent.com/u/220572112?v=4'
 slug: 'we-are-hiring'
-description: 'Published 8/1/26'
-coverImage: '/images/612079066_122118113313039461_5578543549280750358_n-U1ND.jpg'
+description: ''
+coverImage: ''
 publishedAt: '2026-01-08T18:41:10.352Z'
 ---
+
+![](/images/612079066_122118113313039461_5578543549280750358_n-cwND.jpg)
 
 ### We’re gearing up for a busy season at The Ship Inn, Porlock Weir and are hiring across most departments. We’re currently looking for:
 
