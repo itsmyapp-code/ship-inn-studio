@@ -17,7 +17,7 @@ export default function HomePage() {
             {/* Logo Overlay */}
             <div className="bg-white rounded-full w-48 h-48 md:w-64 md:h-64 mx-auto mb-8 flex items-center justify-center shadow-2xl overflow-hidden p-6">
               <img 
-                src="/images/logo/the_ship_inn2.png" 
+                src="/images/logo/the_ship_inn2.webp" 
                 alt="The Ship Inn Logo" 
                 className="max-w-full max-h-full object-contain"
               />

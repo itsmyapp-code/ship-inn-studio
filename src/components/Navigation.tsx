@@ -22,7 +22,7 @@ export default function Navigation() {
           <div className="flex items-center">
             <Link href="/" className="flex items-center">
               <img 
-                src="/images/logo/the_ship_inn2.png" 
+                src="/images/logo/the_ship_inn2.webp" 
                 alt="The Ship Inn Logo" 
                 className="h-16 w-auto mr-3"
               />

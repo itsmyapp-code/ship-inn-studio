@@ -178,7 +178,7 @@ export default function ThingsToDoPage() {
               </div>
               <div className="mt-8">
                 <img 
-                  src="/images/location/porlock-weir-harbour.png" 
+                  src="/images/location/porlock-weir-harbour.webp" 
                   alt="Porlock Weir Harbour"
                   className="h-64 w-full object-cover rounded-lg"
                 />

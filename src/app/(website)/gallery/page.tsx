@@ -17,13 +17,13 @@ export default function GalleryPage() {
       caption: 'The historic Ship Inn welcomes you to Porlock Weir'
     },
     {
-      src: '/images/exterior/shipinn-003.jpg',
+      src: '/images/exterior/shipinn-003.webp',
       alt: 'The Ship Inn - Exterior View',
       category: 'Exterior',
       caption: 'The Ship Inn at Porlock Weir'
     },
     {
-      src: '/images/exterior/shipinn-017.jpg',
+      src: '/images/exterior/shipinn-017.webp',
       alt: 'The Ship Inn - Another View',
       category: 'Exterior',
       caption: 'Beautiful exterior of The Ship Inn'
@@ -31,19 +31,19 @@ export default function GalleryPage() {
     
     // Room Images  
     {
-      src: '/images/rooms/shipinn-029.jpg',
+      src: '/images/rooms/shipinn-029.webp',
       alt: 'Guest Room 1',
       category: 'Rooms',
       caption: 'Comfortable and beautifully appointed guest rooms'
     },
     {
-      src: '/images/rooms/shipinn-035.jpg',
+      src: '/images/rooms/shipinn-035.webp',
       alt: 'Guest Room 2',
       category: 'Rooms',
       caption: 'Relaxing spaces for your stay'
     },
     {
-      src: '/images/rooms/shipinn-051.jpg',
+      src: '/images/rooms/shipinn-051.webp',
       alt: 'Guest Room 3',
       category: 'Rooms',
       caption: 'Traditional charm with modern comfort'
@@ -51,25 +51,25 @@ export default function GalleryPage() {
     
     // Interior Images
     {
-      src: '/images/interior/shipinn-254.jpg',
+      src: '/images/interior/shipinn-254.webp',
       alt: 'The Ship Inn Restaurant',
       category: 'Interior',
       caption: 'Our welcoming restaurant area'
     },
     {
-      src: '/images/interior/shipinn-023.jpg',
+      src: '/images/interior/shipinn-023.webp',
       alt: 'The Ship Inn Bar',
       category: 'Interior',
       caption: 'Traditional bar area with local ales and maritime character'
     },
     {
-      src: '/images/interior/shipinn-021.jpg',
+      src: '/images/interior/shipinn-021.webp',
       alt: 'The Bar at The Ship Inn',
       category: 'Interior',
       caption: 'A warm welcome awaits in our saloon bar'
     },
     {
-      src: '/images/interior/shipinn-022.jpg',
+      src: '/images/interior/shipinn-022.webp',
       alt: 'Bar Seating',
       category: 'Interior',
       caption: 'Cosy seating areas throughout the inn'
@@ -77,7 +77,7 @@ export default function GalleryPage() {
     
     // Location Images
     {
-      src: '/images/location/porlock-weir-harbour.png',
+      src: '/images/location/porlock-weir-harbour.webp',
       alt: 'Porlock Weir Harbour',
       category: 'Location',
       caption: 'Beautiful Porlock Weir harbour, just steps from our door'
