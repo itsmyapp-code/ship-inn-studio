@@ -31,24 +31,48 @@ export default function GalleryPage() {
     
     // Room Images  
     {
-      src: '/images/rooms/harbour-room-bed01.png',
-      alt: 'The Harbour Room - Comfortable King-size Bed',
+      src: '/images/rooms/shipinn-029.jpg',
+      alt: 'Guest Room 1',
       category: 'Rooms',
-      caption: 'Spacious Harbour Room with king-size bed and harbour views'
+      caption: 'Comfortable and beautifully appointed guest rooms'
     },
     {
-      src: '/images/rooms/harbour-room-bed02.png',
-      alt: 'The Harbour Room - Alternative View',
+      src: '/images/rooms/shipinn-035.jpg',
+      alt: 'Guest Room 2',
       category: 'Rooms',
-      caption: 'Another angle of our most popular room'
+      caption: 'Relaxing spaces for your stay'
+    },
+    {
+      src: '/images/rooms/shipinn-051.jpg',
+      alt: 'Guest Room 3',
+      category: 'Rooms',
+      caption: 'Traditional charm with modern comfort'
     },
     
     // Interior Images
     {
-      src: '/images/interior/bar-area2.jpg',
-      alt: 'The Ship Inn Bar Area',
+      src: '/images/interior/shipinn-254.jpg',
+      alt: 'The Ship Inn Restaurant',
       category: 'Interior',
-      caption: 'Traditional bar area with maritime charm and local ales'
+      caption: 'Our welcoming restaurant area'
+    },
+    {
+      src: '/images/interior/shipinn-023.jpg',
+      alt: 'The Ship Inn Bar',
+      category: 'Interior',
+      caption: 'Traditional bar area with local ales and maritime character'
+    },
+    {
+      src: '/images/interior/shipinn-021.jpg',
+      alt: 'The Bar at The Ship Inn',
+      category: 'Interior',
+      caption: 'A warm welcome awaits in our saloon bar'
+    },
+    {
+      src: '/images/interior/shipinn-022.jpg',
+      alt: 'Bar Seating',
+      category: 'Interior',
+      caption: 'Cosy seating areas throughout the inn'
     },
     
     // Location Images

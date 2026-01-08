@@ -49,7 +49,11 @@ export default function FoodDrinkPage() {
                 </p>
               </div>
             </div>
-            <div className="h-96 bg-ship-blue-200 rounded-lg"></div>
+            <img 
+              src="/images/interior/shipinn-254.jpg" 
+              alt="The Ship Inn Restaurant"
+              className="h-96 w-full object-cover rounded-lg"
+            />
           </div>
         </div>
       </section>
@@ -97,7 +101,7 @@ export default function FoodDrinkPage() {
 
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
             <img 
-              src="/images/interior/bar-area2.jpg" 
+              src="/images/interior/shipinn-023.jpg" 
               alt="The Ship Inn Bar Area"
               className="h-96 w-full object-cover rounded-lg"
             />
@@ -168,7 +172,11 @@ export default function FoodDrinkPage() {
                 Dietary requirements catered for upon request.
               </p>
             </div>
-            <div className="h-96 bg-ship-blue-200 rounded-lg"></div>
+            <img 
+              src="/images/interior/shipinn-021.jpg" 
+              alt="Breakfast at The Ship Inn"
+              className="h-96 w-full object-cover rounded-lg"
+            />
           </div>
         </div>
       </section>

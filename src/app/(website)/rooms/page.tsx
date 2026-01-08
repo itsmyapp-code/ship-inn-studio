@@ -5,7 +5,7 @@ import RoomGallery from '@/components/RoomGallery'
 
 export const metadata = {
   title: 'From the Cabins - The Ship Inn Porlock Weir',
-  description: 'Discover our five beautifully appointed guest rooms, each offering modern comfort with traditional charm in the heart of Porlock Weir.',
+  description: 'Discover our three beautifully appointed guest rooms, each offering modern comfort with traditional charm in the heart of Porlock Weir.',
 }
 
 export default function RoomsPage() {
@@ -18,8 +18,13 @@ export default function RoomsPage() {
       price: "Contact for rates",
       images: [
         {
-          src: "/images/rooms/harbour-room-bed01.png",
-          alt: "Guest Room - Comfortable Bed",
+          src: "/images/rooms/shipinn-029.jpg",
+          alt: "Guest Room 1",
+          caption: "Comfortable accommodation at The Ship Inn"
+        },
+        {
+          src: "/images/rooms/shipinn-033.jpg",
+          alt: "Guest Room 1",
           caption: "Comfortable accommodation at The Ship Inn"
         }
       ]
@@ -30,7 +35,23 @@ export default function RoomsPage() {
       description: "A beautifully appointed en-suite room finished to a high, comfortable standard.",
       features: ["En-suite bathroom", "Tea/coffee facilities", "Digital TV", "Free Wi-Fi"],
       price: "Contact for rates",
-      images: []
+      images: [
+        {
+          src: "/images/rooms/shipinn-035.jpg",
+          alt: "Guest Room 2",
+          caption: "Comfortable accommodation at The Ship Inn"
+        },
+        {
+          src: "/images/rooms/shipinn-037.jpg",
+          alt: "Guest Room 2",
+          caption: "Comfortable accommodation at The Ship Inn"
+        },
+        {
+          src: "/images/rooms/shipinn-040.jpg",
+          alt: "Guest Room 2",
+          caption: "Comfortable accommodation at The Ship Inn"
+        }
+      ]
     },
     {
       id: 3,
@@ -38,7 +59,28 @@ export default function RoomsPage() {
       description: "A beautifully appointed en-suite room finished to a high, comfortable standard.",
       features: ["En-suite bathroom", "Tea/coffee facilities", "Digital TV", "Free Wi-Fi"],
       price: "Contact for rates",
-      images: []
+      images: [
+        {
+          src: "/images/rooms/shipinn-051.jpg",
+          alt: "Guest Room 3",
+          caption: "Comfortable accommodation at The Ship Inn"
+        },
+        {
+          src: "/images/rooms/shipinn-049.jpg",
+          alt: "Guest Room 3",
+          caption: "Comfortable accommodation at The Ship Inn"
+        },
+        {
+          src: "/images/rooms/shipinn-052.jpg",
+          alt: "Guest Room 3",
+          caption: "Comfortable accommodation at The Ship Inn"
+        },
+        {
+          src: "/images/rooms/shipinn-062.jpg",
+          alt: "Guest Room 3",
+          caption: "Comfortable accommodation at The Ship Inn"
+        }
+      ]
     }
   ]
 
@@ -60,9 +102,6 @@ export default function RoomsPage() {
             <div className="text-lg text-gray-600 max-w-4xl mx-auto space-y-4">
               <p>
                 We have three double/twin en-suite rooms, all recently refurbished and finished to a high, comfortable standard. Each room is thoughtfully equipped with tea and coffee facilities and digital TV, making them ideal for a relaxed overnight stay whether you’re passing through or planning a longer break. Well-behaved dogs are always welcome, so your four-legged companions can enjoy the adventure too.
-              </p>
-              <p>
-                We’re also in the process of refurbishing two additional rooms, meaning we’ll soon be able to offer five en-suite rooms in total.
               </p>
               <p>
                 Whether you’re here for the walking, the views, or simply the calm coastal atmosphere, The Ship Inn at Porlock Weir offers a warm and welcoming place to unwind.

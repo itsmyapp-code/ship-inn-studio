@@ -81,7 +81,7 @@ export default function HomePage() {
                 </svg>
               </div>
               <h3 className="text-2xl font-bold text-gray-900 mb-4">Comfortable Accommodation</h3>
-              <p className="text-gray-600 text-lg">Five beautifully appointed rooms, each with modern amenities and traditional charm.</p>
+              <p className="text-gray-600 text-lg">Three beautifully appointed rooms, each with modern amenities and traditional charm.</p>
             </div>
 
             <div className="text-center group">
