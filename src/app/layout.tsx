@@ -1,3 +1,6 @@
+import AnalyticsScripts from '@/components/AnalyticsScripts'
+import CookieBanner from '@/components/CookieBanner'
+
 export const metadata = {
   title: 'The Ship Inn Porlock Weir - Historic B&B with Pub & Restaurant',
   description: 'Experience coastal charm at The Ship Inn, a historic B&B with 3 beautifully appointed rooms, traditional pub, and restaurant in picturesque Porlock Weir, Exmoor National Park.',
@@ -12,7 +15,9 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className="font-centaur">
+        <AnalyticsScripts />
         {children}
+        <CookieBanner />
       </body>
     </html>
   )
