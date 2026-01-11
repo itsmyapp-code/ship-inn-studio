@@ -6,7 +6,7 @@ author:
   picture: 'https://avatars.githubusercontent.com/u/220572112?v=4'
 slug: 'we-are-hiring'
 description: ''
-coverImage: ''
+coverImage: '/images/ship-inn-news-g0Nj.jpg'
 publishedAt: '2026-01-08T18:41:10.352Z'
 ---
 
