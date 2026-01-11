@@ -46,8 +46,8 @@ export default async function NewsArticlePage({ params }: Props) {
 
   return (
     <div className="max-w-4xl mx-auto p-6">
-      <Link 
-        href="/news-events" 
+      <Link
+        href="/news-events"
         className="text-amber-700 hover:text-amber-800 mb-6 inline-block"
       >
         ← Back to News & Events
@@ -63,14 +63,14 @@ export default async function NewsArticlePage({ params }: Props) {
         </header>
 
         {post.coverImage && (
-          <img 
-            src={post.coverImage} 
+          <img
+            src={post.coverImage}
             alt={post.title}
-            className="w-full h-64 object-cover rounded-lg mb-8"
+            className="w-full h-auto max-h-[500px] object-cover rounded-lg mb-8"
           />
         )}
 
-        <div 
+        <div
           className="prose prose-lg max-w-none"
           dangerouslySetInnerHTML={{ __html: contentHtml }}
         />
