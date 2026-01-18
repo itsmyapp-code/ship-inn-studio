@@ -22,6 +22,6 @@ publishedAt: '2026-01-08T18:41:10.352Z'
 
   If you enjoy hospitality and want to be part of a friendly coastal team, we’d love to hear from you.
 
-Please email Michelle at [hello@theshipinnporlockweir.co.uk](mailto:hello@theshipinnporlockweir.co.uk)
+Please email Michell at [hello@theshipinnporlockweir.co.uk](mailto:hello@theshipinnporlockweir.co.uk)
 
 or call 01643 863288 for more details.
