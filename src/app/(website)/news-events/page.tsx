@@ -32,10 +32,43 @@ type EventItem = {
   displayDate?: string
 }
 
+// Helper to extract image and description from markdown content
+function extractContentMetadata(content: string) {
+  // Find first image
+  const imageMatch = content.match(/!\[.*?\]\((.*?)\)/)
+  const extractedImage = imageMatch ? imageMatch[1] : undefined
+
+  // Remove images and get text
+  const textContent = content
+    .replace(/!\[.*?\]\(.*?\)/g, '') // Remove images
+    .replace(/#{1,6}\s/g, '') // Remove heading markers
+    .replace(/(\*\*|__)(.*?)\1/g, '$2') // Remove bold
+    .replace(/(\*|_)(.*?)\1/g, '$2') // Remove italic
+    .replace(/\[([^\]]+)\]\([^)]+\)/g, '$1') // Remove links
+    .replace(/\n/g, ' ') // Replace newlines with spaces
+    .trim()
+
+  // limit to 150 chars
+  const extractedDescription = textContent.length > 150
+    ? textContent.slice(0, 150) + '...'
+    : textContent
+
+  return { extractedImage, extractedDescription }
+}
+
 async function getNews(): Promise<NewsItem[]> {
   try {
     const news = getDocuments('news', ['title', 'slug', 'publishedAt', 'description', 'coverImage', 'content', 'status'])
-    return news.filter((item: any) => item.status === 'published') as NewsItem[]
+    return (news as any[])
+      .filter((item: any) => item.status === 'published')
+      .map((item) => {
+        const { extractedImage, extractedDescription } = extractContentMetadata(item.content || '')
+        return {
+          ...item,
+          coverImage: item.coverImage || extractedImage,
+          description: item.description || extractedDescription
+        }
+      }) as NewsItem[]
   } catch (e) {
     console.error('Error fetching news:', e)
     return []
@@ -50,11 +83,16 @@ async function getEvents(): Promise<EventItem[]> {
 
     return (events as any[])
       .filter((event: any) => event.status === 'published')
-      .map((event) => ({
-        ...event,
-        // Use eventDate if set, otherwise fall back to publishedAt
-        displayDate: event.eventDate || event.publishedAt
-      }))
+      .map((event) => {
+        const { extractedImage, extractedDescription } = extractContentMetadata(event.content || '')
+        return {
+          ...event,
+          coverImage: event.coverImage || extractedImage,
+          description: event.description || extractedDescription,
+          // Use eventDate if set, otherwise fall back to publishedAt
+          displayDate: event.eventDate || event.publishedAt
+        }
+      })
       .filter((event) => {
         const date = parseDate(event.displayDate)
         // Keep events that are today or in the future
@@ -96,35 +134,40 @@ export default async function Page() {
             ) : (
               <div className="grid gap-6">
                 {upcomingEvents.map((event) => (
-                  <article key={event.slug} className="border rounded-lg p-6 hover:shadow-lg transition-shadow">
-                    <div className="flex justify-between items-start mb-2">
-                      <h3 className="text-xl font-semibold">{event.title}</h3>
-                      <span className="bg-amber-100 text-amber-800 px-3 py-1 rounded-full text-sm font-medium">
-                        {formatDateShort(parseDate(event.displayDate))}
-                      </span>
-                    </div>
-                    {event.eventTime && (
-                      <p className="text-gray-600 text-sm mb-2">🕐 {event.eventTime}</p>
-                    )}
-                    {event.location && (
-                      <p className="text-gray-600 text-sm mb-2">📍 {event.location}</p>
-                    )}
+                  <article key={event.slug} className="border rounded-lg p-6 hover:shadow-lg transition-shadow flex flex-col md:flex-row gap-6">
+                    {/* Check for image first to decide layout */}
                     {event.coverImage && (
-                      <img
-                        src={event.coverImage}
-                        alt={event.title}
-                        className="w-32 h-24 object-cover rounded-lg float-right ml-4"
-                      />
+                      <div className="md:w-1/3 flex-shrink-0">
+                        <img
+                          src={event.coverImage}
+                          alt={event.title}
+                          className="w-full h-48 md:h-full object-cover rounded-lg"
+                        />
+                      </div>
                     )}
-                    {event.description && (
-                      <p className="text-gray-700 mt-3">{event.description}</p>
-                    )}
-                    <Link
-                      href={`/events/${event.slug}`}
-                      className="text-amber-700 hover:text-amber-800 font-medium mt-3 inline-block"
-                    >
-                      View details →
-                    </Link>
+                    <div className="flex-1">
+                      <div className="flex justify-between items-start mb-2">
+                        <h3 className="text-xl font-semibold">{event.title}</h3>
+                        <span className="bg-amber-100 text-amber-800 px-3 py-1 rounded-full text-sm font-medium whitespace-nowrap ml-2">
+                          {formatDateShort(parseDate(event.displayDate))}
+                        </span>
+                      </div>
+                      {event.eventTime && (
+                        <p className="text-gray-600 text-sm mb-2">🕐 {event.eventTime}</p>
+                      )}
+                      {event.location && (
+                        <p className="text-gray-600 text-sm mb-2">📍 {event.location}</p>
+                      )}
+                      {event.description && (
+                        <p className="text-gray-700 mt-3 line-clamp-3">{event.description}</p>
+                      )}
+                      <Link
+                        href={`/events/${event.slug}`}
+                        className="text-amber-700 hover:text-amber-800 font-medium mt-3 inline-block"
+                      >
+                        View details →
+                      </Link>
+                    </div>
                   </article>
                 ))}
               </div>
@@ -139,7 +182,7 @@ export default async function Page() {
               <div className="grid gap-6">
                 {latestNews.map((news) => (
                   <article key={news.slug} className="border rounded-lg p-6 hover:shadow-lg transition-shadow">
-                    <div className="flex justify-between items-start mb-2">
+                    <div className="flex justify-between items-start mb-4">
                       <h3 className="text-xl font-semibold">{news.title}</h3>
                       <span className="text-gray-500 text-sm">
                         {formatDateShort(parseDate(news.publishedAt))}
@@ -149,7 +192,7 @@ export default async function Page() {
                       <img
                         src={news.coverImage}
                         alt={news.title}
-                        className="w-full h-48 object-cover rounded-lg mb-4"
+                        className="w-full max-h-96 object-contain bg-gray-50 rounded-lg mb-4"
                       />
                     )}
                     {news.description && (

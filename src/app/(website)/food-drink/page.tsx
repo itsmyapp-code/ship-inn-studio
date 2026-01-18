@@ -37,16 +37,7 @@ function getMenus() {
 export default function FoodDrinkPage() {
   const menus = getMenus()
 
-  const menuSections = [
-    {
-      title: "Seasonal Menu",
-      description: "Our menu changes regularly to feature the best local produce",
-      items: [
-        { name: "Sample Dish", description: "A delicious example of our seasonal offerings", price: "£--" },
-        { name: "Sample Dish", description: "Freshly prepared using local ingredients", price: "£--" }
-      ]
-    }
-  ]
+
 
   // ... existing drinks ...
   const drinks = [
@@ -125,39 +116,6 @@ export default function FoodDrinkPage() {
           </div>
         </section>
       )}
-
-      {/* Menu Sections */}
-      <section className="py-16 bg-gray-50">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl font-bold text-gray-900 mb-4">Sample Menu Items</h2>
-            <p className="text-lg text-gray-600">Seasonal dishes featuring the best local produce</p>
-          </div>
-          {/* ... existing menu rendering ... */}
-          <div className="space-y-12">
-            {menuSections.map((section, index) => (
-              <div key={index} className="bg-white rounded-lg shadow-lg p-8">
-                <div className="text-center mb-8">
-                  <h3 className="text-2xl font-bold text-gray-900 mb-2">{section.title}</h3>
-                  <p className="text-gray-600">{section.description}</p>
-                </div>
-
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                  {section.items.map((item, idx) => (
-                    <div key={idx} className="flex justify-between items-start">
-                      <div className="flex-1">
-                        <h4 className="font-semibold text-gray-900">{item.name}</h4>
-                        <p className="text-gray-600 text-sm mt-1">{item.description}</p>
-                      </div>
-                      <span className="font-bold text-ship-blue-600 ml-4">{item.price}</span>
-                    </div>
-                  ))}
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
 
       {/* Drinks Section */}
       <section className="py-16 bg-white">
