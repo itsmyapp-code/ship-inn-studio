@@ -1,12 +1,42 @@
 
 
+import fs from 'fs'
+import path from 'path'
 
-export const metadata = {
-  title: 'From the Galley & Saloon - The Ship Inn Porlock Weir',
-  description: 'Enjoy fresh local seafood, traditional pub classics, and fine ales at The Ship Inn. Our restaurant and bar offer the best of Somerset cuisine with stunning harbour views.',
+// ... metadata ...
+
+function getMenus() {
+  const menusDirectory = path.join(process.cwd(), 'public/menus')
+
+  if (!fs.existsSync(menusDirectory)) {
+    return []
+  }
+
+  const fileNames = fs.readdirSync(menusDirectory)
+  const menus = fileNames
+    .filter(fileName => fileName.toLowerCase().endsWith('.pdf'))
+    .map(fileName => {
+      // Create a nice title from the filename
+      // e.g., "lunch-menu.pdf" -> "Lunch Menu"
+      const title = fileName
+        .replace(/\.pdf$/i, '')
+        .split(/[-_\s]+/)
+        .map(word => word.charAt(0).toUpperCase() + word.slice(1))
+        .join(' ')
+
+      return {
+        title,
+        fileName,
+        path: `/menus/${fileName}`
+      }
+    })
+
+  return menus
 }
 
 export default function FoodDrinkPage() {
+  const menus = getMenus()
+
   const menuSections = [
     {
       title: "Seasonal Menu",
@@ -18,6 +48,7 @@ export default function FoodDrinkPage() {
     }
   ]
 
+  // ... existing drinks ...
   const drinks = [
     { name: "Local Ales", description: "A selection of regional favorites", type: "Ale" },
     { name: "West Country Ciders", description: "Traditional Somerset ciders", type: "Cider" },
@@ -49,8 +80,8 @@ export default function FoodDrinkPage() {
                 </p>
               </div>
             </div>
-            <img 
-              src="/images/interior/shipinn-254.webp" 
+            <img
+              src="/images/interior/shipinn-254.webp"
               alt="The Ship Inn Restaurant"
               className="h-96 w-full object-cover rounded-lg"
             />
@@ -58,14 +89,51 @@ export default function FoodDrinkPage() {
         </div>
       </section>
 
+      {/* Downloadable Menus Section */}
+      {menus.length > 0 && (
+        <section className="py-12 bg-ship-blue-50">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="text-center mb-10">
+              <h2 className="text-3xl font-bold text-gray-900 mb-4">Current Menus</h2>
+              <p className="text-lg text-gray-600">View and download our latest offerings</p>
+            </div>
+            <div className="flex flex-wrap justify-center gap-6">
+              {menus.map((menu, index) => (
+                <a
+                  key={index}
+                  href={menu.path}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex items-center space-x-3 bg-white px-6 py-4 rounded-lg shadow-md hover:shadow-lg transition-all transform hover:-translate-y-1 group border border-gray-100"
+                >
+                  <div className="bg-ship-blue-100 p-2 rounded-full group-hover:bg-ship-blue-200 transition-colors">
+                    <svg className="w-6 h-6 text-ship-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <title>PDF Icon</title>
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 21h10a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-5.414-5.414A1 1 0 0012.586 3H7a2 2 0 00-2 2v14a2 2 0 002 2z" />
+                    </svg>
+                  </div>
+                  <div className="text-left">
+                    <span className="block font-semibold text-gray-900 group-hover:text-ship-blue-600 transition-colors">{menu.title}</span>
+                    <span className="text-xs text-gray-500 uppercase tracking-wide">PDF Menu</span>
+                  </div>
+                  <svg className="w-5 h-5 text-gray-400 group-hover:text-ship-blue-600 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+                  </svg>
+                </a>
+              ))}
+            </div>
+          </div>
+        </section>
+      )}
+
       {/* Menu Sections */}
       <section className="py-16 bg-gray-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
-            <h2 className="text-3xl font-bold text-gray-900 mb-4">Our Menu</h2>
-            <p className="text-lg text-gray-600">Seasonal menus featuring the best local produce</p>
+            <h2 className="text-3xl font-bold text-gray-900 mb-4">Sample Menu Items</h2>
+            <p className="text-lg text-gray-600">Seasonal dishes featuring the best local produce</p>
           </div>
-
+          {/* ... existing menu rendering ... */}
           <div className="space-y-12">
             {menuSections.map((section, index) => (
               <div key={index} className="bg-white rounded-lg shadow-lg p-8">
@@ -73,7 +141,7 @@ export default function FoodDrinkPage() {
                   <h3 className="text-2xl font-bold text-gray-900 mb-2">{section.title}</h3>
                   <p className="text-gray-600">{section.description}</p>
                 </div>
-                
+
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   {section.items.map((item, idx) => (
                     <div key={idx} className="flex justify-between items-start">
@@ -93,6 +161,7 @@ export default function FoodDrinkPage() {
 
       {/* Drinks Section */}
       <section className="py-16 bg-white">
+        {/* ... existing drinks content ... */}
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
             <h2 className="text-3xl font-bold text-gray-900 mb-4">Drinks & Bar</h2>
@@ -100,18 +169,18 @@ export default function FoodDrinkPage() {
           </div>
 
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-            <img 
-              src="/images/interior/shipinn-023.webp" 
+            <img
+              src="/images/interior/shipinn-023.webp"
               alt="The Ship Inn Bar Area"
               className="h-96 w-full object-cover rounded-lg"
             />
             <div>
               <h3 className="text-2xl font-bold text-gray-900 mb-6">Our Selection</h3>
               <p className="text-lg text-gray-600 mb-6">
-                Our bar features a carefully curated selection of local and national drinks, 
+                Our bar features a carefully curated selection of local and national drinks,
                 including regional ales, traditional Somerset ciders, and a well-chosen wine list.
               </p>
-              
+
               <div className="space-y-3">
                 {drinks.map((drink, index) => (
                   <div key={index} className="flex items-center justify-between py-2 border-b border-gray-200">
@@ -142,16 +211,16 @@ export default function FoodDrinkPage() {
             <div>
               <h3 className="text-2xl font-bold text-gray-900 mb-6">Breakfast at The Ship Inn</h3>
               <p className="text-lg text-gray-600 mb-6">
-                Included with all room bookings, our hearty breakfast features the best local produce 
+                Included with all room bookings, our hearty breakfast features the best local produce
                 to fuel your Exmoor adventures.
               </p>
-              
+
               <div className="space-y-2 text-gray-600 mb-6">
                 <div className="flex items-center">
                   <svg className="w-5 h-5 text-ship-green-500 mr-2" fill="currentColor" viewBox="0 0 20 20">
                     <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
                   </svg>
-                  Full English and Continental options
+                  Full English options
                 </div>
                 <div className="flex items-center">
                   <svg className="w-5 h-5 text-ship-green-500 mr-2" fill="currentColor" viewBox="0 0 20 20">
@@ -166,14 +235,14 @@ export default function FoodDrinkPage() {
                   Freshly prepared to order
                 </div>
               </div>
-              
+
               <p className="text-gray-600">
-                <strong>Serving Times:</strong> Please check with us for current serving times.<br/>
+                <strong>Serving Times:</strong> 8am - 10am (Residents Only)<br />
                 Dietary requirements catered for upon request.
               </p>
             </div>
-            <img 
-              src="/images/interior/shipinn-021.webp" 
+            <img
+              src="/images/interior/shipinn-021.webp"
               alt="Breakfast at The Ship Inn"
               className="h-96 w-full object-cover rounded-lg"
             />
@@ -183,6 +252,7 @@ export default function FoodDrinkPage() {
 
       {/* Reservation CTA */}
       <section className="py-16 bg-ship-blue-600">
+        {/* ... existing CTA ... */}
         <div className="max-w-4xl mx-auto text-center px-4 sm:px-6 lg:px-8">
           <h2 className="text-3xl font-bold text-white mb-4">Visit Us</h2>
           <p className="text-xl text-blue-100 mb-8">
