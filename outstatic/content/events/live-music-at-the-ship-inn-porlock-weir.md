@@ -6,10 +6,10 @@ author:
   picture: 'https://avatars.githubusercontent.com/u/249422786?v=4'
 slug: 'live-music-at-the-ship-inn-porlock-weir'
 description: 'Billy Driscoll is a Bristol-based live singer and guitarist known for a raspy, soulful voice and energetic, country-rock infused covers spanning seven decades.'
-coverImage: '/images/121-Y0MD.jfif'
+coverImage: '/images/121-g5OT.jfif'
 eventDate: '28th June 2026'
 eventTime: '15:00 - 19:00'
-location: 'The Ship Inn at Porlock Weir'
+location: 'Porlock Weir'
 publishedAt: '2026-06-28T11:17:46.000Z'
 ---
 
