@@ -13,4 +13,6 @@ location: 'Porlock Weir'
 publishedAt: '2026-06-28T11:17:46.000Z'
 ---
 
+![](/images/121-Q4NT.jfif)
+
 Billy Driscoll is a Bristol-based live singer and guitarist known for a raspy, soulful voice and energetic, country-rock infused covers spanning seven decades.
