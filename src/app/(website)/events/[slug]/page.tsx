@@ -9,8 +9,14 @@ type Props = {
   params: { slug: string }
 }
 
+// Helper to strip the first image from markdown to prevent duplication with the hero image
+function stripFirstImage(markdown: string): string {
+  return markdown.replace(/^\s*!\[.*?\]\(.*?\)/, '')
+}
+
 async function markdownToHtml(markdown: string): Promise<string> {
-  const result = await remark().use(html).process(markdown)
+  const cleanMarkdown = stripFirstImage(markdown)
+  const result = await remark().use(html).process(cleanMarkdown)
   return result.toString()
 }
 
@@ -84,11 +90,11 @@ export default async function EventPage({ params }: Props) {
         </header>
 
         {event.coverImage && (
-          <div className="relative aspect-video w-full mb-12 shadow-xl rounded-xl overflow-hidden">
+          <div className="w-full max-w-4xl mx-auto mb-12 shadow-xl rounded-xl overflow-hidden bg-stone-100">
             <img
               src={event.coverImage}
               alt={event.title}
-              className="object-cover w-full h-full"
+              className="w-full h-auto max-h-[600px] object-contain mx-auto"
             />
           </div>
         )}
