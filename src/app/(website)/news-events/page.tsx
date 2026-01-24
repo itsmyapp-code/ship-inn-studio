@@ -141,45 +141,47 @@ export default async function Page() {
                 <p className="text-stone-500 text-lg italic">We're planning some exciting updates. Check back soon!</p>
               </div>
             ) : (
-              <div className="grid md:grid-cols-2 gap-8">
+              <div className="space-y-8">
                 {upcomingEvents.map((event) => (
-                  <Link href={`/events/${event.slug}`} key={event.slug} className="group">
-                    <article className="bg-white rounded-xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 h-full flex flex-col border border-stone-100">
-                      <div className="relative aspect-[4/3] overflow-hidden bg-stone-200">
+                  <Link href={`/events/${event.slug}`} key={event.slug} className="group block">
+                    <article className="bg-white rounded-xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 border border-stone-100 flex flex-col md:flex-row relative">
+                      {/* Image Container */}
+                      <div className="w-full md:w-1/3 relative min-h-[250px] md:min-h-[280px] bg-stone-200">
                         {event.coverImage ? (
                           <img
                             src={event.coverImage}
                             alt={event.title}
-                            className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                            className="absolute inset-0 w-full h-full object-cover object-top group-hover:scale-105 transition-transform duration-700"
                           />
                         ) : (
-                          <div className="w-full h-full flex items-center justify-center bg-stone-100 text-stone-300">
-                            <span className="text-4xl">📅</span>
+                          <div className="absolute inset-0 flex items-center justify-center bg-stone-100 text-stone-300">
+                            <span className="text-5xl">📅</span>
                           </div>
                         )}
-                        <div className="absolute top-4 left-4 bg-white/95 backdrop-blur-sm px-3 py-1 rounded-md shadow-md text-sm font-semibold text-ship-blue-900">
+                        <div className="absolute top-4 left-4 bg-white/95 backdrop-blur-sm px-3 py-1 rounded-md shadow-md text-sm font-semibold text-ship-blue-900 z-10">
                           {formatDateShort(parseDate(event.displayDate))}
                         </div>
                       </div>
 
-                      <div className="p-6 flex-1 flex flex-col">
-                        <h3 className="text-2xl font-bold font-centaur text-slate-800 mb-2 group-hover:text-amber-700 transition-colors">
+                      {/* Content Container */}
+                      <div className="p-6 md:p-8 flex-1 flex flex-col justify-center">
+                        <h3 className="text-3xl font-bold font-centaur text-slate-800 mb-3 group-hover:text-amber-700 transition-colors">
                           {event.title}
                         </h3>
 
-                        <div className="flex flex-wrap gap-y-2 text-sm text-stone-500 mb-4">
-                          {event.eventTime && <span className="mr-4 flex items-center">🕐 {event.eventTime}</span>}
+                        <div className="flex flex-wrap gap-y-2 gap-x-6 text-sm text-stone-500 mb-5 uppercase tracking-wide font-medium">
+                          {event.eventTime && <span className="flex items-center">🕐 {event.eventTime}</span>}
                           {event.location && <span className="flex items-center">📍 {event.location}</span>}
                         </div>
 
                         {event.description && (
-                          <p className="text-stone-600 line-clamp-2 mb-6 flex-1">
+                          <p className="text-stone-600 line-clamp-3 mb-6 text-lg leading-relaxed">
                             {event.description}
                           </p>
                         )}
 
-                        <span className="text-amber-700 font-medium group-hover:underline decoration-amber-700 underline-offset-4 mt-auto inline-block">
-                          View details
+                        <span className="text-amber-700 font-medium group-hover:underline decoration-amber-700 underline-offset-4 inline-flex items-center">
+                          View details <span className="ml-2 group-hover:translate-x-1 transition-transform">→</span>
                         </span>
                       </div>
                     </article>
