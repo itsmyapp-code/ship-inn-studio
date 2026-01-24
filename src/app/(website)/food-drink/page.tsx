@@ -40,10 +40,19 @@ export default function FoodDrinkPage() {
 
 
   // ... existing drinks ...
-  const drinks = [
-    { name: "Local Ales", description: "A selection of regional favorites", type: "Ale" },
-    { name: "West Country Ciders", description: "Traditional Somerset ciders", type: "Cider" },
-    { name: "Fine Wines", description: "Carefully chosen red, white, and rosé", type: "Wine" }
+  const drinkCategories = [
+    {
+      category: "Lagers",
+      items: ["Estrella", "Carlsberg", "Peretti", "Budvar", "1664 Blanc"]
+    },
+    {
+      category: "Cider",
+      items: ["Thatchers", "Hawkstone", "Porlock Vale"]
+    },
+    {
+      category: "Ales",
+      items: ["Otter Amber", "Guinness", "Exmoor Ale – changes weekly", "Hardings"]
+    }
   ]
 
   return (
@@ -72,7 +81,7 @@ export default function FoodDrinkPage() {
               </div>
             </div>
             <img
-              src="/images/interior/shipinn-254.webp"
+              src="/images/interior/shipinn-204.webp"
               alt="The Ship Inn Restaurant"
               className="h-96 w-full object-cover rounded-lg"
             />
@@ -86,7 +95,7 @@ export default function FoodDrinkPage() {
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="text-center mb-10">
               <h2 className="text-3xl font-bold text-gray-900 mb-4">Current Menus</h2>
-              <p className="text-lg text-gray-600">View and download our latest offerings</p>
+              <p className="text-lg text-gray-600">Explore our menus and discover daily specials, freshly updated on the blackboard in the pub.</p>
             </div>
             <div className="flex flex-wrap justify-center gap-6">
               {menus.map((menu, index) => (
@@ -128,27 +137,31 @@ export default function FoodDrinkPage() {
 
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
             <img
-              src="/images/interior/shipinn-023.webp"
+              src="/images/interior/shipinn-217.webp"
               alt="The Ship Inn Bar Area"
               className="h-96 w-full object-cover rounded-lg"
             />
             <div>
               <h3 className="text-2xl font-bold text-gray-900 mb-6">Our Selection</h3>
               <p className="text-lg text-gray-600 mb-6">
-                Our bar features a carefully curated selection of local and national drinks,
-                including regional ales, traditional Somerset ciders, and a well-chosen wine list.
+                Our bar features a carefully curated selection of local and national drinks, including regional ales and traditional cider, complemented by a carefully selected wine list, a great range of beers, and quality spirits.
               </p>
 
-              <div className="space-y-3">
-                {drinks.map((drink, index) => (
-                  <div key={index} className="flex items-center justify-between py-2 border-b border-gray-200">
-                    <div>
-                      <h4 className="font-semibold text-gray-900">{drink.name}</h4>
-                      <p className="text-gray-600 text-sm">{drink.description}</p>
-                    </div>
-                    <span className="text-sm text-ship-blue-600 font-medium px-2 py-1 bg-ship-blue-50 rounded">
-                      {drink.type}
-                    </span>
+              <div className="space-y-6">
+                {drinkCategories.map((group, index) => (
+                  <div key={index}>
+                    <h4 className="font-semibold text-ship-blue-600 text-lg mb-2 flex items-center">
+                      {group.category}
+                      <span className="ml-3 h-px flex-grow bg-ship-blue-100"></span>
+                    </h4>
+                    <ul className="grid grid-cols-2 gap-2">
+                      {group.items.map((item, idx) => (
+                        <li key={idx} className="text-gray-600 flex items-center">
+                          <span className="w-1.5 h-1.5 bg-ship-green-400 rounded-full mr-2"></span>
+                          {item}
+                        </li>
+                      ))}
+                    </ul>
                   </div>
                 ))}
               </div>
@@ -200,7 +213,7 @@ export default function FoodDrinkPage() {
               </p>
             </div>
             <img
-              src="/images/interior/shipinn-021.webp"
+              src="/images/interior/shipinn-225.webp"
               alt="Breakfast at The Ship Inn"
               className="h-96 w-full object-cover rounded-lg"
             />

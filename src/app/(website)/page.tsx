@@ -5,10 +5,10 @@ export default function HomePage() {
   return (
     <div className="min-h-screen">
       {/* Hero Section */}
-      <section 
+      <section
         className="relative h-screen bg-cover bg-center bg-no-repeat"
         style={{
-          backgroundImage: `url('/images/exterior/ship-inn-front-view.png')`
+          backgroundImage: `url('/images/exterior/shipinn-011.webp')`
         }}
       >
         <div className="absolute inset-0 bg-black bg-opacity-40"></div>
@@ -16,9 +16,9 @@ export default function HomePage() {
           <div className="text-center max-w-6xl mx-auto px-6">
             {/* Logo Overlay */}
             <div className="bg-white rounded-full w-48 h-48 md:w-64 md:h-64 mx-auto mb-8 flex items-center justify-center shadow-2xl overflow-hidden p-6">
-              <img 
-                src="/images/logo/the_ship_inn2.webp" 
-                alt="The Ship Inn Logo" 
+              <img
+                src="/images/logo/the_ship_inn2.webp"
+                alt="The Ship Inn Logo"
                 className="max-w-full max-h-full object-contain"
               />
             </div>

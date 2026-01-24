@@ -8,7 +8,7 @@ import ContactForm from '@/components/ContactForm'
 export default function ContactPage() {
   return (
     <div className="min-h-screen">
-      
+
       {/* Hero Section */}
       <section className="relative h-64 bg-ship-blue-600 flex items-center justify-center">
         <div className="text-center text-white">
@@ -24,7 +24,7 @@ export default function ContactPage() {
             {/* Contact Details */}
             <div>
               <h2 className="text-3xl font-bold text-gray-900 mb-8">Get in Touch</h2>
-              
+
               <div className="space-y-6">
                 <div className="flex items-start">
                   <div className="bg-ship-blue-100 p-3 rounded-full mr-4">
@@ -72,8 +72,16 @@ export default function ContactPage() {
 
             {/* Contact Form */}
             <div>
+              <div className="mb-12">
+                <img
+                  src="/images/exterior/shipinn-012.webp"
+                  alt="The Ship Inn Side View"
+                  className="w-full h-64 object-cover rounded-lg shadow-md"
+                />
+              </div>
+
               <h2 className="text-3xl font-bold text-gray-900 mb-8">Send us a Message</h2>
-              
+
               <ContactForm />
             </div>
           </div>
@@ -90,13 +98,13 @@ export default function ContactPage() {
 
           {/* Map Section */}
           <div className="w-full h-96 rounded-lg overflow-hidden shadow-lg mb-12">
-            <iframe 
-              src="https://www.google.com/maps?q=The%20Ship%20Inn%20Porlock%20Weir%20TA24%208PB&output=embed" 
-              width="100%" 
-              height="100%" 
-              style={{ border: 0 }} 
-              allowFullScreen={true} 
-              loading="lazy" 
+            <iframe
+              src="https://www.google.com/maps?q=The%20Ship%20Inn%20Porlock%20Weir%20TA24%208PB&output=embed"
+              width="100%"
+              height="100%"
+              style={{ border: 0 }}
+              allowFullScreen={true}
+              loading="lazy"
               referrerPolicy="no-referrer-when-downgrade"
               title="The Ship Inn Location"
             ></iframe>
@@ -112,7 +120,7 @@ export default function ContactPage() {
               </div>
               <h3 className="font-semibold text-gray-900 mb-2">By Car</h3>
               <p className="text-gray-600 text-sm">
-                From A39, follow signs to Porlock then Porlock Weir. 
+                From A39, follow signs to Porlock then Porlock Weir.
                 Limited parking available on-site and in village.
               </p>
             </div>
@@ -125,7 +133,7 @@ export default function ContactPage() {
               </div>
               <h3 className="font-semibold text-gray-900 mb-2">By Public Transport</h3>
               <p className="text-gray-600 text-sm">
-                Bus services from Minehead and Lynton. 
+                Bus services from Minehead and Lynton.
                 Nearest railway station is Taunton (45 minutes drive).
               </p>
             </div>
@@ -138,7 +146,7 @@ export default function ContactPage() {
               </div>
               <h3 className="font-semibold text-gray-900 mb-2">Parking</h3>
               <p className="text-gray-600 text-sm">
-                Limited on-site parking available. Additional parking in village car park 
+                Limited on-site parking available. Additional parking in village car park
                 (2 minutes walk). Free for guests.
               </p>
             </div>

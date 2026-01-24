@@ -18,12 +18,17 @@ export default function RoomsPage() {
       price: "Contact for rates",
       images: [
         {
-          src: "/images/rooms/shipinn-029.webp",
+          src: "/images/rooms/shipinn-031.webp",
           alt: "Guest Room 1",
           caption: "Comfortable accommodation at The Ship Inn"
         },
         {
-          src: "/images/rooms/shipinn-033.webp",
+          src: "/images/rooms/shipinn-197.webp",
+          alt: "Guest Room 1",
+          caption: "Comfortable accommodation at The Ship Inn"
+        },
+        {
+          src: "/images/rooms/shipinn-035.webp",
           alt: "Guest Room 1",
           caption: "Comfortable accommodation at The Ship Inn"
         }
@@ -37,17 +42,17 @@ export default function RoomsPage() {
       price: "Contact for rates",
       images: [
         {
-          src: "/images/rooms/shipinn-035.webp",
+          src: "/images/rooms/shipinn-124.webp",
           alt: "Guest Room 2",
           caption: "Comfortable accommodation at The Ship Inn"
         },
         {
-          src: "/images/rooms/shipinn-037.webp",
+          src: "/images/rooms/shipinn-039.webp",
           alt: "Guest Room 2",
           caption: "Comfortable accommodation at The Ship Inn"
         },
         {
-          src: "/images/rooms/shipinn-040.webp",
+          src: "/images/rooms/shipinn-106.webp",
           alt: "Guest Room 2",
           caption: "Comfortable accommodation at The Ship Inn"
         }
@@ -61,22 +66,17 @@ export default function RoomsPage() {
       price: "Contact for rates",
       images: [
         {
-          src: "/images/rooms/shipinn-051.webp",
+          src: "/images/rooms/shipinn-042.webp",
           alt: "Guest Room 3",
           caption: "Comfortable accommodation at The Ship Inn"
         },
         {
-          src: "/images/rooms/shipinn-049.webp",
+          src: "/images/rooms/shipinn-079.webp",
           alt: "Guest Room 3",
           caption: "Comfortable accommodation at The Ship Inn"
         },
         {
-          src: "/images/rooms/shipinn-052.webp",
-          alt: "Guest Room 3",
-          caption: "Comfortable accommodation at The Ship Inn"
-        },
-        {
-          src: "/images/rooms/shipinn-062.webp",
+          src: "/images/rooms/shipinn-070.webp",
           alt: "Guest Room 3",
           caption: "Comfortable accommodation at The Ship Inn"
         }
@@ -119,7 +119,7 @@ export default function RoomsPage() {
                 <div>
                   <h3 className="text-2xl font-bold text-gray-900 mb-3">{room.name}</h3>
                   <p className="text-gray-600 mb-4">{room.description}</p>
-                  
+
                   <div className="mb-6">
                     <h4 className="font-semibold text-gray-900 mb-2">Room Features:</h4>
                     <ul className="grid grid-cols-1 sm:grid-cols-2 gap-1">
@@ -133,7 +133,7 @@ export default function RoomsPage() {
                       ))}
                     </ul>
                   </div>
-                  
+
                   <div className="flex items-center justify-between">
                     <span className="text-2xl font-bold text-ship-blue-600">{room.price}</span>
                   </div>

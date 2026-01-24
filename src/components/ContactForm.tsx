@@ -127,6 +127,7 @@ export default function ContactForm() {
           <option value="restaurant-reservation">Restaurant Reservation</option>
           <option value="event-enquiry">Event Enquiry</option>
           <option value="general-enquiry">General Enquiry</option>
+          <option value="gift-voucher">Gift Voucher</option>
           <option value="group-booking">Group Booking</option>
         </select>
       </div>

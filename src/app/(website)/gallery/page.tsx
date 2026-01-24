@@ -9,27 +9,67 @@ export const metadata = {
 export default function GalleryPage() {
   // All actual images from your uploaded files
   const allImages = [
-    // Exterior Images
+    // Exterior
     {
-      src: '/images/exterior/ship-inn-front-view.png',
-      alt: 'The Ship Inn - Front View',
+      src: '/images/exterior/shipinn-011.webp',
+      alt: 'The Ship Inn - Day View',
       category: 'Exterior',
-      caption: 'The historic Ship Inn welcomes you to Porlock Weir'
+      caption: 'The historic Ship Inn by day'
     },
     {
-      src: '/images/exterior/shipinn-003.webp',
-      alt: 'The Ship Inn - Exterior View',
+      src: '/images/exterior/shipinn-012.webp',
+      alt: 'The Ship Inn - Side View',
       category: 'Exterior',
       caption: 'The Ship Inn at Porlock Weir'
     },
+
+    // Food & Drink
     {
-      src: '/images/exterior/shipinn-017.webp',
-      alt: 'The Ship Inn - Another View',
-      category: 'Exterior',
-      caption: 'Beautiful exterior of The Ship Inn'
+      src: '/images/interior/shipinn-207.webp',
+      alt: 'Delicious Dish',
+      category: 'Food & Drink',
+      caption: 'Seasonal dishes prepared with local ingredients'
     },
-    
-    // Room Images  
+    {
+      src: '/images/interior/shipinn-213.webp',
+      alt: 'Food Detail',
+      category: 'Food & Drink',
+      caption: 'Culinary delights at The Ship Inn'
+    },
+    {
+      src: '/images/interior/shipinn-216.webp',
+      alt: 'Bar Selection',
+      category: 'Food & Drink',
+      caption: 'A wide selection of drinks'
+    },
+    {
+      src: '/images/interior/shipinn-250.webp',
+      alt: 'Fresh Food',
+      category: 'Food & Drink',
+      caption: 'Freshly prepared food'
+    },
+
+    // Atmosphere
+    {
+      src: '/images/interior/shipinn-238.webp',
+      alt: 'Restaurant Atmosphere',
+      category: 'Atmosphere',
+      caption: 'Warm and welcoming dining area'
+    },
+    {
+      src: '/images/interior/shipinn-223.webp',
+      alt: 'Cozy Corner',
+      category: 'Atmosphere',
+      caption: 'Relax in our cozy corners'
+    },
+    {
+      src: '/images/interior/shipinn-204.webp',
+      alt: 'Fireplace',
+      category: 'Atmosphere',
+      caption: 'Atmospheric setting'
+    },
+
+    // Rooms (Keeping existing rooms as they are valuable content)
     {
       src: '/images/rooms/shipinn-029.webp',
       alt: 'Guest Room 1',
@@ -47,40 +87,6 @@ export default function GalleryPage() {
       alt: 'Guest Room 3',
       category: 'Rooms',
       caption: 'Traditional charm with modern comfort'
-    },
-    
-    // Interior Images
-    {
-      src: '/images/interior/shipinn-254.webp',
-      alt: 'The Ship Inn Restaurant',
-      category: 'Interior',
-      caption: 'Our welcoming restaurant area'
-    },
-    {
-      src: '/images/interior/shipinn-023.webp',
-      alt: 'The Ship Inn Bar',
-      category: 'Interior',
-      caption: 'Traditional bar area with local ales and maritime character'
-    },
-    {
-      src: '/images/interior/shipinn-021.webp',
-      alt: 'The Bar at The Ship Inn',
-      category: 'Interior',
-      caption: 'A warm welcome awaits in our saloon bar'
-    },
-    {
-      src: '/images/interior/shipinn-022.webp',
-      alt: 'Bar Seating',
-      category: 'Interior',
-      caption: 'Cosy seating areas throughout the inn'
-    },
-    
-    // Location Images
-    {
-      src: '/images/location/porlock-weir-harbour.webp',
-      alt: 'Porlock Weir Harbour',
-      category: 'Location',
-      caption: 'Beautiful Porlock Weir harbour, just steps from our door'
     }
   ]
 
@@ -102,8 +108,8 @@ export default function GalleryPage() {
             <p className="text-lg text-gray-600">Historic charm meets modern comfort</p>
           </div>
           <div className="relative">
-            <img 
-              src="/images/exterior/ship-inn-front-view.png" 
+            <img
+              src="/images/exterior/ship-inn-front-view.png"
               alt="The Ship Inn Porlock Weir"
               className="w-full h-96 object-cover rounded-lg mb-8"
             />
