@@ -170,6 +170,7 @@ export default async function Page() {
                         </h3>
 
                         <div className="flex flex-wrap gap-y-2 gap-x-6 text-sm text-stone-500 mb-5 uppercase tracking-wide font-medium">
+                          <span className="flex items-center text-amber-700">📅 {formatDateShort(parseDate(event.displayDate))}</span>
                           {event.eventTime && <span className="flex items-center">🕐 {event.eventTime}</span>}
                           {event.location && <span className="flex items-center">📍 {event.location}</span>}
                         </div>
