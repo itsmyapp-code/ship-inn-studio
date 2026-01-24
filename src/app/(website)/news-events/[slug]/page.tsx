@@ -9,8 +9,16 @@ type Props = {
   params: { slug: string }
 }
 
+// Helper to strip the first image from markdown to prevent duplication with the hero image
+function stripFirstImage(markdown: string): string {
+  // Matches markdown image syntax ![alt](url) at the start of the string, optionally preceded by whitespace
+  // This needs to be robust enough to handle the user's content structure
+  return markdown.replace(/^\s*!\[.*?\]\(.*?\)/, '')
+}
+
 async function markdownToHtml(markdown: string): Promise<string> {
-  const result = await remark().use(html).process(markdown)
+  const cleanMarkdown = stripFirstImage(markdown)
+  const result = await remark().use(html).process(cleanMarkdown)
   return result.toString()
 }
 
@@ -63,19 +71,14 @@ export default async function NewsArticlePage({ params }: Props) {
           <h1 className="text-4xl md:text-6xl font-bold mb-6 font-centaur text-slate-900 leading-tight">
             {post.title}
           </h1>
-
-          {/* duplicates content frequently 
-          {post.description && (
-             <p className="text-xl text-gray-500">{post.description}</p>
-          )} */}
         </header>
 
         {post.coverImage && (
-          <div className="relative aspect-video w-full mb-12 shadow-xl rounded-xl overflow-hidden">
+          <div className="w-full max-w-4xl mx-auto mb-12 shadow-xl rounded-xl overflow-hidden bg-stone-100">
             <img
               src={post.coverImage}
               alt={post.title}
-              className="object-cover w-full h-full"
+              className="w-full h-auto max-h-[600px] object-contain mx-auto"
             />
           </div>
         )}
