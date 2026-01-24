@@ -114,135 +114,169 @@ export default async function Page() {
   const latestNews = await getNews()
 
   return (
-    <div className="min-h-screen">
+    <div className="min-h-screen bg-stone-50">
       {/* Hero Section */}
-      <section className="relative h-64 bg-ship-blue-600 flex items-center justify-center mb-12">
-        <div className="text-center text-white max-w-4xl px-6">
-          <h1 className="text-4xl md:text-5xl font-bold mb-4">News and Events</h1>
-          <p className="text-xl">
-            At The Ship Inn at Porlock Weir, there’s always something happening! From live music events and pub quiz nights to our popular curry nights and pie & pint evenings, there’s plenty to enjoy. Keep an eye on our events, there’s always something fun around the corner!
+      <section className="relative h-[40vh] bg-ship-blue-900 flex items-center justify-center mb-16 overflow-hidden">
+        <div className="absolute inset-0 bg-black/40 z-10" />
+        {/* Optional: Add a subtle background pattern or image here */}
+        <div className="relative z-20 text-center text-white max-w-4xl px-6">
+          <h1 className="text-5xl md:text-7xl font-bold mb-6 font-centaur drop-shadow-lg">News & Events</h1>
+          <p className="text-xl md:text-2xl font-light tracking-wide max-w-2xl mx-auto opacity-90">
+            Discover what's happening at Porlock Weir, from live music to seasonal specials.
           </p>
         </div>
       </section>
 
-      <div className="max-w-6xl mx-auto p-6 grid md:grid-cols-3 gap-12">
-        <div className="md:col-span-2 space-y-12">
-          {/* Gift Voucher Section */}
-          <section className="bg-amber-50 rounded-lg p-6 flex flex-col sm:flex-row gap-6 items-center shadow-sm">
-            <div className="sm:w-1/3 flex-shrink-0">
-              <img
-                src="/images/logo/ship-inn-voucher.webp"
-                alt="The Ship Inn Gift Vouchers"
-                className="w-full h-auto rounded-md shadow-md"
-              />
-            </div>
-            <div className="flex-1 text-center sm:text-left">
-              <h2 className="text-2xl font-bold text-gray-900 mb-3">Give the Gift of The Ship Inn</h2>
-              <p className="text-lg text-gray-700 mb-4">
-                Our monetary vouchers make a great gift – whether it’s a night away or lunch or dinner with us.
-              </p>
-              <Link
-                href="/contact"
-                className="inline-block bg-ship-blue-600 hover:bg-ship-blue-700 text-white font-semibold py-2 px-6 rounded-md transition-colors"
-              >
-                Enquire About Vouchers
-              </Link>
-            </div>
-          </section>
+      <div className="max-w-7xl mx-auto px-6 pb-20 grid lg:grid-cols-12 gap-12">
+        <div className="lg:col-span-8 space-y-20">
+
+          {/* Events Section */}
           <section>
-            <h2 className="text-3xl font-bold mb-6">Upcoming Events</h2>
+            <div className="flex items-center justify-between mb-10 border-b border-stone-200 pb-4">
+              <h2 className="text-4xl font-bold font-centaur text-ship-blue-900">Upcoming Events</h2>
+            </div>
+
             {upcomingEvents.length === 0 ? (
-              <p className="text-gray-500">No upcoming events at the moment. Check back soon!</p>
+              <div className="bg-white p-8 rounded-xl border border-stone-200 text-center shadow-sm">
+                <p className="text-stone-500 text-lg italic">We're planning some exciting updates. Check back soon!</p>
+              </div>
             ) : (
-              <div className="grid gap-6">
+              <div className="grid md:grid-cols-2 gap-8">
                 {upcomingEvents.map((event) => (
-                  <article key={event.slug} className="border rounded-lg p-6 hover:shadow-lg transition-shadow flex flex-col md:flex-row gap-6">
-                    {/* Check for image first to decide layout */}
-                    {event.coverImage && (
-                      <div className="md:w-1/3 flex-shrink-0">
-                        <img
-                          src={event.coverImage}
-                          alt={event.title}
-                          className="w-full h-48 md:h-full object-cover rounded-lg"
-                        />
-                      </div>
-                    )}
-                    <div className="flex-1">
-                      <div className="flex justify-between items-start mb-2">
-                        <h3 className="text-xl font-semibold">{event.title}</h3>
-                        <span className="bg-amber-100 text-amber-800 px-3 py-1 rounded-full text-sm font-medium whitespace-nowrap ml-2">
+                  <Link href={`/events/${event.slug}`} key={event.slug} className="group">
+                    <article className="bg-white rounded-xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 h-full flex flex-col border border-stone-100">
+                      <div className="relative aspect-[4/3] overflow-hidden bg-stone-200">
+                        {event.coverImage ? (
+                          <img
+                            src={event.coverImage}
+                            alt={event.title}
+                            className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                          />
+                        ) : (
+                          <div className="w-full h-full flex items-center justify-center bg-stone-100 text-stone-300">
+                            <span className="text-4xl">📅</span>
+                          </div>
+                        )}
+                        <div className="absolute top-4 left-4 bg-white/95 backdrop-blur-sm px-3 py-1 rounded-md shadow-md text-sm font-semibold text-ship-blue-900">
                           {formatDateShort(parseDate(event.displayDate))}
+                        </div>
+                      </div>
+
+                      <div className="p-6 flex-1 flex flex-col">
+                        <h3 className="text-2xl font-bold font-centaur text-slate-800 mb-2 group-hover:text-amber-700 transition-colors">
+                          {event.title}
+                        </h3>
+
+                        <div className="flex flex-wrap gap-y-2 text-sm text-stone-500 mb-4">
+                          {event.eventTime && <span className="mr-4 flex items-center">🕐 {event.eventTime}</span>}
+                          {event.location && <span className="flex items-center">📍 {event.location}</span>}
+                        </div>
+
+                        {event.description && (
+                          <p className="text-stone-600 line-clamp-2 mb-6 flex-1">
+                            {event.description}
+                          </p>
+                        )}
+
+                        <span className="text-amber-700 font-medium group-hover:underline decoration-amber-700 underline-offset-4 mt-auto inline-block">
+                          View details
                         </span>
                       </div>
-                      {event.eventTime && (
-                        <p className="text-gray-600 text-sm mb-2">🕐 {event.eventTime}</p>
-                      )}
-                      {event.location && (
-                        <p className="text-gray-600 text-sm mb-2">📍 {event.location}</p>
-                      )}
-                      {event.description && (
-                        <p className="text-gray-700 mt-3 line-clamp-3">{event.description}</p>
-                      )}
-                      <Link
-                        href={`/events/${event.slug}`}
-                        className="text-amber-700 hover:text-amber-800 font-medium mt-3 inline-block"
-                      >
-                        View details →
-                      </Link>
-                    </div>
-                  </article>
+                    </article>
+                  </Link>
                 ))}
               </div>
             )}
           </section>
 
+          {/* Gift Voucher Banner */}
+          <section className="bg-ship-blue-900 rounded-2xl p-8 md:p-12 relative overflow-hidden shadow-2xl text-white">
+            <div className="absolute inset-0 opacity-10 bg-[url('/pattern.png')]"></div> {/* Placeholder for texture */}
+            <div className="relative z-10 flex flex-col md:flex-row items-center gap-8 md:gap-12">
+              <div className="md:w-1/3">
+                <img
+                  src="/images/logo/ship-inn-voucher.webp"
+                  alt="Gift Voucher"
+                  className="rounded-lg shadow-lg rotate-[-3deg] border-4 border-white/20"
+                />
+              </div>
+              <div className="md:w-2/3 text-center md:text-left">
+                <h2 className="text-3xl font-bold font-centaur mb-4">The Perfect Gift</h2>
+                <p className="text-lg text-blue-100 mb-8 max-w-xl">
+                  Treat someone special to a memorable experience at The Ship Inn. Perfect for birthdays, anniversaries, or just because.
+                </p>
+                <Link
+                  href="/contact"
+                  className="inline-block bg-amber-500 hover:bg-amber-400 text-ship-blue-950 font-bold py-3 px-8 rounded-full transition-transform hover:-translate-y-1 shadow-lg"
+                >
+                  Enquire About Vouchers
+                </Link>
+              </div>
+            </div>
+          </section>
+
+          {/* News Section */}
           <section>
-            <h2 className="text-3xl font-bold mb-6">Latest News</h2>
+            <div className="flex items-center justify-between mb-10 border-b border-stone-200 pb-4">
+              <h2 className="text-3xl font-bold font-centaur text-ship-blue-900">Latest News</h2>
+            </div>
+
             {latestNews.length === 0 ? (
-              <p className="text-gray-500">No news updates yet. Stay tuned!</p>
+              <p className="text-stone-500 italic">No news updates yet.</p>
             ) : (
-              <div className="grid gap-6">
+              <div className="space-y-8">
                 {latestNews.map((news) => (
-                  <article key={news.slug} className="border rounded-lg p-6 hover:shadow-lg transition-shadow">
-                    <div className="flex justify-between items-start mb-4">
-                      <h3 className="text-xl font-semibold">{news.title}</h3>
-                      <span className="text-gray-500 text-sm">
-                        {formatDateShort(parseDate(news.publishedAt))}
-                      </span>
-                    </div>
-                    {news.coverImage && (
-                      <img
-                        src={news.coverImage}
-                        alt={news.title}
-                        className="w-full max-h-96 object-contain bg-gray-50 rounded-lg mb-4"
-                      />
-                    )}
-                    {news.description && (
-                      <p className="text-gray-700 mt-2">{news.description}</p>
-                    )}
-                    <Link
-                      href={`/news-events/${news.slug}`}
-                      className="text-amber-700 hover:text-amber-800 font-medium mt-3 inline-block"
-                    >
-                      Read more →
-                    </Link>
-                  </article>
+                  <Link href={`/news-events/${news.slug}`} key={news.slug} className="group block">
+                    <article className="bg-white rounded-xl p-6 shadow-sm hover:shadow-md transition-all border border-stone-100 flex flex-col md:flex-row gap-8 items-start">
+                      {news.coverImage && (
+                        <div className="w-full md:w-48 aspect-video md:aspect-square flex-shrink-0 rounded-lg overflow-hidden bg-stone-100">
+                          <img
+                            src={news.coverImage}
+                            alt={news.title}
+                            className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                          />
+                        </div>
+                      )}
+
+                      <div className="flex-1">
+                        <span className="text-sm font-semibold text-amber-700 uppercase tracking-wider mb-2 block">
+                          {formatDateShort(parseDate(news.publishedAt))}
+                        </span>
+                        <h3 className="text-2xl font-bold font-centaur text-slate-900 mb-3 group-hover:text-amber-700 transition-colors">
+                          {news.title}
+                        </h3>
+                        {news.description && (
+                          <p className="text-stone-600 mb-4 line-clamp-2">
+                            {news.description}
+                          </p>
+                        )}
+                        <span className="text-stone-500 text-sm font-medium group-hover:text-amber-700 flex items-center">
+                          Read full story <span className="ml-2 group-hover:translate-x-1 transition-transform">→</span>
+                        </span>
+                      </div>
+                    </article>
+                  </Link>
                 ))}
               </div>
             )}
           </section>
         </div>
 
-        <aside className="md:col-span-1 space-y-8">
-          <div className="sticky top-10 space-y-8">
-            <div>
-              <h3 className="text-xl font-bold mb-4">Stay in the loop</h3>
-              <p className="mb-4 text-gray-600">Join our mailing list for exclusive offers and event announcements.</p>
+        {/* Sidebar */}
+        <aside className="lg:col-span-4 space-y-8">
+          <div className="sticky top-24 space-y-8">
+            <div className="bg-white p-6 rounded-xl shadow-sm border border-stone-100">
+              <h3 className="text-xl font-bold font-centaur mb-4 text-ship-blue-900 border-b border-stone-100 pb-2">Newsletter</h3>
+              <p className="mb-6 text-stone-600 text-sm">Join our community for exclusive offers and first announcements of special events.</p>
               <NewsletterForm />
             </div>
 
-            <WeatherWidget />
-            <TideTimes />
+            <div className="bg-white p-6 rounded-xl shadow-sm border border-stone-100">
+              <WeatherWidget />
+            </div>
+            <div className="bg-white p-6 rounded-xl shadow-sm border border-stone-100">
+              <TideTimes />
+            </div>
           </div>
         </aside>
       </div>

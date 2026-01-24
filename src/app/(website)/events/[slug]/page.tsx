@@ -49,49 +49,52 @@ export default async function EventPage({ params }: Props) {
   const displayDate = (event as any).eventDate || event.publishedAt
 
   return (
-    <div className="max-w-4xl mx-auto p-6">
-      <Link 
-        href="/news-events" 
-        className="text-amber-700 hover:text-amber-800 mb-6 inline-block"
+    <div className="max-w-5xl mx-auto px-6 py-12">
+      <Link
+        href="/news-events"
+        className="text-amber-700 hover:text-amber-800 mb-8 inline-flex items-center font-medium transition-colors"
       >
-        ← Back to News & Events
+        <span className="mr-2">←</span> Back to News & Events
       </Link>
 
       <article>
-        <header className="mb-8">
-          <h1 className="text-4xl font-bold mb-4">{event.title}</h1>
-          
-          <div className="flex flex-wrap gap-4 text-gray-600 mb-4">
-            <span className="bg-amber-100 text-amber-800 px-4 py-2 rounded-full font-medium">
+        <header className="mb-10 text-center max-w-3xl mx-auto">
+          <div className="flex flex-wrap justify-center gap-4 text-sm text-amber-800 mb-4 font-semibold tracking-wide uppercase">
+            <span className="flex items-center">
               📅 {formatDate(parseDate(displayDate))}
             </span>
             {(event as any).eventTime && (
-              <span className="bg-gray-100 px-4 py-2 rounded-full">
-                🕐 {(event as any).eventTime}
+              <span className="flex items-center before:content-['•'] before:mx-3 before:text-amber-300">
+                {(event as any).eventTime}
               </span>
             )}
             {(event as any).location && (
-              <span className="bg-gray-100 px-4 py-2 rounded-full">
-                📍 {(event as any).location}
+              <span className="flex items-center before:content-['•'] before:mx-3 before:text-amber-300">
+                {(event as any).location}
               </span>
             )}
           </div>
 
-          {event.description && (
-            <p className="text-xl text-gray-600">{event.description}</p>
-          )}
+          <h1 className="text-4xl md:text-6xl font-bold mb-6 font-centaur text-slate-900 leading-tight">
+            {event.title}
+          </h1>
+
+          {/* Description removed to prevent duplication as it's often in body too.
+              If needed as a stand-first, it can be re-added here. */}
         </header>
 
         {event.coverImage && (
-          <img 
-            src={event.coverImage} 
-            alt={event.title}
-            className="w-full h-80 object-cover rounded-lg mb-8"
-          />
+          <div className="relative aspect-video w-full mb-12 shadow-xl rounded-xl overflow-hidden">
+            <img
+              src={event.coverImage}
+              alt={event.title}
+              className="object-cover w-full h-full"
+            />
+          </div>
         )}
 
-        <div 
-          className="prose prose-lg max-w-none"
+        <div
+          className="prose prose-lg prose-slate mx-auto prose-headings:font-centaur prose-headings:font-bold prose-a:text-amber-700 hover:prose-a:text-amber-800 prose-img:rounded-xl prose-img:shadow-lg"
           dangerouslySetInnerHTML={{ __html: contentHtml }}
         />
       </article>
