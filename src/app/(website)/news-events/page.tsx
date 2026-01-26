@@ -192,31 +192,7 @@ export default async function Page() {
             )}
           </section>
 
-          {/* Gift Voucher Banner */}
-          <section className="bg-ship-blue-900 rounded-2xl p-8 md:p-12 relative overflow-hidden shadow-2xl text-white">
-            <div className="absolute inset-0 opacity-10 bg-[url('/pattern.png')]"></div> {/* Placeholder for texture */}
-            <div className="relative z-10 flex flex-col md:flex-row items-center gap-8 md:gap-12">
-              <div className="md:w-1/3">
-                <img
-                  src="/images/logo/ship-inn-voucher.webp"
-                  alt="Gift Voucher"
-                  className="rounded-lg shadow-lg rotate-[-3deg] border-4 border-white/20"
-                />
-              </div>
-              <div className="md:w-2/3 text-center md:text-left">
-                <h2 className="text-3xl font-bold font-centaur mb-4">The Perfect Gift</h2>
-                <p className="text-lg text-blue-100 mb-8 max-w-xl">
-                  Treat someone special to a memorable experience at The Ship Inn. Perfect for birthdays, anniversaries, or just because.
-                </p>
-                <Link
-                  href="/contact"
-                  className="inline-block bg-amber-500 hover:bg-amber-400 text-ship-blue-950 font-bold py-3 px-8 rounded-full transition-transform hover:-translate-y-1 shadow-lg"
-                >
-                  Enquire About Vouchers
-                </Link>
-              </div>
-            </div>
-          </section>
+
 
           {/* News Section */}
           <section>
@@ -272,6 +248,30 @@ export default async function Page() {
               <h3 className="text-xl font-bold font-centaur mb-4 text-ship-blue-900 border-b border-stone-100 pb-2">Newsletter</h3>
               <p className="mb-6 text-stone-600 text-sm">Join our community for exclusive offers and first announcements of special events.</p>
               <NewsletterForm />
+            </div>
+
+            {/* Gift Voucher Card */}
+            <div className="bg-ship-blue-900 p-6 rounded-xl shadow-sm border border-stone-100 text-white relative overflow-hidden">
+              <div className="absolute inset-0 opacity-10 bg-[url('/pattern.png')]"></div>
+              <div className="relative z-10 text-center">
+                <h3 className="text-xl font-bold font-centaur mb-4">The Perfect Gift</h3>
+                <div className="mb-4 flex justify-center">
+                  <img
+                    src="/images/logo/ship-inn-voucher.webp"
+                    alt="Gift Voucher"
+                    className="w-32 rounded-lg shadow-lg rotate-[-3deg] border-2 border-white/20"
+                  />
+                </div>
+                <p className="mb-6 text-blue-100 text-sm">
+                  Our monetary vouchers make a great gift – whether it’s a night away or lunch or dinner with us.
+                </p>
+                <Link
+                  href="/contact"
+                  className="inline-block bg-amber-500 hover:bg-amber-400 text-ship-blue-950 font-bold py-2 px-6 rounded-full text-sm transition-transform hover:-translate-y-1 shadow-md"
+                >
+                  Enquire About Vouchers
+                </Link>
+              </div>
             </div>
 
             <div className="bg-white p-6 rounded-xl shadow-sm border border-stone-100">
