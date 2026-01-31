@@ -9,7 +9,7 @@ export default function WeatherWidget() {
       const d = document
       const s = 'script'
       const id = 'weatherwidget-io-js'
-      
+
       if (!d.getElementById(id)) {
         const js = d.createElement(s) as HTMLScriptElement
         js.id = id
@@ -35,11 +35,14 @@ export default function WeatherWidget() {
 
   return (
     <div className="weather-widget-container mb-6">
-      <a 
-        className="weatherwidget-io" 
-        href="https://forecast7.com/en/51d22n3d63/porlock-weir/" 
-        data-label_1="PORLOCK WEIR" 
-        data-label_2="WEATHER" 
+      <h3 className="text-xl font-bold font-centaur mb-4 text-ship-blue-900 border-b border-stone-100 pb-2">
+        Weather forecast for the week ahead
+      </h3>
+      <a
+        className="weatherwidget-io"
+        href="https://forecast7.com/en/51d22n3d63/porlock-weir/"
+        data-label_1="PORLOCK WEIR"
+        data-label_2="WEATHER"
         data-theme="original"
       >
         PORLOCK WEIR WEATHER
