@@ -1,32 +1,38 @@
 import Link from 'next/link'
+import Image from 'next/image'
 import NewsletterSignup from '@/components/NewsletterSignup'
 
 export default function HomePage() {
   return (
     <div className="min-h-screen">
       {/* Hero Section */}
-      <section
-        className="relative h-screen bg-cover bg-center bg-no-repeat"
-        style={{
-          backgroundImage: `url('/images/exterior/shipinn-011.webp')`
-        }}
-      >
-        <div className="absolute inset-0 bg-black bg-opacity-40"></div>
+      <section className="relative h-screen">
+        <div className="absolute inset-0">
+          <Image
+            src="/images/exterior/shipinn-011.webp"
+            alt="The Ship Inn Porlock Weir Exterior"
+            fill
+            className="object-cover"
+            priority
+          />
+          <div className="absolute inset-0 bg-black bg-opacity-40"></div>
+        </div>
+
         <div className="relative z-10 flex items-center justify-center h-full">
           <div className="text-center max-w-6xl mx-auto px-6">
             {/* Logo Overlay */}
-            <div className="bg-white rounded-full w-48 h-48 md:w-64 md:h-64 mx-auto mb-8 flex items-center justify-center shadow-2xl overflow-hidden p-6">
+            <div className="bg-white rounded-full w-48 h-48 md:w-64 md:h-64 mx-auto mb-8 flex items-center justify-center shadow-2xl overflow-hidden p-6 relative">
               <img
                 src="/images/logo/the_ship_inn2.webp"
                 alt="The Ship Inn Logo"
                 className="max-w-full max-h-full object-contain"
               />
             </div>
-            <h1 className="text-2xl md:text-4xl font-semibold mb-6 text-white">
+            <h1 className="text-2xl md:text-4xl font-semibold mb-6 text-white text-shadow-lg">
               <span className="block">Welcome to</span>
               <span className="block text-yellow-300">The Ship Inn Porlock Weir</span>
             </h1>
-            <p className="text-xl md:text-3xl mb-12 text-white opacity-90">
+            <p className="text-xl md:text-3xl mb-12 text-white opacity-90 text-shadow-md">
               Historic charm meets modern comfort
             </p>
             <div className="flex flex-col sm:flex-row gap-6 justify-center">
