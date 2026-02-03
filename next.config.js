@@ -4,6 +4,7 @@ const nextConfig = {
   // which breaks dynamic routes used by the embedded Sanity Studio.
   // trailingSlash: true, // Disabled to fix Keystatic API routes
   images: {
+    unoptimized: true,
     remotePatterns: [
       {
         protocol: 'https',
