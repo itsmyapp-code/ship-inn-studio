@@ -6,17 +6,18 @@ export default function HomePage() {
   return (
     <div className="min-h-screen">
       {/* Hero Section */}
-      <section className="relative h-screen">
-        <div className="absolute inset-0">
-          <Image
-            src="/images/exterior/shipinn-011.webp"
-            alt="The Ship Inn Porlock Weir Exterior"
-            fill
-            className="object-cover"
-            priority
-          />
-          <div className="absolute inset-0 bg-black bg-opacity-40"></div>
-        </div>
+      <section className="relative h-screen w-full">
+        {/* Background Image */}
+        <Image
+          src="/images/exterior/shipinn-011.webp"
+          alt="The Ship Inn Exterior"
+          fill
+          priority
+          className="object-cover"
+        />
+
+        {/* Overlay */}
+        <div className="absolute inset-0 bg-black/40"></div>
 
         <div className="relative z-10 flex items-center justify-center h-full">
           <div className="text-center max-w-6xl mx-auto px-6">

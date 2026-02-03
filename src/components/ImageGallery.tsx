@@ -20,10 +20,10 @@ export default function ImageGallery({ images }: ImageGalleryProps) {
 
   // Get unique categories
   const categories = ['All', ...Array.from(new Set(images.map(img => img.category)))]
-  
+
   // Filter images by category
-  const filteredImages = selectedCategory === 'All' 
-    ? images 
+  const filteredImages = selectedCategory === 'All'
+    ? images
     : images.filter(img => img.category === selectedCategory)
 
   const openLightbox = (index: number) => {
@@ -71,11 +71,10 @@ export default function ImageGallery({ images }: ImageGalleryProps) {
             <button
               key={category}
               onClick={() => setSelectedCategory(category)}
-              className={`px-4 py-2 rounded-full text-sm font-medium transition-colors ${
-                selectedCategory === category
-                  ? 'bg-ship-blue-600 text-white'
-                  : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
-              }`}
+              className={`px-4 py-2 rounded-full text-sm font-medium transition-colors ${selectedCategory === category
+                ? 'bg-ship-blue-600 text-white'
+                : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
+                }`}
             >
               {category} ({category === 'All' ? images.length : images.filter(img => img.category === category).length})
             </button>
@@ -87,7 +86,7 @@ export default function ImageGallery({ images }: ImageGalleryProps) {
       <div className="columns-1 md:columns-2 lg:columns-3 gap-6 space-y-6">
         {filteredImages.map((image, index) => (
           <div key={index} className="break-inside-avoid">
-            <div 
+            <div
               className="relative group cursor-pointer overflow-hidden rounded-lg shadow-lg"
               onClick={() => openLightbox(index)}
             >
@@ -97,7 +96,7 @@ export default function ImageGallery({ images }: ImageGalleryProps) {
                 className="w-full h-auto object-cover transition-transform duration-300 group-hover:scale-105"
                 loading="lazy"
               />
-              <div className="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-40 transition-all duration-300 flex items-center justify-center">
+              <div className="absolute inset-0 bg-black/0 group-hover:bg-black/40 transition-all duration-300 flex items-center justify-center">
                 <div className="opacity-0 group-hover:opacity-100 transition-opacity duration-300 text-white text-center">
                   <svg className="w-8 h-8 mx-auto mb-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0zM10 7v3m0 0v3m0-3h3m-3 0H7" />
@@ -105,15 +104,15 @@ export default function ImageGallery({ images }: ImageGalleryProps) {
                   <span className="text-sm font-medium">View</span>
                 </div>
               </div>
-              
+
               {/* Category Badge */}
               <div className="absolute top-2 left-2">
-                <span className="bg-black bg-opacity-50 text-white text-xs px-2 py-1 rounded">
+                <span className="bg-black/50 text-white text-xs px-2 py-1 rounded">
                   {image.category}
                 </span>
               </div>
             </div>
-            
+
             {/* Caption */}
             {image.caption && (
               <p className="text-sm text-gray-600 mt-2 px-1">{image.caption}</p>
@@ -124,8 +123,8 @@ export default function ImageGallery({ images }: ImageGalleryProps) {
 
       {/* Lightbox Modal */}
       {selectedImageIndex !== null && filteredImages[currentImageIndex] && (
-        <div 
-          className="fixed inset-0 bg-black bg-opacity-95 z-50 flex items-center justify-center p-4"
+        <div
+          className="fixed inset-0 bg-black/95 z-50 flex items-center justify-center p-4"
           onClick={closeLightbox}
           onKeyDown={handleKeyDown}
           tabIndex={0}
@@ -154,7 +153,7 @@ export default function ImageGallery({ images }: ImageGalleryProps) {
                 <>
                   <button
                     onClick={prevImage}
-                    className="absolute left-4 top-1/2 -translate-y-1/2 bg-black bg-opacity-50 hover:bg-opacity-75 text-white p-3 rounded-full transition-all"
+                    className="absolute left-4 top-1/2 -translate-y-1/2 bg-black/50 hover:bg-black/75 text-white p-3 rounded-full transition-all"
                   >
                     <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
@@ -162,7 +161,7 @@ export default function ImageGallery({ images }: ImageGalleryProps) {
                   </button>
                   <button
                     onClick={nextImage}
-                    className="absolute right-4 top-1/2 -translate-y-1/2 bg-black bg-opacity-50 hover:bg-opacity-75 text-white p-3 rounded-full transition-all"
+                    className="absolute right-4 top-1/2 -translate-y-1/2 bg-black/50 hover:bg-black/75 text-white p-3 rounded-full transition-all"
                   >
                     <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
