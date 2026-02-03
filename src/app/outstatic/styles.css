@@ -1,5 +1,2 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
-
-@import 'outstatic/outstatic.css';
+@import "tailwindcss";
+@import "outstatic/outstatic.css";
