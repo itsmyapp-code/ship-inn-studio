@@ -6,7 +6,7 @@ import html from 'remark-html'
 import { parseDate, formatDate } from '@/lib/dateUtils'
 
 type Props = {
-  params: { slug: string }
+  params: Promise<{ slug: string }>
 }
 
 // Helper to strip the first image from markdown to prevent duplication with the hero image
@@ -26,7 +26,8 @@ export async function generateStaticParams() {
 }
 
 export async function generateMetadata({ params }: Props) {
-  const event = getDocumentBySlug('events', params.slug, ['title', 'description'])
+  const { slug } = await params
+  const event = getDocumentBySlug('events', slug, ['title', 'description'])
   if (!event) return { title: 'Not Found' }
   return {
     title: `${event.title} | The Ship Inn`,
@@ -35,7 +36,8 @@ export async function generateMetadata({ params }: Props) {
 }
 
 export default async function EventPage({ params }: Props) {
-  const event = getDocumentBySlug('events', params.slug, [
+  const { slug } = await params
+  const event = getDocumentBySlug('events', slug, [
     'title',
     'publishedAt',
     'description',

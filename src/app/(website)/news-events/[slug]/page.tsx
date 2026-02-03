@@ -6,7 +6,7 @@ import html from 'remark-html'
 import { parseDate, formatDateShort } from '@/lib/dateUtils'
 
 type Props = {
-  params: { slug: string }
+  params: Promise<{ slug: string }>
 }
 
 // Helper to strip the first image from markdown to prevent duplication with the hero image
@@ -28,7 +28,8 @@ export async function generateStaticParams() {
 }
 
 export async function generateMetadata({ params }: Props) {
-  const post = getDocumentBySlug('news', params.slug, ['title', 'description'])
+  const { slug } = await params
+  const post = getDocumentBySlug('news', slug, ['title', 'description'])
   if (!post) return { title: 'Not Found' }
   return {
     title: `${post.title} | The Ship Inn`,
@@ -37,7 +38,8 @@ export async function generateMetadata({ params }: Props) {
 }
 
 export default async function NewsArticlePage({ params }: Props) {
-  const post = getDocumentBySlug('news', params.slug, [
+  const { slug } = await params
+  const post = getDocumentBySlug('news', slug, [
     'title',
     'publishedAt',
     'description',
