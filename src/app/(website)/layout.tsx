@@ -1,3 +1,4 @@
+import { Analytics } from '@vercel/analytics/next'
 import AnalyticsScripts from '@/components/AnalyticsScripts'
 import CookieBanner from '@/components/CookieBanner'
 import Navigation from '@/components/Navigation'
@@ -25,6 +26,7 @@ export default function WebsiteLayout({
         </main>
         <Footer />
         <CookieBanner />
+        <Analytics />
       </body>
     </html>
   )
