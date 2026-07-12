@@ -12,10 +12,6 @@
       "title": "Published Date",
       "required": true
     },
-    "coverImage": {
-      "type": "Image",
-      "title": "Cover Image"
-    },
     "content": {
       "type": "String",
       "title": "Content",
