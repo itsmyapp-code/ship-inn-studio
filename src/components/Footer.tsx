@@ -25,7 +25,7 @@ export default function Footer() {
                 From the Cabins
               </Link>
               <Link href="/food-drink" className="block text-gray-300 hover:text-white transition-colors">
-                From the Galley & Saloon
+                From the Galley &amp; Saloon
               </Link>
               <Link href="/things-to-do" className="block text-gray-300 hover:text-white transition-colors">
                 Things to do
@@ -40,8 +40,8 @@ export default function Footer() {
           <div className="space-y-4 md:col-span-2">
             <h3 className="text-lg font-semibold">The Ship Inn</h3>
             <p className="text-gray-300 text-base">
-              Historic pub and B&B in the heart of Porlock Weir, offering comfortable accommodation 
-              and excellent food in one of Somerset's most beautiful coastal villages.
+              Historic pub and B&B in the heart of Porlock Weir, offering comfortable accommodation
+              and excellent food in one of Somerset&apos;s most beautiful coastal villages.
             </p>
             <div className="flex space-x-4">
               <a href="https://www.facebook.com/profile.php?id=61581183853636" target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-white transition-colors">
@@ -54,20 +54,38 @@ export default function Footer() {
           </div>
         </div>
 
+        {/* Compliance Block */}
+        <div className="mt-8 pt-6 border-t border-gray-800">
+          <p className="text-gray-400 text-sm max-w-3xl">
+            <strong className="text-gray-300">Data Privacy &amp; Compliance:</strong> For any questions regarding
+            your data rights, or to submit an inquiry, please contact our Data Privacy Lead directly at{' '}
+            <a href="mailto:hello@theshipinnporlockweir.co.uk" className="text-gray-300 hover:text-white transition-colors underline">
+              hello@theshipinnporlockweir.co.uk
+            </a>
+            . We formally acknowledge all compliance submissions within 30 days.
+          </p>
+        </div>
+
         {/* Bottom Bar */}
-        <div className="mt-8 pt-8 border-t border-gray-800">
+        <div className="mt-6 pt-6 border-t border-gray-800">
           <div className="flex flex-col md:flex-row justify-between items-center">
             <p className="text-gray-400 text-base">
-              © 2025 The Ship Inn Porlock Weir, Website designed by <a href="https://itsmyapp.co.uk" target="_blank" rel="noopener noreferrer" className="hover:text-white transition-colors">itsmyapp.co.uk</a>
+              © 2025 The Ship Inn Porlock Weir, Website designed by{' '}
+              <a href="https://itsmyapp.co.uk" target="_blank" rel="noopener noreferrer" className="hover:text-white transition-colors">
+                itsmyapp.co.uk
+              </a>
             </p>
             <div className="flex space-x-6 mt-4 md:mt-0">
-              <Link href="/legal" className="text-gray-400 hover:text-white text-base transition-colors">
+              <Link href="/privacy" className="text-gray-400 hover:text-white text-sm transition-colors">
                 Privacy Policy
               </Link>
-              <Link href="/legal" className="text-gray-400 hover:text-white text-base transition-colors">
+              <Link href="/terms" className="text-gray-400 hover:text-white text-sm transition-colors">
                 Terms of Service
               </Link>
-              <Link href="/legal" className="text-gray-400 hover:text-white text-base transition-colors">
+              <Link href="/cookies" className="text-gray-400 hover:text-white text-sm transition-colors">
+                Cookies
+              </Link>
+              <Link href="/accessibility" className="text-gray-400 hover:text-white text-sm transition-colors">
                 Accessibility
               </Link>
             </div>
