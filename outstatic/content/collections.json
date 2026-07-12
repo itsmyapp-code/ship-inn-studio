@@ -10,5 +10,11 @@
     "slug": "events",
     "path": "outstatic/content/events",
     "children": []
+  },
+  {
+    "title": "Pages",
+    "slug": "pages",
+    "path": "outstatic/content/pages",
+    "children": []
   }
 ]

@@ -1,17 +1,38 @@
+import ContactForm from '@/components/ContactForm'
+import Image from 'next/image'
+import { getPageData } from '@/lib/outstatic'
+
 export const metadata = {
   title: 'Contact us - The Ship Inn Porlock Weir',
-  description: 'Get in touch with The Ship Inn for bookings, enquiries, or directions. Located in the heart of Porlock Weir, Somerset. Phone: 01643 863288',
+  description: 'Get in touch with The Ship Inn for bookings, enquiries, or directions. Located in the heart of Porlock Weir, Somerset.',
 }
 
-import ContactForm from '@/components/ContactForm'
-
 export default function ContactPage() {
+  const pageData = getPageData('contact')
+
+  const heroImage = pageData?.coverImage || '/images/exterior/shipinn-012.webp'
+  const heroAlt = pageData?.heroAlt || 'The Ship Inn Side View'
+  
+  const phone = pageData?.phone || '01643 863288'
+  const email = pageData?.email || 'hello@theshipinnporlockweir.co.uk'
+  const addressLine1 = pageData?.addressLine1 || 'The Ship Inn'
+  const addressLine2 = pageData?.addressLine2 || 'Porlock Weir'
+  const town = pageData?.town || 'Minehead, Somerset'
+  const postcode = pageData?.postcode || 'TA24 8PB'
+
   return (
     <div className="min-h-screen">
-
       {/* Hero Section */}
-      <section className="relative h-64 bg-ship-blue-600 flex items-center justify-center">
-        <div className="text-center text-white">
+      <section className="relative h-64 bg-ship-blue-600 flex items-center justify-center overflow-hidden">
+        <Image
+          src={heroImage}
+          alt={heroAlt}
+          fill
+          priority
+          className="object-cover"
+        />
+        <div className="absolute inset-0 bg-black/40"></div>
+        <div className="relative z-10 text-center text-white">
           <h1 className="text-4xl md:text-5xl font-bold mb-4">Contact us</h1>
           <p className="text-xl">Get in touch or visit us in beautiful Porlock Weir</p>
         </div>
@@ -34,7 +55,9 @@ export default function ContactPage() {
                   </div>
                   <div>
                     <h3 className="font-semibold text-gray-900 mb-1">Phone</h3>
-                    <p className="text-gray-600">01643 863288</p>
+                    <p className="text-gray-600">
+                      <a href={`tel:${phone.replace(/\s+/g, '')}`} className="hover:text-ship-blue-600 transition-colors">{phone}</a>
+                    </p>
                   </div>
                 </div>
 
@@ -46,7 +69,9 @@ export default function ContactPage() {
                   </div>
                   <div>
                     <h3 className="font-semibold text-gray-900 mb-1">Email</h3>
-                    <p className="text-gray-600">hello@theshipinnporlockweir.co.uk</p>
+                    <p className="text-gray-600">
+                      <a href={`mailto:${email}`} className="hover:text-ship-blue-600 transition-colors break-all">{email}</a>
+                    </p>
                   </div>
                 </div>
 
@@ -60,11 +85,30 @@ export default function ContactPage() {
                   <div>
                     <h3 className="font-semibold text-gray-900 mb-1">Address</h3>
                     <p className="text-gray-600">
-                      The Ship Inn<br />
-                      Porlock Weir<br />
-                      Minehead, Somerset<br />
-                      TA24 8PB
+                      {addressLine1}<br />
+                      {addressLine2}<br />
+                      {town}<br />
+                      {postcode}
                     </p>
+                  </div>
+                </div>
+
+                <div className="flex items-start pt-4 border-t border-gray-100">
+                  <div className="bg-ship-blue-100 p-3 rounded-full mr-4">
+                    <svg className="w-6 h-6 text-ship-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+                    </svg>
+                  </div>
+                  <div>
+                    <h3 className="font-semibold text-gray-900 mb-1">Opening Hours</h3>
+                    <div className="text-gray-600 text-sm space-y-1">
+                      <p>Bar: {pageData?.openingHoursMon || '11:00 AM - 11:00 PM'}</p>
+                      <p>{pageData?.kitchenClose || 'Food served: 12:00 PM - 9:00 PM'}</p>
+                      <p>{pageData?.breakfastTimes || 'Breakfast: 8:00 AM - 10:00 AM (Residents only)'}</p>
+                      {pageData?.seasonalNote && (
+                        <p className="text-xs text-gray-500 italic mt-2">{pageData.seasonalNote}</p>
+                      )}
+                    </div>
                   </div>
                 </div>
               </div>
@@ -74,8 +118,8 @@ export default function ContactPage() {
             <div>
               <div className="mb-12">
                 <img
-                  src="/images/exterior/shipinn-012.webp"
-                  alt="The Ship Inn Side View"
+                  src={heroImage}
+                  alt={heroAlt}
                   className="w-full h-64 object-cover rounded-lg shadow-md"
                 />
               </div>
@@ -163,13 +207,13 @@ export default function ContactPage() {
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <a
-              href="tel:01643863288"
+              href={`tel:${phone.replace(/\s+/g, '')}`}
               className="bg-white hover:bg-gray-100 text-ship-blue-600 px-8 py-3 rounded-lg font-semibold transition-colors"
             >
-              Call Now: 01643 863288
+              Call Now: {phone}
             </a>
             <a
-              href="mailto:hello@theshipinnporlockweir.co.uk"
+              href={`mailto:${email}`}
               className="bg-transparent border-2 border-white hover:bg-white hover:text-ship-blue-600 text-white px-8 py-3 rounded-lg font-semibold transition-colors"
             >
               Send Email

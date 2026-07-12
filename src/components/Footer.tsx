@@ -1,6 +1,9 @@
 import Link from 'next/link'
+import { getSharedContactData } from '@/lib/outstatic'
 
 export default function Footer() {
+  const contactData = getSharedContactData()
+
   return (
     <footer className="bg-gray-900 text-white">
       <div className="max-w-7xl mx-auto py-12 px-4 sm:px-6 lg:px-8">
@@ -8,12 +11,18 @@ export default function Footer() {
           {/* Contact Information */}
           <div className="space-y-4">
             <h3 className="text-lg font-semibold">Contact us</h3>
-            <div className="space-y-2 text-gray-300">
-              <p>Porlock Weir</p>
-              <p>Minehead, Somerset</p>
-              <p>TA24 8PB</p>
-              <p>Tel: 01643 863288</p>
-              <p>Email: hello@theshipinnporlockweir.co.uk</p>
+            <div className="space-y-2 text-gray-300 text-sm">
+              <p>{contactData.addressLine1}</p>
+              <p>{contactData.addressLine2}</p>
+              <p>{contactData.town}</p>
+              <p>{contactData.postcode}</p>
+              <p>Tel: <a href={`tel:${contactData.phone.replace(/\s+/g, '')}`} className="hover:text-white transition-colors">{contactData.phone}</a></p>
+              <p>Email: <a href={`mailto:${contactData.email}`} className="hover:text-white transition-colors break-all">{contactData.email}</a></p>
+            </div>
+            <div className="mt-4 pt-4 border-t border-gray-800 text-gray-300 text-sm space-y-1">
+              <p className="font-semibold text-white">Opening Hours</p>
+              <p>Bar: {contactData.openingHours.monday}</p>
+              <p>{contactData.openingHours.kitchenClose}</p>
             </div>
           </div>
 
@@ -59,8 +68,8 @@ export default function Footer() {
           <p className="text-gray-400 text-sm max-w-3xl">
             <strong className="text-gray-300">Data Privacy &amp; Compliance:</strong> For any questions regarding
             your data rights, or to submit an inquiry, please contact our Data Privacy Lead directly at{' '}
-            <a href="mailto:hello@theshipinnporlockweir.co.uk" className="text-gray-300 hover:text-white transition-colors underline">
-              hello@theshipinnporlockweir.co.uk
+            <a href={`mailto:${contactData.email}`} className="text-gray-300 hover:text-white transition-colors underline">
+              {contactData.email}
             </a>
             . We formally acknowledge all compliance submissions within 30 days.
           </p>

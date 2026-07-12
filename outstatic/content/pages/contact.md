@@ -1,0 +1,30 @@
+---
+title: 'Contact'
+status: 'published'
+author:
+  name: 'Ship Inn Admin'
+  picture: 'https://avatars.githubusercontent.com/u/0?v=4'
+slug: 'contact'
+description: 'Get in touch or visit us in beautiful Porlock Weir'
+coverImage: '/images/exterior/shipinn-012.webp'
+heroAlt: 'The Ship Inn Side View'
+phone: '01643 863288'
+email: 'hello@theshipinnporlockweir.co.uk'
+addressLine1: 'The Ship Inn'
+addressLine2: 'Porlock Weir'
+town: 'Minehead, Somerset'
+postcode: 'TA24 8PB'
+openingHoursMon: '11:00 AM - 11:00 PM'
+openingHoursTue: '11:00 AM - 11:00 PM'
+openingHoursWed: '11:00 AM - 11:00 PM'
+openingHoursThu: '11:00 AM - 11:00 PM'
+openingHoursFri: '11:00 AM - 11:00 PM'
+openingHoursSat: '11:00 AM - 11:00 PM'
+openingHoursSun: '11:00 AM - 11:00 PM'
+kitchenClose: 'Food served: 12:00 PM - 9:00 PM'
+breakfastTimes: 'Breakfast: 8:00 AM - 10:00 AM (Residents only)'
+seasonalNote: 'Winter hours may vary. Please check our Facebook page for updates.'
+publishedAt: '2026-07-12T12:00:00.000Z'
+---
+
+Contact page copy and information.

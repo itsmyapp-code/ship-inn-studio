@@ -1,7 +1,9 @@
 
 
 import Link from 'next/link'
+import Image from 'next/image'
 import RoomGallery from '@/components/RoomGallery'
+import { getPageData, getSharedContactData } from '@/lib/outstatic'
 
 export const metadata = {
   title: 'From the Cabins - The Ship Inn Porlock Weir',
@@ -84,11 +86,29 @@ export default function RoomsPage() {
     }
   ]
 
+  const pageData = getPageData('rooms')
+  const contactData = getSharedContactData()
+
+  const heroImage = pageData?.coverImage
+  const heroAlt = pageData?.heroAlt || 'The Ship Inn Guest Room'
+
   return (
     <div className="min-h-screen">
       {/* Hero Section */}
-      <section className="relative h-64 bg-ship-blue-600 flex items-center justify-center">
-        <div className="text-center text-white">
+      <section className="relative h-64 bg-ship-blue-600 flex items-center justify-center overflow-hidden">
+        {heroImage && (
+          <>
+            <Image
+              src={heroImage}
+              alt={heroAlt}
+              fill
+              priority
+              className="object-cover"
+            />
+            <div className="absolute inset-0 bg-black/40"></div>
+          </>
+        )}
+        <div className="relative z-10 text-center text-white">
           <h1 className="text-4xl md:text-5xl font-bold mb-4">From the Cabins</h1>
           <p className="text-xl">A warm and welcoming place to unwind</p>
         </div>
@@ -205,10 +225,10 @@ export default function RoomsPage() {
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Link
-              href="tel:01643863288"
+              href={`tel:${contactData.phone.replace(/\s+/g, '')}`}
               className="bg-white hover:bg-gray-100 text-ship-blue-600 px-8 py-3 rounded-lg font-semibold transition-colors"
             >
-              Call Us: 01643 863288
+              Call Us: {contactData.phone}
             </Link>
           </div>
         </div>

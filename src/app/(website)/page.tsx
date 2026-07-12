@@ -1,16 +1,52 @@
 import Link from 'next/link'
 import Image from 'next/image'
 import NewsletterSignup from '@/components/NewsletterSignup'
+import { getPageData } from '@/lib/outstatic'
 
 export default function HomePage() {
+  const pageData = getPageData('home')
+
+  // Fallbacks
+  const heroImage = pageData?.coverImage || '/images/exterior/shipinn-011.webp'
+  const heroAlt = pageData?.heroAlt || 'The Ship Inn Exterior'
+  const strapline = pageData?.strapline || 'Historic charm meets modern comfort'
+  
+  const introParagraphs = [
+    pageData?.introParagraph1,
+    pageData?.introParagraph2,
+    pageData?.introParagraph3,
+    pageData?.introParagraph4,
+    pageData?.introParagraph5
+  ].map((p, idx) => {
+    if (p !== undefined && p !== null) return p
+    // Return original hardcoded paragraphs as fallbacks
+    const fallbacks = [
+      "Nestled in the heart of the stunning Exmoor coast, The Ship Inn at Porlock Weir is more than just a pub—it's a destination, a retreat, and a warm welcome at the edge of the sea. With roots tracing back over 200 years, our historic inn has long been a haven for weary travellers, sailors, walkers, and locals alike.",
+      "Set against the dramatic backdrop of Porlock Bay and the ancient woodland of Exmoor National Park, The Ship Inn blends timeless charm with modern comfort. Whether you’re dropping in for a pint of local ale, a hearty meal or staying the night in one of our cosy rooms, you'll feel the character and history.",
+      "In the summertime, our outdoor tables offer some of the best views on the coast—perfect for enjoying a cold drink, a leisurely lunch, or simply watching the boats drift by as the sun sets over the harbour.",
+      "At our core, we’re all about relaxed hospitality. Log fires, sea views, good conversation, and great food, these are the ingredients we believe make a perfect visit. We’re proud to champion West Country suppliers and seasonal menus.",
+      "Whether you're exploring the South West Coast Path or simply soaking in the peaceful harbour setting, The Ship Inn is your home by the sea."
+    ]
+    return fallbacks[idx]
+  }).filter(Boolean)
+
+  const feature1Title = pageData?.feature1Title || 'Comfortable Accommodation'
+  const feature1Desc = pageData?.feature1Desc || 'Three beautifully appointed rooms, each with modern amenities and traditional charm.'
+  
+  const feature2Title = pageData?.feature2Title || 'Traditional Pub & Restaurant'
+  const feature2Desc = pageData?.feature2Desc || 'Enjoy locally sourced food and fine ales in our historic pub with harbour views.'
+  
+  const feature3Title = pageData?.feature3Title || 'Perfect Location'
+  const feature3Desc = pageData?.feature3Desc || 'Situated in the heart of Porlock Weir with easy access to Exmoor National Park.'
+
   return (
     <div className="min-h-screen">
       {/* Hero Section */}
       <section className="relative h-screen w-full">
         {/* Background Image */}
         <Image
-          src="/images/exterior/shipinn-011.webp"
-          alt="The Ship Inn Exterior"
+          src={heroImage}
+          alt={heroAlt}
           fill
           priority
           className="object-cover"
@@ -34,7 +70,7 @@ export default function HomePage() {
               <span className="block text-yellow-300">The Ship Inn Porlock Weir</span>
             </h1>
             <p className="text-xl md:text-3xl mb-12 text-white opacity-90 text-shadow-md">
-              Historic charm meets modern comfort
+              {strapline}
             </p>
             <div className="flex flex-col sm:flex-row gap-6 justify-center">
               <Link
@@ -62,21 +98,9 @@ export default function HomePage() {
               Your Coastal Retreat in Porlock Weir
             </h2>
             <div className="text-xl text-gray-600 max-w-4xl mx-auto space-y-6 text-left md:text-center">
-              <p>
-                Nestled in the heart of the stunning Exmoor coast, The Ship Inn at Porlock Weir is more than just a pub—it's a destination, a retreat, and a warm welcome at the edge of the sea. With roots tracing back over 200 years, our historic inn has long been a haven for weary travellers, sailors, walkers, and locals alike.
-              </p>
-              <p>
-                Set against the dramatic backdrop of Porlock Bay and the ancient woodland of Exmoor National Park, The Ship Inn blends timeless charm with modern comfort. Whether you’re dropping in for a pint of local ale, a hearty meal or staying the night in one of our cosy rooms, you'll feel the character and history.
-              </p>
-              <p>
-                In the summertime, our outdoor tables offer some of the best views on the coast—perfect for enjoying a cold drink, a leisurely lunch, or simply watching the boats drift by as the sun sets over the harbour.
-              </p>
-              <p>
-                At our core, we’re all about relaxed hospitality. Log fires, sea views, good conversation, and great food, these are the ingredients we believe make a perfect visit. We’re proud to champion West Country suppliers and seasonal menus.
-              </p>
-              <p>
-                Whether you're exploring the South West Coast Path or simply soaking in the peaceful harbour setting, The Ship Inn is your home by the sea.
-              </p>
+              {introParagraphs.map((para, index) => (
+                <p key={index}>{para}</p>
+              ))}
             </div>
           </div>
 
@@ -87,8 +111,8 @@ export default function HomePage() {
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
                 </svg>
               </div>
-              <h3 className="text-2xl font-bold text-gray-900 mb-4">Comfortable Accommodation</h3>
-              <p className="text-gray-600 text-lg">Three beautifully appointed rooms, each with modern amenities and traditional charm.</p>
+              <h3 className="text-2xl font-bold text-gray-900 mb-4">{feature1Title}</h3>
+              <p className="text-gray-600 text-lg">{feature1Desc}</p>
             </div>
 
             <div className="text-center group">
@@ -97,8 +121,8 @@ export default function HomePage() {
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
                 </svg>
               </div>
-              <h3 className="text-2xl font-bold text-gray-900 mb-4">Traditional Pub & Restaurant</h3>
-              <p className="text-gray-600 text-lg">Enjoy locally sourced food and fine ales in our historic pub with harbour views.</p>
+              <h3 className="text-2xl font-bold text-gray-900 mb-4">{feature2Title}</h3>
+              <p className="text-gray-600 text-lg">{feature2Desc}</p>
             </div>
 
             <div className="text-center group">
@@ -108,8 +132,8 @@ export default function HomePage() {
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
                 </svg>
               </div>
-              <h3 className="text-2xl font-bold text-gray-900 mb-4">Perfect Location</h3>
-              <p className="text-gray-600 text-lg">Situated in the heart of Porlock Weir with easy access to Exmoor National Park.</p>
+              <h3 className="text-2xl font-bold text-gray-900 mb-4">{feature3Title}</h3>
+              <p className="text-gray-600 text-lg">{feature3Desc}</p>
             </div>
           </div>
         </div>

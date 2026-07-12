@@ -2,6 +2,8 @@
 
 import fs from 'fs'
 import path from 'path'
+import Image from 'next/image'
+import { getPageData, getSharedContactData } from '@/lib/outstatic'
 
 // ... metadata ...
 
@@ -36,30 +38,44 @@ function getMenus() {
 
 export default function FoodDrinkPage() {
   const menus = getMenus()
+  const pageData = getPageData('food-drink')
+  const contactData = getSharedContactData()
 
+  const heroImage = pageData?.coverImage || '/images/interior/shipinn-204.webp'
+  const heroAlt = pageData?.heroAlt || 'The Ship Inn Restaurant'
 
+  const lagersList = pageData?.lagers ? pageData.lagers.split(',').map(s => s.trim()) : ["Estrella", "Carlsberg", "Peretti", "Budvar", "1664 Blanc"]
+  const cidersList = pageData?.ciders ? pageData.ciders.split(',').map(s => s.trim()) : ["Thatchers", "Hawkstone", "Porlock Vale"]
+  const alesList = pageData?.ales ? pageData.ales.split(',').map(s => s.trim()) : ["Otter Amber", "Guinness", "Exmoor Ale – changes weekly", "Hardings"]
 
-  // ... existing drinks ...
   const drinkCategories = [
     {
       category: "Lagers",
-      items: ["Estrella", "Carlsberg", "Peretti", "Budvar", "1664 Blanc"]
+      items: lagersList
     },
     {
       category: "Cider",
-      items: ["Thatchers", "Hawkstone", "Porlock Vale"]
+      items: cidersList
     },
     {
       category: "Ales",
-      items: ["Otter Amber", "Guinness", "Exmoor Ale – changes weekly", "Hardings"]
+      items: alesList
     }
   ]
 
   return (
     <div className="min-h-screen">
       {/* Hero Section */}
-      <section className="relative h-64 bg-ship-blue-600 flex items-center justify-center">
-        <div className="text-center text-white">
+      <section className="relative h-64 bg-ship-blue-600 flex items-center justify-center overflow-hidden">
+        <Image
+          src={heroImage}
+          alt={heroAlt}
+          fill
+          priority
+          className="object-cover"
+        />
+        <div className="absolute inset-0 bg-black/40"></div>
+        <div className="relative z-10 text-center text-white">
           <h1 className="text-4xl md:text-5xl font-bold mb-4">From the Galley & Saloon</h1>
           <p className="text-xl">A true taste of the region in welcoming surroundings</p>
         </div>
@@ -73,10 +89,10 @@ export default function FoodDrinkPage() {
               <h2 className="text-3xl font-bold text-gray-900 mb-6">The Ship Inn Restaurant</h2>
               <div className="text-lg text-gray-600 space-y-4">
                 <p>
-                  We celebrate the very best of local and national drinks, alongside seasonal food. Enjoy a refreshing Hawkstone cider, a perfectly poured Guinness, or a classic 1664 while soaking up the coastal atmosphere.
+                  {pageData?.foodDrinkIntro1 || "We celebrate the very best of local and national drinks, alongside seasonal food. Enjoy a refreshing Hawkstone cider, a perfectly poured Guinness, or a classic 1664 while soaking up the coastal atmosphere."}
                 </p>
                 <p>
-                  Our menu is built around fresh, seasonal ingredients, changing with the time of year to bring you honest, flavourful dishes. Whether it’s a relaxed drink at the bar or a leisurely meal, you’ll find welcoming surroundings and a true taste of the region.
+                  {pageData?.foodDrinkIntro2 || "Our menu is built around fresh, seasonal ingredients, changing with the time of year to bring you honest, flavourful dishes. Whether it’s a relaxed drink at the bar or a leisurely meal, you’ll find welcoming surroundings and a true taste of the region."}
                 </p>
               </div>
             </div>
@@ -182,8 +198,7 @@ export default function FoodDrinkPage() {
             <div>
               <h3 className="text-2xl font-bold text-gray-900 mb-6">Breakfast at The Ship Inn</h3>
               <p className="text-lg text-gray-600 mb-6">
-                Included with all room bookings, our hearty breakfast features the best local produce
-                to fuel your Exmoor adventures.
+                {pageData?.breakfastDescription || "Included with all room bookings, our hearty breakfast features the best local produce to fuel your Exmoor adventures."}
               </p>
 
               <div className="space-y-2 text-gray-600 mb-6">
@@ -208,7 +223,7 @@ export default function FoodDrinkPage() {
               </div>
 
               <p className="text-gray-600">
-                <strong>Serving Times:</strong> 8am - 10am (Residents Only)<br />
+                <strong>Serving Times:</strong> {pageData?.breakfastTimes || "8am - 10am (Residents Only)"}<br />
                 Dietary requirements catered for upon request.
               </p>
             </div>
@@ -231,13 +246,13 @@ export default function FoodDrinkPage() {
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <a
-              href="tel:01643863288"
+              href={`tel:${contactData.phone.replace(/\s+/g, '')}`}
               className="bg-white hover:bg-gray-100 text-ship-blue-600 px-8 py-3 rounded-lg font-semibold transition-colors"
             >
-              Call to Reserve: 01643 863288
+              Call to Reserve: {contactData.phone}
             </a>
             <a
-              href="mailto:hello@theshipinnporlockweir.co.uk"
+              href={`mailto:${contactData.email}`}
               className="bg-transparent border-2 border-white hover:bg-white hover:text-ship-blue-600 text-white px-8 py-3 rounded-lg font-semibold transition-colors"
             >
               Email Us

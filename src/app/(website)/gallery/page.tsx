@@ -1,5 +1,7 @@
 
 import ImageGallery from '@/components/ImageGallery'
+import Image from 'next/image'
+import { getPageData } from '@/lib/outstatic'
 
 export const metadata = {
   title: 'Gallery - The Ship Inn Porlock Weir',
@@ -90,11 +92,27 @@ export default function GalleryPage() {
     }
   ]
 
+  const pageData = getPageData('gallery')
+  const heroImage = pageData?.coverImage
+  const heroAlt = pageData?.heroAlt || 'The Ship Inn Bar Area'
+
   return (
     <div className="min-h-screen">
       {/* Hero Section */}
-      <section className="relative h-64 bg-ship-green-600 flex items-center justify-center">
-        <div className="text-center text-white">
+      <section className="relative h-64 bg-ship-green-600 flex items-center justify-center overflow-hidden">
+        {heroImage && (
+          <>
+            <Image
+              src={heroImage}
+              alt={heroAlt}
+              fill
+              priority
+              className="object-cover"
+            />
+            <div className="absolute inset-0 bg-black/40"></div>
+          </>
+        )}
+        <div className="relative z-10 text-center text-white">
           <h1 className="text-4xl md:text-5xl font-bold mb-4">Gallery</h1>
           <p className="text-xl">Discover The Ship Inn through our photo collection</p>
         </div>

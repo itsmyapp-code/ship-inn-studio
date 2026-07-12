@@ -2,8 +2,10 @@
 
 
 import Link from 'next/link'
+import Image from 'next/image'
 import TideTimes from '@/components/TideTimes'
 import WeatherWidget from '@/components/WeatherWidget'
+import { getPageData } from '@/lib/outstatic'
 
 export const metadata = {
   title: 'Things to do - The Ship Inn Porlock Weir',
@@ -83,11 +85,27 @@ export default function ThingsToDoPage() {
     }
   ]
 
+  const pageData = getPageData('things-to-do')
+  const heroImage = pageData?.coverImage
+  const heroAlt = pageData?.heroAlt || 'The Ship Inn Coastal View'
+
   return (
     <div className="min-h-screen">
       {/* Hero Section */}
-      <section className="relative h-64 bg-ship-green-600 flex items-center justify-center">
-        <div className="text-center text-white">
+      <section className="relative h-64 bg-ship-green-600 flex items-center justify-center overflow-hidden">
+        {heroImage && (
+          <>
+            <Image
+              src={heroImage}
+              alt={heroAlt}
+              fill
+              priority
+              className="object-cover"
+            />
+            <div className="absolute inset-0 bg-black/40"></div>
+          </>
+        )}
+        <div className="relative z-10 text-center text-white">
           <h1 className="text-4xl md:text-5xl font-bold mb-4">Things to do</h1>
           <p className="text-xl">Your gateway to Exmoor National Park and the Somerset coast</p>
         </div>

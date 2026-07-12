@@ -1,9 +1,11 @@
 import NewsletterForm from '@/components/NewsletterForm'
 import { getDocuments } from 'outstatic/server'
 import Link from 'next/link'
+import Image from 'next/image'
 import { parseDate, formatDateShort } from '@/lib/dateUtils'
 import TideTimes from '@/components/TideTimes'
 import WeatherWidget from '@/components/WeatherWidget'
+import { getPageData } from '@/lib/outstatic'
 
 export const metadata = {
   title: 'News and Events - The Ship Inn Porlock Weir',
@@ -112,13 +114,25 @@ async function getEvents(): Promise<EventItem[]> {
 export default async function Page() {
   const upcomingEvents = await getEvents()
   const latestNews = await getNews()
+  const pageData = getPageData('news-events')
+  
+  const heroImage = pageData?.coverImage
+  const heroAlt = pageData?.heroAlt || 'The Ship Inn Side View'
 
   return (
     <div className="min-h-screen bg-stone-50">
       {/* Hero Section */}
       <section className="relative h-[40vh] bg-ship-blue-900 flex items-center justify-center mb-16 overflow-hidden">
+        {heroImage && (
+          <Image
+            src={heroImage}
+            alt={heroAlt}
+            fill
+            priority
+            className="object-cover"
+          />
+        )}
         <div className="absolute inset-0 bg-black/40 z-10" />
-        {/* Optional: Add a subtle background pattern or image here */}
         <div className="relative z-20 text-center text-white max-w-4xl px-6">
           <h1 className="text-5xl md:text-7xl font-bold mb-6 font-centaur drop-shadow-lg">News & Events</h1>
           <p className="text-xl md:text-2xl font-light tracking-wide max-w-2xl mx-auto opacity-90">
