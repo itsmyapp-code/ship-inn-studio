@@ -1,232 +1,180 @@
 {
   "title": "Pages",
-  "path": "outstatic/content/pages",
-  "columns": ["title", "status", "publishedAt"],
-  "customFields": [
-    {
-      "fieldType": "String",
-      "name": "heroAlt",
+  "slug": "pages",
+  "schema": {
+    "title": {
+      "type": "String",
+      "title": "Title",
+      "required": true
+    },
+    "publishedDate": {
+      "type": "Date",
+      "title": "Published Date",
+      "required": true
+    },
+    "coverImage": {
+      "type": "Image",
+      "title": "Cover Image"
+    },
+    "content": {
+      "type": "String",
+      "title": "Content",
+      "richText": true
+    },
+    "heroAlt": {
+      "type": "String",
       "title": "Hero Image Alt Text",
-      "description": "Alt text for screen readers",
-      "required": false
+      "description": "Alt text for screen readers"
     },
-    {
-      "fieldType": "String",
-      "name": "phone",
+    "phone": {
+      "type": "String",
       "title": "Phone Number",
-      "description": "Contact phone number",
-      "required": false
+      "description": "Contact phone number"
     },
-    {
-      "fieldType": "String",
-      "name": "email",
+    "email": {
+      "type": "String",
       "title": "Email Address",
-      "description": "Contact email address",
-      "required": false
+      "description": "Contact email address"
     },
-    {
-      "fieldType": "String",
-      "name": "addressLine1",
+    "addressLine1": {
+      "type": "String",
       "title": "Address Line 1",
-      "description": "e.g. Porlock Weir",
-      "required": false
+      "description": "e.g. Porlock Weir"
     },
-    {
-      "fieldType": "String",
-      "name": "addressLine2",
+    "addressLine2": {
+      "type": "String",
       "title": "Address Line 2",
-      "description": "e.g. Minehead",
-      "required": false
+      "description": "e.g. Minehead"
     },
-    {
-      "fieldType": "String",
-      "name": "town",
+    "town": {
+      "type": "String",
       "title": "Town/City",
-      "description": "e.g. Somerset",
-      "required": false
+      "description": "e.g. Somerset"
     },
-    {
-      "fieldType": "String",
-      "name": "postcode",
+    "postcode": {
+      "type": "String",
       "title": "Postcode",
-      "description": "e.g. TA24 8PB",
-      "required": false
+      "description": "e.g. TA24 8PB"
     },
-    {
-      "fieldType": "String",
-      "name": "openingHoursMon",
+    "openingHoursMon": {
+      "type": "String",
       "title": "Opening Hours (Monday)",
-      "description": "e.g. 11:00 AM - 11:00 PM",
-      "required": false
+      "description": "e.g. 11:00 AM - 11:00 PM"
     },
-    {
-      "fieldType": "String",
-      "name": "openingHoursTue",
-      "title": "Opening Hours (Tuesday)",
-      "required": false
+    "openingHoursTue": {
+      "type": "String",
+      "title": "Opening Hours (Tuesday)"
     },
-    {
-      "fieldType": "String",
-      "name": "openingHoursWed",
-      "title": "Opening Hours (Wednesday)",
-      "required": false
+    "openingHoursWed": {
+      "type": "String",
+      "title": "Opening Hours (Wednesday)"
     },
-    {
-      "fieldType": "String",
-      "name": "openingHoursThu",
-      "title": "Opening Hours (Thursday)",
-      "required": false
+    "openingHoursThu": {
+      "type": "String",
+      "title": "Opening Hours (Thursday)"
     },
-    {
-      "fieldType": "String",
-      "name": "openingHoursFri",
-      "title": "Opening Hours (Friday)",
-      "required": false
+    "openingHoursFri": {
+      "type": "String",
+      "title": "Opening Hours (Friday)"
     },
-    {
-      "fieldType": "String",
-      "name": "openingHoursSat",
-      "title": "Opening Hours (Saturday)",
-      "required": false
+    "openingHoursSat": {
+      "type": "String",
+      "title": "Opening Hours (Saturday)"
     },
-    {
-      "fieldType": "String",
-      "name": "openingHoursSun",
-      "title": "Opening Hours (Sunday)",
-      "required": false
+    "openingHoursSun": {
+      "type": "String",
+      "title": "Opening Hours (Sunday)"
     },
-    {
-      "fieldType": "String",
-      "name": "kitchenClose",
+    "kitchenClose": {
+      "type": "String",
       "title": "Kitchen Close Info",
-      "description": "e.g. Food served until 9:00 PM",
-      "required": false
+      "description": "e.g. Food served until 9:00 PM"
     },
-    {
-      "fieldType": "String",
-      "name": "breakfastTimes",
+    "breakfastTimes": {
+      "type": "String",
       "title": "Breakfast Times",
-      "description": "e.g. 8:30 AM - 10:00 AM",
-      "required": false
+      "description": "e.g. 8:30 AM - 10:00 AM"
     },
-    {
-      "fieldType": "String",
-      "name": "seasonalNote",
+    "seasonalNote": {
+      "type": "String",
       "title": "Opening Hours Seasonal Note",
-      "description": "e.g. Winter hours may vary.",
-      "required": false
+      "description": "e.g. Winter hours may vary."
     },
-    {
-      "fieldType": "String",
-      "name": "foodDrinkIntro1",
-      "title": "Food & Drink Intro Para 1",
-      "required": false
+    "foodDrinkIntro1": {
+      "type": "String",
+      "title": "Food & Drink Intro Para 1"
     },
-    {
-      "fieldType": "String",
-      "name": "foodDrinkIntro2",
-      "title": "Food & Drink Intro Para 2",
-      "required": false
+    "foodDrinkIntro2": {
+      "type": "String",
+      "title": "Food & Drink Intro Para 2"
     },
-    {
-      "fieldType": "String",
-      "name": "lagers",
+    "lagers": {
+      "type": "String",
       "title": "Lagers List",
-      "description": "Comma-separated list, e.g. Birra Moretti, Amstel",
-      "required": false
+      "description": "Comma-separated list, e.g. Birra Moretti, Amstel"
     },
-    {
-      "fieldType": "String",
-      "name": "ciders",
+    "ciders": {
+      "type": "String",
       "title": "Ciders List",
-      "description": "Comma-separated list, e.g. Thatchers, Orchard Thieves",
-      "required": false
+      "description": "Comma-separated list, e.g. Thatchers, Orchard Thieves"
     },
-    {
-      "fieldType": "String",
-      "name": "ales",
+    "ales": {
+      "type": "String",
       "title": "Ales List",
-      "description": "Comma-separated list, e.g. Exmoor Gold, Tribute",
-      "required": false
+      "description": "Comma-separated list, e.g. Exmoor Gold, Tribute"
     },
-    {
-      "fieldType": "String",
-      "name": "breakfastDescription",
-      "title": "Breakfast Description",
-      "required": false
+    "breakfastDescription": {
+      "type": "String",
+      "title": "Breakfast Description"
     },
-    {
-      "fieldType": "String",
-      "name": "strapline",
+    "strapline": {
+      "type": "String",
       "title": "Homepage Strapline",
-      "description": "e.g. Historic charm meets modern comfort",
-      "required": false
+      "description": "e.g. Historic charm meets modern comfort"
     },
-    {
-      "fieldType": "String",
-      "name": "introParagraph1",
-      "title": "Intro Paragraph 1",
-      "required": false
+    "introParagraph1": {
+      "type": "String",
+      "title": "Intro Paragraph 1"
     },
-    {
-      "fieldType": "String",
-      "name": "introParagraph2",
-      "title": "Intro Paragraph 2",
-      "required": false
+    "introParagraph2": {
+      "type": "String",
+      "title": "Intro Paragraph 2"
     },
-    {
-      "fieldType": "String",
-      "name": "introParagraph3",
-      "title": "Intro Paragraph 3",
-      "required": false
+    "introParagraph3": {
+      "type": "String",
+      "title": "Intro Paragraph 3"
     },
-    {
-      "fieldType": "String",
-      "name": "introParagraph4",
-      "title": "Intro Paragraph 4",
-      "required": false
+    "introParagraph4": {
+      "type": "String",
+      "title": "Intro Paragraph 4"
     },
-    {
-      "fieldType": "String",
-      "name": "introParagraph5",
-      "title": "Intro Paragraph 5",
-      "required": false
+    "introParagraph5": {
+      "type": "String",
+      "title": "Intro Paragraph 5"
     },
-    {
-      "fieldType": "String",
-      "name": "feature1Title",
-      "title": "Feature 1 Title",
-      "required": false
+    "feature1Title": {
+      "type": "String",
+      "title": "Feature 1 Title"
     },
-    {
-      "fieldType": "String",
-      "name": "feature1Desc",
-      "title": "Feature 1 Description",
-      "required": false
+    "feature1Desc": {
+      "type": "String",
+      "title": "Feature 1 Description"
     },
-    {
-      "fieldType": "String",
-      "name": "feature2Title",
-      "title": "Feature 2 Title",
-      "required": false
+    "feature2Title": {
+      "type": "String",
+      "title": "Feature 2 Title"
     },
-    {
-      "fieldType": "String",
-      "name": "feature2Desc",
-      "title": "Feature 2 Description",
-      "required": false
+    "feature2Desc": {
+      "type": "String",
+      "title": "Feature 2 Description"
     },
-    {
-      "fieldType": "String",
-      "name": "feature3Title",
-      "title": "Feature 3 Title",
-      "required": false
+    "feature3Title": {
+      "type": "String",
+      "title": "Feature 3 Title"
     },
-    {
-      "fieldType": "String",
-      "name": "feature3Desc",
-      "title": "Feature 3 Description",
-      "required": false
+    "feature3Desc": {
+      "type": "String",
+      "title": "Feature 3 Description"
     }
-  ]
+  }
 }
