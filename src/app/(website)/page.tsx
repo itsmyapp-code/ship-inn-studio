@@ -1,5 +1,5 @@
 import Link from 'next/link'
-import Image from 'next/image'
+import HeroCarousel from '@/components/HeroCarousel'
 import NewsletterSignup from '@/components/NewsletterSignup'
 import { getPageData } from '@/lib/outstatic'
 
@@ -7,7 +7,11 @@ export default function HomePage() {
   const pageData = getPageData('home')
 
   // Fallbacks
-  const heroImage = pageData?.coverImage || '/images/exterior/shipinn-011.webp'
+  const heroImage1 = pageData?.coverImage || '/images/exterior/shipinn-011.webp'
+  const heroImage2 = pageData?.heroImage2 || ''
+  const heroImage3 = pageData?.heroImage3 || ''
+  const heroImages = [heroImage1, heroImage2, heroImage3]
+  
   const heroAlt = pageData?.heroAlt || 'The Ship Inn Exterior'
   const strapline = pageData?.strapline || 'Historic charm meets modern comfort'
   
@@ -43,14 +47,8 @@ export default function HomePage() {
     <div className="min-h-screen">
       {/* Hero Section */}
       <section className="relative h-screen w-full">
-        {/* Background Image */}
-        <Image
-          src={heroImage}
-          alt={heroAlt}
-          fill
-          priority
-          className="object-cover"
-        />
+        {/* Background Images Carousel */}
+        <HeroCarousel images={heroImages} alt={heroAlt} />
 
         {/* Overlay */}
         <div className="absolute inset-0 bg-black/40"></div>

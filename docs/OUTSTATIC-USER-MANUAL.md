@@ -1,153 +1,192 @@
-# The Ship Inn Porlock Weir: Website CMS Manual
+# The Ship Inn Porlock Weir: Complete CMS User Manual
 System: **Outstatic CMS**
 
-This manual provides simple, detailed, and accurate step-by-step instructions for editing the text, phone numbers, email addresses, opening hours, and banner images across your entire website.
+This is the definitive instruction manual for managing your website.
 
 ---
 
-## 🚀 Part 1: How to Log In
+## 1. How to Log In
 
-1. Open your web browser and go to:
-   **[theshipinnporlockweir.co.uk/outstatic](https://theshipinnporlockweir.co.uk/outstatic)**
-2. Click the black button: **"Sign in with GitHub"**.
-3. Enter your login credentials:
-   - **Username / Email:** `hello@theshipinnporlockweir.co.uk`
+1. Go to: **[theshipinnporlockweir.co.uk/outstatic](https://theshipinnporlockweir.co.uk/outstatic)**
+2. Click **"Sign in with GitHub"**.
+3. Enter:
+   - **Username:** `hello@theshipinnporlockweir.co.uk`
    - **Password:** `theshipinnta248pb!`
-4. If this is your first time logging in, click **"Authorize"** if prompted. You are now on the dashboard!
+4. If prompted, click **"Authorize"**.
 
 ---
 
-## ⚡ Part 2: The Core Workflow
+## 2. Understanding the Dashboard
 
-Whenever you edit *any* page or post on the website, you will follow these exact 4 steps:
+The **left sidebar** has three sections:
 
-1. **Select the Content Type** in the left sidebar menu (either **Pages**, **Events**, or **News**).
-2. **Open the Document** you want to change from the list (or click **"New"** to create a News post or Event).
-3. **Locate the Fields:**
-   - Standard content (Title, main description body) is edited in the **center editor**.
-   - Custom fields (like `Cover Image`, `Phone`, `Email`, `Opening Hours`, `Strapline`, etc.) are located in the **right sidebar** under the `Slug*` field.
-4. **Edit Custom Fields using `+ Create` or text boxes:**
-   - In the right sidebar, any custom fields that are currently empty will display a **`+ Create`** button. Click it to open the input widget.
-   - **Important for Images:** If a field like **Cover Image** already has an image set, it will display a text box with the image path (e.g., `/images/exterior/...`). **To upload a new image, delete all the text in that box.** Once the box is empty, the "Upload" button will appear!
-5. **Publish your changes:**
-   - In the right-hand sidebar, ensure the **Status** is set to **"Published"** (not Draft).
-   - Click the black **"Save"** button in the top-right corner.
-   - **Wait 1–2 minutes** for the website to automatically rebuild in the background.
-   - Go to your live website and reload the page (`Ctrl + F5` or `Cmd + Shift + R`) to verify your edits.
+**Content > Collections:**
+- **Pages** — Controls the core website pages (Home, Food & Drink, Contact, etc.).
+- **Events** — Controls upcoming events (live music, specials, etc.).
+- **News** — Controls news articles.
+
+**Libraries:**
+- **Media Library** — Where you upload images.
 
 ---
 
-## 🏠 Part 3: Visual Top-to-Bottom Guide for the "Pages" Collection
+## 3. How to Upload Images (IMPORTANT — Read This First)
 
-The **Pages** collection controls the core structure and layout of the site. Below is the exact mapping of what each field controls as you scroll down the live website from top to bottom.
+Image uploading in Outstatic is a two-step process. You must upload the image first, then paste the path into the correct field.
 
-### 1. The Homepage (`Pages` -> `home`)
+### Step 1: Upload the image
+1. In the left sidebar, click **Media Library**.
+2. Click the upload button and select your image from your computer.
+3. The image will appear in the library with a filename (e.g., `my-photo-xY3k.jpg`).
+4. **Remember or write down that filename.**
 
-As you scroll down the live [Homepage](https://theshipinnporlockweir.co.uk):
+### Step 2: Paste the path into the correct field
+1. Go to the page you want to edit (e.g., **Pages → Home**).
+2. In the right sidebar, find the **Cover Image** box (it is a text box).
+3. Type the path: `/images/` followed by the exact filename.
+   - Example: `/images/my-photo-xY3k.jpg`
+4. Click **Save**.
 
-1. **The giant background photo at the very top:**
-   ➔ Edit field: **`Cover Image`** (Right sidebar)
-2. **The text "*Historic charm meets modern comfort*" below the logo:**
-   ➔ Edit field: **`Strapline`**
-3. **The 5 paragraphs of text in the middle of the page:**
-   ➔ Edit fields: **`Intro Paragraph 1`** through **`Intro Paragraph 5`**
-4. **The 3 Information Cards at the very bottom of the page:**
-   - **Left Card** (Accommodation): ➔ Edit fields: **`Feature 1 Title`** and **`Feature 1 Description`**
-   - **Center Card** (Pub & Restaurant): ➔ Edit fields: **`Feature 2 Title`** and **`Feature 2 Description`**
-   - **Right Card** (Location/Exmoor): ➔ Edit fields: **`Feature 3 Title`** and **`Feature 3 Description`**
-
-*(Note: If you don't want to use all 5 intro paragraphs, just leave the boxes for Paragraph 4 and 5 completely empty, and they simply won't show up on the website).*
+> **The path is ALWAYS `/images/` followed by the filename you see in the Media Library.**
 
 ---
 
-### 2. The Food & Drink Page (`Pages` -> `food-drink`)
+## 4. How to Edit and Save Any Page
 
-As you scroll down the live Food & Drink page:
+1. In the left sidebar, click **Pages**, then click the page name you want to edit.
+2. The editor opens with two areas:
+   - **Centre screen:** A text editor (only used for News/Events articles — ignore this for Pages).
+   - **Right sidebar:** All the important fields that control the live website layout.
+3. Scroll down the right sidebar to find the field you want to change.
+4. If a field shows **`+ Create`**, click it to open the input box, then type your value.
+5. If a field already has text, click into it and edit directly.
+6. Ensure **Status** says **"Published"** (not Draft).
+7. Click the black **Save** button (top-right).
+8. Wait 1–2 minutes, then refresh the live website to see your changes.
 
-1. **The wide background photo at the very top banner:**
-   ➔ Edit field: **`Cover Image`** (Right sidebar)
-2. **The two columns of text at the top describing the restaurant:**
-   ➔ Edit fields: **`Food & Drink Intro Para 1`** (Left side) and **`Food & Drink Intro Para 2`** (Right side)
-3. **The Drinks Menu section (The lists of beers):**
-   ➔ Edit fields: **`Lagers List`**, **`Ciders List`**, and **`Ales List`**
-   *(Crucial: You must type these separated by commas in the box, for example: `Estrella, Carlsberg, Peroni`)*
-4. **The Breakfast section at the bottom:**
-   ➔ Edit field: **`Breakfast Description`** (The paragraph text)
-   ➔ Edit field: **`Breakfast Times`** (The hours, e.g. "8am - 10am")
-
----
-
-### 3. Contact Details & Hours (`Pages` -> `contact`)
-
-**CRITICAL:** Editing this specific page in Outstatic acts as the "Master Control" for the whole website's contact info.
-
-1. **The wide background photo at the very top of the Contact Page:**
-   ➔ Edit field: **`Cover Image`** (Right sidebar)
-2. **The Phone Number & Email Address (Changes everywhere automatically):**
-   ➔ Edit fields: **`Phone Number`** and **`Email Address`**
-3. **The physical address shown in the black Footer:**
-   ➔ Edit fields: **`Address Line 1`**, **`Address Line 2`**, **`Town`**, and **`Postcode`**
-4. **The Opening Hours table on the Contact page:**
-   ➔ Edit fields: **`Opening Hours (Monday)`** through **`Opening Hours (Sunday)`**
-5. **The Food Service hours shown in the black Footer:**
-   ➔ Edit field: **`Kitchen Close Info`** (e.g. "Food served: 12pm - 9pm")
-6. **The little italic warning note below the opening hours:**
-   ➔ Edit field: **`Seasonal Note`**
+> **Note:** The big text area in the centre of the screen is NOT used for Pages. All page content is controlled by the fields in the right sidebar. You can ignore the centre text completely.
 
 ---
 
-### 4. Header Photos on Other Pages (`Pages` -> `rooms`, `gallery`, `things-to-do`, `news-events`)
+## 5. What Each Field Changes — Page by Page
 
-To change the top background banner image for the remaining pages:
-
-1. Click **Pages** in the sidebar.
-2. Select the page you want to update from the list (`rooms`, `gallery`, `things-to-do`, or `news-events`).
-3. Edit field: **`Cover Image`** (Right sidebar). Delete any existing text path to reveal the upload button.
-4. Click **Save** in the top-right corner.
+Imagine you are scrolling down the live website from top to bottom. Here is exactly what each Outstatic field controls.
 
 ---
 
-## 📅 Part 4: How to Create/Edit News & Events
+### 🏠 THE HOMEPAGE (`Pages` → `Home`)
 
-### How to add a new Event or News post:
-1. Select **Events** or **News** in the sidebar.
-2. Click the **"New"** button in the top right.
-3. Fill in the fields:
-   - **Title:** The headline (e.g., *Sunday Roast Special*).
-   - **Date (Right sidebar):** The publication/display date.
-   - **Cover Image (Right sidebar):** The card photo.
-   - **Description:** A short 2-sentence hook shown on the list page.
-   - **Main Text Area (Center):** Write your full article text. Use the toolbar to add headings or upload inline photos.
-4. Set the **Status** to **"Published"** and click **Save** (top-right).
+As you scroll down [theshipinnporlockweir.co.uk](https://theshipinnporlockweir.co.uk):
 
----
+| What you see on the live website | Field to edit in Outstatic |
+|---|---|
+| **The giant background photo at the very top** (rotates between up to 3 images) | **Cover Image** (Image 1), **Hero Image 2**, **Hero Image 3** |
+| **The italic text below the logo** (*"Historic charm meets modern comfort"*) | **Strapline** |
+| **The 5 paragraphs of text in the middle** | **Intro Paragraph 1** through **Intro Paragraph 5** |
+| **Left card at the bottom** (Accommodation) | **Feature 1 Title** and **Feature 1 Description** |
+| **Centre card at the bottom** (Pub & Restaurant) | **Feature 2 Title** and **Feature 2 Description** |
+| **Right card at the bottom** (Location) | **Feature 3 Title** and **Feature 3 Description** |
 
-## 🎨 Part 5: Image Optimization Requirements
-
-To ensure the website loads quickly for guests on mobile phones, always follow these rules before uploading any photo:
-
-* **Format:** Always upload **`.jpg`** (or `.jpeg`) for photos. Use **`.png`** only for graphic designs or logos.
-* **Orientation:** Hero banners and cover images must be **horizontal (landscape)**.
-* **File Size:** Keep files **under 1MB** if possible. Never upload photos larger than **5MB** (the system will reject them).
-* **Dimensions:** Aim for **1200px to 1920px wide** for header banners.
-
----
-
-## 🛠️ Part 6: Troubleshooting
-
-### "My changes are not showing on the live website"
-1. **Wait:** The site takes 1 to 2 minutes to compile and redeploy.
-2. **Hard Refresh:** Clear your browser's cached files by pressing:
-   - **Windows:** `Ctrl + F5` or `Ctrl + Shift + R`
-   - **Mac:** `Cmd + Shift + R`
-3. **Check Status:** Verify that you changed the **Status** field from "Draft" to **"Published"** in the sidebar before clicking Save.
-
-### "I cannot log in"
-1. Open your browser in Private/Incognito mode and try logging in.
-2. Clear your browser cookies and cache.
-3. Ensure you are signed in to the correct GitHub account in another tab.
+**How to change the rotating hero images:**
+1. Upload up to 3 images via the **Media Library** (see Section 3).
+2. Go to **Pages → Home**.
+3. In the right sidebar:
+   - Paste the first image path into **Cover Image** (e.g., `/images/exterior-view.jpg`)
+   - Paste the second image path into **Hero Image 2** (e.g., `/images/harbour-view.jpg`)
+   - Paste the third image path into **Hero Image 3** (e.g., `/images/sunset-view.jpg`)
+4. Click **Save**. The homepage will automatically crossfade between all uploaded images.
+5. If you only want 1 or 2 images, just leave the other fields empty.
 
 ---
 
-*Manual Version 1.3 - Updated July 2026*  
-*Maintained by [itsmyapp.co.uk](https://itsmyapp.co.uk) — hello@itsmyapp.co.uk*
+### 🍷 THE FOOD & DRINK PAGE (`Pages` → `Food & Drink`)
+
+As you scroll down the Food & Drink page:
+
+| What you see on the live website | Field to edit in Outstatic |
+|---|---|
+| **The wide banner photo at the top** | **Cover Image** |
+| **Left column of intro text** | **Food & Drink Intro Para 1** |
+| **Right column of intro text** | **Food & Drink Intro Para 2** |
+| **Lagers list in the drinks menu** | **Lagers List** |
+| **Ciders list in the drinks menu** | **Ciders List** |
+| **Ales list in the drinks menu** | **Ales List** |
+| **Breakfast description text** | **Breakfast Description** |
+| **Breakfast times** | **Breakfast Times** |
+
+> **Drinks lists must be typed separated by commas:** `Estrella, Carlsberg, Peroni, Birra Moretti`
+
+---
+
+### 📞 CONTACT PAGE (`Pages` → `Contact`)
+
+**Editing this page changes contact info across the ENTIRE website** (Footer, Booking sections, Legal pages — everywhere).
+
+| What you see on the live website | Field to edit in Outstatic |
+|---|---|
+| **Banner photo at the top** | **Cover Image** |
+| **Phone number (everywhere on the site)** | **Phone Number** |
+| **Email address (everywhere on the site)** | **Email Address** |
+| **Street address in the Footer** | **Address Line 1**, **Address Line 2**, **Town**, **Postcode** |
+| **Monday opening hours** | **Opening Hours (Monday)** |
+| **Tuesday opening hours** | **Opening Hours (Tuesday)** |
+| **Wednesday opening hours** | **Opening Hours (Wednesday)** |
+| **Thursday opening hours** | **Opening Hours (Thursday)** |
+| **Friday opening hours** | **Opening Hours (Friday)** |
+| **Saturday opening hours** | **Opening Hours (Saturday)** |
+| **Sunday opening hours** | **Opening Hours (Sunday)** |
+| **Food serving hours in the Footer** | **Kitchen Close Info** |
+| **Italic note below opening hours** | **Seasonal Note** |
+
+---
+
+### 🛏️ OTHER PAGES (`Rooms`, `Gallery`, `Things to Do`, `News & Events`)
+
+These pages only have one editable field:
+
+| What you see on the live website | Field to edit in Outstatic |
+|---|---|
+| **The banner photo at the top of the page** | **Cover Image** |
+
+To change it: upload an image to the Media Library, then paste the path (e.g., `/images/rooms-header.jpg`) into the **Cover Image** text box.
+
+---
+
+## 6. How to Add a New Event or News Article
+
+1. Click **Events** or **News** in the left sidebar.
+2. Click the **"New"** button (top right).
+3. **In the centre screen:** Type your headline in the **Title** box, then write the full article below it.
+4. **In the right sidebar:**
+   - Pick the **Date**.
+   - Add a **Cover Image** (upload to Media Library first, then paste the `/images/filename` path).
+   - Add a short **Description** (this is the preview text shown on the list page).
+5. Change **Status** to **"Published"**.
+6. Click **Save**.
+
+---
+
+## 7. How to Delete an Event or News Article
+
+1. Click **Events** or **News** in the left sidebar.
+2. Click the trash can icon (🗑️) next to the item you want to delete.
+3. Confirm the deletion.
+
+---
+
+## 8. Quick Reference — Image Path Format
+
+Every image path follows the same pattern:
+
+```
+/images/[exact-filename-from-media-library]
+```
+
+Examples:
+- `/images/ship-inn-front-view-c2Nj.png`
+- `/images/harbour-sunset.jpg`
+- `/images/food-platter-xK9m.jpeg`
+
+---
+
+*End of Manual*

@@ -16,6 +16,14 @@
       "type": "Image",
       "title": "Cover Image"
     },
+    "heroImage2": {
+      "type": "Image",
+      "title": "Hero Image 2 (Optional)"
+    },
+    "heroImage3": {
+      "type": "Image",
+      "title": "Hero Image 3 (Optional)"
+    },
     "content": {
       "type": "String",
       "title": "Content",

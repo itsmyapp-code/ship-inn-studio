@@ -1,7 +1,7 @@
 import { getDocumentBySlug } from 'outstatic/server'
 
 const PAGE_FIELDS = [
-  'title', 'slug', 'status', 'coverImage', 'heroAlt',
+  'title', 'slug', 'status', 'coverImage', 'heroImage2', 'heroImage3', 'heroAlt',
   'phone', 'email', 'addressLine1', 'addressLine2', 'town', 'postcode',
   'openingHoursMon', 'openingHoursTue', 'openingHoursWed', 'openingHoursThu', 'openingHoursFri', 'openingHoursSat', 'openingHoursSun',
   'kitchenClose', 'breakfastTimes', 'seasonalNote',
@@ -15,6 +15,8 @@ export interface PageData {
   slug: string
   status: string
   coverImage?: string
+  heroImage2?: string
+  heroImage3?: string
   heroAlt?: string
   phone?: string
   email?: string
