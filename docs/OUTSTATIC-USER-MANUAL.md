@@ -23,8 +23,14 @@ Whenever you edit *any* page or post on the website, you will follow these exact
 
 1. **Select the Content Type** in the left sidebar menu (either **Pages**, **Events**, or **News**).
 2. **Open the Document** you want to change from the list (or click **"New"** to create a News post or Event).
-3. **Make your changes** in the center fields (for text) and the right sidebar (for Status, Date, or Cover Image).
-4. **Publish your changes:**
+3. **Locate the Fields:**
+   - Standard content (Title, main description body) is edited in the **center editor**.
+   - Custom fields (like `Cover Image`, `Phone`, `Email`, `Opening Hours`, `Strapline`, etc.) are located in the **right sidebar** under the `Slug*` field.
+4. **Edit Custom Fields using `+ Create`:**
+   - In the right sidebar, any custom fields that are currently empty or not yet filled in will display a **`+ Create`** button next to them.
+   - **Click the `+ Create` button** next to the field you want to modify (e.g. click `+ Create` next to `Cover Image`).
+   - This opens the input widget (image uploader, text box, etc.) allowing you to enter your data or upload a file.
+5. **Publish your changes:**
    - In the right-hand sidebar, ensure the **Status** is set to **"Published"** (not Draft).
    - Click the black **"Save"** button in the top-right corner.
    - **Wait 1–2 minutes** for the website to automatically rebuild in the background.
