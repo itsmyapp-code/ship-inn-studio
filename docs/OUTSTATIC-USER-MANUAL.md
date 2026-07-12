@@ -26,10 +26,9 @@ Whenever you edit *any* page or post on the website, you will follow these exact
 3. **Locate the Fields:**
    - Standard content (Title, main description body) is edited in the **center editor**.
    - Custom fields (like `Cover Image`, `Phone`, `Email`, `Opening Hours`, `Strapline`, etc.) are located in the **right sidebar** under the `Slug*` field.
-4. **Edit Custom Fields using `+ Create`:**
-   - In the right sidebar, any custom fields that are currently empty or not yet filled in will display a **`+ Create`** button next to them.
-   - **Click the `+ Create` button** next to the field you want to modify (e.g. click `+ Create` next to `Cover Image`).
-   - This opens the input widget (image uploader, text box, etc.) allowing you to enter your data or upload a file.
+4. **Edit Custom Fields using `+ Create` or text boxes:**
+   - In the right sidebar, any custom fields that are currently empty will display a **`+ Create`** button. Click it to open the input widget.
+   - **Important for Images:** If a field like **Cover Image** already has an image set, it will display a text box with the image path (e.g., `/images/exterior/...`). **To upload a new image, delete all the text in that box.** Once the box is empty, the "Upload" button will appear!
 5. **Publish your changes:**
    - In the right-hand sidebar, ensure the **Status** is set to **"Published"** (not Draft).
    - Click the black **"Save"** button in the top-right corner.
@@ -49,9 +48,9 @@ Use this document to edit [theshipinnporlockweir.co.uk](https://theshipinnporloc
 #### Simple Step-by-Step Instructions:
 1. In the sidebar, click **Pages**, then click **Home** in the list.
 2. **To change the Top Hero Photo:**
-   - Go to the **right-hand column** of your screen.
-   - Scroll down to the **Cover Image** box.
-   - Click **"From file"** to select and upload a new horizontal photo from your computer.
+   - Go to the **right-hand column** of your screen and find the **Cover Image** box.
+   - If it shows a text path (like `/images/exterior/...`), **delete all the text** in the box.
+   - The box will transform into an Upload button. Click it to upload a new horizontal photo from your computer.
 3. **To change the logo text subtitle:**
    - Find the **Homepage Strapline** field in the center form.
    - Edit the text (default is *Historic charm meets modern comfort*).
