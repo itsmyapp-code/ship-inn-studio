@@ -1,7 +1,18 @@
 {
-  "commit": "",
-  "generated": "2026-02-03T12:42:13.349Z",
+  "commit": "aaa05a766907983b96d0e5b056dc5a8e0fed3e94",
+  "generated": "2026-07-12T23:48:44.465Z",
   "media": [
+    {
+      "__outstatic": {
+        "commit": "aaa05a766907983b96d0e5b056dc5a8e0fed3e94",
+        "hash": "56788337",
+        "path": "public/images/ship-inn-front-view-c2Nj.png"
+      },
+      "alt": "",
+      "filename": "ship-inn-front-view-c2Nj.png",
+      "publishedAt": "2026-07-12T23:48:44.465Z",
+      "type": "image"
+    },
     {
       "__outstatic": {
         "commit": "",
