@@ -37,94 +37,73 @@ Whenever you edit *any* page or post on the website, you will follow these exact
 
 ---
 
-## 🏠 Part 3: Step-by-Step Guide for the "Pages" Collection
+## 🏠 Part 3: Visual Top-to-Bottom Guide for the "Pages" Collection
 
-The **Pages** collection controls the core structure and layout of the site. Below are the exact instructions for editing each individual page.
+The **Pages** collection controls the core structure and layout of the site. Below is the exact mapping of what each field controls as you scroll down the live website from top to bottom.
 
-### 1. How to Update the Homepage (`Pages` -> `home`)
+### 1. The Homepage (`Pages` -> `home`)
 
-Use this document to edit [theshipinnporlockweir.co.uk](https://theshipinnporlockweir.co.uk).
+As you scroll down the live [Homepage](https://theshipinnporlockweir.co.uk):
 
-#### Simple Step-by-Step Instructions:
-1. In the sidebar, click **Pages**, then click **Home** in the list.
-2. **To change the Top Hero Photo:**
-   - Go to the **right-hand column** of your screen and find the **Cover Image** box.
-   - If it shows a text path (like `/images/exterior/...`), **delete all the text** in the box.
-   - The box will transform into an Upload button. Click it to upload a new horizontal photo from your computer.
-3. **To change the logo text subtitle:**
-   - Find the **Homepage Strapline** field in the center form.
-   - Edit the text (default is *Historic charm meets modern comfort*).
-4. **To change the introduction copy:**
-   - Locate the fields **Intro Paragraph 1** through **Intro Paragraph 5** in the center form.
-   - Type your new paragraphs directly into these boxes.
-5. **To change the 3 cards at the bottom of the homepage:**
-   - Locate **Feature 1 Title** & **Feature 1 Description** (controls the Accommodation card).
-   - Locate **Feature 2 Title** & **Feature 2 Description** (controls the Pub & Restaurant card).
-   - Locate **Feature 3 Title** & **Feature 3 Description** (controls the Location card).
-6. Verify the **Status** is set to **"Published"** and click **Save** (top-right).
+1. **The giant background photo at the very top:**
+   ➔ Edit field: **`Cover Image`** (Right sidebar)
+2. **The text "*Historic charm meets modern comfort*" below the logo:**
+   ➔ Edit field: **`Strapline`**
+3. **The 5 paragraphs of text in the middle of the page:**
+   ➔ Edit fields: **`Intro Paragraph 1`** through **`Intro Paragraph 5`**
+4. **The 3 Information Cards at the very bottom of the page:**
+   - **Left Card** (Accommodation): ➔ Edit fields: **`Feature 1 Title`** and **`Feature 1 Description`**
+   - **Center Card** (Pub & Restaurant): ➔ Edit fields: **`Feature 2 Title`** and **`Feature 2 Description`**
+   - **Right Card** (Location/Exmoor): ➔ Edit fields: **`Feature 3 Title`** and **`Feature 3 Description`**
+
+*(Note: If you don't want to use all 5 intro paragraphs, just leave the boxes for Paragraph 4 and 5 completely empty, and they simply won't show up on the website).*
 
 ---
 
-### 2. How to Update the Food & Drink Page (`Pages` -> `food-drink`)
+### 2. The Food & Drink Page (`Pages` -> `food-drink`)
 
-Use this document to edit the **From the Galley & Saloon** page.
+As you scroll down the live Food & Drink page:
 
-#### Simple Step-by-Step Instructions:
-1. In the sidebar, click **Pages**, then click **Food & Drink** in the list.
-2. **To change the Top Header Banner Photo:**
-   - Go to the **right-hand column** and scroll to the **Cover Image** box.
-   - Click **"From file"** to upload a new horizontal background photo.
-3. **To change the restaurant description text:**
-   - Edit **Food & Drink Intro Para 1** and **Food & Drink Intro Para 2** in the center form.
-4. **To update the drinks lists on the page (Lagers, Ciders, Ales):**
-   - Locate the **Lagers List**, **Ciders List**, and **Ales List** text fields in the center form.
-   - **Crucial:** Type the drink names separated *only by commas* (e.g., `Estrella, Carlsberg, Peroni, Birra Moretti`).
-5. **To update the residents' breakfast info:**
-   - Edit the **Breakfast Description** field.
-   - Edit the **Breakfast Times** field (e.g. `8am - 10am (Residents Only)`).
-6. Verify the **Status** is set to **"Published"** and click **Save** (top-right).
+1. **The wide background photo at the very top banner:**
+   ➔ Edit field: **`Cover Image`** (Right sidebar)
+2. **The two columns of text at the top describing the restaurant:**
+   ➔ Edit fields: **`Food & Drink Intro Para 1`** (Left side) and **`Food & Drink Intro Para 2`** (Right side)
+3. **The Drinks Menu section (The lists of beers):**
+   ➔ Edit fields: **`Lagers List`**, **`Ciders List`**, and **`Ales List`**
+   *(Crucial: You must type these separated by commas in the box, for example: `Estrella, Carlsberg, Peroni`)*
+4. **The Breakfast section at the bottom:**
+   ➔ Edit field: **`Breakfast Description`** (The paragraph text)
+   ➔ Edit field: **`Breakfast Times`** (The hours, e.g. "8am - 10am")
 
 ---
 
-### 3. How to Update Contact Details & Opening Hours (`Pages` -> `contact`)
+### 3. Contact Details & Hours (`Pages` -> `contact`)
 
-**CRITICAL:** Editing this document updates details **globally** across the Contact page, Footer, Rooms booking call-to-action, and all Legal/Privacy policy pages automatically.
+**CRITICAL:** Editing this specific page in Outstatic acts as the "Master Control" for the whole website's contact info.
 
-#### Simple Step-by-Step Instructions:
-1. In the sidebar, click **Pages**, then click **Contact** in the list.
-2. **To change the Contact Banner Photo & Form Photo:**
-   - Go to the **right-hand column** and scroll to the **Cover Image** box.
-   - Click **"From file"** to upload a new horizontal photo. This changes both the top banner and the image displayed next to the mail form.
-3. **To change the phone number site-wide:**
-   - Edit the **Phone Number** field in the center form.
-4. **To change the email address site-wide:**
-   - Edit the **Email Address** field in the center form.
-5. **To update the physical address:**
-   - Edit **Address Line 1**, **Address Line 2**, **Town/City**, and **Postcode** in the center form.
-6. **To change the daily opening times:**
-   - Find the **Opening Hours (Monday)** through **Opening Hours (Sunday)** fields.
-   - Edit the times inside these boxes (e.g. `11:00 AM - 11:00 PM`).
-7. **To change the food serving hours:**
-   - Edit the **Kitchen Close Info** field (e.g. `Food served: 12:00 PM - 9:00 PM`).
-8. **To add a seasonal warning or temporary note below the hours:**
-   - Type your note inside the **Opening Hours Seasonal Note** field.
-9. Verify the **Status** is set to **"Published"** and click **Save** (top-right).
+1. **The wide background photo at the very top of the Contact Page:**
+   ➔ Edit field: **`Cover Image`** (Right sidebar)
+2. **The Phone Number & Email Address (Changes everywhere automatically):**
+   ➔ Edit fields: **`Phone Number`** and **`Email Address`**
+3. **The physical address shown in the black Footer:**
+   ➔ Edit fields: **`Address Line 1`**, **`Address Line 2`**, **`Town`**, and **`Postcode`**
+4. **The Opening Hours table on the Contact page:**
+   ➔ Edit fields: **`Opening Hours (Monday)`** through **`Opening Hours (Sunday)`**
+5. **The Food Service hours shown in the black Footer:**
+   ➔ Edit field: **`Kitchen Close Info`** (e.g. "Food served: 12pm - 9pm")
+6. **The little italic warning note below the opening hours:**
+   ➔ Edit field: **`Seasonal Note`**
 
 ---
 
-### 4. How to Update Header Photos on Other Pages (`Pages` -> `rooms`, `gallery`, `things-to-do`, `news-events`)
+### 4. Header Photos on Other Pages (`Pages` -> `rooms`, `gallery`, `things-to-do`, `news-events`)
 
 To change the top background banner image for the remaining pages:
 
 1. Click **Pages** in the sidebar.
-2. Select the page you want to update from the list:
-   - **`rooms`** ➔ Guest Rooms page
-   - **`gallery`** ➔ Photo Gallery page
-   - **`things-to-do`** ➔ Local guide page
-   - **`news-events`** ➔ News & Events list header
-3. Go to the **right-hand column** of your screen and locate the **Cover Image** box.
-4. Click **"From file"** to select and upload a new horizontal photo.
-5. Click **Save** in the top-right corner.
+2. Select the page you want to update from the list (`rooms`, `gallery`, `things-to-do`, or `news-events`).
+3. Edit field: **`Cover Image`** (Right sidebar). Delete any existing text path to reveal the upload button.
+4. Click **Save** in the top-right corner.
 
 ---
 
