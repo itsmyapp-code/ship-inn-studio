@@ -1,155 +1,169 @@
-# The Ship Inn: Website CMS Manual
-System: Outstatic CMS
+# The Ship Inn Porlock Weir: Website CMS Manual
+System: **Outstatic CMS**
+
+This manual provides simple, detailed, and accurate step-by-step instructions for editing the text, phone numbers, email addresses, opening hours, and banner images across your entire website.
 
 ---
 
-## 🚀 Quick Access & Login
+## 🚀 Part 1: How to Log In
 
-| Destination | Link |
-|-------------|------|
-| **CMS Dashboard** | [theshipinnporlockweir.co.uk/outstatic](https://theshipinnporlockweir.co.uk/outstatic) |
-| **Live Website**  | [theshipinnporlockweir.co.uk](https://theshipinnporlockweir.co.uk) |
-
-### How to Log In:
-1. Navigate to the **CMS Dashboard** link above.
-2. Click **"Sign in with GitHub"**.
-3. Use the following credentials:
-   - **Username:** `hello@theshipinnporlockweir.co.uk`
+1. Open your web browser and go to:
+   **[theshipinnporlockweir.co.uk/outstatic](https://theshipinnporlockweir.co.uk/outstatic)**
+2. Click the black button: **"Sign in with GitHub"**.
+3. Enter your login credentials:
+   - **Username / Email:** `hello@theshipinnporlockweir.co.uk`
    - **Password:** `theshipinnta248pb!`
-4. If prompted, authorize the application.
+4. If this is your first time logging in, click **"Authorize"** if prompted. You are now on the dashboard!
 
 ---
 
-## ⚡ Core Workflow: How to Update the Site
+## ⚡ Part 2: The Core Workflow
 
-### Phase 1: Select Content Type
-In the left sidebar, choose the type of content you want to edit:
-- **Pages**: Controls core page layouts, hero images, contact info, opening hours, and static text.
-- **Events**: Controls upcoming events listings.
-- **News**: Controls news articles and updates.
+Whenever you edit *any* page or post on the website, you will follow these exact 4 steps:
 
-### Phase 2: Create or Edit a Document
-- **To edit existing content:** Click on the document title in the list (e.g., click `home` inside **Pages**).
-- **To create new content (News/Events only):** Click the **"New"** button in the top right.
-
-### Phase 3: Fill in standard fields
-| Field | Requirement | Best Practice |
-|-------|-------------|---------------|
-| **Title** | ✅ Required | Keep it clear and descriptive (e.g., "Live Music Night"). |
-| **Date** | ✅ Required | Determines the sorting order of News/Events on the website. |
-| **Status** | ✅ Required | Keep as **"Draft"** while writing. Switch to **"Published"** only when ready to go live. |
-| **Description** | Recommended | 2-3 sentences. Appears on the main listing card. |
-| **Cover Image** | Recommended | Banner image. Horizontal/Landscape orientation works best. |
-
-### Phase 4: Formatting & Images in the Editor
-- **Rich Text Editor:** Highlight text to see options or use keyboard shortcuts:
-  - **Bold:** `Ctrl+B` (Windows) / `Cmd+B` (Mac)
-  - **Italic:** `Ctrl+I` (Windows) / `Cmd+I` (Mac)
-  - **Headings:** Use the dropdown menu to structure long text blocks.
-  - **Lists:** Use bullet points or numbers.
-- **Image Constraints:**
-  - **Format:** `JPG` for photos, `PNG` for logos.
-  - **File Size:** Max 1MB recommended (5MB hard limit). Width of 1200px is ideal.
-- **How to Upload Images:**
-  - **For Cover/Hero Banners:** Use the **Cover Image** box in the right sidebar.
-  - **For Inline Images:** Place cursor in the text box, press `/`, scroll down and click **Image**, then upload.
+1. **Select the Content Type** in the left sidebar menu (either **Pages**, **Events**, or **News**).
+2. **Open the Document** you want to change from the list (or click **"New"** to create a News post or Event).
+3. **Make your changes** in the center fields (for text) and the right sidebar (for Status, Date, or Cover Image).
+4. **Publish your changes:**
+   - In the right-hand sidebar, ensure the **Status** is set to **"Published"** (not Draft).
+   - Click the black **"Save"** button in the top-right corner.
+   - **Wait 1–2 minutes** for the website to automatically rebuild in the background.
+   - Go to your live website and reload the page (`Ctrl + F5` or `Cmd + Shift + R`) to verify your edits.
 
 ---
 
-## 🗺️ Master Mapping: What Changes What?
+## 🏠 Part 3: Step-by-Step Guide for the "Pages" Collection
 
-The new **Pages** collection lets you edit content across the entire website by modifying specific fields in dedicated documents:
+The **Pages** collection controls the core structure and layout of the site. Below are the exact instructions for editing each individual page.
 
-### 🏠 1. Homepage Configuration (`Pages` -> `home`)
-Modify these fields to update [theshipinnporlockweir.co.uk](https://theshipinnporlockweir.co.uk):
+### 1. How to Update the Homepage (`Pages` -> `home`)
 
-| Field Name in CMS | Location on Live Website | What it Controls |
-|:---|:---|:---|
-| **Cover Image** | Top of Homepage | Full-screen background image of the main hero section. |
-| **Hero Image Alt Text** | Under the hood | Screen reader description of the hero image (accessibility). |
-| **Homepage Strapline** | Below Logo overlay | The welcome sub-headline (e.g., *Historic charm meets modern comfort*). |
-| **Intro Paragraph 1 - 5** | "Your Coastal Retreat..." | The 5 intro copy paragraphs in the center of the homepage. |
-| **Feature 1 Title & Desc** | Left Feature Card | Heading and text for the accommodation feature card (links to Cabins). |
-| **Feature 2 Title & Desc** | Center Feature Card | Heading and text for the pub & restaurant feature card. |
-| **Feature 3 Title & Desc** | Right Feature Card | Heading and text for the location/Exmoor feature card. |
+Use this document to edit [theshipinnporlockweir.co.uk](https://theshipinnporlockweir.co.uk).
 
----
-
-### 🍷 2. Food & Drink Configuration (`Pages` -> `food-drink`)
-Modify these fields to update the **From the Galley & Saloon** page:
-
-| Field Name in CMS | Location on Live Website | What it Controls |
-|:---|:---|:---|
-| **Cover Image** | Top Banner | Background photo for the page header banner. |
-| **Food & Drink Intro Para 1 & 2**| Below header | The intro text columns describing the restaurant/sourcing. |
-| **Lagers List** | Drinks -> Lagers | Comma-separated list of lagers (e.g. *Estrella, Carlsberg, Peretti*). |
-| **Ciders List** | Drinks -> Ciders | Comma-separated list of ciders (e.g. *Thatchers, Hawkstone*). |
-| **Ales List** | Drinks -> Ales | Comma-separated list of cask/guest ales (e.g. *Otter Amber, Guinness*). |
-| **Breakfast Description** | Breakfast section | Text block explaining breakfast offerings. |
-| **Breakfast Times** | Breakfast section | Residents' breakfast hours (e.g. *8am - 10am (Residents Only)*). |
+#### Simple Step-by-Step Instructions:
+1. In the sidebar, click **Pages**, then click **Home** in the list.
+2. **To change the Top Hero Photo:**
+   - Go to the **right-hand column** of your screen.
+   - Scroll down to the **Cover Image** box.
+   - Click **"From file"** to select and upload a new horizontal photo from your computer.
+3. **To change the logo text subtitle:**
+   - Find the **Homepage Strapline** field in the center form.
+   - Edit the text (default is *Historic charm meets modern comfort*).
+4. **To change the introduction copy:**
+   - Locate the fields **Intro Paragraph 1** through **Intro Paragraph 5** in the center form.
+   - Type your new paragraphs directly into these boxes.
+5. **To change the 3 cards at the bottom of the homepage:**
+   - Locate **Feature 1 Title** & **Feature 1 Description** (controls the Accommodation card).
+   - Locate **Feature 2 Title** & **Feature 2 Description** (controls the Pub & Restaurant card).
+   - Locate **Feature 3 Title** & **Feature 3 Description** (controls the Location card).
+6. Verify the **Status** is set to **"Published"** and click **Save** (top-right).
 
 ---
 
-### 📞 3. Contact details & Hours (`Pages` -> `contact`)
-**CRITICAL:** Changing fields in this document automatically updates the details globally across the **Contact Page, Footer, Rooms page, and reservation forms**:
+### 2. How to Update the Food & Drink Page (`Pages` -> `food-drink`)
 
-| Field Name in CMS | Location on Live Website | What it Controls |
-|:---|:---|:---|
-| **Cover Image** | Top Banner & Contact Image | Background photo for the page header banner AND the image next to the contact form. |
-| **Phone Number** | Global | Updates the telephone links in the **Footer**, **Rooms CTA**, **Food & Drink Reservation**, and **Contact Page**. |
-| **Email Address** | Global | Updates the email links in the **Footer**, **Contact Page**, **Reservation forms**, and all **Legal Policies** (Privacy, Cookies, etc.). |
-| **Address Line 1 & 2, Town, Postcode** | Footer & Contact Page | Updates the physical address text blocks. |
-| **Opening Hours (Mon - Sun)** | Contact Page | Sets the daily Bar opening times listed on the Contact page. |
-| **Kitchen Close Info** | Footer & Contact Page | Food serving hours (e.g. *Food served: 12:00 PM - 9:00 PM*). |
-| **Breakfast Times** | Contact Page | Breakfast serving times listed on the Contact page. |
-| **Opening Hours Seasonal Note** | Contact Page | Custom italic note shown at the bottom of the opening hours block. |
+Use this document to edit the **From the Galley & Saloon** page.
 
----
-
-### 🛏️ 4. Header Banners (`Pages` -> `rooms`, `things-to-do`, `gallery`, `news-events`)
-To update the top banner background images for other sections:
-
-| Document Slug | Page Location | Field to Edit |
-|:---|:---|:---|
-| **`rooms`** | Accommodations page | Edit **Cover Image** to change the header photo. |
-| **`things-to-do`**| Things to do page | Edit **Cover Image** to change the header photo. |
-| **`gallery`** | Photo Gallery page | Edit **Cover Image** to change the header photo. |
-| **`news-events`**| News & Events listing | Edit **Cover Image** to change the header photo. |
+#### Simple Step-by-Step Instructions:
+1. In the sidebar, click **Pages**, then click **Food & Drink** in the list.
+2. **To change the Top Header Banner Photo:**
+   - Go to the **right-hand column** and scroll to the **Cover Image** box.
+   - Click **"From file"** to upload a new horizontal background photo.
+3. **To change the restaurant description text:**
+   - Edit **Food & Drink Intro Para 1** and **Food & Drink Intro Para 2** in the center form.
+4. **To update the drinks lists on the page (Lagers, Ciders, Ales):**
+   - Locate the **Lagers List**, **Ciders List**, and **Ales List** text fields in the center form.
+   - **Crucial:** Type the drink names separated *only by commas* (e.g., `Estrella, Carlsberg, Peroni, Birra Moretti`).
+5. **To update the residents' breakfast info:**
+   - Edit the **Breakfast Description** field.
+   - Edit the **Breakfast Times** field (e.g. `8am - 10am (Residents Only)`).
+6. Verify the **Status** is set to **"Published"** and click **Save** (top-right).
 
 ---
 
-## 🟢 Going Live (Publishing)
+### 3. How to Update Contact Details & Opening Hours (`Pages` -> `contact`)
 
-This website is static, meaning it rebuilds itself securely in the background whenever you save your changes.
+**CRITICAL:** Editing this document updates details **globally** across the Contact page, Footer, Rooms booking call-to-action, and all Legal/Privacy policy pages automatically.
 
-1. **Set Status:** Change status from **"Draft"** to **"Published"** in the right sidebar.
-2. **Save:** Click the **"Save"** button in the top right.
-3. **Wait:** The website takes **1-2 minutes** to build and push the new version live.
-4. **Verify:** Open the live site to check the changes. If they don't appear immediately, wait another minute and perform a **"Hard Refresh"** (`Ctrl+Shift+R` on Windows, `Cmd+Shift+R` on Mac).
-
----
-
-## 🛠️ Troubleshooting & Safety
-
-### Common Issues
-* **"Changes aren't showing"**: Wait 2-3 minutes for the rebuild to finish. Perform a hard refresh to clear browser cache.
-* **"Images won't upload"**: Double-check that the file size is under 5MB (preferably under 1MB). Convert it to a `.jpg` or `.png` and try again.
-* **"I can't log in"**: Clear browser cookies. Ensure you are logged into the correct GitHub account.
-
-### Danger Zone 🗑️
-* **Deleting Content:** Open the document and click the **trash icon** in the right sidebar.
-* **Warning:** Deletion is permanent and cannot be undone.
-
----
-
-## ✅ Pre-Flight Checklist
-Before clicking **Save** on a published document:
-- [ ] Is the publication **Date** correct?
-- [ ] Is the **Cover Image** high quality and in landscape orientation?
-- [ ] Did you use **Headings** (H2, H3) to structure any long text blocks?
-- [ ] Is the **Status** set to **Published**?
+#### Simple Step-by-Step Instructions:
+1. In the sidebar, click **Pages**, then click **Contact** in the list.
+2. **To change the Contact Banner Photo & Form Photo:**
+   - Go to the **right-hand column** and scroll to the **Cover Image** box.
+   - Click **"From file"** to upload a new horizontal photo. This changes both the top banner and the image displayed next to the mail form.
+3. **To change the phone number site-wide:**
+   - Edit the **Phone Number** field in the center form.
+4. **To change the email address site-wide:**
+   - Edit the **Email Address** field in the center form.
+5. **To update the physical address:**
+   - Edit **Address Line 1**, **Address Line 2**, **Town/City**, and **Postcode** in the center form.
+6. **To change the daily opening times:**
+   - Find the **Opening Hours (Monday)** through **Opening Hours (Sunday)** fields.
+   - Edit the times inside these boxes (e.g. `11:00 AM - 11:00 PM`).
+7. **To change the food serving hours:**
+   - Edit the **Kitchen Close Info** field (e.g. `Food served: 12:00 PM - 9:00 PM`).
+8. **To add a seasonal warning or temporary note below the hours:**
+   - Type your note inside the **Opening Hours Seasonal Note** field.
+9. Verify the **Status** is set to **"Published"** and click **Save** (top-right).
 
 ---
 
-*Manual Version 1.2 - Updated July 2026*  
-*Provided by [itsmyapp.co.uk](https://itsmyapp.co.uk) — hello@itsmyapp.co.uk*
+### 4. How to Update Header Photos on Other Pages (`Pages` -> `rooms`, `gallery`, `things-to-do`, `news-events`)
+
+To change the top background banner image for the remaining pages:
+
+1. Click **Pages** in the sidebar.
+2. Select the page you want to update from the list:
+   - **`rooms`** ➔ Guest Rooms page
+   - **`gallery`** ➔ Photo Gallery page
+   - **`things-to-do`** ➔ Local guide page
+   - **`news-events`** ➔ News & Events list header
+3. Go to the **right-hand column** of your screen and locate the **Cover Image** box.
+4. Click **"From file"** to select and upload a new horizontal photo.
+5. Click **Save** in the top-right corner.
+
+---
+
+## 📅 Part 4: How to Create/Edit News & Events
+
+### How to add a new Event or News post:
+1. Select **Events** or **News** in the sidebar.
+2. Click the **"New"** button in the top right.
+3. Fill in the fields:
+   - **Title:** The headline (e.g., *Sunday Roast Special*).
+   - **Date (Right sidebar):** The publication/display date.
+   - **Cover Image (Right sidebar):** The card photo.
+   - **Description:** A short 2-sentence hook shown on the list page.
+   - **Main Text Area (Center):** Write your full article text. Use the toolbar to add headings or upload inline photos.
+4. Set the **Status** to **"Published"** and click **Save** (top-right).
+
+---
+
+## 🎨 Part 5: Image Optimization Requirements
+
+To ensure the website loads quickly for guests on mobile phones, always follow these rules before uploading any photo:
+
+* **Format:** Always upload **`.jpg`** (or `.jpeg`) for photos. Use **`.png`** only for graphic designs or logos.
+* **Orientation:** Hero banners and cover images must be **horizontal (landscape)**.
+* **File Size:** Keep files **under 1MB** if possible. Never upload photos larger than **5MB** (the system will reject them).
+* **Dimensions:** Aim for **1200px to 1920px wide** for header banners.
+
+---
+
+## 🛠️ Part 6: Troubleshooting
+
+### "My changes are not showing on the live website"
+1. **Wait:** The site takes 1 to 2 minutes to compile and redeploy.
+2. **Hard Refresh:** Clear your browser's cached files by pressing:
+   - **Windows:** `Ctrl + F5` or `Ctrl + Shift + R`
+   - **Mac:** `Cmd + Shift + R`
+3. **Check Status:** Verify that you changed the **Status** field from "Draft" to **"Published"** in the sidebar before clicking Save.
+
+### "I cannot log in"
+1. Open your browser in Private/Incognito mode and try logging in.
+2. Clear your browser cookies and cache.
+3. Ensure you are signed in to the correct GitHub account in another tab.
+
+---
+
+*Manual Version 1.3 - Updated July 2026*  
+*Maintained by [itsmyapp.co.uk](https://itsmyapp.co.uk) — hello@itsmyapp.co.uk*
