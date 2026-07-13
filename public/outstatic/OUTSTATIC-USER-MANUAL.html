@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Ship Inn Porlock Weir: Complete CMS User Manual</title>
+    <style>
+        :root {
+            --primary: #1e3a8a;
+            --text-main: #334155;
+            --bg-light: #f8fafc;
+            --border: #e2e8f0;
+        }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            color: var(--text-main);
+            line-height: 1.6;
+            margin: 0;
+            padding: 0;
+            background-color: var(--bg-light);
+        }
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: white;
+            padding: 40px 60px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+        .header {
+            text-align: center;
+            border-bottom: 2px solid var(--primary);
+            padding-bottom: 20px;
+            margin-bottom: 40px;
+        }
+        .header img.logo {
+            max-height: 120px;
+            margin-bottom: 20px;
+        }
+        h1 {
+            color: var(--primary);
+            font-size: 2.2em;
+            margin: 0;
+        }
+        h2 {
+            color: var(--primary);
+            border-bottom: 1px solid var(--border);
+            padding-bottom: 10px;
+            margin-top: 40px;
+        }
+        h3 {
+            color: #475569;
+            margin-top: 30px;
+        }
+        a {
+            color: #2563eb;
+            text-decoration: none;
+        }
+        a:hover {
+            text-decoration: underline;
+        }
+        .step-box {
+            background: var(--bg-light);
+            border: 1px solid var(--border);
+            border-left: 4px solid var(--primary);
+            padding: 20px;
+            border-radius: 4px;
+            margin-bottom: 20px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 30px;
+        }
+        th, td {
+            padding: 12px 15px;
+            border: 1px solid var(--border);
+            text-align: left;
+        }
+        th {
+            background-color: var(--primary);
+            color: white;
+        }
+        tr:nth-child(even) {
+            background-color: var(--bg-light);
+        }
+        code {
+            background: #e2e8f0;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-family: monospace;
+            color: #be123c;
+        }
+        .note {
+            background: #fffbeb;
+            border-left: 4px solid #f59e0b;
+            padding: 15px;
+            margin: 20px 0;
+        }
+        .footer {
+            margin-top: auto;
+            border-top: 1px solid var(--border);
+            padding-top: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+        .footer-logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .footer-logo img {
+            height: 40px;
+        }
+        .footer-links {
+            display: flex;
+            gap: 30px;
+        }
+        .footer-links a {
+            font-style: italic;
+            color: #60a5fa;
+            font-weight: 500;
+        }
+        .footer-version {
+            width: 100%;
+            text-align: center;
+            color: #64748b;
+            font-style: italic;
+            font-size: 0.9em;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div class="header">
+        <img src="/images/the_ship_inn.webp" alt="The Ship Inn Logo" class="logo">
+        <h1>CMS User Manual</h1>
+        <p>System: <strong>Outstatic CMS</strong></p>
+    </div>
+
+    <div class="content">
+        <p>This is the definitive instruction manual for managing your website.</p>
+
+        <h2>1. How to Log In</h2>
+        <div class="step-box">
+            <ol>
+                <li>Go to: <strong><a href="https://theshipinnporlockweir.co.uk/outstatic" target="_blank">theshipinnporlockweir.co.uk/outstatic</a></strong></li>
+                <li>Click <strong>"Sign in with GitHub"</strong>.</li>
+                <li>Enter Username: <code>hello@theshipinnporlockweir.co.uk</code> and Password: <code>theshipinnta248pb!</code></li>
+                <li>If prompted, click <strong>"Authorize"</strong>.</li>
+            </ol>
+        </div>
+
+        <h2>2. Understanding the Dashboard</h2>
+        <p>The <strong>left sidebar</strong> has three sections:</p>
+        <ul>
+            <li><strong>Pages</strong> — Controls the core website pages (Home, Food & Drink, Contact, etc.).</li>
+            <li><strong>Events</strong> — Controls upcoming events (live music, specials, etc.).</li>
+            <li><strong>News</strong> — Controls news articles.</li>
+            <li><strong>Gallery</strong> — Controls the photos shown on the Gallery page.</li>
+            <li><strong>Media Library</strong> — Where you upload all images.</li>
+        </ul>
+
+        <h2>3. How to Upload and Use Images</h2>
+        <h3>Step 1: Upload the image</h3>
+        <ol>
+            <li>In the left sidebar, click <strong>Media Library</strong>.</li>
+            <li>Click <strong>Add Media</strong> and select your image from your computer.</li>
+            <li>The image will appear in the library.</li>
+        </ol>
+
+        <h3>Step 2: Use the image</h3>
+        <p><strong>For standard pages (Cover Images):</strong></p>
+        <ol>
+            <li>Go to the page you want to edit.</li>
+            <li>Click the Cover Image field in the right sidebar.</li>
+            <li>It will open an image picker — select your image and click <strong>Save</strong>.</li>
+        </ol>
+
+        <p><strong>For the Hero Images (Home Page only):</strong></p>
+        <ol>
+            <li>Right-click your uploaded image in the Media Library.</li>
+            <li>Choose <strong>"Open image in new tab"</strong>.</li>
+            <li>Look at the browser address bar — your image path is <code>/images/</code> followed by the filename (e.g., <code>/images/ship-inn.png</code>).</li>
+            <li>Go to <strong>Pages &rarr; Home</strong> and paste that path into the Hero Image text fields.</li>
+        </ol>
+
+        <div class="note">
+            <strong>Note:</strong> Image picker fields have a visual preview. You'll see a thumbnail of the selected image, with a "Remove" button to clear it.
+        </div>
+
+        <h2>4. How to Edit and Save Any Page</h2>
+        <div class="step-box">
+            <ol>
+                <li>In the left sidebar, click <strong>Pages</strong>, then click the page you want to edit.</li>
+                <li>The editor opens. <strong>Ignore the large centre text editor for Pages.</strong> It is not used on the live website.</li>
+                <li>Scroll down the <strong>right sidebar</strong> to find all the important fields that control the live website layout.</li>
+                <li>If a field shows <strong>+ Create</strong>, click it to open the input box, then type your value.</li>
+                <li>Ensure <strong>Status</strong> says <strong>"Published"</strong> (not Draft).</li>
+                <li>Click the black <strong>Save</strong> button (top-right).</li>
+                <li>Wait 1&ndash;2 minutes, then refresh the live website to see your changes.</li>
+            </ol>
+        </div>
+
+        <h2>5. What Each Field Changes — Page by Page</h2>
+        
+        <h3>🏠 THE HOMEPAGE</h3>
+        <table>
+            <tr><th>What you see on the website</th><th>Field to edit in Outstatic (right sidebar)</th></tr>
+            <tr><td>Giant rotating background photos</td><td>Hero Image One, Two, Three</td></tr>
+            <tr><td>Italic text below the logo</td><td>Strapline</td></tr>
+            <tr><td>5 paragraphs of text in the middle</td><td>Intro Paragraph One through Five</td></tr>
+            <tr><td>Left card at the bottom</td><td>Feature One Title & Description</td></tr>
+            <tr><td>Centre card at the bottom</td><td>Feature Two Title & Description</td></tr>
+            <tr><td>Right card at the bottom</td><td>Feature Three Title & Description</td></tr>
+        </table>
+
+        <h3>🍷 THE FOOD & DRINK PAGE</h3>
+        <table>
+            <tr><th>What you see on the website</th><th>Field to edit in Outstatic (right sidebar)</th></tr>
+            <tr><td>Wide banner photo at the top</td><td>Cover Image</td></tr>
+            <tr><td>Left column of intro text</td><td>Food & Drink Intro Para One</td></tr>
+            <tr><td>Lagers, Ciders, Ales lists</td><td>Lagers List, Ciders List, Ales List</td></tr>
+            <tr><td>Breakfast info</td><td>Breakfast Description & Times</td></tr>
+        </table>
+
+        <h3>📞 CONTACT PAGE (Global Info)</h3>
+        <p><strong>Editing this page changes contact info across the ENTIRE website</strong> (Footer, Booking sections, Legal pages).</p>
+        <table>
+            <tr><th>What you see on the website</th><th>Field to edit in Outstatic (right sidebar)</th></tr>
+            <tr><td>Phone & Email (everywhere)</td><td>Phone Number, Email Address</td></tr>
+            <tr><td>Street address in Footer</td><td>Address Line One, Two, Town, Postcode</td></tr>
+            <tr><td>Daily opening hours</td><td>Opening Hours (Monday - Sunday)</td></tr>
+            <tr><td>Food serving hours in Footer</td><td>Kitchen Close Info</td></tr>
+        </table>
+
+        <h2>6. How to Manage the Gallery in Detail</h2>
+        <p>The Gallery page is entirely dynamic and controlled by the <strong>Gallery Collection</strong> in the sidebar. This makes it incredibly easy to add or remove photos without touching any code.</p>
+        
+        <div class="step-box">
+            <h3>To Add a New Photo:</h3>
+            <ol>
+                <li>Click <strong>Gallery</strong> under Collections in the left sidebar.</li>
+                <li>Click the black <strong>"New"</strong> button in the top right corner.</li>
+                <li><strong>Title:</strong> Type a descriptive name for the photo (e.g., "Roast Dinner" or "Front Bar"). This is just for your reference in the dashboard.</li>
+                <li><strong>Description:</strong> (Optional) You can add a short caption here if you want it to display on the photo.</li>
+                <li><strong>Cover Image:</strong> Click the large grey box that says "Click to add an image". This opens your Media Library. Select the photo you want to display.</li>
+                <li><strong>Category:</strong> In the right sidebar, find the Category dropdown. You <strong>must</strong> select a category (<code>Food & Drink</code>, <code>Exterior</code>, <code>Interior</code>, <code>Rooms</code>, or <code>Surroundings</code>). This perfectly maps to the buttons at the top of your live gallery page, allowing users to filter by that category.</li>
+                <li>Ensure the <strong>Status</strong> dropdown is set to <strong>"Published"</strong>.</li>
+                <li>Click the <strong>Save</strong> button. The live website will rebuild and the photo will appear in the gallery within 60 seconds!</li>
+            </ol>
+        </div>
+
+        <div class="step-box">
+            <h3>To Edit or Delete an Existing Photo:</h3>
+            <ol>
+                <li>Click <strong>Gallery</strong> in the left sidebar to view the list of all uploaded gallery photos.</li>
+                <li>To <strong>change a category</strong>: Click the photo in the list, change the Category dropdown in the right sidebar, and click Save.</li>
+                <li>To <strong>remove a photo completely</strong>: Hover over the photo in the list and click the trash can icon (🗑️) on the far right. Confirm the deletion, and it will be permanently removed from the live gallery.</li>
+            </ol>
+        </div>
+
+        <h2>7. How to Add a New Event or News Article</h2>
+        <ol>
+            <li>Click <strong>Events</strong> or <strong>News</strong> in the left sidebar.</li>
+            <li>Click the <strong>"New"</strong> button (top right).</li>
+            <li><strong>In the centre screen:</strong> Type your headline in the <strong>Title</strong> box, then write the full article below it.</li>
+            <li><strong>In the right sidebar:</strong> Pick the Date, add a Cover Image, and add a short Description.</li>
+            <li>Change <strong>Status</strong> to <strong>"Published"</strong> and click <strong>Save</strong>.</li>
+        </ol>
+
+    </div>
+
+    <!-- Custom Footer as requested -->
+    <div class="footer">
+        <div class="footer-logo">
+            <img src="/images/itsmyapp_logo.png" alt="itsmyapp logo" style="height: 40px; object-fit: contain;">
+        </div>
+        <div class="footer-links">
+            <a href="https://itsmyapp.co.uk" target="_blank">itsmyapp.co.uk</a>
+            <a href="mailto:hello@itsmyapp.co.uk">hello@itsmyapp.co.uk</a>
+        </div>
+        <div class="footer-version">
+            Manual Version 1.3 - Optimized July 2026
+        </div>
+    </div>
+</div>
+
+</body>
+</html>
