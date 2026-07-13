@@ -12,17 +12,17 @@
       "title": "Published Date",
       "required": true
     },
-    "coverImage": {
+    "heroImageOne": {
       "type": "Image",
-      "title": "Cover Image"
+      "title": "Hero Image One"
     },
-    "heroImage2": {
+    "heroImageTwo": {
       "type": "Image",
-      "title": "Hero Image 2 (Optional)"
+      "title": "Hero Image Two"
     },
-    "heroImage3": {
+    "heroImageThree": {
       "type": "Image",
-      "title": "Hero Image 3 (Optional)"
+      "title": "Hero Image Three"
     },
     "content": {
       "type": "String",

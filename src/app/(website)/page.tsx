@@ -6,10 +6,10 @@ import { getPageData } from '@/lib/outstatic'
 export default function HomePage() {
   const pageData = getPageData('home')
 
-  // Fallbacks
-  const heroImage1 = pageData?.coverImage || '/images/exterior/shipinn-011.webp'
-  const heroImage2 = pageData?.heroImage2 || ''
-  const heroImage3 = pageData?.heroImage3 || ''
+  // Hero images for carousel
+  const heroImage1 = pageData?.heroImageOne || '/images/exterior/shipinn-011.webp'
+  const heroImage2 = pageData?.heroImageTwo || ''
+  const heroImage3 = pageData?.heroImageThree || ''
   const heroImages = [heroImage1, heroImage2, heroImage3]
   
   const heroAlt = pageData?.heroAlt || 'The Ship Inn Exterior'
