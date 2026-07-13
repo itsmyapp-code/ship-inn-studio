@@ -26,6 +26,11 @@
       "fieldType": "Text",
       "dataType": "string",
       "title": "Strapline"
+    },
+    "introParagraphOne": {
+      "fieldType": "Text",
+      "dataType": "string",
+      "title": "Intro Paragraph One"
     }
   }
 }
