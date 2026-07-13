@@ -30,6 +30,9 @@ export default function GalleryPage() {
     return cat.trim().split(' ').map(w => w.charAt(0).toUpperCase() + w.slice(1).toLowerCase()).join(' ')
   }
 
+  // Helper to ensure URLs have exactly one leading slash (fixes Outstatic's double slash bug)
+  const formatUrl = (url: string) => url.replace(/^\/+/, '/');
+
   // Filter for published documents and extract images
   documents.filter(doc => doc.status === 'published').forEach(doc => {
     const category = normalizeCategory(doc.category as string)
@@ -37,7 +40,7 @@ export default function GalleryPage() {
     // 1. Add the main cover image if it exists
     if (doc.coverImage) {
       allImages.push({
-        src: doc.coverImage,
+        src: formatUrl(doc.coverImage),
         alt: doc.title || '',
         category: category,
         caption: doc.description || ''
@@ -55,7 +58,7 @@ export default function GalleryPage() {
         // Prevent duplicating the coverImage if they accidentally inserted it into the body too
         if (srcUrl !== doc.coverImage) {
           allImages.push({
-            src: srcUrl,
+            src: formatUrl(srcUrl),
             alt: altText,
             category: category,
             caption: doc.description || ''
