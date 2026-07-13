@@ -1,6 +1,6 @@
 {
-  "commit": "bf3d8760e02c2f720a1145e42c8993d7cbbbed81",
-  "generated": "2026-07-13T11:57:22.979Z",
+  "commit": "e5eb2ab5d38f39e5967febfc188c6df78e9b9bf4",
+  "generated": "2026-07-13T11:59:05.029Z",
   "metadata": [
     {
       "__outstatic": {
@@ -54,6 +54,25 @@
       "slug": "delicious-dish",
       "status": "published",
       "title": "Delicious Dish"
+    },
+    {
+      "__outstatic": {
+        "commit": "e5eb2ab5d38f39e5967febfc188c6df78e9b9bf4",
+        "hash": "3091273693",
+        "path": "outstatic/content/gallery/gallery-5.md"
+      },
+      "author": {
+        "name": "Admin",
+        "picture": ""
+      },
+      "category": "Food & Drink",
+      "collection": "gallery",
+      "coverImage": "//images/721626006_122132621229039461_4785115120299414845_n-gwNz.jpg",
+      "description": "Freshly prepared food",
+      "publishedAt": "2026-07-13T12:00:00.000Z",
+      "slug": "gallery-5",
+      "status": "published",
+      "title": "Fresh Food"
     }
   ]
 }
