@@ -271,7 +271,7 @@ export default async function Page() {
                 <h3 className="text-xl font-bold font-centaur mb-4">The Perfect Gift</h3>
                 <div className="mb-4 flex justify-center">
                   <img
-                    src="/images/logo/ship-inn-voucher.webp"
+                    src="/images/ship-inn-voucher.webp"
                     alt="Gift Voucher"
                     className="w-32 rounded-lg shadow-lg rotate-[-3deg] border-2 border-white/20"
                   />

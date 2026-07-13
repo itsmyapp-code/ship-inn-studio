@@ -20,17 +20,17 @@ export default function RoomsPage() {
       price: "Contact for rates",
       images: [
         {
-          src: "/images/rooms/shipinn-031.webp",
+          src: "/images/shipinn-031.webp",
           alt: "Guest Room 1",
           caption: "Comfortable accommodation at The Ship Inn"
         },
         {
-          src: "/images/rooms/shipinn-197.webp",
+          src: "/images/shipinn-197.webp",
           alt: "Guest Room 1",
           caption: "Comfortable accommodation at The Ship Inn"
         },
         {
-          src: "/images/rooms/shipinn-035.webp",
+          src: "/images/shipinn-035.webp",
           alt: "Guest Room 1",
           caption: "Comfortable accommodation at The Ship Inn"
         }
@@ -44,17 +44,17 @@ export default function RoomsPage() {
       price: "Contact for rates",
       images: [
         {
-          src: "/images/rooms/shipinn-124.webp",
+          src: "/images/shipinn-124.webp",
           alt: "Guest Room 2",
           caption: "Comfortable accommodation at The Ship Inn"
         },
         {
-          src: "/images/rooms/shipinn-039.webp",
+          src: "/images/shipinn-039.webp",
           alt: "Guest Room 2",
           caption: "Comfortable accommodation at The Ship Inn"
         },
         {
-          src: "/images/rooms/shipinn-106.webp",
+          src: "/images/shipinn-106.webp",
           alt: "Guest Room 2",
           caption: "Comfortable accommodation at The Ship Inn"
         }
@@ -68,17 +68,17 @@ export default function RoomsPage() {
       price: "Contact for rates",
       images: [
         {
-          src: "/images/rooms/shipinn-042.webp",
+          src: "/images/shipinn-042.webp",
           alt: "Guest Room 3",
           caption: "Comfortable accommodation at The Ship Inn"
         },
         {
-          src: "/images/rooms/shipinn-079.webp",
+          src: "/images/shipinn-079.webp",
           alt: "Guest Room 3",
           caption: "Comfortable accommodation at The Ship Inn"
         },
         {
-          src: "/images/rooms/shipinn-070.webp",
+          src: "/images/shipinn-070.webp",
           alt: "Guest Room 3",
           caption: "Comfortable accommodation at The Ship Inn"
         }

@@ -8,7 +8,7 @@ export default function HomePage() {
 
   // Hero images for carousel — fix Outstatic's double-slash paths
   const fixPath = (p: string) => p.replace(/^\/\//, '/')
-  const heroImage1 = fixPath(pageData?.heroImageOne || '/images/exterior/shipinn-011.webp')
+  const heroImage1 = fixPath(pageData?.heroImageOne || '/images/shipinn-011.webp')
   const heroImage2 = fixPath(pageData?.heroImageTwo || '')
   const heroImage3 = fixPath(pageData?.heroImageThree || '')
   const heroImages = [heroImage1, heroImage2, heroImage3]
@@ -59,7 +59,7 @@ export default function HomePage() {
             {/* Logo Overlay */}
             <div className="bg-white rounded-full w-48 h-48 md:w-64 md:h-64 mx-auto mb-8 flex items-center justify-center shadow-2xl overflow-hidden p-6 relative">
               <img
-                src="/images/logo/the_ship_inn2.webp"
+                src="/images/the_ship_inn2.webp"
                 alt="The Ship Inn Logo"
                 className="max-w-full max-h-full object-contain"
               />

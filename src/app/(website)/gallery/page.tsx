@@ -2,6 +2,7 @@
 import ImageGallery from '@/components/ImageGallery'
 import Image from 'next/image'
 import { getPageData } from '@/lib/outstatic'
+import { getDocuments } from 'outstatic/server'
 
 export const metadata = {
   title: 'Gallery - The Ship Inn Porlock Weir',
@@ -9,88 +10,18 @@ export const metadata = {
 }
 
 export default function GalleryPage() {
-  // All actual images from your uploaded files
-  const allImages = [
-    // Exterior
-    {
-      src: '/images/exterior/shipinn-011.webp',
-      alt: 'The Ship Inn - Day View',
-      category: 'Exterior',
-      caption: 'The historic Ship Inn by day'
-    },
-    {
-      src: '/images/exterior/shipinn-012.webp',
-      alt: 'The Ship Inn - Side View',
-      category: 'Exterior',
-      caption: 'The Ship Inn at Porlock Weir'
-    },
-
-    // Food & Drink
-    {
-      src: '/images/interior/shipinn-207.webp',
-      alt: 'Delicious Dish',
-      category: 'Food & Drink',
-      caption: 'Seasonal dishes prepared with local ingredients'
-    },
-    {
-      src: '/images/interior/shipinn-213.webp',
-      alt: 'Food Detail',
-      category: 'Food & Drink',
-      caption: 'Culinary delights at The Ship Inn'
-    },
-    {
-      src: '/images/interior/shipinn-216.webp',
-      alt: 'Bar Selection',
-      category: 'Food & Drink',
-      caption: 'A wide selection of drinks'
-    },
-    {
-      src: '/images/interior/shipinn-250.webp',
-      alt: 'Fresh Food',
-      category: 'Food & Drink',
-      caption: 'Freshly prepared food'
-    },
-
-    // Atmosphere
-    {
-      src: '/images/interior/shipinn-238.webp',
-      alt: 'Restaurant Atmosphere',
-      category: 'Atmosphere',
-      caption: 'Warm and welcoming dining area'
-    },
-    {
-      src: '/images/interior/shipinn-223.webp',
-      alt: 'Cozy Corner',
-      category: 'Atmosphere',
-      caption: 'Relax in our cozy corners'
-    },
-    {
-      src: '/images/interior/shipinn-204.webp',
-      alt: 'Fireplace',
-      category: 'Atmosphere',
-      caption: 'Atmospheric setting'
-    },
-
-    // Rooms (Keeping existing rooms as they are valuable content)
-    {
-      src: '/images/rooms/shipinn-029.webp',
-      alt: 'Guest Room 1',
-      category: 'Rooms',
-      caption: 'Comfortable and beautifully appointed guest rooms'
-    },
-    {
-      src: '/images/rooms/shipinn-035.webp',
-      alt: 'Guest Room 2',
-      category: 'Rooms',
-      caption: 'Relaxing spaces for your stay'
-    },
-    {
-      src: '/images/rooms/shipinn-051.webp',
-      alt: 'Guest Room 3',
-      category: 'Rooms',
-      caption: 'Traditional charm with modern comfort'
-    }
-  ]
+  // Fetch all images from the Outstatic gallery collection
+  const documents = getDocuments('gallery', ['title', 'coverImage', 'category', 'description', 'status'])
+  
+  // Filter for published documents and map them to the format expected by ImageGallery
+  const allImages = documents
+    .filter(doc => doc.status === 'published')
+    .map(doc => ({
+      src: doc.coverImage || '',
+      alt: doc.title || '',
+      category: (doc.category as string) || 'Other',
+      caption: doc.description || ''
+    }))
 
   const pageData = getPageData('gallery')
   const heroImage = pageData?.coverImage
@@ -127,7 +58,7 @@ export default function GalleryPage() {
           </div>
           <div className="relative">
             <img
-              src="/images/exterior/ship-inn-front-view.png"
+              src="/images/ship-inn-front-view.png"
               alt="The Ship Inn Porlock Weir"
               className="w-full h-96 object-cover rounded-lg mb-8"
             />

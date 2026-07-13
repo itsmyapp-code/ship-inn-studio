@@ -6,7 +6,7 @@ author:
   picture: 'https://avatars.githubusercontent.com/u/0?v=4'
 slug: 'food-drink'
 description: 'From the Galley & Saloon - welcoming surroundings and local taste'
-coverImage: '/images/interior/shipinn-204.webp'
+coverImage: '/images/shipinn-204.webp'
 heroAlt: 'The Ship Inn Restaurant'
 foodDrinkIntroOne: 'We celebrate the very best of local and national drinks, alongside seasonal food. Enjoy a refreshing Hawkstone cider, a perfectly poured Guinness, or a classic 1664 while soaking up the coastal atmosphere.'
 foodDrinkIntroTwo: 'Our menu is built around fresh, seasonal ingredients, changing with the time of year to bring you honest, flavourful dishes. Whether it’s a relaxed drink at the bar or a leisurely meal, you’ll find welcoming surroundings and a true taste of the region.'

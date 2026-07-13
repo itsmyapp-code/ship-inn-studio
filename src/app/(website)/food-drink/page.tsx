@@ -41,7 +41,7 @@ export default function FoodDrinkPage() {
   const pageData = getPageData('food-drink')
   const contactData = getSharedContactData()
 
-  const heroImage = pageData?.coverImage || '/images/interior/shipinn-204.webp'
+  const heroImage = pageData?.coverImage || '/images/shipinn-204.webp'
   const heroAlt = pageData?.heroAlt || 'The Ship Inn Restaurant'
 
   const lagersList = pageData?.lagers ? pageData.lagers.split(',').map(s => s.trim()) : ["Estrella", "Carlsberg", "Peretti", "Budvar", "1664 Blanc"]
@@ -97,7 +97,7 @@ export default function FoodDrinkPage() {
               </div>
             </div>
             <img
-              src="/images/interior/shipinn-204.webp"
+              src="/images/shipinn-204.webp"
               alt="The Ship Inn Restaurant"
               className="h-96 w-full object-cover rounded-lg"
             />
@@ -153,7 +153,7 @@ export default function FoodDrinkPage() {
 
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
             <img
-              src="/images/interior/shipinn-217.webp"
+              src="/images/shipinn-217.webp"
               alt="The Ship Inn Bar Area"
               className="h-96 w-full object-cover rounded-lg"
             />
@@ -228,7 +228,7 @@ export default function FoodDrinkPage() {
               </p>
             </div>
             <img
-              src="/images/interior/shipinn-225.webp"
+              src="/images/shipinn-225.webp"
               alt="Breakfast at The Ship Inn"
               className="h-96 w-full object-cover rounded-lg"
             />

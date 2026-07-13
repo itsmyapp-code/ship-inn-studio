@@ -6,7 +6,7 @@ author:
   picture: 'https://avatars.githubusercontent.com/u/0?v=4'
 slug: 'contact'
 description: 'Get in touch or visit us in beautiful Porlock Weir'
-coverImage: '/images/exterior/shipinn-012.webp'
+coverImage: '/images/shipinn-012.webp'
 heroAlt: 'The Ship Inn Side View'
 phone: '01643 863288'
 email: 'hello@theshipinnporlockweir.co.uk'

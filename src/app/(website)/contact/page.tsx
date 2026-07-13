@@ -10,7 +10,7 @@ export const metadata = {
 export default function ContactPage() {
   const pageData = getPageData('contact')
 
-  const heroImage = pageData?.coverImage || '/images/exterior/shipinn-012.webp'
+  const heroImage = pageData?.coverImage || '/images/shipinn-012.webp'
   const heroAlt = pageData?.heroAlt || 'The Ship Inn Side View'
   
   const phone = pageData?.phone || '01643 863288'

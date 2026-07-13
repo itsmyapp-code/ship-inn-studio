@@ -42,7 +42,7 @@ export default function HeroCarousel({ images, alt }: HeroCarouselProps) {
     return (
       <div className="absolute inset-0 hero-ken-burns">
         <Image
-          src="/images/exterior/shipinn-011.webp"
+          src="/images/shipinn-011.webp"
           alt={alt}
           fill
           priority
