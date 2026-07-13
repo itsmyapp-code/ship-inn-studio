@@ -6,6 +6,11 @@
       "fieldType": "Text",
       "dataType": "string",
       "title": "Cover Image"
+    },
+    "heroImageOne": {
+      "fieldType": "Image",
+      "dataType": "image",
+      "title": "Hero Image One"
     }
   }
 }
