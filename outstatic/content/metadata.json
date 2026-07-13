@@ -1,11 +1,11 @@
 {
-  "commit": "bcc8c383ff399c194c6a45fa5e103c066b4b43ec",
-  "generated": "2026-07-13T06:55:10.723Z",
+  "commit": "92e1515c809e4b6b7502625f5b69273fd2011ff0",
+  "generated": "2026-07-13T07:04:30.065Z",
   "metadata": [
     {
       "__outstatic": {
-        "commit": "bcc8c383ff399c194c6a45fa5e103c066b4b43ec",
-        "hash": "3569437710",
+        "commit": "92e1515c809e4b6b7502625f5b69273fd2011ff0",
+        "hash": "2527091074",
         "path": "outstatic/content/pages/home.md"
       },
       "author": {
@@ -22,7 +22,7 @@
       "featureTwoDesc": "Enjoy locally sourced food and fine ales in our historic pub with harbour views.",
       "featureTwoTitle": "Traditional Pub & Restaurant",
       "heroAlt": "The Ship Inn Exterior",
-      "heroImageOne": "//images/shipinn-006-Y4Nj.webp",
+      "heroImageOne": "",
       "heroImageThree": "//images/shipinn-003-U3OD.webp",
       "heroImageTwo": "",
       "introParagraphFive": "Whether you're exploring the South West Coast Path or simply soaking in the peaceful harbour setting, The Ship Inn is your home by the sea.",
