@@ -7,7 +7,7 @@ author:
 slug: "home"
 description: "Welcome to The Ship Inn Porlock Weir"
 publishedAt: "2026-07-13T00:00:00.000Z"
-heroImageOne: "/images/ship-inn-front-view-c2Nj.png"
+heroImageOne: "/images/shipinn-006-Y4Nj.webp"
 heroImageTwo: "/images/shipinn-013-Y4OT.webp"
 heroImageThree: "/images/shipinn-003-U3OD.webp"
 heroAlt: "The Ship Inn Exterior"
