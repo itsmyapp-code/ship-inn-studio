@@ -16,5 +16,11 @@
     "slug": "pages",
     "path": "outstatic/content/pages",
     "children": []
+  },
+  {
+    "title": "Gallery",
+    "slug": "gallery",
+    "path": "outstatic/content/gallery",
+    "children": []
   }
 ]
