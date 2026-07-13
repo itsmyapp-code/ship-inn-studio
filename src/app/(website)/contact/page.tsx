@@ -2,6 +2,8 @@ import ContactForm from '@/components/ContactForm'
 import Image from 'next/image'
 import { getPageData } from '@/lib/outstatic'
 
+export const dynamic = 'force-dynamic'
+
 export const metadata = {
   title: 'Contact us - The Ship Inn Porlock Weir',
   description: 'Get in touch with The Ship Inn for bookings, enquiries, or directions. Located in the heart of Porlock Weir, Somerset.',

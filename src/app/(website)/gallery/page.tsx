@@ -4,6 +4,8 @@ import Image from 'next/image'
 import { getPageData } from '@/lib/outstatic'
 import { getDocuments } from 'outstatic/server'
 
+export const dynamic = 'force-dynamic'
+
 export const metadata = {
   title: 'Gallery - The Ship Inn Porlock Weir',
   description: 'Explore our photo gallery showcasing The Ship Inn, our comfortable rooms, delicious food, and the beautiful Porlock Weir location.',

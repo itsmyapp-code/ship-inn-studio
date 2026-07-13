@@ -3,6 +3,8 @@ import HeroCarousel from '@/components/HeroCarousel'
 import NewsletterSignup from '@/components/NewsletterSignup'
 import { getPageData } from '@/lib/outstatic'
 
+export const dynamic = 'force-dynamic'
+
 export default function HomePage() {
   const pageData = getPageData('home')
 
