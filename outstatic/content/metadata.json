@@ -1,6 +1,6 @@
 {
-  "commit": "be388321f49c20a6ec33c6a9cbfd8a0e5f015da4",
-  "generated": "2026-07-13T11:00:18.838Z",
+  "commit": "bf3d8760e02c2f720a1145e42c8993d7cbbbed81",
+  "generated": "2026-07-13T11:57:22.979Z",
   "metadata": [
     {
       "__outstatic": {
@@ -35,6 +35,25 @@
       "status": "published",
       "strapline": "Historic charm meets modern comfort",
       "title": "Home"
+    },
+    {
+      "__outstatic": {
+        "commit": "bf3d8760e02c2f720a1145e42c8993d7cbbbed81",
+        "hash": "1061852394",
+        "path": "outstatic/content/gallery/delicious-dish.md"
+      },
+      "author": {
+        "name": "Admin",
+        "picture": ""
+      },
+      "category": "Food & Drink",
+      "collection": "gallery",
+      "coverImage": "//images/ship-inn-gallery-new-mrj626aq-5.jpg",
+      "description": "Seasonal dishes prepared with local ingredients",
+      "publishedAt": "2026-07-13T12:00:00.000Z",
+      "slug": "delicious-dish",
+      "status": "published",
+      "title": "Delicious Dish"
     }
   ]
 }
