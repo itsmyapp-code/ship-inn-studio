@@ -3,8 +3,8 @@
   "type": "object",
   "properties": {
     "coverImage": {
-      "fieldType": "Text",
-      "dataType": "string",
+      "fieldType": "Image",
+      "dataType": "image",
       "title": "Cover Image"
     },
     "heroImageOne": {

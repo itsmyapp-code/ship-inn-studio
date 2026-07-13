@@ -2,12 +2,12 @@ import { getDocumentBySlug } from 'outstatic/server'
 
 const PAGE_FIELDS = [
   'title', 'slug', 'status', 'coverImage', 'heroImageOne', 'heroImageTwo', 'heroImageThree', 'heroAlt',
-  'phone', 'email', 'addressLine1', 'addressLine2', 'town', 'postcode',
+  'phone', 'email', 'addressLineOne', 'addressLineTwo', 'town', 'postcode',
   'openingHoursMon', 'openingHoursTue', 'openingHoursWed', 'openingHoursThu', 'openingHoursFri', 'openingHoursSat', 'openingHoursSun',
   'kitchenClose', 'breakfastTimes', 'seasonalNote',
-  'foodDrinkIntro1', 'foodDrinkIntro2', 'lagers', 'ciders', 'ales', 'breakfastDescription',
-  'strapline', 'introParagraph1', 'introParagraph2', 'introParagraph3', 'introParagraph4', 'introParagraph5',
-  'feature1Title', 'feature1Desc', 'feature2Title', 'feature2Desc', 'feature3Title', 'feature3Desc'
+  'foodDrinkIntroOne', 'foodDrinkIntroTwo', 'lagers', 'ciders', 'ales', 'breakfastDescription',
+  'strapline', 'introParagraphOne', 'introParagraphTwo', 'introParagraphThree', 'introParagraphFour', 'introParagraphFive',
+  'featureOneTitle', 'featureOneDesc', 'featureTwoTitle', 'featureTwoDesc', 'featureThreeTitle', 'featureThreeDesc'
 ]
 
 export interface PageData {
@@ -21,8 +21,8 @@ export interface PageData {
   heroAlt?: string
   phone?: string
   email?: string
-  addressLine1?: string
-  addressLine2?: string
+  addressLineOne?: string
+  addressLineTwo?: string
   town?: string
   postcode?: string
   openingHoursMon?: string
@@ -35,24 +35,24 @@ export interface PageData {
   kitchenClose?: string
   breakfastTimes?: string
   seasonalNote?: string
-  foodDrinkIntro1?: string
-  foodDrinkIntro2?: string
+  foodDrinkIntroOne?: string
+  foodDrinkIntroTwo?: string
   lagers?: string
   ciders?: string
   ales?: string
   breakfastDescription?: string
   strapline?: string
-  introParagraph1?: string
-  introParagraph2?: string
-  introParagraph3?: string
-  introParagraph4?: string
-  introParagraph5?: string
-  feature1Title?: string
-  feature1Desc?: string
-  feature2Title?: string
-  feature2Desc?: string
-  feature3Title?: string
-  feature3Desc?: string
+  introParagraphOne?: string
+  introParagraphTwo?: string
+  introParagraphThree?: string
+  introParagraphFour?: string
+  introParagraphFive?: string
+  featureOneTitle?: string
+  featureOneDesc?: string
+  featureTwoTitle?: string
+  featureTwoDesc?: string
+  featureThreeTitle?: string
+  featureThreeDesc?: string
 }
 
 export function getPageData(slug: string): PageData | null {
@@ -73,8 +73,8 @@ export function getSharedContactData() {
   return {
     phone: contactPage?.phone || '01643 863288',
     email: contactPage?.email || 'hello@theshipinnporlockweir.co.uk',
-    addressLine1: contactPage?.addressLine1 || 'The Ship Inn',
-    addressLine2: contactPage?.addressLine2 || 'Porlock Weir',
+    addressLine1: contactPage?.addressLineOne || 'The Ship Inn',
+    addressLine2: contactPage?.addressLineTwo || 'Porlock Weir',
     town: contactPage?.town || 'Somerset',
     postcode: contactPage?.postcode || 'TA24 8PB',
     openingHours: {

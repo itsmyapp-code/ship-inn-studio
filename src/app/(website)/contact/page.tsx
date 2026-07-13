@@ -15,8 +15,8 @@ export default function ContactPage() {
   
   const phone = pageData?.phone || '01643 863288'
   const email = pageData?.email || 'hello@theshipinnporlockweir.co.uk'
-  const addressLine1 = pageData?.addressLine1 || 'The Ship Inn'
-  const addressLine2 = pageData?.addressLine2 || 'Porlock Weir'
+  const addressLine1 = pageData?.addressLineOne || 'The Ship Inn'
+  const addressLine2 = pageData?.addressLineTwo || 'Porlock Weir'
   const town = pageData?.town || 'Minehead, Somerset'
   const postcode = pageData?.postcode || 'TA24 8PB'
 

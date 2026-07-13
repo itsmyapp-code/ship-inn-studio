@@ -89,10 +89,10 @@ export default function FoodDrinkPage() {
               <h2 className="text-3xl font-bold text-gray-900 mb-6">The Ship Inn Restaurant</h2>
               <div className="text-lg text-gray-600 space-y-4">
                 <p>
-                  {pageData?.foodDrinkIntro1 || "We celebrate the very best of local and national drinks, alongside seasonal food. Enjoy a refreshing Hawkstone cider, a perfectly poured Guinness, or a classic 1664 while soaking up the coastal atmosphere."}
+                  {pageData?.foodDrinkIntroOne || "We celebrate the very best of local and national drinks, alongside seasonal food. Enjoy a refreshing Hawkstone cider, a perfectly poured Guinness, or a classic 1664 while soaking up the coastal atmosphere."}
                 </p>
                 <p>
-                  {pageData?.foodDrinkIntro2 || "Our menu is built around fresh, seasonal ingredients, changing with the time of year to bring you honest, flavourful dishes. Whether it’s a relaxed drink at the bar or a leisurely meal, you’ll find welcoming surroundings and a true taste of the region."}
+                  {pageData?.foodDrinkIntroTwo || "Our menu is built around fresh, seasonal ingredients, changing with the time of year to bring you honest, flavourful dishes. Whether it’s a relaxed drink at the bar or a leisurely meal, you’ll find welcoming surroundings and a true taste of the region."}
                 </p>
               </div>
             </div>

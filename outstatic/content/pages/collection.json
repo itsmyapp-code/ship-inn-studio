@@ -44,14 +44,14 @@
       "title": "Email Address",
       "description": "Contact email address"
     },
-    "addressLine1": {
+    "addressLineOne": {
       "type": "String",
-      "title": "Address Line 1",
+      "title": "Address Line One",
       "description": "e.g. Porlock Weir"
     },
-    "addressLine2": {
+    "addressLineTwo": {
       "type": "String",
-      "title": "Address Line 2",
+      "title": "Address Line Two",
       "description": "e.g. Minehead"
     },
     "town": {
@@ -108,13 +108,13 @@
       "title": "Opening Hours Seasonal Note",
       "description": "e.g. Winter hours may vary."
     },
-    "foodDrinkIntro1": {
+    "foodDrinkIntroOne": {
       "type": "String",
-      "title": "Food & Drink Intro Para 1"
+      "title": "Food & Drink Intro Para One"
     },
-    "foodDrinkIntro2": {
+    "foodDrinkIntroTwo": {
       "type": "String",
-      "title": "Food & Drink Intro Para 2"
+      "title": "Food & Drink Intro Para Two"
     },
     "lagers": {
       "type": "String",
@@ -140,49 +140,49 @@
       "title": "Homepage Strapline",
       "description": "e.g. Historic charm meets modern comfort"
     },
-    "introParagraph1": {
+    "introParagraphOne": {
       "type": "String",
-      "title": "Intro Paragraph 1"
+      "title": "Intro Paragraph One"
     },
-    "introParagraph2": {
+    "introParagraphTwo": {
       "type": "String",
-      "title": "Intro Paragraph 2"
+      "title": "Intro Paragraph Two"
     },
-    "introParagraph3": {
+    "introParagraphThree": {
       "type": "String",
-      "title": "Intro Paragraph 3"
+      "title": "Intro Paragraph Three"
     },
-    "introParagraph4": {
+    "introParagraphFour": {
       "type": "String",
-      "title": "Intro Paragraph 4"
+      "title": "Intro Paragraph Four"
     },
-    "introParagraph5": {
+    "introParagraphFive": {
       "type": "String",
-      "title": "Intro Paragraph 5"
+      "title": "Intro Paragraph Five"
     },
-    "feature1Title": {
+    "featureOneTitle": {
       "type": "String",
-      "title": "Feature 1 Title"
+      "title": "Feature One Title"
     },
-    "feature1Desc": {
+    "featureOneDesc": {
       "type": "String",
-      "title": "Feature 1 Description"
+      "title": "Feature One Description"
     },
-    "feature2Title": {
+    "featureTwoTitle": {
       "type": "String",
-      "title": "Feature 2 Title"
+      "title": "Feature Two Title"
     },
-    "feature2Desc": {
+    "featureTwoDesc": {
       "type": "String",
-      "title": "Feature 2 Description"
+      "title": "Feature Two Description"
     },
-    "feature3Title": {
+    "featureThreeTitle": {
       "type": "String",
-      "title": "Feature 3 Title"
+      "title": "Feature Three Title"
     },
-    "feature3Desc": {
+    "featureThreeDesc": {
       "type": "String",
-      "title": "Feature 3 Description"
+      "title": "Feature Three Description"
     }
   }
 }

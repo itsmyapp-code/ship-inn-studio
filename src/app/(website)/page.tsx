@@ -17,11 +17,11 @@ export default function HomePage() {
   const strapline = pageData?.strapline || 'Historic charm meets modern comfort'
   
   const introParagraphs = [
-    pageData?.introParagraph1,
-    pageData?.introParagraph2,
-    pageData?.introParagraph3,
-    pageData?.introParagraph4,
-    pageData?.introParagraph5
+    pageData?.introParagraphOne,
+    pageData?.introParagraphTwo,
+    pageData?.introParagraphThree,
+    pageData?.introParagraphFour,
+    pageData?.introParagraphFive
   ].map((p, idx) => {
     if (p !== undefined && p !== null) return p
     // Return original hardcoded paragraphs as fallbacks
@@ -35,14 +35,14 @@ export default function HomePage() {
     return fallbacks[idx]
   }).filter(Boolean)
 
-  const feature1Title = pageData?.feature1Title || 'Comfortable Accommodation'
-  const feature1Desc = pageData?.feature1Desc || 'Three beautifully appointed rooms, each with modern amenities and traditional charm.'
+  const feature1Title = pageData?.featureOneTitle || 'Comfortable Accommodation'
+  const feature1Desc = pageData?.featureOneDesc || 'Three beautifully appointed rooms, each with modern amenities and traditional charm.'
   
-  const feature2Title = pageData?.feature2Title || 'Traditional Pub & Restaurant'
-  const feature2Desc = pageData?.feature2Desc || 'Enjoy locally sourced food and fine ales in our historic pub with harbour views.'
+  const feature2Title = pageData?.featureTwoTitle || 'Traditional Pub & Restaurant'
+  const feature2Desc = pageData?.featureTwoDesc || 'Enjoy locally sourced food and fine ales in our historic pub with harbour views.'
   
-  const feature3Title = pageData?.feature3Title || 'Perfect Location'
-  const feature3Desc = pageData?.feature3Desc || 'Situated in the heart of Porlock Weir with easy access to Exmoor National Park.'
+  const feature3Title = pageData?.featureThreeTitle || 'Perfect Location'
+  const feature3Desc = pageData?.featureThreeDesc || 'Situated in the heart of Porlock Weir with easy access to Exmoor National Park.'
 
   return (
     <div className="min-h-screen">

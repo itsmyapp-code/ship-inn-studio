@@ -37,24 +37,15 @@ The **left sidebar** has three sections:
 2. Click **Add Media** and select your image from your computer.
 3. The image will appear in the library.
 
-### Step 2: Get the image path
-Outstatic renames your file and truncates the display name, so you cannot always read the full filename in the Media Library.
+### Step 2: Use the image
 
-**To get the full path:**
-- Right-click the image thumbnail in the Media Library.
-- Choose **"Open image in new tab"**.
-- Look at the browser address bar — the filename will be at the end of the URL after `/images/`.
-- Your image path is: `/images/` followed by that filename.
-- Example: `/images/ship-inn-front-view-c2Nj.png`
+**For Image picker fields** (Cover Image, Hero Image One/Two/Three):
+1. Go to the page you want to edit (e.g., **Pages → Contact**).
+2. Find the image field in the right sidebar.
+3. Click the field — it will show an image picker where you can select from uploaded images or upload a new one.
+4. Select the image and click **Save**.
 
-### Step 3: Paste the path
-1. Go to the page you want to edit (e.g., **Pages → Home**).
-2. Find the image field in the right sidebar (e.g., **Hero Image One**).
-3. If the field is empty, click **+ Create** to open it.
-4. Type or paste the path (e.g., `/images/ship-inn-front-view-c2Nj.png`).
-5. Click **Save**.
-
-> **The path is ALWAYS `/images/` followed by the filename.**
+> **Image picker fields have a visual preview** — you'll see a thumbnail of the selected image, with a "Remove" button to clear it.
 
 ---
 
@@ -88,18 +79,19 @@ As you scroll down [theshipinnporlockweir.co.uk](https://theshipinnporlockweir.c
 |---|---|
 | **The giant rotating background photos at the very top** | **Hero Image One**, **Hero Image Two**, **Hero Image Three** |
 | **The italic text below the logo** (*"Historic charm meets modern comfort"*) | **Strapline** |
-| **The 5 paragraphs of text in the middle** | **Intro Paragraph 1** through **Intro Paragraph 5** |
-| **Left card at the bottom** (Accommodation) | **Feature 1 Title** and **Feature 1 Description** |
-| **Centre card at the bottom** (Pub & Restaurant) | **Feature 2 Title** and **Feature 2 Description** |
-| **Right card at the bottom** (Location) | **Feature 3 Title** and **Feature 3 Description** |
+| **The 5 paragraphs of text in the middle** | **Intro Paragraph One** through **Intro Paragraph Five** |
+| **Left card at the bottom** (Accommodation) | **Feature One Title** and **Feature One Description** |
+| **Centre card at the bottom** (Pub & Restaurant) | **Feature Two Title** and **Feature Two Description** |
+| **Right card at the bottom** (Location) | **Feature Three Title** and **Feature Three Description** |
 
 **How the rotating hero images work:**
 - The homepage automatically crossfades between up to 3 images every 6 seconds.
-- Upload up to 3 images via the Media Library (see Section 3), then paste the paths into:
+- Each Hero Image field has an **image picker** — click it to select or upload an image.
+- Fill in:
   - **Hero Image One** — the first photo (required)
   - **Hero Image Two** — the second photo (optional, leave empty if not needed)
   - **Hero Image Three** — the third photo (optional, leave empty if not needed)
-- If you only paste 1 image, it stays static. If you paste 2 or 3, they rotate automatically.
+- If you only set 1 image, it stays static. If you set 2 or 3, they rotate automatically.
 
 > **Note:** There is also a built-in "Cover Image" box near the top of the right sidebar. **Ignore it for the Home page** — it is not used. Use the three Hero Image fields instead.
 
@@ -111,9 +103,9 @@ As you scroll down the Food & Drink page:
 
 | What you see on the live website | Field to edit in Outstatic (right sidebar) |
 |---|---|
-| **The wide banner photo at the top** | **Cover Image** (built-in, near top of right sidebar) |
-| **Left column of intro text** | **Food & Drink Intro Para 1** |
-| **Right column of intro text** | **Food & Drink Intro Para 2** |
+| **The wide banner photo at the top** | **Cover Image** (image picker, near top of right sidebar) |
+| **Left column of intro text** | **Food & Drink Intro Para One** |
+| **Right column of intro text** | **Food & Drink Intro Para Two** |
 | **Lagers list in the drinks menu** | **Lagers List** |
 | **Ciders list in the drinks menu** | **Ciders List** |
 | **Ales list in the drinks menu** | **Ales List** |
@@ -130,10 +122,10 @@ As you scroll down the Food & Drink page:
 
 | What you see on the live website | Field to edit in Outstatic (right sidebar) |
 |---|---|
-| **Banner photo at the top** | **Cover Image** (built-in, near top of right sidebar) |
+| **Banner photo at the top** | **Cover Image** (image picker, near top of right sidebar) |
 | **Phone number (everywhere on the site)** | **Phone Number** |
 | **Email address (everywhere on the site)** | **Email Address** |
-| **Street address in the Footer** | **Address Line 1**, **Address Line 2**, **Town**, **Postcode** |
+| **Street address in the Footer** | **Address Line One**, **Address Line Two**, **Town**, **Postcode** |
 | **Monday opening hours** | **Opening Hours (Monday)** |
 | **Tuesday opening hours** | **Opening Hours (Tuesday)** |
 | **Wednesday opening hours** | **Opening Hours (Wednesday)** |
@@ -152,9 +144,9 @@ These pages only have one editable field:
 
 | What you see on the live website | Field to edit in Outstatic (right sidebar) |
 |---|---|
-| **The banner photo at the top of the page** | **Cover Image** (built-in, near top of right sidebar) |
+| **The banner photo at the top of the page** | **Cover Image** (image picker, near top of right sidebar) |
 
-To change it: upload an image to the Media Library, get the path (see Section 3), then paste it into the **Cover Image** box.
+To change it: click the **Cover Image** field in the right sidebar and use the image picker to select or upload a new image.
 
 ---
 

@@ -84,17 +84,17 @@ export default function HeroCarousel({ images, alt }: HeroCarouselProps) {
 
       {/* Slide indicators and navigation — only show if more than 1 image */}
       {validImages.length > 1 && (
-        <div className="absolute bottom-8 right-8 z-20 flex items-center gap-4">
+        <div className="absolute bottom-3 left-1/2 -translate-x-1/2 z-20 flex items-center gap-3">
           {/* Dot indicators */}
-          <div className="flex items-center gap-2">
+          <div className="flex items-center gap-1.5">
             {validImages.map((_, index) => (
               <button
                 key={index}
                 onClick={() => goToSlide(index)}
                 className={`transition-all duration-300 rounded-full ${
                   index === currentIndex
-                    ? 'w-8 h-3 bg-white'
-                    : 'w-3 h-3 bg-white/50 hover:bg-white/80'
+                    ? 'w-5 h-2 md:w-7 md:h-2.5 bg-white'
+                    : 'w-2 h-2 md:w-2.5 md:h-2.5 bg-white/50 hover:bg-white/80'
                 }`}
                 aria-label={`Go to slide ${index + 1}`}
               />
@@ -102,22 +102,22 @@ export default function HeroCarousel({ images, alt }: HeroCarouselProps) {
           </div>
 
           {/* Arrow buttons */}
-          <div className="flex items-center gap-2">
+          <div className="flex items-center gap-1.5">
             <button
               onClick={goPrev}
-              className="w-10 h-10 rounded-full border-2 border-white/60 bg-black/30 backdrop-blur-sm flex items-center justify-center text-white hover:bg-white/20 transition-all duration-300"
+              className="w-7 h-7 md:w-9 md:h-9 rounded-full border border-white/60 bg-black/30 backdrop-blur-sm flex items-center justify-center text-white hover:bg-white/20 transition-all duration-300"
               aria-label="Previous slide"
             >
-              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <svg className="w-3 h-3 md:w-4 md:h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
               </svg>
             </button>
             <button
               onClick={goNext}
-              className="w-10 h-10 rounded-full border-2 border-white/60 bg-black/30 backdrop-blur-sm flex items-center justify-center text-white hover:bg-white/20 transition-all duration-300"
+              className="w-7 h-7 md:w-9 md:h-9 rounded-full border border-white/60 bg-black/30 backdrop-blur-sm flex items-center justify-center text-white hover:bg-white/20 transition-all duration-300"
               aria-label="Next slide"
             >
-              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <svg className="w-3 h-3 md:w-4 md:h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
               </svg>
             </button>
