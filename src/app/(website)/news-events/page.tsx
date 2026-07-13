@@ -276,7 +276,7 @@ export default async function Page() {
                     className="w-32 rounded-lg shadow-lg rotate-[-3deg] border-2 border-white/20"
                   />
                 </div>
-                <p className="mb-6 text-blue-100 text-sm">
+                <p className="mb-6 text-ship-blue-100 text-sm">
                   Our monetary vouchers make a great gift – whether it’s a night away or lunch or dinner with us.
                 </p>
                 <Link

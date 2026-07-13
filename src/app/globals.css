@@ -1,5 +1,31 @@
 @import "tailwindcss";
 
+@theme {
+  --color-ship-blue-50: #f4f6f8;
+  --color-ship-blue-100: #e4e9f0;
+  --color-ship-blue-200: #c9d4df;
+  --color-ship-blue-300: #aebecd;
+  --color-ship-blue-400: #7b94ad;
+  --color-ship-blue-500: #4f6e8e;
+  --color-ship-blue-600: #1e3a5f;
+  --color-ship-blue-700: #162c4a;
+  --color-ship-blue-800: #102038;
+  --color-ship-blue-900: #0a1525;
+
+  --color-ship-green-50: #f2f6f3;
+  --color-ship-green-100: #e0ece4;
+  --color-ship-green-200: #c3dad0;
+  --color-ship-green-300: #9cbcae;
+  --color-ship-green-400: #769b8b;
+  --color-ship-green-500: #557c6b;
+  --color-ship-green-600: #426253;
+  --color-ship-green-700: #334d40;
+  --color-ship-green-800: #273b31;
+  --color-ship-green-900: #1d2c25;
+
+  --font-centaur: "Centaur", "Palatino Linotype", "Book Antiqua", "Palatino", "Times New Roman", serif;
+}
+
 /* Centaur Font Family - loaded from local file */
 @font-face {
   font-family: 'Centaur';

@@ -144,7 +144,7 @@ export default function HomePage() {
           <h2 className="text-4xl font-bold text-white mb-6">
             Ready to Experience The Ship Inn?
           </h2>
-          <p className="text-xl text-blue-100 mb-8">
+          <p className="text-xl text-ship-blue-100 mb-8">
             Contact us today and discover why guests return year after year to our coastal retreat.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">

@@ -37,7 +37,7 @@ export default function NewsletterSignup() {
         <h2 className="text-3xl font-bold text-white mb-4">
           Stay Connected with The Ship Inn
         </h2>
-        <p className="text-xl text-blue-100 mb-8">
+        <p className="text-xl text-ship-blue-100 mb-8">
           Get the latest news, special offers, and events delivered to your inbox
         </p>
         
