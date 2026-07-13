@@ -1,6 +1,6 @@
 {
-  "commit": "26d4cdd73cb409095a8b24499c80fdf9dacd9ddf",
-  "generated": "2026-07-13T15:35:32.272Z",
+  "commit": "750f96b2b23b0568e52c10c27a5cd9f064b703f0",
+  "generated": "2026-07-13T15:36:18.865Z",
   "metadata": [
     {
       "__outstatic": {
@@ -60,8 +60,8 @@
     },
     {
       "__outstatic": {
-        "commit": "26d4cdd73cb409095a8b24499c80fdf9dacd9ddf",
-        "hash": "3565967236",
+        "commit": "750f96b2b23b0568e52c10c27a5cd9f064b703f0",
+        "hash": "1980796377",
         "path": "outstatic/content/pages/home.md"
       },
       "author": {
@@ -89,7 +89,7 @@
       "publishedAt": "2026-07-13T00:00:00.000Z",
       "slug": "home",
       "status": "published",
-      "strapline": "Historic charm meets modern comfort - TEST",
+      "strapline": "Historic charm meets modern comfort - TEST OF THE SYSTEM",
       "title": "Home"
     }
   ]
