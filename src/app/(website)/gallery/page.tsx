@@ -10,18 +10,46 @@ export const metadata = {
 }
 
 export default function GalleryPage() {
-  // Fetch all images from the Outstatic gallery collection
-  const documents = getDocuments('gallery', ['title', 'coverImage', 'category', 'description', 'status'])
+  // Fetch all images from the Outstatic gallery collection, including the markdown body content
+  const documents = getDocuments('gallery', ['title', 'coverImage', 'category', 'description', 'status', 'content'])
   
-  // Filter for published documents and map them to the format expected by ImageGallery
-  const allImages = documents
-    .filter(doc => doc.status === 'published')
-    .map(doc => ({
-      src: doc.coverImage || '',
-      alt: doc.title || '',
-      category: (doc.category as string) || 'Other',
-      caption: doc.description || ''
-    }))
+  // Array to hold all flattened images
+  const allImages: { src: string; alt: string; category: string; caption: string }[] = []
+
+  // Filter for published documents and extract images
+  documents.filter(doc => doc.status === 'published').forEach(doc => {
+    const category = (doc.category as string) || 'Other'
+    
+    // 1. Add the main cover image if it exists
+    if (doc.coverImage) {
+      allImages.push({
+        src: doc.coverImage,
+        alt: doc.title || '',
+        category: category,
+        caption: doc.description || ''
+      })
+    }
+    
+    // 2. Extract any additional images dropped into the markdown content body
+    if (doc.content) {
+      const imageRegex = /!\[(.*?)\]\((.*?)\)/g;
+      let match;
+      while ((match = imageRegex.exec(doc.content)) !== null) {
+        const altText = match[1] || doc.title || '';
+        const srcUrl = match[2];
+        
+        // Prevent duplicating the coverImage if they accidentally inserted it into the body too
+        if (srcUrl !== doc.coverImage) {
+          allImages.push({
+            src: srcUrl,
+            alt: altText,
+            category: category,
+            caption: doc.description || ''
+          });
+        }
+      }
+    }
+  })
 
   const pageData = getPageData('gallery')
   const heroImage = pageData?.coverImage
