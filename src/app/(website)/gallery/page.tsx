@@ -16,9 +16,23 @@ export default function GalleryPage() {
   // Array to hold all flattened images
   const allImages: { src: string; alt: string; category: string; caption: string }[] = []
 
+  // Helper to normalize user-typed categories from the CMS text box
+  const normalizeCategory = (cat: string) => {
+    if (!cat) return 'Other'
+    const lower = cat.trim().toLowerCase()
+    if (lower.includes('food') || lower.includes('drink')) return 'Food & Drink'
+    if (lower.includes('exterior') || lower.includes('outside')) return 'Exterior'
+    if (lower.includes('interior') || lower.includes('inside') || lower.includes('bar')) return 'Interior'
+    if (lower.includes('room') || lower.includes('cabin')) return 'Rooms'
+    if (lower.includes('surround') || lower.includes('location')) return 'Surroundings'
+    
+    // Capitalize first letters for anything else they type
+    return cat.trim().split(' ').map(w => w.charAt(0).toUpperCase() + w.slice(1).toLowerCase()).join(' ')
+  }
+
   // Filter for published documents and extract images
   documents.filter(doc => doc.status === 'published').forEach(doc => {
-    const category = (doc.category as string) || 'Other'
+    const category = normalizeCategory(doc.category as string)
     
     // 1. Add the main cover image if it exists
     if (doc.coverImage) {
