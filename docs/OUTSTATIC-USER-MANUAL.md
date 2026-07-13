@@ -24,6 +24,7 @@ The **left sidebar** has three sections:
 - **Pages** — Controls the core website pages (Home, Food & Drink, Contact, etc.).
 - **Events** — Controls upcoming events (live music, specials, etc.).
 - **News** — Controls news articles.
+- **Gallery** — Controls the photos shown on the Gallery page.
 
 **Libraries:**
 - **Media Library** — Where you upload images.
@@ -146,7 +147,7 @@ As you scroll down the Food & Drink page:
 
 ---
 
-### 🛏️ OTHER PAGES (`Rooms`, `Gallery`, `Things to Do`, `News & Events`)
+### 🛏️ OTHER PAGES (`Rooms`, `Things to Do`, `News & Events`)
 
 These pages only have one editable field:
 
@@ -180,7 +181,28 @@ To change it: click the **Cover Image** field in the right sidebar and use the i
 
 ---
 
-## 8. Quick Reference — Image Path Format
+## 8. How to Manage the Gallery
+
+The Gallery page is now entirely controlled by the **Gallery Collection**.
+
+**To Add a New Photo:**
+1. Click **Gallery** under Collections in the left sidebar.
+2. Click the **"New"** button (top right).
+3. **Title:** Type a name for the photo (e.g., "Front Bar" or "Fish & Chips").
+4. **Description:** Add an optional caption if desired.
+5. **Cover Image:** Click this field to open the Media Library and select your photo.
+6. **Category:** Choose a category (e.g., `Food & Drink`, `Exterior`, `Interior`, `Rooms`, or `Surroundings`). This determines where it appears on the gallery page filter.
+7. Change **Status** to **"Published"**.
+8. Click **Save**.
+
+**To Edit or Delete a Photo:**
+1. Click **Gallery** in the left sidebar to see all your photos.
+2. Click on a photo to change its category or image.
+3. Or click the trash can icon (🗑️) to delete it from the website.
+
+---
+
+## 9. Quick Reference — Image Path Format
 
 Every image path follows the same pattern:
 
