@@ -41,6 +41,11 @@
       "fieldType": "Text",
       "dataType": "string",
       "title": "Intro Paragraph Three"
+    },
+    "introParagraphFour": {
+      "fieldType": "Text",
+      "dataType": "string",
+      "title": "Intro Paragraph Four"
     }
   }
 }
