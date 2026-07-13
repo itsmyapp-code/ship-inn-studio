@@ -1,10 +1,10 @@
 {
-  "commit": "daa52716367cf1514b0cf83830c4dc77c0a4fa62",
-  "generated": "2026-07-13T00:14:51.911Z",
+  "commit": "2ab9d623c5bba102c4f0f5c65c26d0a1c0d4535f",
+  "generated": "2026-07-13T00:15:30.921Z",
   "metadata": [
     {
       "__outstatic": {
-        "commit": "daa52716367cf1514b0cf83830c4dc77c0a4fa62",
+        "commit": "2ab9d623c5bba102c4f0f5c65c26d0a1c0d4535f",
         "hash": "3958528457",
         "path": "outstatic/content/pages/home.md"
       },
