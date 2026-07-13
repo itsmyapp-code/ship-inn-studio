@@ -51,6 +51,11 @@
       "fieldType": "Text",
       "dataType": "string",
       "title": "Intro Paragraph Five"
+    },
+    "featureOneTitle": {
+      "fieldType": "Text",
+      "dataType": "string",
+      "title": "Feature One Title"
     }
   }
 }
