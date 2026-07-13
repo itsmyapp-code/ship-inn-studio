@@ -1,41 +1,7 @@
 {
-  "commit": "2be49f864ad6c8ac23b59a5f9e41057609250821",
-  "generated": "2026-07-13T12:06:35.717Z",
+  "commit": "4ff637e8e02f4367d818f0d8b1180eaeddc76d4f",
+  "generated": "2026-07-13T15:17:49.638Z",
   "metadata": [
-    {
-      "__outstatic": {
-        "commit": "be388321f49c20a6ec33c6a9cbfd8a0e5f015da4",
-        "hash": "2409717545",
-        "path": "outstatic/content/pages/home.md"
-      },
-      "author": {
-        "name": "Ship Inn Admin",
-        "picture": "https://avatars.githubusercontent.com/u/220572112?v=4"
-      },
-      "collection": "pages",
-      "coverImage": "",
-      "description": "Welcome to The Ship Inn Porlock Weir",
-      "featureOneDesc": "Three beautifully appointed rooms, each with modern amenities and traditional charm.",
-      "featureOneTitle": "Comfortable Accommodation",
-      "featureThreeDesc": "Situated in the heart of Porlock Weir with easy access to Exmoor National Park.",
-      "featureThreeTitle": "Perfect Location",
-      "featureTwoDesc": "Enjoy locally sourced food and fine ales in our historic pub with harbour views.",
-      "featureTwoTitle": "Traditional Pub & Restaurant",
-      "heroAlt": "The Ship Inn Exterior",
-      "heroImageOne": "/images/shipinn-006-Y4Nj.webp",
-      "heroImageThree": "//images/shipinn-006-Y4Nj.webp",
-      "heroImageTwo": "/images/shipinn-006-Y4Nj.webp",
-      "introParagraphFive": "Whether you're exploring the South West Coast Path or simply soaking in the peaceful harbour setting, The Ship Inn is your home by the sea.",
-      "introParagraphFour": "At our core, we're all about relaxed hospitality. Log fires, sea views, good conversation, and great food, these are the ingredients we believe make a perfect visit. We're proud to champion West Country suppliers and seasonal menus.",
-      "introParagraphOne": "Nestled in the heart of the stunning Exmoor coast, The Ship Inn at Porlock Weir is more than just a pub—it's a destination, a retreat, and a warm welcome at the edge of the sea. With roots tracing back over 200 years, our historic inn has long been a haven for weary travellers, sailors, walkers, and locals alike.",
-      "introParagraphThree": "In the summertime, our outdoor tables offer some of the best views on the coast—perfect for enjoying a cold drink, a leisurely lunch, or simply watching the boats drift by as the sun sets over the harbour.",
-      "introParagraphTwo": "Set against the dramatic backdrop of Porlock Bay and the ancient woodland of Exmoor National Park, The Ship Inn blends timeless charm with modern comfort. Whether you're dropping in for a pint of local ale, a hearty meal or staying the night in one of our cosy rooms, you'll feel the character and history.",
-      "publishedAt": "2026-07-13T00:00:00.000Z",
-      "slug": "home",
-      "status": "published",
-      "strapline": "Historic charm meets modern comfort",
-      "title": "Home"
-    },
     {
       "__outstatic": {
         "commit": "bf3d8760e02c2f720a1145e42c8993d7cbbbed81",
@@ -91,6 +57,40 @@
       "slug": "summer-dishes",
       "status": "published",
       "title": "Summer Dishes"
+    },
+    {
+      "__outstatic": {
+        "commit": "4ff637e8e02f4367d818f0d8b1180eaeddc76d4f",
+        "hash": "3565967236",
+        "path": "outstatic/content/pages/home.md"
+      },
+      "author": {
+        "name": "Ship Inn Admin",
+        "picture": "https://avatars.githubusercontent.com/u/220572112?v=4"
+      },
+      "collection": "pages",
+      "coverImage": "",
+      "description": "Welcome to The Ship Inn Porlock Weir",
+      "featureOneDesc": "Three beautifully appointed rooms, each with modern amenities and traditional charm.",
+      "featureOneTitle": "Comfortable Accommodation",
+      "featureThreeDesc": "Situated in the heart of Porlock Weir with easy access to Exmoor National Park.",
+      "featureThreeTitle": "Perfect Location",
+      "featureTwoDesc": "Enjoy locally sourced food and fine ales in our historic pub with harbour views.",
+      "featureTwoTitle": "Traditional Pub & Restaurant",
+      "heroAlt": "The Ship Inn Exterior",
+      "heroImageOne": "/images/shipinn-006-Y4Nj.webp",
+      "heroImageThree": "//images/shipinn-006-Y4Nj.webp",
+      "heroImageTwo": "/images/shipinn-006-Y4Nj.webp",
+      "introParagraphFive": "Whether you're exploring the South West Coast Path or simply soaking in the peaceful harbour setting, The Ship Inn is your home by the sea.",
+      "introParagraphFour": "At our core, we're all about relaxed hospitality. Log fires, sea views, good conversation, and great food, these are the ingredients we believe make a perfect visit. We're proud to champion West Country suppliers and seasonal menus.",
+      "introParagraphOne": "Nestled in the heart of the stunning Exmoor coast, The Ship Inn at Porlock Weir is more than just a pub—it's a destination, a retreat, and a warm welcome at the edge of the sea. With roots tracing back over 200 years, our historic inn has long been a haven for weary travellers, sailors, walkers, and locals alike.",
+      "introParagraphThree": "In the summertime, our outdoor tables offer some of the best views on the coast—perfect for enjoying a cold drink, a leisurely lunch, or simply watching the boats drift by as the sun sets over the harbour.",
+      "introParagraphTwo": "Set against the dramatic backdrop of Porlock Bay and the ancient woodland of Exmoor National Park, The Ship Inn blends timeless charm with modern comfort. Whether you're dropping in for a pint of local ale, a hearty meal or staying the night in one of our cosy rooms, you'll feel the character and history.",
+      "publishedAt": "2026-07-13T00:00:00.000Z",
+      "slug": "home",
+      "status": "published",
+      "strapline": "Historic charm meets modern comfort - TEST",
+      "title": "Home"
     }
   ]
 }
