@@ -1,4 +1,4 @@
---
+---
 title: 'Food Detail'
 status: 'published'
 author:

@@ -1,4 +1,4 @@
---
+---
 title: 'The Ship Inn - Day View'
 status: 'published'
 author:

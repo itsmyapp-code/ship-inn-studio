@@ -1,4 +1,4 @@
---
+---
 title: 'Bar Selection'
 status: 'published'
 author:

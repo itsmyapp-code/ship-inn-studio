@@ -1,4 +1,4 @@
---
+---
 title: 'Fireplace'
 status: 'published'
 author:

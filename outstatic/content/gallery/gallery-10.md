@@ -1,4 +1,4 @@
---
+---
 title: 'Guest Room 2'
 status: 'published'
 author:
