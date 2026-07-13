@@ -3213,6 +3213,83 @@
       "filename": "the_ship_inn2.webp",
       "publishedAt": "2026-07-13T11:26:12.420Z",
       "type": "image"
+    },
+    {
+      "__outstatic": {
+        "commit": "",
+        "hash": "cc5slnqy",
+        "path": "public/images/ship-inn-gallery-new-mrj6269z-1.jpg"
+      },
+      "alt": "",
+      "filename": "ship-inn-gallery-new-mrj6269z-1.jpg",
+      "publishedAt": "2026-07-13T11:56:09.678Z",
+      "type": "image"
+    },
+    {
+      "__outstatic": {
+        "commit": "",
+        "hash": "gyvvbsob",
+        "path": "public/images/ship-inn-gallery-new-mrj626a7-2.jpg"
+      },
+      "alt": "",
+      "filename": "ship-inn-gallery-new-mrj626a7-2.jpg",
+      "publishedAt": "2026-07-13T11:56:09.686Z",
+      "type": "image"
+    },
+    {
+      "__outstatic": {
+        "commit": "",
+        "hash": "yz3q1a8y",
+        "path": "public/images/ship-inn-gallery-new-mrj626ae-3.jpg"
+      },
+      "alt": "",
+      "filename": "ship-inn-gallery-new-mrj626ae-3.jpg",
+      "publishedAt": "2026-07-13T11:56:09.692Z",
+      "type": "image"
+    },
+    {
+      "__outstatic": {
+        "commit": "",
+        "hash": "u4odyyso",
+        "path": "public/images/ship-inn-gallery-new-mrj626ak-4.jpg"
+      },
+      "alt": "",
+      "filename": "ship-inn-gallery-new-mrj626ak-4.jpg",
+      "publishedAt": "2026-07-13T11:56:09.698Z",
+      "type": "image"
+    },
+    {
+      "__outstatic": {
+        "commit": "",
+        "hash": "8zhdggbz",
+        "path": "public/images/ship-inn-gallery-new-mrj626aq-5.jpg"
+      },
+      "alt": "",
+      "filename": "ship-inn-gallery-new-mrj626aq-5.jpg",
+      "publishedAt": "2026-07-13T11:56:09.704Z",
+      "type": "image"
+    },
+    {
+      "__outstatic": {
+        "commit": "",
+        "hash": "idg9y3a4",
+        "path": "public/images/ship-inn-gallery-new-mrj626aw-6.jpg"
+      },
+      "alt": "",
+      "filename": "ship-inn-gallery-new-mrj626aw-6.jpg",
+      "publishedAt": "2026-07-13T11:56:09.710Z",
+      "type": "image"
+    },
+    {
+      "__outstatic": {
+        "commit": "",
+        "hash": "c2ezs3ml",
+        "path": "public/images/ship-inn-gallery-new-mrj626b2-7.jpg"
+      },
+      "alt": "",
+      "filename": "ship-inn-gallery-new-mrj626b2-7.jpg",
+      "publishedAt": "2026-07-13T11:56:09.719Z",
+      "type": "image"
     }
   ]
 }
