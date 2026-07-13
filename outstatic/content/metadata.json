@@ -1,6 +1,6 @@
 {
-  "commit": "e5eb2ab5d38f39e5967febfc188c6df78e9b9bf4",
-  "generated": "2026-07-13T11:59:05.029Z",
+  "commit": "2be49f864ad6c8ac23b59a5f9e41057609250821",
+  "generated": "2026-07-13T12:06:35.717Z",
   "metadata": [
     {
       "__outstatic": {
@@ -73,6 +73,24 @@
       "slug": "gallery-5",
       "status": "published",
       "title": "Fresh Food"
+    },
+    {
+      "__outstatic": {
+        "commit": "2be49f864ad6c8ac23b59a5f9e41057609250821",
+        "hash": "1435319781",
+        "path": "outstatic/content/gallery/summer-dishes.mdx"
+      },
+      "author": {
+        "name": "",
+        "picture": "https://avatars.githubusercontent.com/u/220572112?v=4"
+      },
+      "category": "Food & Drink",
+      "collection": "gallery",
+      "coverImage": "//images/ship-inn-gallery-new-mrj626aw-6.jpg",
+      "publishedAt": "2026-07-13T12:06:29.459Z",
+      "slug": "summer-dishes",
+      "status": "published",
+      "title": "Summer Dishes"
     }
   ]
 }
