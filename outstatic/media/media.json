@@ -1,6 +1,6 @@
 {
-  "commit": "51eb81d01c7117909c1a3b72cbe9a551924f7afa",
-  "generated": "2026-07-13T00:08:56.551Z",
+  "commit": "ee07a4627ab60240038b9c36a6f90fd3563f6780",
+  "generated": "2026-07-13T00:09:35.457Z",
   "media": [
     {
       "__outstatic": {
@@ -22,6 +22,17 @@
       "alt": "",
       "filename": "shipinn-003-U3OD.webp",
       "publishedAt": "2026-07-13T00:08:56.551Z",
+      "type": "image"
+    },
+    {
+      "__outstatic": {
+        "commit": "ee07a4627ab60240038b9c36a6f90fd3563f6780",
+        "hash": "340909794",
+        "path": "public/images/shipinn-006-Y4Nj.webp"
+      },
+      "alt": "",
+      "filename": "shipinn-006-Y4Nj.webp",
+      "publishedAt": "2026-07-13T00:09:35.457Z",
       "type": "image"
     },
     {
