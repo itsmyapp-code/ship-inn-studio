@@ -8,18 +8,18 @@
       "title": "Cover Image"
     },
     "heroImageOne": {
-      "fieldType": "Image",
-      "dataType": "image",
+      "fieldType": "String",
+      "dataType": "string",
       "title": "Hero Image One"
     },
     "heroImageTwo": {
-      "fieldType": "Image",
-      "dataType": "image",
+      "fieldType": "String",
+      "dataType": "string",
       "title": "Hero Image Two"
     },
     "heroImageThree": {
-      "fieldType": "Image",
-      "dataType": "image",
+      "fieldType": "String",
+      "dataType": "string",
       "title": "Hero Image Three"
     }
   }

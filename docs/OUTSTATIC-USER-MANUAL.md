@@ -39,11 +39,19 @@ The **left sidebar** has three sections:
 
 ### Step 2: Use the image
 
-**For Image picker fields** (Cover Image, Hero Image One/Two/Three):
+**For the Cover Image field**:
 1. Go to the page you want to edit (e.g., **Pages → Contact**).
-2. Find the image field in the right sidebar.
-3. Click the field — it will show an image picker where you can select from uploaded images or upload a new one.
-4. Select the image and click **Save**.
+2. Click the Cover Image field in the right sidebar.
+3. It will open an image picker — select your image and click **Save**.
+
+**For the Hero Images (Home Page only)**:
+Due to a technical limitation, the three Hero Images on the Home page are text fields. You must paste the path.
+1. Right-click your uploaded image in the Media Library.
+2. Choose **"Open image in new tab"**.
+3. Look at the browser address bar — your image path is `/images/` followed by the filename (e.g., `/images/ship-inn-front-view-c2Nj.png`).
+4. Go to **Pages → Home**.
+5. Paste that path into the **Hero Image One**, **Two**, or **Three** text field.
+6. Click **Save**.
 
 > **Image picker fields have a visual preview** — you'll see a thumbnail of the selected image, with a "Remove" button to clear it.
 
@@ -86,7 +94,7 @@ As you scroll down [theshipinnporlockweir.co.uk](https://theshipinnporlockweir.c
 
 **How the rotating hero images work:**
 - The homepage automatically crossfades between up to 3 images every 6 seconds.
-- Each Hero Image field has an **image picker** — click it to select or upload an image.
+- These fields require you to **paste the image path** (see Section 3).
 - Fill in:
   - **Hero Image One** — the first photo (required)
   - **Hero Image Two** — the second photo (optional, leave empty if not needed)
