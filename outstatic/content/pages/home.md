@@ -1,6 +1,6 @@
 ---
 title: "Home"
-status: "draft"
+status: "published"
 author:
   name: "Ship Inn Admin"
   picture: "https://avatars.githubusercontent.com/u/220572112?v=4"

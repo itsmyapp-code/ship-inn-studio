@@ -1,11 +1,11 @@
 {
-  "commit": "0d51182203c726c3a825839fa44c0ff5c0b7f989",
-  "generated": "2026-07-13T00:14:48.913Z",
+  "commit": "daa52716367cf1514b0cf83830c4dc77c0a4fa62",
+  "generated": "2026-07-13T00:14:51.911Z",
   "metadata": [
     {
       "__outstatic": {
-        "commit": "0d51182203c726c3a825839fa44c0ff5c0b7f989",
-        "hash": "2553792251",
+        "commit": "daa52716367cf1514b0cf83830c4dc77c0a4fa62",
+        "hash": "3958528457",
         "path": "outstatic/content/pages/home.md"
       },
       "author": {
@@ -31,7 +31,7 @@
       "introParagraph5": "Whether you're exploring the South West Coast Path or simply soaking in the peaceful harbour setting, The Ship Inn is your home by the sea.",
       "publishedAt": "2026-07-13T00:00:00.000Z",
       "slug": "home",
-      "status": "draft",
+      "status": "published",
       "strapline": "Historic charm meets modern comfort",
       "title": "Home"
     }
