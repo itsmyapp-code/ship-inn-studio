@@ -11,6 +11,11 @@
       "fieldType": "Image",
       "dataType": "image",
       "title": "Hero Image One"
+    },
+    "heroImageTwo": {
+      "fieldType": "Image",
+      "dataType": "image",
+      "title": "Hero Image Two"
     }
   }
 }
