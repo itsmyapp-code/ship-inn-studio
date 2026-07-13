@@ -56,6 +56,11 @@
       "fieldType": "Text",
       "dataType": "string",
       "title": "Feature One Title"
+    },
+    "featureOneDesc": {
+      "fieldType": "Text",
+      "dataType": "string",
+      "title": "Feature One Desc"
     }
   }
 }
