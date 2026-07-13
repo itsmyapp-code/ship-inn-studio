@@ -76,6 +76,11 @@
       "fieldType": "Text",
       "dataType": "string",
       "title": "Feature Two Desc"
+    },
+    "featureThreeDesc": {
+      "fieldType": "Text",
+      "dataType": "string",
+      "title": "Feature Three Desc"
     }
   }
 }
