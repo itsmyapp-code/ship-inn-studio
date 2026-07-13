@@ -1,0 +1,16 @@
+{
+  "title": "gallery",
+  "type": "object",
+  "properties": {
+    "coverImage": {
+      "fieldType": "Image",
+      "dataType": "string",
+      "title": "Cover Image"
+    },
+    "category": {
+      "fieldType": "String",
+      "dataType": "string",
+      "title": "Category"
+    }
+  }
+}
