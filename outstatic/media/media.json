@@ -1,6 +1,6 @@
 {
-  "commit": "aaa05a766907983b96d0e5b056dc5a8e0fed3e94",
-  "generated": "2026-07-12T23:48:44.465Z",
+  "commit": "51eb81d01c7117909c1a3b72cbe9a551924f7afa",
+  "generated": "2026-07-13T00:08:56.551Z",
   "media": [
     {
       "__outstatic": {
@@ -11,6 +11,17 @@
       "alt": "",
       "filename": "ship-inn-front-view-c2Nj.png",
       "publishedAt": "2026-07-12T23:48:44.465Z",
+      "type": "image"
+    },
+    {
+      "__outstatic": {
+        "commit": "51eb81d01c7117909c1a3b72cbe9a551924f7afa",
+        "hash": "2129673375",
+        "path": "public/images/shipinn-003-U3OD.webp"
+      },
+      "alt": "",
+      "filename": "shipinn-003-U3OD.webp",
+      "publishedAt": "2026-07-13T00:08:56.551Z",
       "type": "image"
     },
     {
