@@ -67,10 +67,10 @@
       "dataType": "string",
       "title": "Feature Two Title"
     },
-    "featureTwoDesc": {
+    "featureThreeTitle": {
       "fieldType": "Text",
       "dataType": "string",
-      "title": "Feature Two Desc"
+      "title": "Feature Three Title"
     }
   }
 }
