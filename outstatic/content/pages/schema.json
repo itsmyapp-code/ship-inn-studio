@@ -21,6 +21,11 @@
       "fieldType": "String",
       "dataType": "string",
       "title": "Hero Image Three"
+    },
+    "strapline": {
+      "fieldType": "Text",
+      "dataType": "string",
+      "title": "Strapline"
     }
   }
 }
