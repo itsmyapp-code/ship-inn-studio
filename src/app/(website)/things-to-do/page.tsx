@@ -7,8 +7,6 @@ import TideTimes from '@/components/TideTimes'
 import WeatherWidget from '@/components/WeatherWidget'
 import { getPageData } from '@/lib/outstatic'
 
-export const dynamic = 'force-dynamic'
-
 export const metadata = {
   title: 'Things to do - The Ship Inn Porlock Weir',
   description: 'Discover the best of Porlock Weir and Exmoor National Park. From coastal walks to historic villages, your guide to West Somerset adventures.',

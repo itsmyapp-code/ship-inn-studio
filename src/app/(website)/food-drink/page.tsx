@@ -5,8 +5,6 @@ import path from 'path'
 import Image from 'next/image'
 import { getPageData, getSharedContactData } from '@/lib/outstatic'
 
-export const dynamic = 'force-dynamic'
-
 // ... metadata ...
 
 function getMenus() {

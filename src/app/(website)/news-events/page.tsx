@@ -7,8 +7,6 @@ import TideTimes from '@/components/TideTimes'
 import WeatherWidget from '@/components/WeatherWidget'
 import { getPageData } from '@/lib/outstatic'
 
-export const dynamic = 'force-dynamic'
-
 export const metadata = {
   title: 'News and Events - The Ship Inn Porlock Weir',
   description: 'Stay up to date with the latest news and upcoming events at The Ship Inn, Porlock Weir.',

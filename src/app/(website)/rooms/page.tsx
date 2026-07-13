@@ -5,8 +5,6 @@ import Image from 'next/image'
 import RoomGallery from '@/components/RoomGallery'
 import { getPageData, getSharedContactData } from '@/lib/outstatic'
 
-export const dynamic = 'force-dynamic'
-
 export const metadata = {
   title: 'From the Cabins - The Ship Inn Porlock Weir',
   description: 'Discover our three beautifully appointed guest rooms, each offering modern comfort with traditional charm in the heart of Porlock Weir.',
