@@ -1,6 +1,6 @@
 {
-  "commit": "c91edb708dd831bf151ec0e7e9e091d252a3dfa1",
-  "generated": "2026-07-13T15:42:02.876Z",
+  "commit": "3064c48d603d5d261add4a9e913f9c5c97f69d9d",
+  "generated": "2026-07-14T04:51:16.399Z",
   "metadata": [
     {
       "__outstatic": {
@@ -60,7 +60,7 @@
     },
     {
       "__outstatic": {
-        "commit": "c91edb708dd831bf151ec0e7e9e091d252a3dfa1",
+        "commit": "3064c48d603d5d261add4a9e913f9c5c97f69d9d",
         "hash": "2409717545",
         "path": "outstatic/content/pages/home.md"
       },
