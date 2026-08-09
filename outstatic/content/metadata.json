@@ -1,6 +1,6 @@
 {
-  "commit": "a43ca9c6503aaabaf29c5428fa04114c5b6914f4",
-  "generated": "2026-08-09T10:01:24.085Z",
+  "commit": "41ccc2df2b9fd25cf9e0ead8953c36b625f8c6cf",
+  "generated": "2026-08-09T10:04:10.903Z",
   "metadata": [
     {
       "__outstatic": {
@@ -94,8 +94,8 @@
     },
     {
       "__outstatic": {
-        "commit": "a43ca9c6503aaabaf29c5428fa04114c5b6914f4",
-        "hash": "1216013029",
+        "commit": "41ccc2df2b9fd25cf9e0ead8953c36b625f8c6cf",
+        "hash": "1831748175",
         "path": "outstatic/content/events/rough-justice.mdx"
       },
       "author": {
