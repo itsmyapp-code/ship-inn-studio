@@ -38,7 +38,10 @@ type EventItem = {
 function extractContentMetadata(content: string) {
   // Find first image
   const imageMatch = content.match(/!\[.*?\]\((.*?)\)/)
-  const extractedImage = imageMatch ? imageMatch[1] : undefined
+  let extractedImage = imageMatch ? imageMatch[1] : undefined
+  if (extractedImage?.startsWith('//')) {
+    extractedImage = extractedImage.replace(/^\/\//, '/')
+  }
 
   // Remove images and get text
   const textContent = content
@@ -60,14 +63,18 @@ function extractContentMetadata(content: string) {
 
 async function getNews(): Promise<NewsItem[]> {
   try {
-    const news = getDocuments('news', ['title', 'slug', 'publishedAt', 'description', 'coverImage', 'content', 'status'])
+    const news = getDocuments('news', ['title', 'slug', 'publishedAt', 'description', 'coverImage', 'uploadImage', 'content', 'status'])
     return (news as any[])
       .filter((item: any) => item.status === 'published')
       .map((item) => {
         const { extractedImage, extractedDescription } = extractContentMetadata(item.content || '')
+        let image = item.coverImage || item.uploadImage || extractedImage
+        if (image?.startsWith('//')) {
+          image = image.replace(/^\/\//, '/')
+        }
         return {
           ...item,
-          coverImage: item.coverImage || extractedImage,
+          coverImage: image,
           description: item.description || extractedDescription
         }
       }) as NewsItem[]
@@ -79,7 +86,7 @@ async function getNews(): Promise<NewsItem[]> {
 
 async function getEvents(): Promise<EventItem[]> {
   try {
-    const events = getDocuments('events', ['title', 'slug', 'publishedAt', 'description', 'coverImage', 'content', 'status', 'eventDate', 'eventTime', 'location'])
+    const events = getDocuments('events', ['title', 'slug', 'publishedAt', 'description', 'coverImage', 'uploadImage', 'content', 'status', 'eventDate', 'eventTime', 'location'])
     const now = new Date()
     now.setHours(0, 0, 0, 0) // Start of today
 
@@ -87,9 +94,13 @@ async function getEvents(): Promise<EventItem[]> {
       .filter((event: any) => event.status === 'published')
       .map((event) => {
         const { extractedImage, extractedDescription } = extractContentMetadata(event.content || '')
+        let image = event.coverImage || event.uploadImage || extractedImage
+        if (image?.startsWith('//')) {
+          image = image.replace(/^\/\//, '/')
+        }
         return {
           ...event,
-          coverImage: event.coverImage || extractedImage,
+          coverImage: image,
           description: event.description || extractedDescription,
           // Use eventDate if set, otherwise fall back to publishedAt
           displayDate: event.eventDate || event.publishedAt
