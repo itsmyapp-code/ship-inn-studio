@@ -22,6 +22,11 @@
       "fieldType": "String",
       "dataType": "string",
       "title": "location"
+    },
+    "uploadImage": {
+      "fieldType": "Image",
+      "dataType": "image",
+      "title": "Upload image"
     }
   }
 }
