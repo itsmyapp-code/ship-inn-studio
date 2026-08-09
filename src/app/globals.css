@@ -122,3 +122,10 @@ select:focus {
   outline-offset: 2px;
   border-radius: 8px;
 }
+
+/* Force hero images to crop at 30% from top on mobile */
+@media (max-width: 768px) {
+  .hero-crop-mobile img {
+    object-position: center 30% !important;
+  }
+}

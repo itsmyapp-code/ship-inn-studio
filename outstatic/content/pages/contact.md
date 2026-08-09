@@ -21,7 +21,7 @@ openingHoursThu: '11:00 AM - 11:00 PM'
 openingHoursFri: '11:00 AM - 11:00 PM'
 openingHoursSat: '11:00 AM - 11:00 PM'
 openingHoursSun: '11:00 AM - 11:00 PM'
-kitchenClose: 'Food served: 12:00 PM - 9:00 PM'
+kitchenClose: "Lunch: 12:00 - 14:15\nDinner: 18:00 - 20:15"
 breakfastTimes: 'Breakfast: 8:00 AM - 10:00 AM (Residents only)'
 seasonalNote: 'Winter hours may vary. Please check our Facebook page for updates.'
 publishedAt: '2026-07-12T12:00:00.000Z'

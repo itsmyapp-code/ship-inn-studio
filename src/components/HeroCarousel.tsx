@@ -57,7 +57,7 @@ export default function HeroCarousel({ images, alt }: HeroCarouselProps) {
       {/* Images with Ken Burns zoom/pan effect */}
       {validImages.map((src, index) => (
         <div
-          key={src}
+          key={`${src}-${index}`}
           className={`absolute inset-0 transition-opacity duration-1500 ease-in-out ${
             index === currentIndex ? 'opacity-100' : 'opacity-0'
           }`}
@@ -76,7 +76,7 @@ export default function HeroCarousel({ images, alt }: HeroCarouselProps) {
               alt={`${alt} - View ${index + 1}`}
               fill
               priority={index === 0}
-              className="object-cover"
+              className="object-cover hero-crop-mobile"
             />
           </div>
         </div>
@@ -127,19 +127,29 @@ export default function HeroCarousel({ images, alt }: HeroCarouselProps) {
 
       {/* Ken Burns animation styles */}
       <style jsx global>{`
-        @keyframes ken-burns {
-          0% {
-            transform: scale(1) translate(0, 0);
-          }
-          50% {
-            transform: scale(1.12) translate(-1.5%, -1%);
-          }
-          100% {
-            transform: scale(1) translate(0, 0);
-          }
+        @keyframes ken-burns-desktop {
+          0% { transform: scale(1) translate(0, 0); }
+          50% { transform: scale(1.12) translate(-1.5%, -1%); }
+          100% { transform: scale(1) translate(0, 0); }
+        }
+        @keyframes ken-burns-mobile {
+          0% { transform: scale(1) translate(0, 0); }
+          50% { transform: scale(1.05) translate(0, -1%); }
+          100% { transform: scale(1) translate(0, 0); }
         }
         .animate-ken-burns {
-          animation: ken-burns 12s ease-in-out infinite;
+          animation: ken-burns-mobile 12s ease-in-out infinite;
+        }
+        @media (min-width: 768px) {
+          .animate-ken-burns {
+            animation: ken-burns-desktop 15s ease-in-out infinite;
+          }
+        }
+        @media (prefers-reduced-motion: reduce) {
+          .animate-ken-burns {
+            animation: none !important;
+            transform: none !important;
+          }
         }
         .duration-1500 {
           transition-duration: 1500ms;

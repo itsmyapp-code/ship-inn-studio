@@ -47,7 +47,7 @@ export default function HomePage() {
   return (
     <div className="min-h-screen">
       {/* Hero Section */}
-      <section className="relative h-screen w-full">
+      <section className="relative h-[75vh] md:h-screen w-full overflow-hidden">
         {/* Background Images Carousel */}
         <HeroCarousel images={heroImages} alt={heroAlt} />
 
@@ -57,7 +57,7 @@ export default function HomePage() {
         <div className="relative z-10 flex items-center justify-center h-full">
           <div className="text-center max-w-6xl mx-auto px-6">
             {/* Logo Overlay */}
-            <div className="bg-white rounded-full w-48 h-48 md:w-64 md:h-64 mx-auto mb-8 flex items-center justify-center shadow-2xl overflow-hidden p-6 relative">
+            <div className="bg-white rounded-full w-32 h-32 md:w-64 md:h-64 mx-auto mb-4 md:mb-8 flex items-center justify-center shadow-2xl overflow-hidden p-4 md:p-6 relative">
               <img
                 src="/images/the_ship_inn2.webp"
                 alt="The Ship Inn Logo"
@@ -68,7 +68,7 @@ export default function HomePage() {
               <span className="block">Welcome to</span>
               <span className="block text-yellow-300">The Ship Inn Porlock Weir</span>
             </h1>
-            <p className="text-xl md:text-3xl mb-12 text-white opacity-90 text-shadow-md">
+            <p className="text-lg md:text-3xl mb-8 md:mb-12 text-white opacity-90 text-shadow-md">
               {strapline}
             </p>
             <div className="flex flex-col sm:flex-row gap-6 justify-center">
