@@ -1,6 +1,6 @@
 {
-  "commit": "41ccc2df2b9fd25cf9e0ead8953c36b625f8c6cf",
-  "generated": "2026-08-09T10:04:10.903Z",
+  "commit": "c2c41bb9b2719d8123649d13813d9b94be519000",
+  "generated": "2026-08-09T10:06:24.073Z",
   "metadata": [
     {
       "__outstatic": {
@@ -94,8 +94,8 @@
     },
     {
       "__outstatic": {
-        "commit": "41ccc2df2b9fd25cf9e0ead8953c36b625f8c6cf",
-        "hash": "1831748175",
+        "commit": "c2c41bb9b2719d8123649d13813d9b94be519000",
+        "hash": "702923138",
         "path": "outstatic/content/events/rough-justice.mdx"
       },
       "author": {
@@ -108,7 +108,8 @@
       "publishedAt": "2026-08-28T23:00:00.000Z",
       "slug": "rough-justice",
       "status": "draft",
-      "title": "Rough Justice "
+      "title": "Rough Justice ",
+      "uploadImage": "//images/rough-justice-UxNT.png"
     }
   ]
 }
