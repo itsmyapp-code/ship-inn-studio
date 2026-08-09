@@ -1,6 +1,6 @@
 {
-  "commit": "e55352fab6821b022ea153522e587b669ca442ee",
-  "generated": "2026-08-09T10:15:02.598Z",
+  "commit": "f61102484695704dfb9f3402e38e26e6a3050514",
+  "generated": "2026-08-09T10:22:44.855Z",
   "metadata": [
     {
       "__outstatic": {
@@ -110,6 +110,22 @@
       "status": "published",
       "title": "Rough Justice ",
       "uploadImage": "//images/rough-justice-UxNT.png"
+    },
+    {
+      "__outstatic": {
+        "commit": "f61102484695704dfb9f3402e38e26e6a3050514",
+        "hash": "539512659",
+        "path": "outstatic/content/news/a-fresh-new-thatch-for-the-ship.mdx"
+      },
+      "author": {
+        "name": "",
+        "picture": "https://avatars.githubusercontent.com/u/249422786?v=4"
+      },
+      "collection": "news",
+      "publishedAt": "2026-08-09T10:23:23.213Z",
+      "slug": "a-fresh-new-thatch-for-the-ship",
+      "status": "published",
+      "title": "🌾 A Fresh New Thatch for The Ship! 🌾"
     }
   ]
 }

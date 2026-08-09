@@ -1,6 +1,6 @@
 {
-  "commit": "c8fb60acf9373517ea4923bf67d2bd2a5ccb3e38",
-  "generated": "2026-08-09T10:04:46.784Z",
+  "commit": "f61102484695704dfb9f3402e38e26e6a3050514",
+  "generated": "2026-08-09T10:22:44.855Z",
   "media": [
     {
       "__outstatic": {
@@ -154,6 +154,17 @@
       "alt": "",
       "filename": "harbour-room-bed02.webp",
       "publishedAt": "2026-07-13T11:26:12.419Z",
+      "type": "image"
+    },
+    {
+      "__outstatic": {
+        "commit": "f61102484695704dfb9f3402e38e26e6a3050514",
+        "hash": "1133188337",
+        "path": "public/images/new-thatch--kyOD.jpg"
+      },
+      "alt": "",
+      "filename": "new-thatch--kyOD.jpg",
+      "publishedAt": "2026-08-09T10:22:44.853Z",
       "type": "image"
     },
     {
