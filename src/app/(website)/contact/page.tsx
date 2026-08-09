@@ -104,7 +104,7 @@ export default function ContactPage() {
                     <div className="text-gray-600 text-sm space-y-1">
                       <p>Bar: {pageData?.openingHoursMon || '11:00 AM - 11:00 PM'}</p>
                       <p className="whitespace-pre-line">{pageData?.kitchenClose || 'Lunch: 12:00 - 14:15\nDinner: 18:00 - 20:15'}</p>
-                      <p>{pageData?.breakfastTimes || 'Breakfast: 8:00 AM - 10:00 AM (Residents only)'}</p>
+                      <p>{pageData?.breakfastTimes || 'Breakfast: 8:00 AM - 10:00 AM'}</p>
                       {pageData?.seasonalNote && (
                         <p className="text-xs text-gray-500 italic mt-2">{pageData.seasonalNote}</p>
                       )}
