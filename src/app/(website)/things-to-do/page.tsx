@@ -13,7 +13,20 @@ export const metadata = {
 }
 
 export default function ThingsToDoPage() {
-  const activities = [
+  interface ActivityItem {
+    name: string
+    description: string
+    distance: string
+    duration: string
+    image?: string
+  }
+
+  interface ActivityCategory {
+    category: string
+    items: ActivityItem[]
+  }
+
+  const activities: ActivityCategory[] = [
     {
       category: "Coastal Adventures",
       items: [
@@ -21,7 +34,8 @@ export default function ThingsToDoPage() {
           name: "South West Coast Path",
           description: "World-class cliff-top walking with stunning views over the Bristol Channel.",
           distance: "On your doorstep",
-          duration: "1-8 hours"
+          duration: "1-8 hours",
+          image: "/images/area.webp"
         },
         {
           name: "Porlock Beach",
@@ -152,8 +166,20 @@ export default function ThingsToDoPage() {
               
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                 {category.items.map((item, idx) => (
-                  <div key={idx} className="bg-white rounded-lg shadow-lg overflow-hidden ship-card-hover">
-                    <div className="h-48 bg-ship-green-200"></div>
+                  <div key={idx} className="bg-white rounded-lg shadow-lg overflow-hidden ship-card-hover group">
+                    <div className="h-48 relative overflow-hidden bg-ship-green-200">
+                      {item.image ? (
+                        <Image
+                          src={item.image}
+                          alt={item.name}
+                          fill
+                          className="object-cover group-hover:scale-105 transition-transform duration-500"
+                          sizes="(max-w-768px) 100vw, 33vw"
+                        />
+                      ) : (
+                        <div className="w-full h-full bg-ship-green-200"></div>
+                      )}
+                    </div>
                     <div className="p-6">
                       <h3 className="text-xl font-semibold text-gray-900 mb-2">{item.name}</h3>
                       <p className="text-gray-600 mb-4">{item.description}</p>

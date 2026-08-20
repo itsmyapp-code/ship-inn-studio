@@ -1,4 +1,5 @@
 import AnalyticsScripts from '@/components/AnalyticsScripts'
+import { Analytics } from '@vercel/analytics/react'
 import CookieBanner from '@/components/CookieBanner'
 import Navigation from '@/components/Navigation'
 import Footer from '@/components/Footer'
@@ -19,6 +20,7 @@ export default function WebsiteLayout({
     <html lang="en">
       <body className="font-centaur">
         <AnalyticsScripts />
+        <Analytics />
         <Navigation />
         <main className="min-h-screen">
           {children}
