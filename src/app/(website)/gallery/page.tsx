@@ -103,7 +103,7 @@ export default function GalleryPage() {
           </div>
           <div className="relative">
             <img
-              src="/images/ship-inn-front-view.png"
+              src="/images/Ship%20-new-thatch.jpg"
               alt="The Ship Inn Porlock Weir"
               className="w-full h-96 object-cover rounded-lg mb-8"
             />
