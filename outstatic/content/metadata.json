@@ -1,6 +1,6 @@
 {
-  "commit": "f570718561d0f87d524a2329daed6af5d26bfdbf",
-  "generated": "2026-08-20T04:37:58.090Z",
+  "commit": "dc29df802ff08522ad7ca46efa57e4a0e7d29374",
+  "generated": "2026-08-20T04:48:11.210Z",
   "metadata": [
     {
       "__outstatic": {
@@ -142,6 +142,22 @@
       "slug": "bbq-braai-at-the-ship-inn-porlock-weir",
       "status": "published",
       "title": "BBQ/Braai at the Ship Inn, Porlock Weir "
+    },
+    {
+      "__outstatic": {
+        "commit": "dc29df802ff08522ad7ca46efa57e4a0e7d29374",
+        "hash": "3395742190",
+        "path": "outstatic/content/news/have-you-met-nelson.mdx"
+      },
+      "author": {
+        "name": "",
+        "picture": "https://avatars.githubusercontent.com/u/249422786?v=4"
+      },
+      "collection": "news",
+      "publishedAt": "2026-08-20T04:46:08.039Z",
+      "slug": "have-you-met-nelson",
+      "status": "published",
+      "title": "🐾 HAVE YOU MET NELSON? 🐾"
     }
   ]
 }
