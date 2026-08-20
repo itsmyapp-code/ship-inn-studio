@@ -1,6 +1,6 @@
 {
-  "commit": "82e99469bc60c3dd47cd5ca8d149f052f9929be1",
-  "generated": "2026-08-09T10:25:11.858Z",
+  "commit": "8034615eef85e4dc37f5506ff008e0974d92abaa",
+  "generated": "2026-08-20T04:36:40.629Z",
   "metadata": [
     {
       "__outstatic": {
@@ -126,6 +126,22 @@
       "slug": "a-fresh-new-thatch-for-the-ship",
       "status": "published",
       "title": "🌾 A Fresh New Thatch for The Ship! 🌾"
+    },
+    {
+      "__outstatic": {
+        "commit": "8034615eef85e4dc37f5506ff008e0974d92abaa",
+        "hash": "2627735781",
+        "path": "outstatic/content/news/bbq-braai-at-the-ship-inn-porlock-weir.mdx"
+      },
+      "author": {
+        "name": "",
+        "picture": "https://avatars.githubusercontent.com/u/249422786?v=4"
+      },
+      "collection": "news",
+      "publishedAt": "2026-08-20T04:40:00.798Z",
+      "slug": "bbq-braai-at-the-ship-inn-porlock-weir",
+      "status": "published",
+      "title": "BBQ/Braai at the Ship Inn, Porlock Weir "
     }
   ]
 }

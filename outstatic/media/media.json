@@ -1,6 +1,6 @@
 {
-  "commit": "f61102484695704dfb9f3402e38e26e6a3050514",
-  "generated": "2026-08-09T10:22:44.855Z",
+  "commit": "8034615eef85e4dc37f5506ff008e0974d92abaa",
+  "generated": "2026-08-20T04:36:40.629Z",
   "media": [
     {
       "__outstatic": {
@@ -132,6 +132,17 @@
       "alt": "",
       "filename": "bar-area2.webp",
       "publishedAt": "2026-07-13T11:26:12.419Z",
+      "type": "image"
+    },
+    {
+      "__outstatic": {
+        "commit": "8034615eef85e4dc37f5506ff008e0974d92abaa",
+        "hash": "1628703954",
+        "path": "public/images/bq-g2Nj.png"
+      },
+      "alt": "",
+      "filename": "bq-g2Nj.png",
+      "publishedAt": "2026-08-20T04:36:40.624Z",
       "type": "image"
     },
     {
