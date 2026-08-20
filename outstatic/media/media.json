@@ -1,6 +1,6 @@
 {
-  "commit": "f61102484695704dfb9f3402e38e26e6a3050514",
-  "generated": "2026-08-09T10:22:44.855Z",
+  "commit": "dc29df802ff08522ad7ca46efa57e4a0e7d29374",
+  "generated": "2026-08-20T04:48:11.210Z",
   "media": [
     {
       "__outstatic": {
@@ -136,6 +136,17 @@
     },
     {
       "__outstatic": {
+        "commit": "8034615eef85e4dc37f5506ff008e0974d92abaa",
+        "hash": "1628703954",
+        "path": "public/images/bq-g2Nj.png"
+      },
+      "alt": "",
+      "filename": "bq-g2Nj.png",
+      "publishedAt": "2026-08-20T04:36:40.624Z",
+      "type": "image"
+    },
+    {
+      "__outstatic": {
         "commit": "",
         "hash": "e6e356ae",
         "path": "public/images/harbour-room-bed01.webp"
@@ -154,6 +165,17 @@
       "alt": "",
       "filename": "harbour-room-bed02.webp",
       "publishedAt": "2026-07-13T11:26:12.419Z",
+      "type": "image"
+    },
+    {
+      "__outstatic": {
+        "commit": "dc29df802ff08522ad7ca46efa57e4a0e7d29374",
+        "hash": "4253957828",
+        "path": "public/images/nelson-g1Mz.jpg"
+      },
+      "alt": "",
+      "filename": "nelson-g1Mz.jpg",
+      "publishedAt": "2026-08-20T04:48:11.208Z",
       "type": "image"
     },
     {

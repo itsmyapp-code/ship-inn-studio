@@ -1,6 +1,6 @@
 {
-  "commit": "82e99469bc60c3dd47cd5ca8d149f052f9929be1",
-  "generated": "2026-08-09T10:25:11.858Z",
+  "commit": "e6323147191319cff0523b0555ada6ffd99913d9",
+  "generated": "2026-08-20T04:49:01.423Z",
   "metadata": [
     {
       "__outstatic": {
@@ -126,6 +126,38 @@
       "slug": "a-fresh-new-thatch-for-the-ship",
       "status": "published",
       "title": "🌾 A Fresh New Thatch for The Ship! 🌾"
+    },
+    {
+      "__outstatic": {
+        "commit": "f570718561d0f87d524a2329daed6af5d26bfdbf",
+        "hash": "3487297045",
+        "path": "outstatic/content/news/bbq-braai-at-the-ship-inn-porlock-weir.mdx"
+      },
+      "author": {
+        "name": "",
+        "picture": "https://avatars.githubusercontent.com/u/249422786?v=4"
+      },
+      "collection": "news",
+      "publishedAt": "2026-08-20T04:40:00.798Z",
+      "slug": "bbq-braai-at-the-ship-inn-porlock-weir",
+      "status": "published",
+      "title": "BBQ/Braai at the Ship Inn, Porlock Weir "
+    },
+    {
+      "__outstatic": {
+        "commit": "e6323147191319cff0523b0555ada6ffd99913d9",
+        "hash": "2771853503",
+        "path": "outstatic/content/news/have-you-met-nelson.mdx"
+      },
+      "author": {
+        "name": "",
+        "picture": "https://avatars.githubusercontent.com/u/249422786?v=4"
+      },
+      "collection": "news",
+      "publishedAt": "2026-08-20T04:46:08.039Z",
+      "slug": "have-you-met-nelson",
+      "status": "published",
+      "title": "🐾 HAVE YOU MET NELSON? 🐾"
     }
   ]
 }
