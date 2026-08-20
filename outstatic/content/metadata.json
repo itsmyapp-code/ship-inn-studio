@@ -1,6 +1,6 @@
 {
-  "commit": "8034615eef85e4dc37f5506ff008e0974d92abaa",
-  "generated": "2026-08-20T04:36:40.629Z",
+  "commit": "f570718561d0f87d524a2329daed6af5d26bfdbf",
+  "generated": "2026-08-20T04:37:58.090Z",
   "metadata": [
     {
       "__outstatic": {
@@ -129,8 +129,8 @@
     },
     {
       "__outstatic": {
-        "commit": "8034615eef85e4dc37f5506ff008e0974d92abaa",
-        "hash": "2627735781",
+        "commit": "f570718561d0f87d524a2329daed6af5d26bfdbf",
+        "hash": "3487297045",
         "path": "outstatic/content/news/bbq-braai-at-the-ship-inn-porlock-weir.mdx"
       },
       "author": {
