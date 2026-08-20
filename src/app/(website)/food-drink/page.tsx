@@ -81,6 +81,49 @@ export default function FoodDrinkPage() {
         </div>
       </section>
 
+      {/* Top BBQ Promo Card */}
+      <section className="bg-amber-50/40 border-b border-amber-100 py-4 sm:py-6">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
+            <div className="flex items-center gap-4 text-center sm:text-left flex-col sm:flex-row">
+              {/* Glowing Thumbnail */}
+              <a href="#bbq" className="relative block group shrink-0">
+                <div className="relative w-32 h-24 rounded-lg overflow-hidden border border-amber-500 shadow-[0_0_15px_rgba(245,158,11,0.5)] group-hover:shadow-[0_0_20px_rgba(245,158,11,0.8)] transition-all duration-300 transform group-hover:scale-105">
+                  <Image
+                    src="/images/Ship_Inn_BBQ.jpg"
+                    alt="BBQ Every Saturday"
+                    fill
+                    className="object-cover"
+                  />
+                </div>
+                {/* Pulsing glow ring */}
+                <div className="absolute inset-0 rounded-lg border-2 border-amber-400 opacity-75 group-hover:opacity-100 animate-pulse pointer-events-none"></div>
+              </a>
+              <div>
+                <span className="inline-block bg-amber-100 text-amber-900 text-xs font-bold uppercase tracking-wider px-2 py-0.5 rounded-full mb-1">
+                  Weekend Event
+                </span>
+                <h3 className="text-lg font-bold text-gray-900 font-centaur">
+                  Saturday BBQ / Braai!
+                </h3>
+                <p className="text-sm text-gray-600">
+                  Firing up the grill from 2pm–5pm at The Ship Inn. Good food, cold drinks, and sea views.
+                </p>
+              </div>
+            </div>
+            <a
+              href="#bbq"
+              className="inline-flex items-center justify-center bg-amber-600 hover:bg-amber-700 text-white font-semibold text-sm px-5 py-2.5 rounded-lg shadow-sm hover:shadow transition-colors whitespace-nowrap"
+            >
+              <span>Explore BBQ</span>
+              <svg className="w-4 h-4 ml-1.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 14l-7 7m0 0l-7-7m7 7V3" />
+              </svg>
+            </a>
+          </div>
+        </div>
+      </section>
+
       {/* Restaurant Overview */}
       <section className="py-16 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -142,43 +185,7 @@ export default function FoodDrinkPage() {
         </section>
       )}
 
-      {/* BBQ Promo Banner */}
-      <section className="relative py-16 md:py-24 bg-gray-900 text-white overflow-hidden">
-        <div className="absolute inset-0 z-0">
-          <Image
-            src="/images/Ship_Inn_BBQ.jpg"
-            alt="BBQ at The Ship Inn"
-            fill
-            className="object-cover object-center opacity-50"
-            priority
-          />
-          {/* Mobile-first overlay: solid dark overlay on mobile, gradient on larger screens */}
-          <div className="absolute inset-0 bg-black/60 md:bg-gradient-to-r md:from-black/85 md:via-black/60 md:to-transparent"></div>
-        </div>
-        <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="max-w-2xl text-center md:text-left">
-            <span className="inline-block bg-ship-green-600 text-white text-xs font-bold uppercase tracking-widest px-3 py-1.5 rounded-full mb-4">
-              Saturday Special
-            </span>
-            <h2 className="text-3xl md:text-5xl font-bold font-centaur mb-4 tracking-wide leading-tight">
-              BBQ / Braai!
-            </h2>
-            <p className="text-lg md:text-xl text-gray-200 mb-6 font-light leading-relaxed">
-              We’re firing up the grill from 2pm–5pm at The Ship Inn, Porlock Weir. Good food, cold drinks, and stunning sea views.
-            </p>
-            <a
-              href="#bbq"
-              className="inline-flex items-center justify-center bg-ship-blue-600 hover:bg-ship-blue-700 text-white font-semibold px-6 py-3 md:px-8 md:py-3.5 rounded-lg shadow-lg hover:shadow-xl transition-all transform hover:-translate-y-0.5 group w-full sm:w-auto"
-            >
-              <span>See BBQ Details</span>
-              <svg className="w-5 h-5 ml-2.5 transform group-hover:translate-y-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <title>Arrow Down</title>
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 14l-7 7m0 0l-7-7m7 7V3" />
-              </svg>
-            </a>
-          </div>
-        </div>
-      </section>
+
 
       {/* Drinks Section */}
       <section className="py-16 bg-white">
