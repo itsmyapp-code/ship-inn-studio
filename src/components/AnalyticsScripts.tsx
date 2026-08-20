@@ -13,7 +13,7 @@ declare global {
 
 export default function AnalyticsScripts() {
     const { consent } = useCookieConsent()
-    const gaId = process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID
+    const gaId = process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID || 'G-60V93GPD0C'
 
     useEffect(() => {
         if (consent === 'granted' && gaId) {
