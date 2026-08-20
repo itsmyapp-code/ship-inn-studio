@@ -292,14 +292,14 @@ export default function FoodDrinkPage() {
               <div className="relative h-64 sm:h-72 md:h-80 w-full">
                 <Image
                   src="/images/bbq%20board.webp"
-                  alt="BBQ Platters and Sides"
+                  alt="Saturday BBQ Menu"
                   fill
                   className="object-cover group-hover:scale-105 transition-transform duration-500"
                   sizes="(max-w-768px) 100vw, 33vw"
                 />
               </div>
               <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/25 to-transparent opacity-90 md:opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-6">
-                <span className="text-white font-medium text-lg tracking-wide">Platters & Sides</span>
+                <span className="text-white font-medium text-lg tracking-wide">Saturday BBQ Menu</span>
               </div>
             </div>
           </div>
