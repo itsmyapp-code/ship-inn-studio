@@ -88,7 +88,7 @@ export default function FoodDrinkPage() {
             <div className="flex items-center gap-4 text-center sm:text-left flex-col sm:flex-row">
               {/* Glowing Thumbnail */}
               <a href="#bbq" className="relative block group shrink-0">
-                <div className="relative w-32 h-24 rounded-lg overflow-hidden border border-amber-500 shadow-[0_0_15px_rgba(245,158,11,0.5)] group-hover:shadow-[0_0_20px_rgba(245,158,11,0.8)] transition-all duration-300 transform group-hover:scale-105">
+                <div className="relative w-[85px] h-[120px] rounded-lg overflow-hidden border border-amber-500 shadow-[0_0_15px_rgba(245,158,11,0.5)] group-hover:shadow-[0_0_20px_rgba(245,158,11,0.8)] transition-all duration-300 transform group-hover:scale-105">
                   <Image
                     src="/images/Ship_Inn_BBQ.jpg"
                     alt="BBQ Every Saturday"
