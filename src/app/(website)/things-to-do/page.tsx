@@ -41,13 +41,15 @@ export default function ThingsToDoPage() {
           name: "Porlock Beach",
           description: "Pebble beach perfect for fossil hunting and rock pooling.",
           distance: "5 minutes walk",
-          duration: "Half day"
+          duration: "Half day",
+          image: "/images/Porlock_Beach.webp"
         },
         {
           name: "Hurlstone Point",
           description: "Dramatic coastal headland with panoramic sea views.",
           distance: "2 miles",
-          duration: "2-3 hours"
+          duration: "2-3 hours",
+          image: "/images/Hurlstone_Point.webp"
         }
       ]
     },
@@ -58,19 +60,22 @@ export default function ThingsToDoPage() {
           name: "Dunkery Beacon",
           description: "Exmoor's highest point with 360° views across the moor and sea.",
           distance: "8 miles",
-          duration: "Half day"
+          duration: "Half day",
+          image: "/images/Dunkery_Beacon.webp"
         },
         {
           name: "Tarr Steps",
           description: "Ancient clapper bridge over the River Barle in beautiful woodland.",
           distance: "12 miles",
-          duration: "Half day"
+          duration: "Half day",
+          image: "/images/Tarr_Steps.webp"
         },
         {
           name: "Exmoor Ponies",
           description: "Spot wild ponies roaming freely across the open moorland.",
           distance: "Various locations",
-          duration: "Ongoing"
+          duration: "Ongoing",
+          image: "/images/Exmoor_Ponies.webp"
         }
       ]
     },
@@ -81,19 +86,22 @@ export default function ThingsToDoPage() {
           name: "Porlock Village",
           description: "Charming thatched village with medieval church and local shops.",
           distance: "1 mile",
-          duration: "2-3 hours"
+          duration: "2-3 hours",
+          image: "/images/Porlock_Village.webp"
         },
         {
           name: "Dunster",
           description: "Medieval castle town with cobbled streets and yarn market.",
           distance: "8 miles",
-          duration: "Full day"
+          duration: "Full day",
+          image: "/images/Dunster.webp"
         },
         {
           name: "Lynton & Lynmouth",
           description: "Victorian seaside resorts connected by cliff railway.",
           distance: "15 miles",
-          duration: "Full day"
+          duration: "Full day",
+          image: "/images/Lynton_Lynmouth.webp"
         }
       ]
     }
