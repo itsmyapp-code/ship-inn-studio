@@ -19,6 +19,7 @@ export default function ThingsToDoPage() {
     distance: string
     duration: string
     image?: string
+    imagePosition?: string
   }
 
   interface ActivityCategory {
@@ -101,7 +102,8 @@ export default function ThingsToDoPage() {
           description: "Victorian seaside resorts connected by cliff railway.",
           distance: "15 miles",
           duration: "Full day",
-          image: "/images/Lynton_Lynmouth.webp"
+          image: "/images/Lynton_Lynmouth.webp",
+          imagePosition: "object-bottom"
         }
       ]
     }
@@ -181,7 +183,7 @@ export default function ThingsToDoPage() {
                           src={item.image}
                           alt={item.name}
                           fill
-                          className="object-cover group-hover:scale-105 transition-transform duration-500"
+                          className={`object-cover ${item.imagePosition || 'object-center'} group-hover:scale-105 transition-transform duration-500`}
                           sizes="(max-w-768px) 100vw, 33vw"
                         />
                       ) : (
