@@ -1,6 +1,6 @@
 {
-  "commit": "99b52f3b69c7aa6f403092dfdc51cb3350f298aa",
-  "generated": "2026-09-08T13:00:54.705Z",
+  "commit": "6f0e44550bbe0653351846c2329935313096cdc9",
+  "generated": "2026-09-08T14:37:12.997Z",
   "metadata": [
     {
       "__outstatic": {
@@ -139,6 +139,24 @@
       "slug": "have-you-met-nelson",
       "status": "published",
       "title": "🐾 HAVE YOU MET NELSON? 🐾"
+    },
+    {
+      "__outstatic": {
+        "commit": "6f0e44550bbe0653351846c2329935313096cdc9",
+        "hash": "3145716822",
+        "path": "outstatic/content/events/new-year-s-eve-at-the-ship-inn-porlock-weir.mdx"
+      },
+      "author": {
+        "name": "",
+        "picture": "https://avatars.githubusercontent.com/u/249422786?v=4"
+      },
+      "collection": "events",
+      "eventDate": "31/12/2026",
+      "eventTime": "18:00",
+      "publishedAt": "2026-09-08T14:40:22.968Z",
+      "slug": "new-year-s-eve-at-the-ship-inn-porlock-weir",
+      "status": "published",
+      "title": "New Year's Eve at the Ship Inn, Porlock Weir  "
     }
   ]
 }
