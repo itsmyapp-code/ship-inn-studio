@@ -68,6 +68,11 @@ export default function RoomsPage() {
       price: "Contact for rates",
       images: [
         {
+          src: "/images/IMG_4416.webp",
+          alt: "Guest Room 3",
+          caption: "Comfortable accommodation at The Ship Inn"
+        },
+        {
           src: "/images/shipinn-042.webp",
           alt: "Guest Room 3",
           caption: "Comfortable accommodation at The Ship Inn"
