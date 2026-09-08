@@ -1,6 +1,6 @@
 {
-  "commit": "e6323147191319cff0523b0555ada6ffd99913d9",
-  "generated": "2026-08-20T04:49:01.423Z",
+  "commit": "99b52f3b69c7aa6f403092dfdc51cb3350f298aa",
+  "generated": "2026-09-08T13:00:54.705Z",
   "metadata": [
     {
       "__outstatic": {
@@ -91,25 +91,6 @@
       "status": "published",
       "strapline": "Historic charm meets modern comfort",
       "title": "Home"
-    },
-    {
-      "__outstatic": {
-        "commit": "e55352fab6821b022ea153522e587b669ca442ee",
-        "hash": "4197575578",
-        "path": "outstatic/content/events/rough-justice.mdx"
-      },
-      "author": {
-        "name": "",
-        "picture": "https://avatars.githubusercontent.com/u/249422786?v=4"
-      },
-      "collection": "events",
-      "eventDate": "Saturday 29th August 2026",
-      "eventTime": "15:00 - 18:00",
-      "publishedAt": "2026-08-28T23:00:00.000Z",
-      "slug": "rough-justice",
-      "status": "published",
-      "title": "Rough Justice ",
-      "uploadImage": "//images/rough-justice-UxNT.png"
     },
     {
       "__outstatic": {
