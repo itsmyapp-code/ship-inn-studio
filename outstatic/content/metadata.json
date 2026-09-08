@@ -1,6 +1,6 @@
 {
-  "commit": "70f52685639922a974f57abbebc74e717ef6e99e",
-  "generated": "2026-09-08T14:40:46.121Z",
+  "commit": "9ffccaf34c1e5ce54a722b60b763dc2a69c7d186",
+  "generated": "2026-09-08T14:42:02.318Z",
   "metadata": [
     {
       "__outstatic": {
@@ -144,8 +144,8 @@
     },
     {
       "__outstatic": {
-        "commit": "70f52685639922a974f57abbebc74e717ef6e99e",
-        "hash": "4082037891",
+        "commit": "9ffccaf34c1e5ce54a722b60b763dc2a69c7d186",
+        "hash": "3727705418",
         "path": "outstatic/content/news/have-you-met-nelson.mdx"
       },
       "author": {
