@@ -1,6 +1,6 @@
 {
-  "commit": "6f0e44550bbe0653351846c2329935313096cdc9",
-  "generated": "2026-09-08T14:37:12.997Z",
+  "commit": "70f52685639922a974f57abbebc74e717ef6e99e",
+  "generated": "2026-09-08T14:40:46.121Z",
   "metadata": [
     {
       "__outstatic": {
@@ -126,22 +126,6 @@
     },
     {
       "__outstatic": {
-        "commit": "e6323147191319cff0523b0555ada6ffd99913d9",
-        "hash": "2771853503",
-        "path": "outstatic/content/news/have-you-met-nelson.mdx"
-      },
-      "author": {
-        "name": "",
-        "picture": "https://avatars.githubusercontent.com/u/249422786?v=4"
-      },
-      "collection": "news",
-      "publishedAt": "2026-08-20T04:46:08.039Z",
-      "slug": "have-you-met-nelson",
-      "status": "published",
-      "title": "🐾 HAVE YOU MET NELSON? 🐾"
-    },
-    {
-      "__outstatic": {
         "commit": "6f0e44550bbe0653351846c2329935313096cdc9",
         "hash": "3145716822",
         "path": "outstatic/content/events/new-year-s-eve-at-the-ship-inn-porlock-weir.mdx"
@@ -157,6 +141,22 @@
       "slug": "new-year-s-eve-at-the-ship-inn-porlock-weir",
       "status": "published",
       "title": "New Year's Eve at the Ship Inn, Porlock Weir  "
+    },
+    {
+      "__outstatic": {
+        "commit": "70f52685639922a974f57abbebc74e717ef6e99e",
+        "hash": "4082037891",
+        "path": "outstatic/content/news/have-you-met-nelson.mdx"
+      },
+      "author": {
+        "name": "",
+        "picture": "https://avatars.githubusercontent.com/u/249422786?v=4"
+      },
+      "collection": "news",
+      "publishedAt": "2026-08-20T04:46:08.039Z",
+      "slug": "have-you-met-nelson",
+      "status": "published",
+      "title": "🐾 Have you met Nelson? 🐾"
     }
   ]
 }
