@@ -1,182 +1,121 @@
-# The Ship Inn Website - Project Status
+# The Ship Inn Website — Project Status & Documentation
 
-**Last Updated:** December 14, 2025
-
----
-
-## 🎯 Current Status: LIVE & FUNCTIONAL
-
-The website is deployed and live on Vercel with a working CMS system.
-
-### Live URLs
-- **Website:** https://ship-inn-website.vercel.app
-- **CMS Dashboard:** https://ship-inn-website.vercel.app/outstatic
-- **RSS Feed:** https://ship-inn-website.vercel.app/feed.xml
+**Last Updated:** September 23, 2026  
+**Status:** 🚀 LIVE, OPTIMIZED & FULLY FUNCTIONAL
 
 ---
 
-## ✅ What's Working
+## 🎯 Production Overview
 
-### Website Pages
-| Page | URL | Status |
-|------|-----|--------|
-| Home | `/` | ✅ Live |
-| Our Rooms | `/rooms` | ✅ Live |
-| Food & Drink | `/food-drink` | ✅ Live |
-| Things to Do | `/things-to-do` | ✅ Live |
-| News & Events | `/news-events` | ✅ Live - Pulls from CMS |
-| Gallery | `/gallery` | ✅ Live |
-| Contact | `/contact` | ✅ Live |
-| Legal | `/legal` | ✅ Live |
+The official website for **The Ship Inn, Porlock Weir** is live, running on Next.js 16 (Turbopack) with custom admin tools and integrated Outstatic CMS.
 
-### CMS System (Outstatic)
-- **Version:** 1.4.14
-- **Authentication:** GitHub OAuth
-- **Content Storage:** Git-based (commits to repository)
-- **Collections:**
-  - **News** - Blog posts and announcements
-  - **Events** - Upcoming events with dates
-
-### Technical Stack
-| Component | Technology | Version |
-|-----------|------------|---------|
-| Framework | Next.js | 14.2.15 |
-| Language | TypeScript | 5.9.3 |
-| Styling | Tailwind CSS | 3.4.18 |
-| CMS | Outstatic | 1.4.14 |
-| Hosting | Vercel | - |
-| Repository | GitHub | itsmyapp-code/ship-inn-studio |
-
-### Environment Variables (Vercel)
-All configured and working:
-- `OST_GITHUB_ID` - GitHub OAuth Client ID
-- `OST_GITHUB_SECRET` - GitHub OAuth Secret
-- `OST_TOKEN_SECRET` - Session encryption key
-- `OST_REPO_SLUG` - Repository name (ship-inn-studio)
-- `OST_REPO_OWNER` - GitHub owner (itsmyapp-code)
-- `OST_REPO_BRANCH` - Branch (main)
+### 🌐 Key Production URLs
+* **Live Website:** [`https://www.theshipinnporlockweir.co.uk`](https://www.theshipinnporlockweir.co.uk)
+* **Vercel Staging/Preview:** [`https://ship-inn-website.vercel.app`](https://ship-inn-website.vercel.app)
+* **Outstatic CMS Dashboard:** [`https://www.theshipinnporlockweir.co.uk/outstatic`](https://www.theshipinnporlockweir.co.uk/outstatic)
+* **Menu Manager & PDF Uploader:** [`https://www.theshipinnporlockweir.co.uk/admin/menus`](https://www.theshipinnporlockweir.co.uk/admin/menus)
+* **Gallery Manager & Photo Uploader:** [`https://www.theshipinnporlockweir.co.uk/admin/gallery`](https://www.theshipinnporlockweir.co.uk/admin/gallery)
+* **RSS Feed:** [`https://www.theshipinnporlockweir.co.uk/feed.xml`](https://www.theshipinnporlockweir.co.uk/feed.xml)
 
 ---
 
-## 🔧 What Needs Work
+## 📚 Client User Guides & Documentation
 
-### 1. RSS Feed Integration with Mailerlite
-**Priority:** High  
-**Status:** Partially implemented
-
-The RSS feed exists but currently shows placeholder content. Needs to:
-- Pull actual events and news from Outstatic
-- Format correctly for Mailerlite consumption
-- Include proper item structure (title, description, date, link, image)
-
-### 2. Newsletter Signup
-**Priority:** Medium  
-**Status:** Form exists, backend needs Mailerlite API integration
-
-The newsletter form on the News & Events page needs to connect to Mailerlite.
-
-### 3. Custom Fields in Outstatic
-**Priority:** Low  
-**Status:** Schema created but not visible in UI
-
-Outstatic v1.4.14 doesn't auto-generate custom field inputs. The Events collection has these optional fields defined but they need manual setup:
-- `eventDate` - Specific event date
-- `eventTime` - Event time
-- `location` - Event location
-
-**Workaround:** Use the Description field for time/location info, or upgrade to Outstatic v2 when Tailwind v4 is supported.
-
-### 4. Production Domain
-**Priority:** High  
-**Status:** Not configured
-
-The site is on Vercel's default domain. Needs:
-- Custom domain configuration (shipinnporlockweir.com)
-- SSL certificate (automatic with Vercel)
-- Update RSS feed URLs
+| Document | Format | Description |
+| :--- | :--- | :--- |
+| **Complete Website & CMS Manual** | [HTML (`/docs/OUTSTATIC-USER-MANUAL.html`)](https://www.theshipinnporlockweir.co.uk/docs/OUTSTATIC-USER-MANUAL.html) | Version 2.0 comprehensive client guide |
+| **Complete Website & CMS Manual** | [Word Doc (`.docx`)](https://www.theshipinnporlockweir.co.uk/docs/The-Ship-Inn-Website-Management-Guide.docx) | Distributable Word format for staff/owners |
+| **Gallery Manager Quick Guide** | [HTML](https://www.theshipinnporlockweir.co.uk/docs/CLIENT-GALLERY-GUIDE.html) / [Markdown](https://www.theshipinnporlockweir.co.uk/docs/CLIENT-GALLERY-GUIDE.md) | 1-minute photo uploader guide |
+| **Menu Manager Quick Guide** | [HTML](https://www.theshipinnporlockweir.co.uk/docs/CLIENT-MENU-GUIDE.html) / [Markdown](https://www.theshipinnporlockweir.co.uk/docs/CLIENT-MENU-GUIDE.md) | 1-minute PDF menu uploader guide |
 
 ---
 
-## 📁 Project Structure
+## ✅ Implemented Features & Architecture
 
-```
-Ship-Inn-Website/
-├── src/
-│   ├── app/
-│   │   ├── (website)/          # Public pages
-│   │   │   ├── page.tsx        # Home
-│   │   │   ├── rooms/
-│   │   │   ├── food-drink/
-│   │   │   ├── things-to-do/
-│   │   │   ├── news-events/    # News & Events listing
-│   │   │   │   └── [slug]/     # Individual news articles
-│   │   │   ├── events/
-│   │   │   │   └── [slug]/     # Individual event pages
-│   │   │   ├── gallery/
-│   │   │   ├── contact/
-│   │   │   └── legal/
-│   │   ├── api/
-│   │   │   ├── outstatic/      # CMS API routes
-│   │   │   └── newsletter/     # Newsletter signup
-│   │   ├── outstatic/          # CMS dashboard UI
-│   │   └── feed.xml/           # RSS feed route
-│   └── components/             # Reusable components
-├── outstatic/
-│   └── content/
-│       ├── collections.json    # Collection definitions
-│       ├── news/               # News articles (.md files)
-│       └── events/             # Event posts (.md files)
-├── public/
-│   └── images/                 # Uploaded images
-└── docs/
-    ├── PROJECT-STATUS.md       # This file
-    └── OUTSTATIC-USER-MANUAL.md
-```
+### 1. Website Pages
+| Page Route | Description | CMS Integration |
+| :--- | :--- | :--- |
+| `/` | Homepage with hero slides, welcoming text, and feature cards | Outstatic `pages/home` |
+| `/rooms` | Accommodation, cabin details, booking links | Dynamic + Outstatic |
+| `/food-drink` | Pub dining, drink lists, live downloadable PDF menus | Outstatic `menus` + `/admin/menus` |
+| `/gallery` | Interactive filterable image gallery with lightbox | Outstatic `gallery` + `/admin/gallery` |
+| `/news-events` | News announcements, live events, tides, weather | Outstatic `events` + `news` |
+| `/events/[slug]` | Individual event pages with flyer/poster hero display | Outstatic `events` |
+| `/news-events/[slug]` | Individual news articles | Outstatic `news` |
+| `/contact` | Global opening hours, phone, email, address | Outstatic `pages/contact` |
+| `/accessibility` | Accessibility guide and information | Static + Outstatic |
+| `/terms` & `/privacy` | Legal compliance pages | Static |
 
----
+### 2. Dedicated 1-Minute Admin Tools
+* **Menu Manager (`/admin/menus`)**:
+  * Uploads `.pdf` menus directly into `/public/menus/`.
+  * Creates and synchronizes markdown documents in `outstatic/content/menus/`.
+  * Commits changes directly to GitHub via REST API (`/api/upload-menu`) for automated production deployments.
+* **Gallery Manager (`/admin/gallery`)**:
+  * Single or batch photo uploading with live preview and category preset buttons (🍽️ *Food & Drink*, 🪵 *Interior & Bar*, 🏡 *Exterior & Garden*, 🛏️ *Rooms & Cabins*, 🌿 *Surroundings*).
+  * Creates Outstatic markdown documents in `outstatic/content/gallery/`.
+  * Allows managing/deleting live gallery photos directly from the admin grid (`/api/upload-gallery`).
+* **Cross-Navigation**:
+  * Unified admin header linking between Menu Manager, Gallery Manager, Outstatic CMS, and the live site.
 
-## 🚀 Next Steps (Priority Order)
-
-1. **Fix RSS Feed** - Connect to Outstatic content for Mailerlite
-2. **Mailerlite Integration** - Connect newsletter form to API
-3. **Custom Domain** - Set up shipinnporlockweir.com
-4. **Content Entry** - Add real events and news
-5. **SEO Optimization** - Meta tags, Open Graph, structured data
+### 3. Outstatic CMS
+* **Version:** 2.0.17
+* **Authentication:** GitHub OAuth with session encryption.
+* **Content Storage:** Git-backed Markdown (`outstatic/content/`), zero database overhead.
+* **Collections:**
+  * `pages` — Homepage, Food & Drink, Contact, Rooms, etc.
+  * `menus` — Breakfast, Lunch, Evening, Sunday Lunch, and Specials.
+  * `gallery` — Photos categorized for the gallery page.
+  * `events` — Upcoming pub events with dates, times, and flyer image extraction.
+  * `news` — Blog updates and pub announcements.
 
 ---
 
-## 📝 Development Commands
+## 🛠️ Technical Stack
 
-```bash
-# Start development server
+| Layer | Technology | Version |
+| :--- | :--- | :--- |
+| **Framework** | Next.js (App Router, Turbopack) | `16.1.6` |
+| **Runtime / UI** | React | `19.2.4` |
+| **Language** | TypeScript | `5.9.3` |
+| **Styling** | Tailwind CSS (v4) + PostCSS | `4.1.18` |
+| **CMS Engine** | Outstatic | `2.0.17` |
+| **Hosting & CI/CD** | Vercel (Production & Staging) | Live |
+| **Code Repository** | GitHub | `itsmyapp-code/ship-inn-studio` (branch: `main`) |
+
+---
+
+## 🔐 Environment Variables (Configured in Vercel & `.env.local`)
+
+* `OST_GITHUB_ID` — GitHub OAuth Client ID for Outstatic CMS login
+* `OST_GITHUB_SECRET` — GitHub OAuth Client Secret
+* `OST_TOKEN_SECRET` — JWT session encryption key
+* `OST_REPO_SLUG` — Repository name (`ship-inn-studio`)
+* `OST_REPO_OWNER` — Repository owner (`itsmyapp-code`)
+* `OST_REPO_BRANCH` — Primary deployment branch (`main`)
+* `GITHUB_TOKEN` / `OST_GITHUB_TOKEN` — GitHub Personal Access Token for headless API commits from `/api/upload-menu` and `/api/upload-gallery`.
+
+---
+
+## 💾 Backups
+
+* **Latest Full Site Backup:** [`Ship-Inn-Website-Backup-2026-09-23.zip`](file:///c:/Users/mcozens/Documents/Websites_Apps/Websites/The%20Ship%20Inn%20Porlock%20Weir/Ship-Inn-Website/Ship-Inn-Website-Backup-2026-09-23.zip) (~140.6 MB)
+* **Previous Backup:** `Ship-Inn-Website-Backup-2026-01-18.zip`
+
+---
+
+## 📝 Common Development & Maintenance Commands
+
+```powershell
+# Start local development server
 npm run dev
 
-# Build for production
+# Run production build and type checking
 npm run build
 
-# Start production server
+# Start production server locally
 npm run start
 
-# Pull latest content changes
-git pull
+# Regenerate Word Document user manual
+node scripts/generate-manual-docx.mjs
 ```
-
----
-
-## 🔐 Access & Credentials
-
-### GitHub OAuth App
-- **Client ID:** Ov23liJWu8geK8HsiyH0
-- **Authorized callback:** https://ship-inn-website.vercel.app/api/outstatic/callback
-
-### Vercel Project
-- **Project:** ship-inn-website
-- **Team/Account:** (your Vercel account)
-
----
-
-## 📞 Support Notes
-
-- Content changes made in Outstatic are committed to GitHub and trigger automatic Vercel rebuilds
-- Images uploaded through Outstatic are stored in `/public/images/`
-- The site uses Static Site Generation (SSG) for fast performance
