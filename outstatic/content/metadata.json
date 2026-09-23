@@ -1,6 +1,6 @@
 {
-  "commit": "4011e7d608c42f7ed0684c0ba8dce95e6f1e2e5c",
-  "generated": "2026-09-23T06:44:33.122Z",
+  "commit": "01d5a11382fcf5ae39e99972d51d7935491d9568",
+  "generated": "2026-09-23T06:48:15.840Z",
   "metadata": [
     {
       "__outstatic": {
@@ -157,23 +157,6 @@
       "slug": "have-you-met-nelson",
       "status": "published",
       "title": "🐾 Have you met Nelson? 🐾"
-    },
-    {
-      "__outstatic": {
-        "commit": "4011e7d608c42f7ed0684c0ba8dce95e6f1e2e5c",
-        "hash": "4005745159",
-        "path": "outstatic/content/menus/test.mdx"
-      },
-      "author": {
-        "name": "Admin",
-        "picture": "https://avatars.githubusercontent.com/u/220572112?v=4"
-      },
-      "collection": "menus",
-      "pdfFile": "/C:\\Users\\mcozens\\Documents\\Websites_Apps\\Websites\\The Ship Inn Porlock Weir\\Current menus\\Archive\\Lunch Menu - May 2026.pdf",
-      "publishedAt": "2026-09-23T06:48:42.384Z",
-      "slug": "test",
-      "status": "published",
-      "title": "Test"
     }
   ]
 }
