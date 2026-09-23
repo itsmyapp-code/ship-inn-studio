@@ -112,24 +112,36 @@ export default function AdminMenusPage() {
       <div className="max-w-4xl mx-auto">
         
         {/* Header Navigation */}
-        <div className="flex items-center justify-between pb-6 border-b border-gray-200 mb-8">
+        <div className="flex flex-col md:flex-row md:items-center md:justify-between pb-6 border-b border-gray-200 mb-8 gap-4">
           <div>
-            <h1 className="text-3xl font-bold text-gray-900 font-serif">Menu Manager & PDF Uploader</h1>
-            <p className="text-sm text-gray-600 mt-1">Upload and update downloadable PDF menus for The Ship Inn website</p>
+            <div className="flex items-center space-x-2">
+              <span className="px-2.5 py-0.5 rounded-full text-xs font-semibold bg-ship-blue-100 text-ship-blue-800">
+                Website Admin
+              </span>
+              <span className="text-xs text-gray-500">The Ship Inn Porlock Weir</span>
+            </div>
+            <h1 className="text-2xl sm:text-3xl font-bold text-gray-900 font-serif mt-1">Menu Manager & PDF Uploader</h1>
+            <p className="text-sm text-gray-600 mt-0.5">Upload and update downloadable PDF menus for The Ship Inn website</p>
           </div>
-          <div className="flex space-x-3">
+          <div className="flex flex-wrap items-center gap-2">
+            <Link
+              href="/admin/gallery"
+              className="inline-flex items-center px-3.5 py-2 border border-gray-300 text-xs font-semibold rounded-lg text-gray-700 bg-white hover:bg-gray-50 shadow-xs transition-colors"
+            >
+              🖼️ Gallery Manager
+            </Link>
             <Link
               href="/outstatic"
-              className="inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 shadow-sm"
+              className="inline-flex items-center px-3.5 py-2 border border-gray-300 text-xs font-semibold rounded-lg text-gray-700 bg-white hover:bg-gray-50 shadow-xs transition-colors"
             >
-              &larr; Outstatic CMS
+              ⚡ Outstatic CMS
             </Link>
             <Link
               href="/food-drink"
               target="_blank"
-              className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-ship-blue-600 hover:bg-ship-blue-700 shadow-sm"
+              className="inline-flex items-center px-3.5 py-2 border border-transparent text-xs font-semibold rounded-lg text-white bg-ship-blue-600 hover:bg-ship-blue-700 shadow-xs transition-colors"
             >
-              View Food & Drink Page &rarr;
+              View Food & Drink &rarr;
             </Link>
           </div>
         </div>

@@ -292,47 +292,35 @@
             </ol>
         </div>
 
-        <h2>7. How to Manage the Gallery in Detail</h2>
-        <p>The Gallery page is entirely dynamic and controlled by the <strong>Gallery Collection</strong> in the sidebar. This makes it incredibly easy to add or remove photos without touching any code.</p>
+        <h2>7. How to Manage the Gallery</h2>
+        <p>The Gallery page is dynamic and can be managed either via the dedicated <strong>Gallery Manager tool (<code>/admin/gallery</code>)</strong> or directly in the <strong>Outstatic Gallery collection</strong>.</p>
         
         <div class="step-box">
-            <h3>To Add a New Photo:</h3>
+            <h3>Method 1: Using the Dedicated Gallery Manager (Recommended)</h3>
+            <ol>
+                <li>Go to <strong><code>/admin/gallery</code></strong> in your browser (e.g., <code>https://your-domain.co.uk/admin/gallery</code>).</li>
+                <li>Choose <strong>Single Photo Upload</strong> (with custom title and caption) or <strong>Batch Upload</strong> (to upload multiple photos into a category at once).</li>
+                <li>Click the matching category button (<strong>Food &amp; Drink</strong>, <strong>Interior &amp; Bar</strong>, <strong>Exterior &amp; Garden</strong>, <strong>Rooms &amp; Cabins</strong>, <strong>Surroundings</strong>, or <strong>Custom</strong>).</li>
+                <li>Click <strong>"Browse Image"</strong> to pick your photo (supports WebP, JPG, PNG, AVIF).</li>
+                <li>Enter the photo title / alt text and an optional caption.</li>
+                <li>Click <strong>"Upload &amp; Publish Image"</strong>. The photo is automatically uploaded, saved in Outstatic, and goes live on the website!</li>
+            </ol>
+        </div>
+
+        <div class="step-box">
+            <h3>Method 2: Managing via Outstatic Dashboard</h3>
             <ol>
                 <li>Click <strong>Gallery</strong> under Collections in the left sidebar.</li>
                 <li>Click the black <strong>"New"</strong> button in the top right corner.</li>
-                <li><strong>Title:</strong> Type a descriptive name for the photo (e.g., "Roast Dinner" or "Front Bar"). This is just for your reference in the dashboard.</li>
-                <li><strong>Description:</strong> (Optional) You can add a short caption here if you want it to display on the photo.</li>
-                <li><strong>Cover Image:</strong> Click the large grey box that says "Click to add an image". This opens your Media Library. Select the photo you want to display.</li>
-                <li><strong>Category:</strong> In the right sidebar, find the Category text box. Simply type the name of the category (<code>Food & Drink</code>, <code>Exterior</code>, <code>Interior</code>, <code>Rooms</code>, or <code>Surroundings</code>). This perfectly maps to the buttons at the top of your live gallery page, allowing users to filter by that category.</li>
-                <li>Ensure the <strong>Status</strong> dropdown is set to <strong>"Published"</strong>.</li>
-                <li>Click the <strong>Save</strong> button. The live website will rebuild and the photo will appear in the gallery within 60 seconds!</li>
+                <li><strong>Title:</strong> Type a descriptive name for the photo (e.g., "Roast Dinner" or "Front Bar").</li>
+                <li><strong>Cover Image:</strong> Click the image box to choose or upload a photo from your Media Library.</li>
+                <li><strong>Category:</strong> In the right sidebar, type the category (<code>Food & Drink</code>, <code>Exterior</code>, <code>Interior</code>, <code>Rooms</code>, or <code>Surroundings</code>).</li>
+                <li>Ensure <strong>Status</strong> is set to <strong>"Published"</strong> (or switch to <strong>"Draft"</strong> to hide a photo temporarily).</li>
+                <li>Click <strong>Save</strong>.</li>
             </ol>
         </div>
 
-        <div class="step-box">
-            <h3>To Add MULTIPLE Photos at Once (e.g., Food Dishes):</h3>
-            <p>You don't need to create separate entries for photos in the same category! You can group them in one post:</p>
-            <ol>
-                <li>Click <strong>Gallery</strong> &rarr; <strong>New</strong>.</li>
-                <li>Give it a grouped title (e.g., "Summer Menu Dishes") and select the Category.</li>
-                <li>Set a <strong>Cover Image</strong> in the sidebar as usual.</li>
-                <li>Click into the large white <strong>Text Editor</strong> box in the centre of the screen.</li>
-                <li>Type a forward slash (<strong>/</strong>) to open the command menu, and select <strong>Image</strong> from the popup list.</li>
-                <li>Choose your photo from the Media Library. Repeat this to insert as many photos as you want!</li>
-                <li>Click <strong>Save</strong>. The gallery will automatically extract all the images from the text editor and beautifully separate them into individual photos on the live website grid!</li>
-            </ol>
-        </div>
-
-        <div class="step-box">
-            <h3>To Edit or Delete an Existing Photo:</h3>
-            <ol>
-                <li>Click <strong>Gallery</strong> in the left sidebar to view the list of all uploaded gallery photos.</li>
-                <li>To <strong>change a category</strong>: Click the photo in the list, change the Category dropdown in the right sidebar, and click Save.</li>
-                <li>To <strong>remove a photo completely</strong>: Hover over the photo in the list and click the trash can icon (🗑️) on the far right. Confirm the deletion, and it will be permanently removed from the live gallery.</li>
-            </ol>
-        </div>
-
-        <h2>7. How to Add a New Event or News Article</h2>
+        <h2>8. How to Add a New Event or News Article</h2>
         <ol>
             <li>Click <strong>Events</strong> or <strong>News</strong> in the left sidebar.</li>
             <li>Click the <strong>"New"</strong> button (top right).</li>
