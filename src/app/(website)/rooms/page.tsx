@@ -4,7 +4,7 @@ import Link from 'next/link'
 import Image from 'next/image'
 import RoomGallery from '@/components/RoomGallery'
 import { getPageData, getSharedContactData } from '@/lib/outstatic'
-import { TrackedPhoneLink } from '@/components/TrackedContactLinks'
+import { TrackedPhoneLink, TrackedEmailLink } from '@/components/TrackedContactLinks'
 
 export const metadata = {
   title: 'From the Cabins - The Ship Inn Porlock Weir',
@@ -223,20 +223,38 @@ export default function RoomsPage() {
       </section>
 
       {/* Booking CTA */}
-      <section className="py-16 bg-ship-blue-600">
-        <div className="max-w-4xl mx-auto text-center px-4 sm:px-6 lg:px-8">
-          <h2 className="text-3xl font-bold text-white mb-4">Ready to Visit Us?</h2>
-          <p className="text-xl text-ship-blue-100 mb-8">
-            Contact us directly for the best rates and to check availability for your preferred dates.
+      <section className="relative py-20 bg-gradient-to-br from-slate-900 via-ship-blue-900 to-slate-950 text-white overflow-hidden">
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-blue-700/20 via-transparent to-transparent pointer-events-none"></div>
+        <div className="relative max-w-5xl mx-auto text-center px-4 sm:px-6 lg:px-8">
+          <span className="inline-block bg-yellow-400/20 text-yellow-300 font-sans font-bold text-xs uppercase tracking-widest px-4 py-1.5 rounded-full mb-4 border border-yellow-400/30">
+            Direct Booking &amp; Best Rates
+          </span>
+          <h2 className="text-3xl sm:text-5xl font-bold text-white mb-4 tracking-tight">Ready to Stay With Us?</h2>
+          <p className="text-lg sm:text-xl text-slate-300 max-w-2xl mx-auto mb-10">
+            Contact us directly to check availability, secure the best guaranteed rates, and plan your coastal getaway in Porlock Weir.
           </p>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
+
+          <div className="flex flex-col sm:flex-row gap-5 justify-center items-center">
             <TrackedPhoneLink
               phone={contactData.phone}
               location="rooms_booking_cta"
-              className="bg-white hover:bg-gray-100 text-ship-blue-600 px-8 py-3 rounded-lg font-semibold transition-colors inline-block text-center"
+              className="w-full sm:w-auto bg-gradient-to-r from-yellow-400 to-amber-500 hover:from-yellow-300 hover:to-amber-400 text-slate-950 font-sans font-bold px-9 py-4 rounded-2xl shadow-xl shadow-yellow-500/20 hover:shadow-2xl hover:shadow-yellow-500/30 transform hover:-translate-y-0.5 transition-all inline-flex items-center justify-center gap-3 text-lg"
             >
-              Call Us: {contactData.phone}
+              <svg className="w-6 h-6 text-slate-950" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
+              </svg>
+              <span>Call Us: {contactData.phone}</span>
             </TrackedPhoneLink>
+
+            <Link
+              href="/contact"
+              className="w-full sm:w-auto bg-white/10 hover:bg-white/20 text-white border border-white/30 hover:border-white/60 backdrop-blur-md font-sans font-semibold px-9 py-4 rounded-2xl shadow-lg hover:shadow-white/10 transform hover:-translate-y-0.5 transition-all inline-flex items-center justify-center gap-3 text-lg"
+            >
+              <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
+              </svg>
+              <span>Send Room Enquiry</span>
+            </Link>
           </div>
         </div>
       </section>

@@ -16,14 +16,14 @@ export default function Footer() {
               <p>{contactData.addressLine1}</p>
               <p>{contactData.addressLine2}</p>
               <p>{contactData.town}</p>
-              <p>{contactData.postcode}</p>
-              <p>Tel: <TrackedPhoneLink phone={contactData.phone} location="footer" className="hover:text-white transition-colors" /></p>
-              <p>Email: <TrackedEmailLink email={contactData.email} location="footer" className="hover:text-white transition-colors break-all" /></p>
+              <p><span className="font-sans font-medium text-gray-200">{contactData.postcode}</span></p>
+              <p>Tel: <TrackedPhoneLink phone={contactData.phone} location="footer" className="font-sans font-bold text-white hover:text-yellow-300 transition-colors" /></p>
+              <p>Email: <TrackedEmailLink email={contactData.email} location="footer" className="font-sans font-medium text-gray-200 hover:text-white transition-colors break-all" /></p>
             </div>
             <div className="mt-4 pt-4 border-t border-gray-800 text-gray-300 text-sm space-y-1">
               <p className="font-semibold text-white">Opening Hours</p>
-              <p>Bar: {contactData.openingHours.monday}</p>
-              <p>{contactData.openingHours.kitchenClose}</p>
+              <p className="font-sans text-xs sm:text-sm">Bar: <span className="font-medium text-gray-200">{contactData.openingHours.monday}</span></p>
+              <p className="font-sans text-xs sm:text-sm text-gray-300">{contactData.openingHours.kitchenClose}</p>
             </div>
           </div>
 

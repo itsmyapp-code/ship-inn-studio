@@ -71,18 +71,24 @@ export default function HomePage() {
             <p className="text-lg md:text-3xl mb-8 md:mb-12 text-white opacity-90 text-shadow-md">
               {strapline}
             </p>
-            <div className="flex flex-col sm:flex-row gap-6 justify-center">
+            <div className="flex flex-col sm:flex-row gap-5 justify-center items-center">
               <Link
                 href="/rooms"
-                className="bg-white hover:bg-gray-100 text-blue-900 px-10 py-4 rounded-full text-xl font-bold transition-all duration-300 shadow-lg"
+                className="w-full sm:w-auto bg-gradient-to-r from-yellow-400 to-amber-500 hover:from-yellow-300 hover:to-amber-400 text-slate-950 font-sans font-bold px-9 py-4 rounded-full text-lg sm:text-xl shadow-2xl shadow-yellow-500/30 hover:shadow-yellow-500/50 hover:scale-105 transition-all duration-300 inline-flex items-center justify-center gap-2.5"
               >
-                From the Cabins
+                <svg className="w-5 h-5 text-slate-950" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
+                </svg>
+                <span>From the Cabins</span>
               </Link>
               <Link
                 href="/contact"
-                className="border-4 border-white bg-transparent hover:bg-white text-white hover:text-blue-900 px-10 py-4 rounded-full text-xl font-bold transition-all duration-300"
+                className="w-full sm:w-auto bg-white/15 hover:bg-white/25 text-white border-2 border-white/60 hover:border-white backdrop-blur-md font-sans font-semibold px-9 py-4 rounded-full text-lg sm:text-xl shadow-xl hover:shadow-white/20 hover:scale-105 transition-all duration-300 inline-flex items-center justify-center gap-2.5"
               >
-                Contact us
+                <svg className="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 4.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                </svg>
+                <span>Contact us</span>
               </Link>
             </div>
           </div>
@@ -139,26 +145,36 @@ export default function HomePage() {
       </section>
 
       {/* Call to Action */}
-      <section className="py-16 bg-blue-600">
-        <div className="max-w-4xl mx-auto text-center px-6">
-          <h2 className="text-4xl font-bold text-white mb-6">
+      <section className="relative py-20 bg-gradient-to-br from-slate-900 via-ship-blue-900 to-slate-950 text-white overflow-hidden">
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-blue-700/20 via-transparent to-transparent pointer-events-none"></div>
+        <div className="relative max-w-4xl mx-auto text-center px-6">
+          <span className="inline-block bg-yellow-400/20 text-yellow-300 font-sans font-bold text-xs uppercase tracking-widest px-4 py-1.5 rounded-full mb-4 border border-yellow-400/30">
+            Visit Porlock Weir
+          </span>
+          <h2 className="text-3xl sm:text-5xl font-bold text-white mb-4 tracking-tight">
             Ready to Experience The Ship Inn?
           </h2>
-          <p className="text-xl text-ship-blue-100 mb-8">
-            Contact us today and discover why guests return year after year to our coastal retreat.
+          <p className="text-lg sm:text-xl text-slate-300 mb-10 max-w-2xl mx-auto">
+            Contact us today and discover why guests return year after year to our historic coastal retreat.
           </p>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
+          <div className="flex flex-col sm:flex-row gap-5 justify-center items-center">
             <Link
               href="/rooms"
-              className="bg-white hover:bg-gray-100 text-blue-600 px-8 py-4 rounded-full text-lg font-bold transition-all duration-300"
+              className="w-full sm:w-auto bg-gradient-to-r from-yellow-400 to-amber-500 hover:from-yellow-300 hover:to-amber-400 text-slate-950 font-sans font-bold px-9 py-4 rounded-2xl shadow-xl shadow-yellow-500/20 hover:shadow-2xl hover:shadow-yellow-500/30 transform hover:-translate-y-0.5 transition-all inline-flex items-center justify-center gap-2.5 text-lg"
             >
-              From the Cabins
+              <svg className="w-5 h-5 text-slate-950" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
+              </svg>
+              <span>From the Cabins</span>
             </Link>
             <Link
               href="/contact"
-              className="border-2 border-white bg-transparent hover:bg-white text-white hover:text-blue-600 px-8 py-4 rounded-full text-lg font-bold transition-all duration-300"
+              className="w-full sm:w-auto bg-white/10 hover:bg-white/20 text-white border border-white/30 hover:border-white/60 backdrop-blur-md font-sans font-semibold px-9 py-4 rounded-2xl shadow-lg hover:shadow-white/10 transform hover:-translate-y-0.5 transition-all inline-flex items-center justify-center gap-2.5 text-lg"
             >
-              Contact us
+              <svg className="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 4.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+              </svg>
+              <span>Contact us</span>
             </Link>
           </div>
         </div>

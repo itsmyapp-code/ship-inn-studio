@@ -376,27 +376,38 @@ export default function FoodDrinkPage() {
       </section>
 
       {/* Reservation CTA */}
-      <section className="py-16 bg-ship-blue-600">
-        {/* ... existing CTA ... */}
-        <div className="max-w-4xl mx-auto text-center px-4 sm:px-6 lg:px-8">
-          <h2 className="text-3xl font-bold text-white mb-4">Visit Us</h2>
-          <p className="text-xl text-ship-blue-100 mb-8">
-            Contact us to reserve your table for an unforgettable dining experience overlooking Porlock Weir harbour.
+      <section className="relative py-20 bg-gradient-to-br from-slate-900 via-ship-blue-900 to-slate-950 text-white overflow-hidden">
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-blue-700/20 via-transparent to-transparent pointer-events-none"></div>
+        <div className="relative max-w-5xl mx-auto text-center px-4 sm:px-6 lg:px-8">
+          <span className="inline-block bg-yellow-400/20 text-yellow-300 font-sans font-bold text-xs uppercase tracking-widest px-4 py-1.5 rounded-full mb-4 border border-yellow-400/30">
+            Table Reservations &amp; Enquiries
+          </span>
+          <h2 className="text-3xl sm:text-5xl font-bold text-white mb-4 tracking-tight">Dine With Us</h2>
+          <p className="text-lg sm:text-xl text-slate-300 max-w-2xl mx-auto mb-10">
+            Reserve your table for an unforgettable dining experience featuring fresh Exmoor produce and fine local ales overlooking Porlock Weir harbour.
           </p>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
+
+          <div className="flex flex-col sm:flex-row gap-5 justify-center items-center">
             <TrackedPhoneLink
               phone={contactData.phone}
               location="food_drink_cta"
-              className="bg-white hover:bg-gray-100 text-ship-blue-600 px-8 py-3 rounded-lg font-semibold transition-colors inline-block text-center"
+              className="w-full sm:w-auto bg-gradient-to-r from-yellow-400 to-amber-500 hover:from-yellow-300 hover:to-amber-400 text-slate-950 font-sans font-bold px-9 py-4 rounded-2xl shadow-xl shadow-yellow-500/20 hover:shadow-2xl hover:shadow-yellow-500/30 transform hover:-translate-y-0.5 transition-all inline-flex items-center justify-center gap-3 text-lg"
             >
-              Call to Reserve: {contactData.phone}
+              <svg className="w-6 h-6 text-slate-950" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
+              </svg>
+              <span>Call to Reserve: {contactData.phone}</span>
             </TrackedPhoneLink>
+
             <TrackedEmailLink
               email={contactData.email}
               location="food_drink_cta"
-              className="bg-transparent border-2 border-white hover:bg-white hover:text-ship-blue-600 text-white px-8 py-3 rounded-lg font-semibold transition-colors inline-block text-center"
+              className="w-full sm:w-auto bg-white/10 hover:bg-white/20 text-white border border-white/30 hover:border-white/60 backdrop-blur-md font-sans font-semibold px-9 py-4 rounded-2xl shadow-lg hover:shadow-white/10 transform hover:-translate-y-0.5 transition-all inline-flex items-center justify-center gap-3 text-lg"
             >
-              Email Us
+              <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 4.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+              </svg>
+              <span>Email Dining Enquiry</span>
             </TrackedEmailLink>
           </div>
         </div>
