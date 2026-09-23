@@ -69,6 +69,14 @@ The official website for **The Ship Inn, Porlock Weir** is live, running on Next
   * `events` — Upcoming pub events with dates, times, and flyer image extraction.
   * `news` — Blog updates and pub announcements.
 
+### 4. Interactive Conversion Tracking (Vercel Web Analytics + GA4)
+* **Custom Event Tracking (`/src/lib/analytics.ts`)**:
+  * 📞 **Click-to-Call Phone Numbers (`Phone Call Click`)**: Tracked across Footer, Contact page details, Contact CTA, Rooms booking CTA, and Food & Drink reservation CTA.
+  * ✉️ **Direct Email Clicks (`Direct Email Click`)**: Tracked across Footer, Contact page details & CTA, Food & Drink CTA, Legal, Terms, Privacy, Cookies, and Accessibility pages.
+  * 📝 **Form Submissions (`Form Submission`)**: Tracked on Contact Form submissions with enquiry category breakdown (`room-booking`, `restaurant-reservation`, `group-booking`, `general-enquiry`, etc.) and Newsletter subscriptions.
+  * 🗺️ **Google Maps Directions (`Google Maps Directions Click`)**: Dedicated "Get Directions on Google Maps" button and map address links on the Contact page.
+* **Dual Reporting Engine**: Simultaneously captures custom events in **Vercel Web Analytics** (zero cookies required) and **Google Analytics 4** (`gtag`).
+
 ---
 
 ## 🛠️ Technical Stack

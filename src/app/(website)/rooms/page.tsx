@@ -4,6 +4,7 @@ import Link from 'next/link'
 import Image from 'next/image'
 import RoomGallery from '@/components/RoomGallery'
 import { getPageData, getSharedContactData } from '@/lib/outstatic'
+import { TrackedPhoneLink } from '@/components/TrackedContactLinks'
 
 export const metadata = {
   title: 'From the Cabins - The Ship Inn Porlock Weir',
@@ -229,12 +230,13 @@ export default function RoomsPage() {
             Contact us directly for the best rates and to check availability for your preferred dates.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Link
-              href={`tel:${contactData.phone.replace(/\s+/g, '')}`}
-              className="bg-white hover:bg-gray-100 text-ship-blue-600 px-8 py-3 rounded-lg font-semibold transition-colors"
+            <TrackedPhoneLink
+              phone={contactData.phone}
+              location="rooms_booking_cta"
+              className="bg-white hover:bg-gray-100 text-ship-blue-600 px-8 py-3 rounded-lg font-semibold transition-colors inline-block text-center"
             >
               Call Us: {contactData.phone}
-            </Link>
+            </TrackedPhoneLink>
           </div>
         </div>
       </section>

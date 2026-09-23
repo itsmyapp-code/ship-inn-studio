@@ -4,6 +4,7 @@ import fs from 'fs'
 import path from 'path'
 import Image from 'next/image'
 import { getPageData, getSharedContactData, getMenusData } from '@/lib/outstatic'
+import { TrackedPhoneLink, TrackedEmailLink } from '@/components/TrackedContactLinks'
 
 interface MenuDisplayItem {
   title: string
@@ -383,18 +384,20 @@ export default function FoodDrinkPage() {
             Contact us to reserve your table for an unforgettable dining experience overlooking Porlock Weir harbour.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <a
-              href={`tel:${contactData.phone.replace(/\s+/g, '')}`}
-              className="bg-white hover:bg-gray-100 text-ship-blue-600 px-8 py-3 rounded-lg font-semibold transition-colors"
+            <TrackedPhoneLink
+              phone={contactData.phone}
+              location="food_drink_cta"
+              className="bg-white hover:bg-gray-100 text-ship-blue-600 px-8 py-3 rounded-lg font-semibold transition-colors inline-block text-center"
             >
               Call to Reserve: {contactData.phone}
-            </a>
-            <a
-              href={`mailto:${contactData.email}`}
-              className="bg-transparent border-2 border-white hover:bg-white hover:text-ship-blue-600 text-white px-8 py-3 rounded-lg font-semibold transition-colors"
+            </TrackedPhoneLink>
+            <TrackedEmailLink
+              email={contactData.email}
+              location="food_drink_cta"
+              className="bg-transparent border-2 border-white hover:bg-white hover:text-ship-blue-600 text-white px-8 py-3 rounded-lg font-semibold transition-colors inline-block text-center"
             >
               Email Us
-            </a>
+            </TrackedEmailLink>
           </div>
         </div>
       </section>

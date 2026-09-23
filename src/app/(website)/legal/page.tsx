@@ -1,4 +1,5 @@
 import Link from 'next/link'
+import { TrackedEmailLink } from '@/components/TrackedContactLinks'
 
 export const metadata = {
   title: 'Legal - The Ship Inn Porlock Weir',
@@ -63,9 +64,11 @@ export default function LegalPage() {
             <p className="text-gray-600 text-sm">
               For any questions regarding your data rights, or to submit an inquiry, please contact our
               Data Privacy Lead directly at{' '}
-              <a href="mailto:hello@theshipinnporlockweir.co.uk" className="text-blue-700 hover:underline">
-                hello@theshipinnporlockweir.co.uk
-              </a>
+              <TrackedEmailLink
+                email="hello@theshipinnporlockweir.co.uk"
+                location="legal_page_compliance"
+                className="text-blue-700 hover:underline"
+              />
               . We formally acknowledge all compliance submissions within 30 days.
             </p>
           </div>

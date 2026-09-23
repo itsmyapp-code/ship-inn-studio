@@ -1,3 +1,5 @@
+import { TrackedEmailLink } from '@/components/TrackedContactLinks'
+
 export const metadata = {
   title: 'Terms of Service - The Ship Inn Porlock Weir',
   description: 'Terms and conditions governing use of The Ship Inn Porlock Weir website and accommodation, restaurant and pub services.',
@@ -99,7 +101,11 @@ export default function TermsPage() {
           <h2>10. Contact</h2>
           <p>
             For questions about these terms, contact us at{' '}
-            <a href="mailto:hello@theshipinnporlockweir.co.uk">hello@theshipinnporlockweir.co.uk</a>{' '}
+            <TrackedEmailLink
+              email="hello@theshipinnporlockweir.co.uk"
+              location="terms_page_body"
+              className="text-blue-700 hover:underline"
+            />{' '}
             or call 01643 863288.
           </p>
 
@@ -109,12 +115,13 @@ export default function TermsPage() {
       <section className="py-10 bg-gray-50 border-t border-gray-200">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <p className="text-gray-600 mb-4">Questions about our terms?</p>
-          <a
-            href="mailto:hello@theshipinnporlockweir.co.uk"
+          <TrackedEmailLink
+            email="hello@theshipinnporlockweir.co.uk"
+            location="terms_page_cta"
             className="inline-block bg-blue-900 hover:bg-blue-800 text-white px-6 py-2 rounded-lg font-semibold transition-colors"
           >
             Get in touch
-          </a>
+          </TrackedEmailLink>
         </div>
       </section>
     </div>

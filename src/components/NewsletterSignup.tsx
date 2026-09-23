@@ -1,6 +1,7 @@
 'use client'
 
 import { useState, FormEvent } from 'react'
+import { trackFormSubmission } from '@/lib/analytics'
 
 export default function NewsletterSignup() {
   const [status, setStatus] = useState<'idle' | 'loading' | 'success' | 'error'>('idle')
@@ -23,6 +24,7 @@ export default function NewsletterSignup() {
 
       if (response.ok) {
         setStatus('success')
+        trackFormSubmission('newsletter_signup')
       } else {
         setStatus('error')
       }

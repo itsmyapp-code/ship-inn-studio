@@ -1,3 +1,5 @@
+import { TrackedEmailLink } from '@/components/TrackedContactLinks'
+
 export const metadata = {
   title: 'Accessibility Statement - The Ship Inn Porlock Weir',
   description: 'Our commitment to digital and physical accessibility at The Ship Inn Porlock Weir.',
@@ -69,7 +71,11 @@ export default function AccessibilityPage() {
           <ul>
             <li>
               <strong>Email:</strong>{' '}
-              <a href="mailto:hello@theshipinnporlockweir.co.uk">hello@theshipinnporlockweir.co.uk</a>
+              <TrackedEmailLink
+                email="hello@theshipinnporlockweir.co.uk"
+                location="accessibility_page_body"
+                className="text-blue-700 hover:underline"
+              />
             </li>
             <li>
               <strong>Telephone:</strong> 01643 863288
@@ -102,12 +108,13 @@ export default function AccessibilityPage() {
       <section className="py-10 bg-gray-50 border-t border-gray-200">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <p className="text-gray-600 mb-4">Found an accessibility issue? Please let us know.</p>
-          <a
-            href="mailto:hello@theshipinnporlockweir.co.uk"
+          <TrackedEmailLink
+            email="hello@theshipinnporlockweir.co.uk"
+            location="accessibility_page_cta"
             className="inline-block bg-blue-900 hover:bg-blue-800 text-white px-6 py-2 rounded-lg font-semibold transition-colors"
           >
             Report an accessibility issue
-          </a>
+          </TrackedEmailLink>
         </div>
       </section>
     </div>

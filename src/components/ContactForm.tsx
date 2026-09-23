@@ -1,6 +1,7 @@
 'use client'
 
 import { useState, FormEvent } from 'react'
+import { trackFormSubmission } from '@/lib/analytics'
 
 export default function ContactForm() {
   const [status, setStatus] = useState<'idle' | 'submitting' | 'success' | 'error'>('idle')
@@ -33,6 +34,10 @@ export default function ContactForm() {
 
       if (response.ok) {
         setStatus('success')
+        trackFormSubmission('contact_form', {
+          enquiry_type: (data.enquiryType as string) || 'general-enquiry',
+          has_phone: Boolean(data.phone),
+        })
         form.reset()
       } else {
         setStatus('error')

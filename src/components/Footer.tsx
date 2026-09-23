@@ -1,5 +1,6 @@
 import Link from 'next/link'
 import { getSharedContactData } from '@/lib/outstatic'
+import { TrackedPhoneLink, TrackedEmailLink } from '@/components/TrackedContactLinks'
 
 export default function Footer() {
   const contactData = getSharedContactData()
@@ -16,8 +17,8 @@ export default function Footer() {
               <p>{contactData.addressLine2}</p>
               <p>{contactData.town}</p>
               <p>{contactData.postcode}</p>
-              <p>Tel: <a href={`tel:${contactData.phone.replace(/\s+/g, '')}`} className="hover:text-white transition-colors">{contactData.phone}</a></p>
-              <p>Email: <a href={`mailto:${contactData.email}`} className="hover:text-white transition-colors break-all">{contactData.email}</a></p>
+              <p>Tel: <TrackedPhoneLink phone={contactData.phone} location="footer" className="hover:text-white transition-colors" /></p>
+              <p>Email: <TrackedEmailLink email={contactData.email} location="footer" className="hover:text-white transition-colors break-all" /></p>
             </div>
             <div className="mt-4 pt-4 border-t border-gray-800 text-gray-300 text-sm space-y-1">
               <p className="font-semibold text-white">Opening Hours</p>
@@ -68,9 +69,11 @@ export default function Footer() {
           <p className="text-gray-400 text-sm max-w-3xl">
             <strong className="text-gray-300">Data Privacy &amp; Compliance:</strong> For any questions regarding
             your data rights, or to submit an inquiry, please contact our Data Privacy Lead directly at{' '}
-            <a href={`mailto:${contactData.email}`} className="text-gray-300 hover:text-white transition-colors underline">
-              {contactData.email}
-            </a>
+            <TrackedEmailLink
+              email={contactData.email}
+              location="footer_compliance"
+              className="text-gray-300 hover:text-white transition-colors underline"
+            />
             . We formally acknowledge all compliance submissions within 30 days.
           </p>
         </div>

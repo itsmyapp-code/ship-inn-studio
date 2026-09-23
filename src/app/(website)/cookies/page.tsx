@@ -1,3 +1,5 @@
+import { TrackedEmailLink } from '@/components/TrackedContactLinks'
+
 export const metadata = {
   title: 'Cookie Policy - The Ship Inn Porlock Weir',
   description: 'How The Ship Inn Porlock Weir uses cookies, what types are used, and how to manage your preferences.',
@@ -118,7 +120,12 @@ export default function CookiesPage() {
           <h2>Contact</h2>
           <p>
             If you have any questions about our use of cookies, please contact our Data Privacy Lead
-            at <a href="mailto:hello@theshipinnporlockweir.co.uk">hello@theshipinnporlockweir.co.uk</a>.
+            at{' '}
+            <TrackedEmailLink
+              email="hello@theshipinnporlockweir.co.uk"
+              location="cookies_page_body"
+              className="text-blue-700 hover:underline"
+            />.
           </p>
 
         </div>
@@ -127,12 +134,13 @@ export default function CookiesPage() {
       <section className="py-10 bg-gray-50 border-t border-gray-200">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <p className="text-gray-600 mb-4">Questions about cookies or your data preferences?</p>
-          <a
-            href="mailto:hello@theshipinnporlockweir.co.uk"
+          <TrackedEmailLink
+            email="hello@theshipinnporlockweir.co.uk"
+            location="cookies_page_cta"
             className="inline-block bg-blue-900 hover:bg-blue-800 text-white px-6 py-2 rounded-lg font-semibold transition-colors"
           >
             Contact our Data Privacy Lead
-          </a>
+          </TrackedEmailLink>
         </div>
       </section>
     </div>

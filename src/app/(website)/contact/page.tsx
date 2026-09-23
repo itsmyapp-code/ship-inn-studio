@@ -1,6 +1,11 @@
 import ContactForm from '@/components/ContactForm'
 import Image from 'next/image'
 import { getPageData } from '@/lib/outstatic'
+import {
+  TrackedPhoneLink,
+  TrackedEmailLink,
+  TrackedDirectionsLink
+} from '@/components/TrackedContactLinks'
 
 export const metadata = {
   title: 'Contact us - The Ship Inn Porlock Weir',
@@ -56,7 +61,7 @@ export default function ContactPage() {
                   <div>
                     <h3 className="font-semibold text-gray-900 mb-1">Phone</h3>
                     <p className="text-gray-600">
-                      <a href={`tel:${phone.replace(/\s+/g, '')}`} className="hover:text-ship-blue-600 transition-colors">{phone}</a>
+                      <TrackedPhoneLink phone={phone} location="contact_page_details" className="hover:text-ship-blue-600 transition-colors" />
                     </p>
                   </div>
                 </div>
@@ -70,7 +75,7 @@ export default function ContactPage() {
                   <div>
                     <h3 className="font-semibold text-gray-900 mb-1">Email</h3>
                     <p className="text-gray-600">
-                      <a href={`mailto:${email}`} className="hover:text-ship-blue-600 transition-colors break-all">{email}</a>
+                      <TrackedEmailLink email={email} location="contact_page_details" className="hover:text-ship-blue-600 transition-colors break-all" />
                     </p>
                   </div>
                 </div>
@@ -90,6 +95,17 @@ export default function ContactPage() {
                       {town}<br />
                       {postcode}
                     </p>
+                    <div className="mt-2">
+                      <TrackedDirectionsLink
+                        location="contact_address_link"
+                        className="inline-flex items-center text-sm font-medium text-ship-blue-600 hover:text-ship-blue-800 transition-colors"
+                      >
+                        <span>Open in Maps</span>
+                        <svg className="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+                        </svg>
+                      </TrackedDirectionsLink>
+                    </div>
                   </div>
                 </div>
 
@@ -135,9 +151,21 @@ export default function ContactPage() {
       {/* Map Section */}
       <section className="py-16 bg-gray-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-12">
+          <div className="text-center mb-8">
             <h2 className="text-3xl font-bold text-gray-900 mb-4">Find Us</h2>
-            <p className="text-lg text-gray-600">Located in the heart of Porlock Weir</p>
+            <p className="text-lg text-gray-600 mb-6">Located in the heart of Porlock Weir</p>
+            <div>
+              <TrackedDirectionsLink
+                location="contact_map_header"
+                className="inline-flex items-center gap-2 bg-ship-blue-600 hover:bg-ship-blue-700 text-white px-6 py-3 rounded-lg font-semibold shadow-md transition-all hover:shadow-lg"
+              >
+                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+                </svg>
+                <span>Get Directions on Google Maps</span>
+              </TrackedDirectionsLink>
+            </div>
           </div>
 
           {/* Map Section */}
@@ -206,18 +234,20 @@ export default function ContactPage() {
             Contact us directly for stay or table reservations
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <a
-              href={`tel:${phone.replace(/\s+/g, '')}`}
-              className="bg-white hover:bg-gray-100 text-ship-blue-600 px-8 py-3 rounded-lg font-semibold transition-colors"
+            <TrackedPhoneLink
+              phone={phone}
+              location="contact_page_cta"
+              className="bg-white hover:bg-gray-100 text-ship-blue-600 px-8 py-3 rounded-lg font-semibold transition-colors inline-block text-center"
             >
               Call Now: {phone}
-            </a>
-            <a
-              href={`mailto:${email}`}
-              className="bg-transparent border-2 border-white hover:bg-white hover:text-ship-blue-600 text-white px-8 py-3 rounded-lg font-semibold transition-colors"
+            </TrackedPhoneLink>
+            <TrackedEmailLink
+              email={email}
+              location="contact_page_cta"
+              className="bg-transparent border-2 border-white hover:bg-white hover:text-ship-blue-600 text-white px-8 py-3 rounded-lg font-semibold transition-colors inline-block text-center"
             >
               Send Email
-            </a>
+            </TrackedEmailLink>
           </div>
         </div>
       </section>

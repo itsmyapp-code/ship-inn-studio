@@ -1,3 +1,5 @@
+import { TrackedEmailLink } from '@/components/TrackedContactLinks'
+
 export const metadata = {
   title: 'Privacy Policy - The Ship Inn Porlock Weir',
   description: 'How The Ship Inn Porlock Weir collects, uses, and protects your personal data under UK GDPR.',
@@ -120,7 +122,11 @@ export default function PrivacyPage() {
           <h2>8. Subject Access Requests (SARs)</h2>
           <p>
             To exercise any of the above rights, contact our Data Privacy Lead at{' '}
-            <a href="mailto:hello@theshipinnporlockweir.co.uk">hello@theshipinnporlockweir.co.uk</a>.
+            <TrackedEmailLink
+              email="hello@theshipinnporlockweir.co.uk"
+              location="privacy_page_sar"
+              className="text-blue-700 hover:underline"
+            />.
             We will acknowledge your request within 5 working days and respond within 30 days.
             This period may be extended by a further two months where requests are complex or numerous;
             we will notify you if this applies. We may pause the clock to verify your identity or seek
@@ -150,12 +156,13 @@ export default function PrivacyPage() {
       <section className="py-10 bg-gray-50 border-t border-gray-200">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <p className="text-gray-600 mb-4">Questions about this policy?</p>
-          <a
-            href="mailto:hello@theshipinnporlockweir.co.uk"
+          <TrackedEmailLink
+            email="hello@theshipinnporlockweir.co.uk"
+            location="privacy_page_cta"
             className="inline-block bg-blue-900 hover:bg-blue-800 text-white px-6 py-2 rounded-lg font-semibold transition-colors"
           >
             Email our Data Privacy Lead
-          </a>
+          </TrackedEmailLink>
         </div>
       </section>
     </div>

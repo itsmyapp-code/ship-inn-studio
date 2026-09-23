@@ -1,5 +1,6 @@
 'use client'
 import { useState } from 'react'
+import { trackFormSubmission } from '@/lib/analytics'
 
 export default function NewsletterForm() {
   const [status, setStatus] = useState<'idle'|'loading'|'success'|'error'>('idle')
@@ -15,8 +16,12 @@ export default function NewsletterForm() {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ email }),
       })
-      if (res.ok) setStatus('success')
-      else setStatus('error')
+      if (res.ok) {
+        setStatus('success')
+        trackFormSubmission('newsletter_signup')
+      } else {
+        setStatus('error')
+      }
     } catch (err) {
       setStatus('error')
     }
