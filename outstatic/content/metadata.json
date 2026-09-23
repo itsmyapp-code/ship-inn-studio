@@ -1,6 +1,6 @@
 {
-  "commit": "b4e5678be857840ebdc0faa27628657dd2c2972e",
-  "generated": "2026-09-23T06:43:57.396Z",
+  "commit": "4011e7d608c42f7ed0684c0ba8dce95e6f1e2e5c",
+  "generated": "2026-09-23T06:44:33.122Z",
   "metadata": [
     {
       "__outstatic": {
@@ -160,12 +160,12 @@
     },
     {
       "__outstatic": {
-        "commit": "b4e5678be857840ebdc0faa27628657dd2c2972e",
-        "hash": "4284232112",
+        "commit": "4011e7d608c42f7ed0684c0ba8dce95e6f1e2e5c",
+        "hash": "4005745159",
         "path": "outstatic/content/menus/test.mdx"
       },
       "author": {
-        "name": "",
+        "name": "Admin",
         "picture": "https://avatars.githubusercontent.com/u/220572112?v=4"
       },
       "collection": "menus",
