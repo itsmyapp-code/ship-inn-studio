@@ -278,11 +278,26 @@ async function generateDocx() {
   const docsDir = path.join(process.cwd(), 'docs')
   const publicDocsDir = path.join(process.cwd(), 'public', 'docs')
 
-  const filename = 'The-Ship-Inn-CMS-User-Manual.docx'
-  fs.writeFileSync(path.join(docsDir, filename), buffer)
-  fs.writeFileSync(path.join(publicDocsDir, filename), buffer)
+  if (!fs.existsSync(publicDocsDir)) {
+    fs.mkdirSync(publicDocsDir, { recursive: true })
+  }
 
-  console.log('Successfully regenerated Word Document (.docx) at docs/ and public/docs/')
+  const filenames = ['The-Ship-Inn-CMS-User-Manual.docx', 'The-Ship-Inn-Website-Management-Guide.docx']
+  
+  for (const filename of filenames) {
+    try {
+      fs.writeFileSync(path.join(docsDir, filename), buffer)
+    } catch (e) {
+      console.log(`Could not write ${filename} to docs/ (file may be open in Word):`, e.message)
+    }
+    try {
+      fs.writeFileSync(path.join(publicDocsDir, filename), buffer)
+    } catch (e) {
+      console.log(`Could not write ${filename} to public/docs/:`, e.message)
+    }
+  }
+
+  console.log('Successfully generated Word Documents (.docx)')
 }
 
 // Helpers
