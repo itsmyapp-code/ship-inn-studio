@@ -1,5 +1,6 @@
 import AnalyticsScripts from '@/components/AnalyticsScripts'
 import { Analytics } from '@vercel/analytics/react'
+import { SpeedInsights } from '@vercel/speed-insights/next'
 import CookieBanner from '@/components/CookieBanner'
 import Navigation from '@/components/Navigation'
 import Footer from '@/components/Footer'
@@ -21,6 +22,7 @@ export default function WebsiteLayout({
       <body className="font-centaur">
         <AnalyticsScripts />
         <Analytics />
+        <SpeedInsights />
         <Navigation />
         <main className="min-h-screen">
           {children}
