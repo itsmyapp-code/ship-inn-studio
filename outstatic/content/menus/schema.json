@@ -1,0 +1,30 @@
+{
+  "title": "menus",
+  "type": "object",
+  "properties": {
+    "subtitle": {
+      "fieldType": "String",
+      "dataType": "string",
+      "title": "Subtitle / Season / Serving Times",
+      "description": "e.g. Sept 2026 or Served 12:00 PM - 3:00 PM"
+    },
+    "pdfFile": {
+      "fieldType": "String",
+      "dataType": "string",
+      "title": "PDF File URL / Path",
+      "description": "Path or URL to the menu PDF (e.g. /menus/Breakfast Menu - Sept 2026.pdf). Note: Only .pdf files are supported."
+    },
+    "order": {
+      "fieldType": "Number",
+      "dataType": "number",
+      "title": "Display Order",
+      "description": "Sort number (1 = Breakfast, 2 = Lunch, 3 = Evening, 4 = Sunday Lunch)"
+    },
+    "description": {
+      "fieldType": "String",
+      "dataType": "string",
+      "title": "Brief Description / Notes",
+      "description": "Optional notes or highlights for this menu"
+    }
+  }
+}

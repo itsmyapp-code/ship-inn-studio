@@ -22,5 +22,11 @@
     "slug": "gallery",
     "path": "outstatic/content/gallery",
     "children": []
+  },
+  {
+    "title": "Menus",
+    "slug": "menus",
+    "path": "outstatic/content/menus",
+    "children": []
   }
 ]

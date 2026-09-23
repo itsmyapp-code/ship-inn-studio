@@ -1,4 +1,4 @@
-import { getDocumentBySlug } from 'outstatic/server'
+import { getDocumentBySlug, getDocuments } from 'outstatic/server'
 
 const PAGE_FIELDS = [
   'title', 'slug', 'status', 'coverImage', 'heroImageOne', 'heroImageTwo', 'heroImageThree', 'heroAlt',
@@ -91,3 +91,39 @@ export function getSharedContactData() {
     }
   }
 }
+
+export interface MenuData {
+  title: string
+  slug: string
+  status: string
+  subtitle?: string
+  pdfFile?: string
+  pdfUrl?: string
+  order?: number
+  description?: string
+  content?: string
+}
+
+export function getMenusData(): MenuData[] {
+  try {
+    const documents = getDocuments('menus', [
+      'title',
+      'slug',
+      'status',
+      'subtitle',
+      'pdfFile',
+      'pdfUrl',
+      'order',
+      'description',
+      'content'
+    ])
+    
+    return (documents as unknown as MenuData[])
+      .filter(doc => doc && doc.status === 'published')
+      .sort((a, b) => (Number(a.order) || 99) - (Number(b.order) || 99))
+  } catch (error) {
+    console.error('Error loading menus data from Outstatic:', error)
+    return []
+  }
+}
+

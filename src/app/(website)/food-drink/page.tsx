@@ -3,23 +3,42 @@
 import fs from 'fs'
 import path from 'path'
 import Image from 'next/image'
-import { getPageData, getSharedContactData } from '@/lib/outstatic'
+import { getPageData, getSharedContactData, getMenusData } from '@/lib/outstatic'
 
-// ... metadata ...
+interface MenuDisplayItem {
+  title: string
+  subtitle?: string
+  path: string
+}
 
-function getMenus() {
+function getMenus(): MenuDisplayItem[] {
+  // 1. Try fetching menus from Outstatic CMS collection
+  const outstaticMenus = getMenusData()
+  if (outstaticMenus && outstaticMenus.length > 0) {
+    return outstaticMenus.map(menu => {
+      let menuPath = menu.pdfFile || menu.pdfUrl || ''
+      if (menuPath && !menuPath.startsWith('http://') && !menuPath.startsWith('https://')) {
+        menuPath = '/' + menuPath.replace(/^\/+/, '')
+      }
+
+      return {
+        title: menu.title,
+        subtitle: menu.subtitle,
+        path: menuPath || `/menus/${menu.title}.pdf`
+      }
+    })
+  }
+
+  // 2. Fallback: scan public/menus directory if no Outstatic menus exist
   const menusDirectory = path.join(process.cwd(), 'public/menus')
-
   if (!fs.existsSync(menusDirectory)) {
     return []
   }
 
   const fileNames = fs.readdirSync(menusDirectory)
-  const menus = fileNames
+  return fileNames
     .filter(fileName => fileName.toLowerCase().endsWith('.pdf'))
     .map(fileName => {
-      // Create a nice title from the filename
-      // e.g., "lunch-menu.pdf" -> "Lunch Menu"
       const title = fileName
         .replace(/\.pdf$/i, '')
         .split(/[-_\s]+/)
@@ -28,12 +47,9 @@ function getMenus() {
 
       return {
         title,
-        fileName,
         path: `/menus/${fileName}`
       }
     })
-
-  return menus
 }
 
 export default function FoodDrinkPage() {
@@ -173,7 +189,9 @@ export default function FoodDrinkPage() {
                   </div>
                   <div className="text-left">
                     <span className="block font-semibold text-gray-900 group-hover:text-ship-blue-600 transition-colors">{menu.title}</span>
-                    <span className="text-xs text-gray-500 uppercase tracking-wide">PDF Menu</span>
+                    <span className="text-xs text-gray-500 uppercase tracking-wide">
+                      {menu.subtitle ? `${menu.subtitle} • PDF Menu` : 'PDF Menu'}
+                    </span>
                   </div>
                   <svg className="w-5 h-5 text-gray-400 group-hover:text-ship-blue-600 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
