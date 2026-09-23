@@ -9,15 +9,32 @@ type Props = {
   params: Promise<{ slug: string }>
 }
 
-// Helper to strip the first image from markdown to prevent duplication with the hero image
-function stripFirstImage(markdown: string): string {
-  return markdown.replace(/^\s*!\[.*?\]\(.*?\)/, '')
-}
+// Helper to process markdown and extract hero image without duplication
+async function processEventContent(
+  content: string = '',
+  frontmatterCover?: string
+): Promise<{ heroImage?: string; contentHtml: string }> {
+  // 1. Normalize double-slash Outstatic paths in markdown (//images/ -> /images/)
+  let normalized = content.replace(/!\[(.*?)\]\(\/\/+images\/(.*?)\)/g, '![$1](/images/$2)')
 
-async function markdownToHtml(markdown: string): Promise<string> {
-  const cleanMarkdown = stripFirstImage(markdown)
-  const result = await remark().use(html).process(cleanMarkdown)
-  return result.toString()
+  let heroImage = frontmatterCover ? frontmatterCover.replace(/^\/+/, '/') : undefined
+
+  // 2. Check for first image in markdown
+  const firstImageMatch = normalized.match(/^\s*!\[(.*?)\]\((.*?)\)/)
+
+  if (!heroImage && firstImageMatch) {
+    heroImage = firstImageMatch[2].replace(/^\/+/, '/')
+    // Remove the first image from body so it displays as the hero banner without duplication
+    normalized = normalized.replace(/^\s*!\[.*?\]\(.*?\)/, '')
+  } else if (heroImage && firstImageMatch) {
+    const firstSrc = firstImageMatch[2].replace(/^\/+/, '/')
+    if (firstSrc === heroImage || heroImage.includes(firstSrc) || firstSrc.includes(heroImage)) {
+      normalized = normalized.replace(/^\s*!\[.*?\]\(.*?\)/, '')
+    }
+  }
+
+  const result = await remark().use(html).process(normalized)
+  return { heroImage, contentHtml: result.toString() }
 }
 
 export async function generateStaticParams() {
@@ -43,6 +60,7 @@ export default async function EventPage({ params }: Props) {
     'description',
     'content',
     'coverImage',
+    'uploadImage',
     'author',
     'eventDate',
     'eventTime',
@@ -53,7 +71,8 @@ export default async function EventPage({ params }: Props) {
     notFound()
   }
 
-  const contentHtml = await markdownToHtml(event.content || '')
+  const explicitCover = (event as any).coverImage || (event as any).uploadImage
+  const { heroImage, contentHtml } = await processEventContent(event.content || '', explicitCover)
   const displayDate = (event as any).eventDate || event.publishedAt
 
   return (
@@ -86,25 +105,24 @@ export default async function EventPage({ params }: Props) {
           <h1 className="text-4xl md:text-6xl font-bold mb-6 font-centaur text-slate-900 leading-tight">
             {event.title}
           </h1>
-
-          {/* Description removed to prevent duplication as it's often in body too.
-              If needed as a stand-first, it can be re-added here. */}
         </header>
 
-        {event.coverImage && (
-          <div className="w-full max-w-4xl mx-auto mb-12 shadow-xl rounded-xl overflow-hidden bg-stone-100">
+        {heroImage && (
+          <div className="w-full max-w-4xl mx-auto mb-12 shadow-xl rounded-xl overflow-hidden bg-stone-100 flex justify-center">
             <img
-              src={event.coverImage}
+              src={heroImage.startsWith('/') ? heroImage : `/${heroImage}`}
               alt={event.title}
-              className="w-full h-auto max-h-[600px] object-contain mx-auto"
+              className="w-full h-auto max-h-[700px] object-contain mx-auto"
             />
           </div>
         )}
 
-        <div
-          className="prose prose-lg prose-slate mx-auto prose-headings:font-centaur prose-headings:font-bold prose-a:text-amber-700 hover:prose-a:text-amber-800 prose-img:rounded-xl prose-img:shadow-lg"
-          dangerouslySetInnerHTML={{ __html: contentHtml }}
-        />
+        {contentHtml && contentHtml.trim().length > 0 && (
+          <div
+            className="prose prose-lg prose-slate mx-auto prose-headings:font-centaur prose-headings:font-bold prose-a:text-amber-700 hover:prose-a:text-amber-800 prose-img:rounded-xl prose-img:shadow-lg"
+            dangerouslySetInnerHTML={{ __html: contentHtml }}
+          />
+        )}
       </article>
     </div>
   )
