@@ -1,6 +1,6 @@
 {
-  "commit": "6bab9fb2f0caf055832ddd44a0d6034ab8bcc1fa",
-  "generated": "2026-09-23T06:43:52.360Z",
+  "commit": "b4e5678be857840ebdc0faa27628657dd2c2972e",
+  "generated": "2026-09-23T06:43:57.396Z",
   "metadata": [
     {
       "__outstatic": {
@@ -160,8 +160,8 @@
     },
     {
       "__outstatic": {
-        "commit": "6bab9fb2f0caf055832ddd44a0d6034ab8bcc1fa",
-        "hash": "654379318",
+        "commit": "b4e5678be857840ebdc0faa27628657dd2c2972e",
+        "hash": "4284232112",
         "path": "outstatic/content/menus/test.mdx"
       },
       "author": {
@@ -172,7 +172,7 @@
       "pdfFile": "/C:\\Users\\mcozens\\Documents\\Websites_Apps\\Websites\\The Ship Inn Porlock Weir\\Current menus\\Archive\\Lunch Menu - May 2026.pdf",
       "publishedAt": "2026-09-23T06:48:42.384Z",
       "slug": "test",
-      "status": "draft",
+      "status": "published",
       "title": "Test"
     }
   ]
