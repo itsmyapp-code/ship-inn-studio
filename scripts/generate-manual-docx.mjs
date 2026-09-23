@@ -12,8 +12,7 @@ import {
   WidthType,
   BorderStyle,
   AlignmentType,
-  ShadingType,
-  ImageRun
+  ShadingType
 } from 'docx'
 
 async function generateDocx() {
@@ -48,7 +47,7 @@ async function generateDocx() {
           }
         },
         children: [
-          // Header / Title
+          // Document Header
           new Paragraph({
             alignment: AlignmentType.CENTER,
             children: [
@@ -62,10 +61,10 @@ async function generateDocx() {
           }),
           new Paragraph({
             alignment: AlignmentType.CENTER,
-            spacing: { after: 200 },
+            spacing: { after: 140 },
             children: [
               new TextRun({
-                text: 'CMS User Manual & Client Guide',
+                text: 'Website & Content Management Guide',
                 bold: true,
                 size: 40, // 20pt
                 color: '1E3A8A'
@@ -74,7 +73,7 @@ async function generateDocx() {
           }),
           new Paragraph({
             alignment: AlignmentType.CENTER,
-            spacing: { after: 400 },
+            spacing: { after: 300 },
             children: [
               new TextRun({
                 text: 'System: ',
@@ -82,7 +81,7 @@ async function generateDocx() {
                 size: 22
               }),
               new TextRun({
-                text: 'Outstatic CMS & Admin Tools',
+                text: 'Dedicated Admin Tools & Outstatic CMS',
                 bold: true,
                 color: 'D97706',
                 size: 22
@@ -90,74 +89,84 @@ async function generateDocx() {
             ]
           }),
 
-          // Intro
+          // Fast Track Callout Box
+          createCalloutBox(
+            '⚡ Fast Track: Which Tool to Use?',
+            [
+              '• To Upload or Update PDF Menus: Use the Menu Manager (https://theshipinnporlockweir.co.uk/admin/menus)',
+              '• To Add or Remove Gallery Photos: Use the Gallery Manager (https://theshipinnporlockweir.co.uk/admin/gallery)',
+              '• To Edit Page Text, Hours, Contact Info, News, or Events: Use Outstatic CMS (https://theshipinnporlockweir.co.uk/outstatic)'
+            ]
+          ),
+
+          // Section 1: Dedicated Fast Admin Tools
+          createHeading('1. Dedicated Fast Admin Tools (1-Minute Updates)'),
+
           new Paragraph({
-            spacing: { after: 280 },
             children: [
-              new TextRun({
-                text: 'This is the definitive instruction manual for managing your website, updating downloadable menus, adding gallery photos, and editing pages on ',
-                size: 22
-              }),
-              new TextRun({
-                text: 'theshipinnporlockweir.co.uk',
-                bold: true,
-                color: '1E3A8A'
-              }),
-              new TextRun({
-                text: '.'
-              })
+              new TextRun({ text: '1.1 Menu Manager & PDF Uploader', bold: true, size: 24, color: '1E3A8A' })
             ]
           }),
-
-          // Section 1: How to Log In
-          createHeading('1. How to Log In'),
+          new Paragraph({
+            text: 'Use this dedicated tool whenever you have a new season or updated menu PDF:'
+          }),
           createStepBox([
-            '1. In your web browser, go to: https://theshipinnporlockweir.co.uk/outstatic',
+            '1. Open your browser and go to: https://theshipinnporlockweir.co.uk/admin/menus',
+            '2. Click the menu you want to update (Breakfast Menu, Lunch Menu, Evening Menu, Sunday Lunch Menu, or Custom Menu).',
+            '3. Enter the Season / Subtitle (e.g. "Autumn 2026" or "Served 12:00 PM – 3:00 PM").',
+            '4. Click "Browse PDF file" and choose your .pdf file.',
+            '5. Click "Upload & Publish Menu". The live website and Outstatic update automatically in 1–2 minutes!'
+          ]),
+
+          new Paragraph({
+            spacing: { before: 200 },
+            children: [
+              new TextRun({ text: '1.2 Gallery Manager & Photo Uploader', bold: true, size: 24, color: '1E3A8A' })
+            ]
+          }),
+          new Paragraph({
+            text: 'Use this dedicated tool to upload new photos to the gallery without having to manually copy file links:'
+          }),
+          createStepBox([
+            '1. Open your browser and go to: https://theshipinnporlockweir.co.uk/admin/gallery',
+            '2. Choose your upload mode:',
+            '   • Single Photo Upload: Add an individual photo with a custom title and caption.',
+            '   • Batch Upload: Upload 3–10 photos at once into a chosen category.',
+            '3. Click the matching category button (Food & Drink, Interior & Bar, Exterior & Garden, Rooms & Cabins, Surroundings, or Custom).',
+            '4. Click "Browse Image" to select your photo (.webp, .jpg, .png, .avif) and verify the instant preview thumbnail.',
+            '5. Enter a descriptive Photo Title and optional Caption.',
+            '6. Click "Upload & Publish Image". The photo goes live immediately and syncs with Outstatic CMS!'
+          ]),
+
+          // Section 2: Outstatic CMS Login
+          createHeading('2. How to Log In to Outstatic CMS'),
+          new Paragraph({
+            text: 'Use Outstatic CMS when you need to edit written text across website pages, change opening hours, post news stories, or add events:'
+          }),
+          createStepBox([
+            '1. In your browser, go to: https://theshipinnporlockweir.co.uk/outstatic',
             '2. Click "Sign in with GitHub".',
             '3. Enter Username: hello@theshipinnporlockweir.co.uk and Password: theshipinnta248pb!',
             '4. If prompted on screen, click "Authorize".'
           ]),
 
-          // Section 2: Understanding the Dashboard
-          createHeading('2. Understanding the Dashboard'),
+          // Section 3: Understanding the Dashboard
+          createHeading('3. Understanding the Outstatic Dashboard'),
           new Paragraph({
-            text: 'The left sidebar of your Outstatic dashboard gives you access to all key website sections:'
+            text: 'The left sidebar of your Outstatic dashboard provides access to all content sections:'
           }),
-          createBullet('Pages — Controls core website content (Home, Food & Drink, Contact, Rooms, etc.).'),
-          createBullet('Menus — Displays and manages all downloadable food & drink PDF menus.'),
-          createBullet('Gallery — Controls all photos and categories shown on the Photo Gallery page.'),
-          createBullet('Events — Displays and schedules upcoming live music, pub events, and promotions.'),
-          createBullet('News — Controls articles and news updates.'),
-          createBullet('Media Library — Central repository for all uploaded images.'),
-
-          // Section 3: How to Upload & Use Images
-          createHeading('3. How to Upload and Use Images in Outstatic'),
-          new Paragraph({
-            children: [
-              new TextRun({ text: 'Step 1: Uploading Images to the Media Library', bold: true, color: '1E3A8A' })
-            ]
-          }),
-          createStepBox([
-            '1. In the left sidebar, click Media Library.',
-            '2. Click "Add Media" and choose the image from your computer (.webp, .jpg, .png).',
-            '3. The photo will appear immediately in your media library.'
-          ]),
-
-          new Paragraph({
-            children: [
-              new TextRun({ text: 'Step 2: Assigning Images to Pages', bold: true, color: '1E3A8A' })
-            ]
-          }),
-          createStepBox([
-            '• Cover Images (Standard Pages): Click the Cover Image box in the right sidebar, pick your photo from the Media Library, and click Save.',
-            '• Hero Rotating Images (Home Page): Copy the image path from the Media Library (e.g., /images/ship-inn.webp) and paste it into Hero Image 1, 2, or 3.'
-          ]),
+          createBullet('Pages — Controls text and banners on core website pages (Home, Food & Drink, Contact, Rooms, etc.).'),
+          createBullet('Menus — Shows all uploaded menus (where you can toggle Draft/Published to temporarily hide a menu).'),
+          createBullet('Gallery — Shows your photo collection (where you can edit captions or toggle Draft/Published).'),
+          createBullet('Events — Add upcoming live music, pub quizzes, and seasonal celebrations.'),
+          createBullet('News — Post articles and announcements.'),
+          createBullet('Media Library — Central repository for all images used on website pages.'),
 
           // Section 4: How to Edit and Save Any Page
-          createHeading('4. How to Edit and Save Any Page'),
+          createHeading('4. How to Edit and Save Any Page in Outstatic'),
           createStepBox([
             '1. In the left sidebar, click Pages, then click the page you want to update.',
-            '2. Focus on the Right Sidebar fields. (The large center editor is for internal notes only).',
+            '2. Focus on the Right Sidebar fields. (The large center editor is not used for page layouts).',
             '3. If a field shows "+ Create", click it to open the text input box.',
             '4. Ensure Status is set to "Published" (not Draft).',
             '5. Click the black "Save" button in the top-right corner.',
@@ -165,7 +174,7 @@ async function generateDocx() {
           ]),
 
           // Section 5: Page-by-Page Editing Guide
-          createHeading('5. What Each Field Changes (Page by Page)'),
+          createHeading('5. Page-by-Page Field Reference'),
           
           new Paragraph({
             children: [
@@ -186,10 +195,11 @@ async function generateDocx() {
           createTable(
             ['What you see on the website', 'Field to edit in Outstatic (Right Sidebar)'],
             [
-              ['Wide banner photo at the top', 'Cover Image'],
+              ['Wide banner photo at the top', 'Cover Image (click to choose from Media Library)'],
               ['Left column introductory text', 'Food & Drink Intro Para One'],
               ['Lagers, Ciders, Ales beer lists', 'Lagers List, Ciders List, Ales List'],
-              ['Breakfast serving details', 'Breakfast Description & Times']
+              ['Breakfast serving details', 'Breakfast Description & Times'],
+              ['Downloadable PDF Menus', 'Managed via https://theshipinnporlockweir.co.uk/admin/menus']
             ]
           ),
 
@@ -212,74 +222,24 @@ async function generateDocx() {
             ]
           ),
 
-          // Section 6: How to Manage & Upload Menus
-          createHeading('6. How to Manage & Upload Menus'),
-          new Paragraph({
-            children: [
-              new TextRun({
-                text: '⚠️ Requirement: ',
-                bold: true,
-                color: 'D97706'
-              }),
-              new TextRun({
-                text: 'Menus must be in PDF format (.pdf). Word files or images should be exported/saved as PDF before uploading.'
-              })
-            ]
-          }),
-
-          createStepBox([
-            'Method 1: One-Click Menu Manager (Recommended)',
-            '1. Go to: https://theshipinnporlockweir.co.uk/admin/menus',
-            '2. Select the menu (Breakfast Menu, Lunch Menu, Evening Menu, Sunday Lunch Menu, or Custom Menu).',
-            '3. Enter the Season / Subtitle (e.g. "Autumn 2026" or "Served 12:00 PM – 3:00 PM").',
-            '4. Click "Browse PDF file" and choose your .pdf file.',
-            '5. Click "Upload & Publish Menu". Live website & Outstatic update automatically in 1–2 minutes!'
-          ]),
-
-          createStepBox([
-            'Method 2: Managing via Outstatic Dashboard',
-            '1. Click Menus in the left sidebar of Outstatic.',
-            '2. Click any menu to edit its subtitle, display order, or toggle Status from Published to Draft (to temporarily hide a menu).',
-            '3. Click Save.'
-          ]),
-
-          // Section 7: How to Manage the Gallery
-          createHeading('7. How to Manage the Photo Gallery'),
-          createStepBox([
-            'Method 1: Dedicated Gallery Manager (Recommended)',
-            '1. Go to: https://theshipinnporlockweir.co.uk/admin/gallery',
-            '2. Choose Single Photo Upload or Batch Upload (for uploading multiple photos at once).',
-            '3. Select Category: Food & Drink, Interior & Bar, Exterior & Garden, Rooms & Cabins, Surroundings, or Custom.',
-            '4. Click "Browse Image" to pick your photo (.webp, .jpg, .png, .avif) and preview it.',
-            '5. Enter a Photo Title / Alt Text and optional Caption.',
-            '6. Click "Upload & Publish Image". The photo goes live and syncs with Outstatic!'
-          ]),
-
-          createStepBox([
-            'Method 2: Managing via Outstatic Dashboard',
-            '1. Click Gallery in the left sidebar.',
-            '2. Click "New" to create a photo entry.',
-            '3. Set Title, Cover Image, and Category in the right sidebar.',
-            '4. Set Status to Published (or Draft to hide) and click Save.'
-          ]),
-
-          // Section 8: Events and News
-          createHeading('8. How to Add a New Event or News Article'),
+          // Section 6: Events and News
+          createHeading('6. How to Add a New Event or News Article'),
           createStepBox([
             '1. Click Events or News in the left sidebar of Outstatic.',
-            '2. Click the "New" button in the top right.',
-            '3. In the centre screen: Type your headline in the Title box and write your story/event text below it.',
+            '2. Click the black "New" button in the top right.',
+            '3. In the centre screen: Type your headline in the Title box and write your story or event description below it.',
             '4. In the right sidebar: Select the Date, upload a Cover Image, and enter a short Description.',
             '5. Set Status to "Published" and click Save.'
           ]),
 
-          // Quick Summary Table
-          createHeading('9. Quick Summary: Which Tool Should I Use?'),
+          // Section 7: Quick Summary Table
+          createHeading('7. Summary: Which Tool Should I Use?'),
           createTable(
-            ['Task', 'Best Tool', 'Web Link'],
+            ['Task', 'Recommended Tool', 'Web Link'],
             [
               ['Upload a new PDF food menu', 'Menu Manager', 'https://theshipinnporlockweir.co.uk/admin/menus'],
-              ['Upload new photos to the gallery', 'Gallery Manager', 'https://theshipinnporlockweir.co.uk/admin/gallery'],
+              ['Add new photos to the gallery', 'Gallery Manager', 'https://theshipinnporlockweir.co.uk/admin/gallery'],
+              ['Temporarily hide a menu or photo', 'Outstatic (Switch to Draft)', 'https://theshipinnporlockweir.co.uk/outstatic'],
               ['Edit phone number, address, or hours', 'Outstatic Pages (Contact)', 'https://theshipinnporlockweir.co.uk/outstatic'],
               ['Add an upcoming live music event', 'Outstatic Events', 'https://theshipinnporlockweir.co.uk/outstatic'],
               ['Publish a news story or announcement', 'Outstatic News', 'https://theshipinnporlockweir.co.uk/outstatic']
@@ -302,7 +262,7 @@ async function generateDocx() {
                 size: 18
               }),
               new TextRun({
-                text: 'Manual Version 1.5 — Updated 23 September 2026',
+                text: 'Manual Version 2.0 — Updated 23 September 2026',
                 italics: true,
                 color: '94A3B8',
                 size: 18
@@ -318,15 +278,11 @@ async function generateDocx() {
   const docsDir = path.join(process.cwd(), 'docs')
   const publicDocsDir = path.join(process.cwd(), 'public', 'docs')
 
-  if (!fs.existsSync(publicDocsDir)) {
-    fs.mkdirSync(publicDocsDir, { recursive: true })
-  }
-
   const filename = 'The-Ship-Inn-CMS-User-Manual.docx'
   fs.writeFileSync(path.join(docsDir, filename), buffer)
   fs.writeFileSync(path.join(publicDocsDir, filename), buffer)
 
-  console.log('Successfully generated Word Document (.docx) at docs/ and public/docs/')
+  console.log('Successfully regenerated Word Document (.docx) at docs/ and public/docs/')
 }
 
 // Helpers
@@ -353,6 +309,42 @@ function createBullet(text) {
       new TextRun({
         text,
         size: 22
+      })
+    ]
+  })
+}
+
+function createCalloutBox(title, lines) {
+  return new Table({
+    width: { size: 100, type: WidthType.PERCENTAGE },
+    rows: [
+      new TableRow({
+        children: [
+          new TableCell({
+            shading: { type: ShadingType.CLEAR, fill: 'EFF6FF' },
+            borders: {
+              left: { style: BorderStyle.SINGLE, size: 36, color: '1E3A8A' },
+              top: { style: BorderStyle.SINGLE, size: 6, color: 'BFDBFE' },
+              right: { style: BorderStyle.SINGLE, size: 6, color: 'BFDBFE' },
+              bottom: { style: BorderStyle.SINGLE, size: 6, color: 'BFDBFE' }
+            },
+            margins: { top: 140, bottom: 140, left: 200, right: 200 },
+            children: [
+              new Paragraph({
+                spacing: { after: 100 },
+                children: [
+                  new TextRun({ text: title, bold: true, size: 24, color: '1E3A8A' })
+                ]
+              }),
+              ...lines.map(l => new Paragraph({
+                spacing: { after: 60 },
+                children: [
+                  new TextRun({ text: l, size: 21, color: '1E3A8A' })
+                ]
+              }))
+            ]
+          })
+        ]
       })
     ]
   })
