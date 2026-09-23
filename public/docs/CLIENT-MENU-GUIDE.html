@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Ship Inn - Quick Guide to Updating Menus</title>
+    <style>
+        :root {
+            --primary: #1e3a8a;
+            --primary-dark: #0f172a;
+            --accent: #d97706;
+            --text-main: #334155;
+            --bg-light: #f8fafc;
+            --border: #e2e8f0;
+            --success: #059669;
+        }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            color: var(--text-main);
+            line-height: 1.6;
+            margin: 0;
+            padding: 40px 20px;
+            background-color: var(--bg-light);
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            padding: 40px 50px;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            border: 1px solid var(--border);
+        }
+        .header {
+            text-align: center;
+            border-bottom: 2px solid var(--primary);
+            padding-bottom: 20px;
+            margin-bottom: 30px;
+        }
+        h1 {
+            color: var(--primary);
+            font-size: 28px;
+            margin: 0 0 8px 0;
+        }
+        .subtitle {
+            font-size: 16px;
+            color: #64748b;
+            margin: 0;
+        }
+        h2 {
+            color: var(--primary);
+            font-size: 20px;
+            margin-top: 30px;
+            margin-bottom: 12px;
+            border-bottom: 1px solid var(--border);
+            padding-bottom: 6px;
+        }
+        .alert-box {
+            background: #fffbeb;
+            border-left: 4px solid var(--accent);
+            padding: 16px 20px;
+            border-radius: 0 8px 8px 0;
+            margin: 20px 0;
+        }
+        .alert-box strong {
+            color: #92400e;
+            display: block;
+            margin-bottom: 4px;
+        }
+        .step-card {
+            background: #f8fafc;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 18px;
+        }
+        .step-title {
+            font-size: 16px;
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+        }
+        .step-number {
+            background: var(--primary);
+            color: white;
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 13px;
+            margin-right: 10px;
+        }
+        .sync-box {
+            background: #ecfdf5;
+            border: 1px solid #a7f3d0;
+            border-radius: 8px;
+            padding: 20px;
+            margin-top: 25px;
+        }
+        .sync-box h3 {
+            color: var(--success);
+            margin: 0 0 10px 0;
+            font-size: 17px;
+        }
+        ul, ol {
+            margin: 8px 0;
+            padding-left: 24px;
+        }
+        li {
+            margin-bottom: 6px;
+        }
+        code {
+            background: #e2e8f0;
+            color: #0f172a;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-family: monospace;
+            font-size: 13px;
+        }
+        .btn-link {
+            display: inline-block;
+            background: var(--primary);
+            color: white;
+            text-decoration: none;
+            padding: 8px 16px;
+            border-radius: 6px;
+            font-weight: 600;
+            font-size: 14px;
+            margin-top: 10px;
+        }
+        .footer {
+            text-align: center;
+            font-size: 13px;
+            color: #94a3b8;
+            margin-top: 40px;
+            border-top: 1px solid var(--border);
+            padding-top: 20px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div class="header">
+        <h1>The Ship Inn, Porlock Weir</h1>
+        <p class="subtitle">Client Quick Guide: How to Upload & Manage Menus</p>
+    </div>
+
+    <div class="alert-box">
+        <strong>⚠️ File Format Requirement:</strong>
+        Downloadable menus <strong>must be in <code>.pdf</code> format</strong>. If your menu was created in Word, Canva, or Pages, please export or save it as a PDF before uploading.
+    </div>
+
+    <h2>Method 1: Uploading a New Menu PDF (1-Minute Method)</h2>
+    <p>Use the dedicated <strong>Menu Manager tool</strong> on your website to upload your new menu PDF directly from your computer:</p>
+
+    <div class="step-card">
+        <div class="step-title"><span class="step-number">1</span> Open the Menu Uploader</div>
+        <p>In your browser, visit: <code>https://www.theshipinnporlockweir.co.uk/admin/menus</code></p>
+    </div>
+
+    <div class="step-card">
+        <div class="step-title"><span class="step-number">2</span> Select the Menu</div>
+        <p>Click on the menu you want to update (e.g., <strong>Lunch Menu</strong>, <strong>Evening Menu</strong>, <strong>Breakfast Menu</strong>, or <strong>Sunday Lunch Menu</strong>).</p>
+    </div>
+
+    <div class="step-card">
+        <div class="step-title"><span class="step-number">3</span> Enter Season & Choose PDF File</div>
+        <ul>
+            <li><strong>Season / Subtitle:</strong> Enter the season or serving times (e.g., <code>Autumn 2026</code> or <code>Served 12:00 PM – 3:00 PM</code>).</li>
+            <li><strong>Browse PDF File:</strong> Click <strong>"Browse PDF file"</strong> and select your <code>.pdf</code> file from your computer.</li>
+        </ul>
+    </div>
+
+    <div class="step-card">
+        <div class="step-title"><span class="step-number">4</span> Click &quot;Upload &amp; Publish Menu&quot;</div>
+        <p>Click the blue upload button. Within <strong>1 to 2 minutes</strong>, the live website will be updated with your new downloadable PDF menu!</p>
+    </div>
+
+    <div class="sync-box">
+        <h3>🔄 How Does This Connect to the Outstatic Menus Page?</h3>
+        <p>The <strong>Outstatic Menus</strong> tab and the <strong>Menu Uploader</strong> work together automatically:</p>
+        <ul>
+            <li><strong>Instant Sync:</strong> Whenever you upload a PDF via <code>/admin/menus</code>, it automatically updates the corresponding document inside your <strong>Outstatic Menus</strong> dashboard.</li>
+            <li><strong>What Outstatic does:</strong> Outstatic acts as the master record. Inside Outstatic, you can:
+                <ul>
+                    <li><strong>Temporarily Hide a Menu:</strong> Change the <em>Status</em> from <code>Published</code> to <code>Draft</code> (and click Save) to hide it from the website.</li>
+                    <li><strong>Change Menu Order:</strong> Edit the <em>Display Order</em> number (1 = Breakfast, 2 = Lunch, 3 = Evening, 4 = Sunday).</li>
+                    <li><strong>Add Notes / Highlights:</strong> Add descriptions or notes to any menu.</li>
+                </ul>
+            </li>
+        </ul>
+    </div>
+
+    <h2>Summary: When to use which tool?</h2>
+    <table>
+        <thead>
+            <tr style="background:#f1f5f9; text-align:left;">
+                <th style="padding:10px; border:1px solid #e2e8f0;">Task</th>
+                <th style="padding:10px; border:1px solid #e2e8f0;">Best Tool</th>
+                <th style="padding:10px; border:1px solid #e2e8f0;">Link</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td style="padding:10px; border:1px solid #e2e8f0;">Upload a new PDF menu</td>
+                <td style="padding:10px; border:1px solid #e2e8f0;"><strong>Menu Manager</strong></td>
+                <td style="padding:10px; border:1px solid #e2e8f0;"><code>/admin/menus</code></td>
+            </tr>
+            <tr>
+                <td style="padding:10px; border:1px solid #e2e8f0;">Hide / unpublish a menu temporarily</td>
+                <td style="padding:10px; border:1px solid #e2e8f0;"><strong>Outstatic (Draft mode)</strong></td>
+                <td style="padding:10px; border:1px solid #e2e8f0;"><code>/outstatic/menus</code></td>
+            </tr>
+            <tr>
+                <td style="padding:10px; border:1px solid #e2e8f0;">Change serving times or descriptions</td>
+                <td style="padding:10px; border:1px solid #e2e8f0;"><strong>Either tool</strong></td>
+                <td style="padding:10px; border:1px solid #e2e8f0;"><code>/admin/menus</code> or <code>/outstatic</code></td>
+            </tr>
+        </tbody>
+    </table>
+
+    <div class="footer">
+        The Ship Inn, Porlock Weir &bull; Website Management Guide
+    </div>
+</div>
+
+</body>
+</html>
