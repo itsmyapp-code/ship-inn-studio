@@ -4,7 +4,7 @@ import fs from 'fs'
 import path from 'path'
 import Image from 'next/image'
 import { getPageData, getSharedContactData, getMenusData } from '@/lib/outstatic'
-import { TrackedPhoneLink, TrackedEmailLink } from '@/components/TrackedContactLinks'
+import { TrackedPhoneLink, TrackedEmailLink, TrackedMenuLink, TrackedPromoLink } from '@/components/TrackedContactLinks'
 
 interface MenuDisplayItem {
   title: string
@@ -104,7 +104,7 @@ export default function FoodDrinkPage() {
           <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
             <div className="flex items-center gap-4 text-center sm:text-left flex-col sm:flex-row">
               {/* Glowing Thumbnail */}
-              <a href="#bbq" className="relative block group shrink-0">
+              <TrackedPromoLink promoName="Saturday BBQ Thumbnail" href="#bbq" className="relative block group shrink-0">
                 <div className="relative w-[85px] h-[120px] rounded-lg overflow-hidden border border-amber-500 shadow-[0_0_15px_rgba(245,158,11,0.5)] group-hover:shadow-[0_0_20px_rgba(245,158,11,0.8)] transition-all duration-300 transform group-hover:scale-105">
                   <Image
                     src="/images/Ship_Inn_BBQ.jpg"
@@ -115,7 +115,7 @@ export default function FoodDrinkPage() {
                 </div>
                 {/* Pulsing glow ring */}
                 <div className="absolute inset-0 rounded-lg border-2 border-amber-400 opacity-75 group-hover:opacity-100 animate-pulse pointer-events-none"></div>
-              </a>
+              </TrackedPromoLink>
               <div>
                 <span className="inline-block bg-amber-100 text-amber-900 text-xs font-bold uppercase tracking-wider px-2 py-0.5 rounded-full mb-1">
                   Weekend Event
@@ -128,7 +128,8 @@ export default function FoodDrinkPage() {
                 </p>
               </div>
             </div>
-            <a
+            <TrackedPromoLink
+              promoName="Explore BBQ Button"
               href="#bbq"
               className="inline-flex items-center justify-center bg-amber-600 hover:bg-amber-700 text-white font-semibold text-sm px-5 py-2.5 rounded-lg shadow-sm hover:shadow transition-colors whitespace-nowrap"
             >
@@ -136,7 +137,7 @@ export default function FoodDrinkPage() {
               <svg className="w-4 h-4 ml-1.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 14l-7 7m0 0l-7-7m7 7V3" />
               </svg>
-            </a>
+            </TrackedPromoLink>
           </div>
         </div>
       </section>
@@ -175,12 +176,11 @@ export default function FoodDrinkPage() {
             </div>
             <div className="flex flex-wrap justify-center gap-6">
               {menus.map((menu, index) => (
-                <a
+                <TrackedMenuLink
                   key={index}
-                  href={menu.path}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="flex items-center space-x-3 bg-white px-6 py-4 rounded-lg shadow-md hover:shadow-lg transition-all transform hover:-translate-y-1 group border border-gray-100"
+                  menuTitle={menu.title}
+                  menuUrl={menu.path}
+                  className="flex items-center space-x-3 bg-white px-6 py-4 rounded-lg shadow-md hover:shadow-lg transition-all transform hover:-translate-y-1 group border border-gray-100 cursor-pointer"
                 >
                   <div className="bg-ship-blue-100 p-2 rounded-full group-hover:bg-ship-blue-200 transition-colors">
                     <svg className="w-6 h-6 text-ship-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -197,7 +197,7 @@ export default function FoodDrinkPage() {
                   <svg className="w-5 h-5 text-gray-400 group-hover:text-ship-blue-600 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
                   </svg>
-                </a>
+                </TrackedMenuLink>
               ))}
             </div>
           </div>

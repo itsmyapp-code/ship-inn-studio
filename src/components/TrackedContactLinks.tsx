@@ -6,7 +6,11 @@ import {
   trackPhoneCall,
   trackEmailClick,
   trackDirectionsClick,
-  trackFeatureClick
+  trackFeatureClick,
+  trackMenuClick,
+  trackHeroCta,
+  trackPromoClick,
+  trackArticleClick,
 } from '@/lib/analytics'
 
 interface TrackedPhoneLinkProps extends React.AnchorHTMLAttributes<HTMLAnchorElement> {
@@ -161,4 +165,116 @@ export function TrackedFeatureCard({
     </Link>
   )
 }
+
+interface TrackedMenuLinkProps extends React.AnchorHTMLAttributes<HTMLAnchorElement> {
+  menuTitle: string
+  menuUrl: string
+  children: React.ReactNode
+}
+
+export function TrackedMenuLink({
+  menuTitle,
+  menuUrl,
+  children,
+  className,
+  ...props
+}: TrackedMenuLinkProps) {
+  const handleClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
+    trackMenuClick(menuTitle, menuUrl)
+    if (props.onClick) props.onClick(e)
+  }
+
+  return (
+    <a
+      href={menuUrl}
+      target="_blank"
+      rel="noopener noreferrer"
+      className={className}
+      onClick={handleClick}
+      {...props}
+    >
+      {children}
+    </a>
+  )
+}
+
+interface TrackedHeroButtonProps extends React.AnchorHTMLAttributes<HTMLAnchorElement> {
+  buttonName: string
+  href: string
+  children: React.ReactNode
+}
+
+export function TrackedHeroButton({
+  buttonName,
+  href,
+  children,
+  className,
+  ...props
+}: TrackedHeroButtonProps) {
+  const handleClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
+    trackHeroCta(buttonName, href)
+    if (props.onClick) props.onClick(e)
+  }
+
+  return (
+    <Link href={href} className={className} onClick={handleClick} {...props}>
+      {children}
+    </Link>
+  )
+}
+
+interface TrackedPromoLinkProps extends React.AnchorHTMLAttributes<HTMLAnchorElement> {
+  promoName: string
+  href: string
+  children: React.ReactNode
+}
+
+export function TrackedPromoLink({
+  promoName,
+  href,
+  children,
+  className,
+  ...props
+}: TrackedPromoLinkProps) {
+  const handleClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
+    trackPromoClick(promoName, href)
+    if (props.onClick) props.onClick(e)
+  }
+
+  return (
+    <a href={href} className={className} onClick={handleClick} {...props}>
+      {children}
+    </a>
+  )
+}
+
+interface TrackedArticleLinkProps extends React.AnchorHTMLAttributes<HTMLAnchorElement> {
+  type: 'event' | 'news'
+  title: string
+  slug: string
+  href: string
+  children: React.ReactNode
+}
+
+export function TrackedArticleLink({
+  type,
+  title,
+  slug,
+  href,
+  children,
+  className,
+  ...props
+}: TrackedArticleLinkProps) {
+  const handleClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
+    trackArticleClick(type, title, slug)
+    if (props.onClick) props.onClick(e)
+  }
+
+  return (
+    <Link href={href} className={className} onClick={handleClick} {...props}>
+      {children}
+    </Link>
+  )
+}
+
 

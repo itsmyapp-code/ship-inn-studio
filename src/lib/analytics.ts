@@ -66,7 +66,13 @@ export function trackFormSubmission(
   formType: 'contact_form' | 'newsletter_signup' | 'booking_enquiry',
   details?: Record<string, AllowedValue>
 ) {
-  trackEvent('Form Submission', {
+  const eventName = formType === 'newsletter_signup'
+    ? 'Newsletter Signup'
+    : formType === 'contact_form'
+    ? 'Contact Form Submission'
+    : 'Booking Enquiry Submission'
+
+  trackEvent(eventName, {
     form_type: formType,
     page: typeof window !== 'undefined' ? window.location.pathname : '',
     ...details,
@@ -95,4 +101,61 @@ export function trackFeatureClick(feature: string, targetUrl: string) {
     page: typeof window !== 'undefined' ? window.location.pathname : '/',
   })
 }
+
+/**
+ * Track when a visitor opens or downloads a PDF menu
+ */
+export function trackMenuClick(menuTitle: string, menuUrl: string) {
+  trackEvent('Menu PDF Click', {
+    menu_title: menuTitle,
+    menu_url: menuUrl,
+    page: typeof window !== 'undefined' ? window.location.pathname : '/food-drink',
+  })
+}
+
+/**
+ * Track Homepage Hero CTA button clicks
+ */
+export function trackHeroCta(buttonName: string, targetUrl: string) {
+  trackEvent('Hero CTA Click', {
+    button_name: buttonName,
+    target_url: targetUrl,
+    page: typeof window !== 'undefined' ? window.location.pathname : '/',
+  })
+}
+
+/**
+ * Track promotional banner/card clicks (e.g., Saturday BBQ)
+ */
+export function trackPromoClick(promoName: string, targetUrl: string) {
+  trackEvent('Promo Banner Click', {
+    promo_name: promoName,
+    target_url: targetUrl,
+    page: typeof window !== 'undefined' ? window.location.pathname : '',
+  })
+}
+
+/**
+ * Track when an event or news item is clicked for details
+ */
+export function trackArticleClick(type: 'event' | 'news', title: string, slug: string) {
+  trackEvent('Article Click', {
+    content_type: type,
+    title,
+    slug,
+    page: typeof window !== 'undefined' ? window.location.pathname : '/news-events',
+  })
+}
+
+/**
+ * Track gallery user actions (category filter change or photo lightbox view)
+ */
+export function trackGalleryInteraction(action: 'filter' | 'lightbox_open', label: string) {
+  trackEvent('Gallery Interaction', {
+    action,
+    label,
+    page: typeof window !== 'undefined' ? window.location.pathname : '/gallery',
+  })
+}
+
 

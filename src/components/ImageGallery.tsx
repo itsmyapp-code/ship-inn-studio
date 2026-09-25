@@ -1,6 +1,7 @@
 'use client'
 
 import { useState } from 'react'
+import { trackGalleryInteraction } from '@/lib/analytics'
 
 interface GalleryImage {
   src: string
@@ -29,6 +30,15 @@ export default function ImageGallery({ images }: ImageGalleryProps) {
   const openLightbox = (index: number) => {
     setCurrentImageIndex(index)
     setSelectedImageIndex(index)
+    const img = filteredImages[index]
+    if (img) {
+      trackGalleryInteraction('lightbox_open', img.alt || img.category || `Image ${index + 1}`)
+    }
+  }
+
+  const handleCategorySelect = (category: string) => {
+    setSelectedCategory(category)
+    trackGalleryInteraction('filter', category)
   }
 
   const closeLightbox = () => {
@@ -70,7 +80,7 @@ export default function ImageGallery({ images }: ImageGalleryProps) {
           {categories.map((category) => (
             <button
               key={category}
-              onClick={() => setSelectedCategory(category)}
+              onClick={() => handleCategorySelect(category)}
               className={`px-4 py-2 rounded-full text-sm font-medium transition-colors ${selectedCategory === category
                 ? 'bg-ship-blue-600 text-white'
                 : 'bg-gray-100 text-gray-700 hover:bg-gray-200'

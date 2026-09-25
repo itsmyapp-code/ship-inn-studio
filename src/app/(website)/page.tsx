@@ -2,7 +2,7 @@ import Link from 'next/link'
 import HeroCarousel from '@/components/HeroCarousel'
 import NewsletterSignup from '@/components/NewsletterSignup'
 import { getPageData } from '@/lib/outstatic'
-import { TrackedFeatureCard } from '@/components/TrackedContactLinks'
+import { TrackedFeatureCard, TrackedHeroButton } from '@/components/TrackedContactLinks'
 
 export default function HomePage() {
   const pageData = getPageData('home')
@@ -73,7 +73,8 @@ export default function HomePage() {
               {strapline}
             </p>
             <div className="flex flex-col sm:flex-row gap-5 justify-center items-center">
-              <Link
+              <TrackedHeroButton
+                buttonName="Hero: From the Cabins"
                 href="/rooms"
                 className="w-full sm:w-auto bg-gradient-to-r from-yellow-400 to-amber-500 hover:from-yellow-300 hover:to-amber-400 text-slate-950 font-sans font-bold px-9 py-4 rounded-full text-lg sm:text-xl shadow-2xl shadow-yellow-500/30 hover:shadow-yellow-500/50 hover:scale-105 transition-all duration-300 inline-flex items-center justify-center gap-2.5"
               >
@@ -81,8 +82,9 @@ export default function HomePage() {
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
                 </svg>
                 <span>From the Cabins</span>
-              </Link>
-              <Link
+              </TrackedHeroButton>
+              <TrackedHeroButton
+                buttonName="Hero: Contact us"
                 href="/contact"
                 className="w-full sm:w-auto bg-white/15 hover:bg-white/25 text-white border-2 border-white/60 hover:border-white backdrop-blur-md font-sans font-semibold px-9 py-4 rounded-full text-lg sm:text-xl shadow-xl hover:shadow-white/20 hover:scale-105 transition-all duration-300 inline-flex items-center justify-center gap-2.5"
               >
@@ -90,7 +92,7 @@ export default function HomePage() {
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 4.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
                 </svg>
                 <span>Contact us</span>
-              </Link>
+              </TrackedHeroButton>
             </div>
           </div>
         </div>

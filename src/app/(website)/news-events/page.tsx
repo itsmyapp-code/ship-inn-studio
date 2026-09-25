@@ -2,6 +2,7 @@ import NewsletterForm from '@/components/NewsletterForm'
 import { getDocuments } from 'outstatic/server'
 import Link from 'next/link'
 import Image from 'next/image'
+import { TrackedArticleLink } from '@/components/TrackedContactLinks'
 import { parseDate, formatDateShort } from '@/lib/dateUtils'
 import TideTimes from '@/components/TideTimes'
 import WeatherWidget from '@/components/WeatherWidget'
@@ -168,7 +169,14 @@ export default async function Page() {
             ) : (
               <div className="space-y-8">
                 {upcomingEvents.map((event) => (
-                  <Link href={`/events/${event.slug}`} key={event.slug} className="group block">
+                  <TrackedArticleLink
+                    key={event.slug}
+                    type="event"
+                    title={event.title}
+                    slug={event.slug}
+                    href={`/events/${event.slug}`}
+                    className="group block"
+                  >
                     <article className="bg-white rounded-xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 border border-stone-100 flex flex-col md:flex-row relative">
                       {/* Image Container */}
                       <div className="w-full md:w-1/3 relative min-h-[250px] md:min-h-[280px] bg-stone-200">
@@ -211,7 +219,7 @@ export default async function Page() {
                         </span>
                       </div>
                     </article>
-                  </Link>
+                  </TrackedArticleLink>
                 ))}
               </div>
             )}
@@ -230,7 +238,14 @@ export default async function Page() {
             ) : (
               <div className="space-y-8">
                 {latestNews.map((news) => (
-                  <Link href={`/news-events/${news.slug}`} key={news.slug} className="group block">
+                  <TrackedArticleLink
+                    key={news.slug}
+                    type="news"
+                    title={news.title}
+                    slug={news.slug}
+                    href={`/news-events/${news.slug}`}
+                    className="group block"
+                  >
                     <article className="bg-white rounded-xl p-6 shadow-sm hover:shadow-md transition-all border border-stone-100 flex flex-col md:flex-row gap-8 items-start">
                       {news.coverImage && (
                         <div className="w-full md:w-48 aspect-video md:aspect-square flex-shrink-0 rounded-lg overflow-hidden bg-stone-100">
@@ -259,7 +274,7 @@ export default async function Page() {
                         </span>
                       </div>
                     </article>
-                  </Link>
+                  </TrackedArticleLink>
                 ))}
               </div>
             )}
