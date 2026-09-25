@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Ship Inn - Complete Analytics & Event Tracking Guide</title>
+    <style>
+        :root {
+            --primary: #1e3a8a;
+            --primary-dark: #0f172a;
+            --accent: #d97706;
+            --text-main: #334155;
+            --bg-light: #f8fafc;
+            --border: #e2e8f0;
+            --success: #059669;
+        }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            color: var(--text-main);
+            line-height: 1.6;
+            margin: 0;
+            padding: 40px 20px;
+            background-color: var(--bg-light);
+        }
+        .container {
+            max-width: 920px;
+            margin: 0 auto;
+            background: white;
+            padding: 40px 50px;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            border: 1px solid var(--border);
+        }
+        .header {
+            text-align: center;
+            border-bottom: 2px solid var(--primary);
+            padding-bottom: 20px;
+            margin-bottom: 30px;
+        }
+        h1 {
+            color: var(--primary);
+            font-size: 28px;
+            margin: 0 0 8px 0;
+        }
+        .subtitle {
+            font-size: 16px;
+            color: #64748b;
+            margin: 0;
+        }
+        h2 {
+            color: var(--primary);
+            font-size: 20px;
+            margin-top: 32px;
+            margin-bottom: 12px;
+            border-bottom: 1px solid var(--border);
+            padding-bottom: 6px;
+        }
+        h3 {
+            color: var(--primary-dark);
+            font-size: 16px;
+            margin-top: 20px;
+            margin-bottom: 8px;
+        }
+        .alert-box {
+            background: #eff6ff;
+            border-left: 4px solid var(--primary);
+            padding: 16px 20px;
+            border-radius: 0 8px 8px 0;
+            margin-bottom: 25px;
+            font-size: 15px;
+        }
+        .tip-box {
+            background: #f0fdf4;
+            border-left: 4px solid var(--success);
+            padding: 16px 20px;
+            border-radius: 0 8px 8px 0;
+            margin-bottom: 25px;
+            font-size: 15px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0 30px 0;
+            font-size: 14px;
+        }
+        th, td {
+            text-align: left;
+            padding: 12px 14px;
+            border-bottom: 1px solid var(--border);
+            vertical-align: top;
+        }
+        th {
+            background-color: #f1f5f9;
+            color: var(--primary-dark);
+            font-weight: 600;
+        }
+        tr:hover td {
+            background-color: #f8fafc;
+        }
+        .badge {
+            display: inline-block;
+            font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+            background: #e0f2fe;
+            color: #0369a1;
+            padding: 3px 8px;
+            border-radius: 6px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+        .badge-green {
+            background: #dcfce7;
+            color: #15803d;
+        }
+        .badge-amber {
+            background: #fef3c7;
+            color: #b45309;
+        }
+        .code-tag {
+            font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+            background: #f1f5f9;
+            color: #475569;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-size: 12px;
+        }
+        .card-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 16px;
+            margin: 20px 0;
+        }
+        .card {
+            border: 1px solid var(--border);
+            padding: 16px;
+            border-radius: 8px;
+            background: #fafafa;
+        }
+        .card strong {
+            color: var(--primary);
+            display: block;
+            margin-bottom: 4px;
+        }
+        ul, ol {
+            padding-left: 20px;
+        }
+        li {
+            margin-bottom: 8px;
+        }
+        .footer {
+            margin-top: 40px;
+            text-align: center;
+            font-size: 13px;
+            color: #94a3b8;
+            border-top: 1px solid var(--border);
+            padding-top: 20px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div class="header">
+        <h1>The Ship Inn Porlock Weir</h1>
+        <p class="subtitle">Client Guide: Website Events & Analytics Dashboard</p>
+    </div>
+
+    <div class="alert-box">
+        <strong>Overview:</strong> All custom events on the website are tracked privacy-friendly and automatically reported in real time inside your <strong>Vercel Analytics</strong> dashboard under the <strong>Events</strong> tab (as well as Google Analytics 4 if configured).
+    </div>
+
+    <h2>1. Event Reference & Dashboard Guide</h2>
+    <p>Below is every event tracked across the website, where it originates, and what custom parameters are saved with it:</p>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Event Name in Dashboard</th>
+                <th>Trigger / What Fires It</th>
+                <th>Key Data Recorded</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td><span class="badge badge-green">Phone Call Click</span></td>
+                <td>Visitor clicks any telephone link (<span class="code-tag">tel:</span>) on the website.</td>
+                <td><span class="code-tag">location</span> (header, footer, contact page, rooms CTA), <span class="code-tag">phone</span></td>
+            </tr>
+            <tr>
+                <td><span class="badge badge-green">Direct Email Click</span></td>
+                <td>Visitor clicks any email link (<span class="code-tag">mailto:</span>) on the website.</td>
+                <td><span class="code-tag">location</span> (footer, contact page, legal pages), <span class="code-tag">email</span></td>
+            </tr>
+            <tr>
+                <td><span class="badge badge-green">Google Maps Directions Click</span></td>
+                <td>Visitor clicks to open driving / walking directions to Porlock Weir (TA24 8PB).</td>
+                <td><span class="code-tag">location</span>, <span class="code-tag">destination</span></td>
+            </tr>
+            <tr>
+                <td><span class="badge">Hero CTA Click</span></td>
+                <td>Visitor clicks either the <strong>"From the Cabins"</strong> or <strong>"Contact us"</strong> buttons on the Homepage Hero banner.</td>
+                <td><span class="code-tag">button_name</span>, <span class="code-tag">target_url</span></td>
+            </tr>
+            <tr>
+                <td><span class="badge">Rooms Feature Click</span></td>
+                <td>Visitor clicks the <strong>"Explore Our Rooms"</strong> highlight card on the Homepage.</td>
+                <td><span class="code-tag">target_url: "/rooms"</span></td>
+            </tr>
+            <tr>
+                <td><span class="badge">Pub &amp; Restaurant Feature Click</span></td>
+                <td>Visitor clicks the <strong>"View Food &amp; Menus"</strong> highlight card on the Homepage.</td>
+                <td><span class="code-tag">target_url: "/food-drink"</span></td>
+            </tr>
+            <tr>
+                <td><span class="badge">Things to Do Feature Click</span></td>
+                <td>Visitor clicks the <strong>"Discover Things to Do"</strong> highlight card on the Homepage.</td>
+                <td><span class="code-tag">target_url: "/things-to-do"</span></td>
+            </tr>
+            <tr>
+                <td><span class="badge badge-amber">Menu PDF Click</span></td>
+                <td>Visitor clicks to open or download any PDF menu on the <em>Food &amp; Drink</em> page.</td>
+                <td><span class="code-tag">menu_title</span> (e.g. "Main Menu", "Sunday Lunch", "Wine List"), <span class="code-tag">menu_url</span></td>
+            </tr>
+            <tr>
+                <td><span class="badge badge-amber">Promo Banner Click</span></td>
+                <td>Visitor clicks the <strong>Saturday BBQ / Braai</strong> promo banner or "Explore BBQ" button.</td>
+                <td><span class="code-tag">promo_name</span>, <span class="code-tag">target_url</span></td>
+            </tr>
+            <tr>
+                <td><span class="badge">Article Click</span></td>
+                <td>Visitor clicks an Upcoming Event card or Latest News item on the <em>News &amp; Events</em> page.</td>
+                <td><span class="code-tag">content_type</span> (event/news), <span class="code-tag">title</span>, <span class="code-tag">slug</span></td>
+            </tr>
+            <tr>
+                <td><span class="badge">Gallery Interaction</span></td>
+                <td>Visitor clicks a category filter button (e.g., "Food &amp; Drink", "Rooms") or clicks to open a photo lightbox.</td>
+                <td><span class="code-tag">action</span> (filter / lightbox_open), <span class="code-tag">label</span></td>
+            </tr>
+            <tr>
+                <td><span class="badge badge-green">Contact Form Submission</span></td>
+                <td>Visitor submits the main contact enquiry form.</td>
+                <td><span class="code-tag">enquiry_type</span> (general, room booking, table reservation), <span class="code-tag">has_phone</span></td>
+            </tr>
+            <tr>
+                <td><span class="badge badge-green">Newsletter Signup</span></td>
+                <td>Visitor subscribes to the Ship Inn email newsletter.</td>
+                <td><span class="code-tag">page</span></td>
+            </tr>
+        </tbody>
+    </table>
+
+    <h2>2. How to Read Your Vercel Analytics Dashboard</h2>
+    <div class="card-grid">
+        <div class="card">
+            <strong>1. Top-Level Events Table</strong>
+            Shows the total count and unique visitor count for each specific event during your chosen date range (e.g. <em>Last 24 hours</em>, <em>7 days</em>, <em>30 days</em>).
+        </div>
+        <div class="card">
+            <strong>2. Drill-Down Filter</strong>
+            Clicking any event row (such as <span class="code-tag">Menu PDF Click</span> or <span class="code-tag">Phone Call Click</span>) filters the whole dashboard to see which pages or dates generated those clicks.
+        </div>
+        <div class="card">
+            <strong>3. Property Inspection</strong>
+            Custom properties (like which menu was opened or which enquiry type was submitted) appear in the event breakdown views.
+        </div>
+    </div>
+
+    <h2>3. Top Insights to Watch</h2>
+    <ol>
+        <li><strong>Food vs Stay Demand:</strong> Compare <span class="badge">Rooms Feature Click</span> vs <span class="badge">Pub &amp; Restaurant Feature Click</span> to see seasonal interest shifts between dining and overnight stays.</li>
+        <li><strong>Most Popular Menus:</strong> Look at <span class="badge badge-amber">Menu PDF Click</span> to see if guests are checking out daily specials, Sunday roasts, or drinks before arriving.</li>
+        <li><strong>Direct Conversion Volume:</strong> Add together <span class="badge badge-green">Phone Call Click</span> + <span class="badge badge-green">Contact Form Submission</span> + <span class="badge badge-green">Direct Email Click</span> for total high-intent leads generated.</li>
+    </ol>
+
+    <div class="tip-box">
+        <strong>Need Custom Tracking Added?</strong> If you launch a new seasonal campaign, special accommodation package, or external booking engine, additional custom events can be added at any time.
+    </div>
+
+    <div class="footer">
+        The Ship Inn Porlock Weir &bull; Analytics System Documentation &bull; Generated September 2026
+    </div>
+</div>
+
+</body>
+</html>
