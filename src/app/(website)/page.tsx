@@ -113,7 +113,7 @@ export default function HomePage() {
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8 sm:gap-10 mt-12">
             <TrackedFeatureCard
               href="/rooms"
-              featureKey="Accommodation"
+              featureKey="Rooms Feature"
               title={feature1Title}
               description={feature1Desc}
               buttonText="Explore Our Rooms"
@@ -127,7 +127,7 @@ export default function HomePage() {
 
             <TrackedFeatureCard
               href="/food-drink"
-              featureKey="Pub & Restaurant"
+              featureKey="Pub & Restaurant Feature"
               title={feature2Title}
               description={feature2Desc}
               buttonText="View Food & Menus"
@@ -141,7 +141,7 @@ export default function HomePage() {
 
             <TrackedFeatureCard
               href="/things-to-do"
-              featureKey="Location & Things to Do"
+              featureKey="Things to Do Feature"
               title={feature3Title}
               description={feature3Desc}
               buttonText="Discover Things to Do"

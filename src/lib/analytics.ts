@@ -88,7 +88,8 @@ export function trackDirectionsClick(location: string = 'contact_page') {
  * Track when a visitor clicks a Homepage Feature CTA card/button
  */
 export function trackFeatureClick(feature: string, targetUrl: string) {
-  trackEvent('Feature CTA Click', {
+  const eventName = feature.endsWith('Click') ? feature : `${feature} Click`
+  trackEvent(eventName, {
     feature,
     target_url: targetUrl,
     page: typeof window !== 'undefined' ? window.location.pathname : '/',
