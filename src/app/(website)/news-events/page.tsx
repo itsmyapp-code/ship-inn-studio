@@ -1,7 +1,7 @@
 import NewsletterForm from '@/components/NewsletterForm'
 import { getDocuments } from 'outstatic/server'
 import Link from 'next/link'
-import Image from 'next/image'
+import SmartImage from '@/components/SmartImage'
 import { TrackedArticleLink } from '@/components/TrackedContactLinks'
 import { parseDate, formatDateShort } from '@/lib/dateUtils'
 import TideTimes from '@/components/TideTimes'
@@ -136,7 +136,7 @@ export default async function Page() {
       {/* Hero Section */}
       <section className="relative h-[40vh] bg-ship-blue-900 flex items-center justify-center mb-16 overflow-hidden">
         {heroImage && (
-          <Image
+          <SmartImage
             src={heroImage}
             alt={heroAlt}
             fill
@@ -181,7 +181,7 @@ export default async function Page() {
                       {/* Image Container */}
                       <div className="w-full md:w-1/3 relative min-h-[250px] md:min-h-[280px] bg-stone-200">
                         {event.coverImage ? (
-                          <img
+                          <SmartImage
                             src={event.coverImage}
                             alt={event.title}
                             className="absolute inset-0 w-full h-full object-cover object-top group-hover:scale-105 transition-transform duration-700"
@@ -249,7 +249,7 @@ export default async function Page() {
                     <article className="bg-white rounded-xl p-6 shadow-sm hover:shadow-md transition-all border border-stone-100 flex flex-col md:flex-row gap-8 items-start">
                       {news.coverImage && (
                         <div className="w-full md:w-48 aspect-video md:aspect-square flex-shrink-0 rounded-lg overflow-hidden bg-stone-100">
-                          <img
+                          <SmartImage
                             src={news.coverImage}
                             alt={news.title}
                             className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
@@ -296,7 +296,7 @@ export default async function Page() {
               <div className="relative z-10 text-center">
                 <h3 className="text-xl font-bold font-centaur mb-4">The Perfect Gift</h3>
                 <div className="mb-4 flex justify-center">
-                  <img
+                  <SmartImage
                     src="/images/ship-inn-voucher.webp"
                     alt="Gift Voucher"
                     className="w-32 rounded-lg shadow-lg rotate-[-3deg] border-2 border-white/20"

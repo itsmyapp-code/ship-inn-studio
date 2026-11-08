@@ -2,7 +2,7 @@
 
 import fs from 'fs'
 import path from 'path'
-import Image from 'next/image'
+import SmartImage from '@/components/SmartImage'
 import { getPageData, getSharedContactData, getMenusData } from '@/lib/outstatic'
 import { TrackedPhoneLink, TrackedEmailLink, TrackedMenuLink, TrackedPromoLink } from '@/components/TrackedContactLinks'
 
@@ -84,7 +84,7 @@ export default function FoodDrinkPage() {
     <div className="min-h-screen">
       {/* Hero Section */}
       <section className="relative h-64 bg-ship-blue-600 flex items-center justify-center overflow-hidden">
-        <Image
+        <SmartImage
           src={heroImage}
           alt={heroAlt}
           fill
@@ -106,8 +106,8 @@ export default function FoodDrinkPage() {
               {/* Glowing Thumbnail */}
               <TrackedPromoLink promoName="Saturday BBQ Thumbnail" href="#bbq" className="relative block group shrink-0">
                 <div className="relative w-[85px] h-[120px] rounded-lg overflow-hidden border border-amber-500 shadow-[0_0_15px_rgba(245,158,11,0.5)] group-hover:shadow-[0_0_20px_rgba(245,158,11,0.8)] transition-all duration-300 transform group-hover:scale-105">
-                  <Image
-                    src="/images/Ship_Inn_BBQ.jpg"
+                  <SmartImage
+                    src="/images/Ship_Inn_BBQ.webp"
                     alt="BBQ Every Saturday"
                     fill
                     className="object-cover"
@@ -157,7 +157,7 @@ export default function FoodDrinkPage() {
                 </p>
               </div>
             </div>
-            <img
+            <SmartImage
               src="/images/shipinn-204.webp"
               alt="The Ship Inn Restaurant"
               className="h-96 w-full object-cover rounded-lg"
@@ -216,7 +216,7 @@ export default function FoodDrinkPage() {
           </div>
 
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-            <img
+            <SmartImage
               src="/images/shipinn-217.webp"
               alt="The Ship Inn Bar Area"
               className="h-96 w-full object-cover rounded-lg"
@@ -279,7 +279,7 @@ export default function FoodDrinkPage() {
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8">
             <div className="relative group overflow-hidden rounded-2xl shadow-md hover:shadow-lg transition-all duration-300 transform hover:-translate-y-1">
               <div className="relative h-64 sm:h-72 md:h-80 w-full">
-                <Image
+                <SmartImage
                   src="/images/seafood%20bbq.webp"
                   alt="Fresh Seafood BBQ at The Ship Inn"
                   fill
@@ -294,7 +294,7 @@ export default function FoodDrinkPage() {
 
             <div className="relative group overflow-hidden rounded-2xl shadow-md hover:shadow-lg transition-all duration-300 transform hover:-translate-y-1">
               <div className="relative h-64 sm:h-72 md:h-80 w-full">
-                <Image
+                <SmartImage
                   src="/images/seaFOOD%20bbq%202.webp"
                   alt="Sizzling Lobster and Sea Food Braai"
                   fill
@@ -309,7 +309,7 @@ export default function FoodDrinkPage() {
 
             <div className="relative group overflow-hidden rounded-2xl shadow-md hover:shadow-lg transition-all duration-300 transform hover:-translate-y-1">
               <div className="relative h-64 sm:h-72 md:h-80 w-full">
-                <Image
+                <SmartImage
                   src="/images/bbq%20board.webp"
                   alt="Saturday BBQ Menu"
                   fill
@@ -366,7 +366,7 @@ export default function FoodDrinkPage() {
                 Dietary requirements catered for upon request.
               </p>
             </div>
-            <img
+            <SmartImage
               src="/images/shipinn-225.webp"
               alt="Breakfast at The Ship Inn"
               className="h-96 w-full object-cover rounded-lg"

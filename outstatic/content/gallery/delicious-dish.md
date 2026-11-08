@@ -6,7 +6,7 @@ author:
   picture: ""
 slug: "delicious-dish"
 description: "Seasonal dishes prepared with local ingredients"
-coverImage: "//images/ship-inn-gallery-new-mrj626aq-5.jpg"
+coverImage: "//images/ship-inn-gallery-new-mrj626aq-5.webp"
 publishedAt: "2026-07-13T12:00:00.000Z"
 category: "Food & Drink"
 ---

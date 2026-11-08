@@ -4,6 +4,7 @@ import Link from 'next/link'
 import { remark } from 'remark'
 import html from 'remark-html'
 import { parseDate, formatDate } from '@/lib/dateUtils'
+import SmartImage, { upgradeHtmlImagesToPicture } from '@/components/SmartImage'
 
 type Props = {
   params: Promise<{ slug: string }>
@@ -34,7 +35,7 @@ async function processEventContent(
   }
 
   const result = await remark().use(html).process(normalized)
-  return { heroImage, contentHtml: result.toString() }
+  return { heroImage, contentHtml: upgradeHtmlImagesToPicture(result.toString()) }
 }
 
 export async function generateStaticParams() {
@@ -109,7 +110,7 @@ export default async function EventPage({ params }: Props) {
 
         {heroImage && (
           <div className="w-full max-w-4xl mx-auto mb-12 shadow-xl rounded-xl overflow-hidden bg-stone-100 flex justify-center">
-            <img
+            <SmartImage
               src={heroImage.startsWith('/') ? heroImage : `/${heroImage}`}
               alt={event.title}
               className="w-full h-auto max-h-[700px] object-contain mx-auto"

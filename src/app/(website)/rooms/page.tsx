@@ -1,7 +1,7 @@
 
 
 import Link from 'next/link'
-import Image from 'next/image'
+import SmartImage from '@/components/SmartImage'
 import RoomGallery from '@/components/RoomGallery'
 import { getPageData, getSharedContactData } from '@/lib/outstatic'
 import { TrackedPhoneLink, TrackedEmailLink } from '@/components/TrackedContactLinks'
@@ -104,7 +104,7 @@ export default function RoomsPage() {
       <section className="relative h-64 bg-ship-blue-600 flex items-center justify-center overflow-hidden">
         {heroImage && (
           <>
-            <Image
+            <SmartImage
               src={heroImage}
               alt={heroAlt}
               fill

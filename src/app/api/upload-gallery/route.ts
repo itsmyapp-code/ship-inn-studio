@@ -2,6 +2,7 @@ import { NextResponse } from 'next/server'
 import fs from 'fs'
 import path from 'path'
 import matter from 'gray-matter'
+import sharp from 'sharp'
 
 export const dynamic = 'force-dynamic'
 
@@ -71,7 +72,7 @@ export async function POST(request: Request) {
       return NextResponse.json({ success: false, error: 'No image file uploaded' }, { status: 400 })
     }
 
-    const validExtensions = ['.webp', '.jpg', '.jpeg', '.png', '.avif', '.gif']
+    const validExtensions = ['.webp', '.jpg', '.jpeg', '.png', '.avif', '.gif', '.jfif']
     const originalExt = path.extname(file.name).toLowerCase()
     if (!validExtensions.includes(originalExt)) {
       return NextResponse.json({
@@ -90,11 +91,26 @@ export async function POST(request: Request) {
       baseSlug = `gallery-${Date.now()}`
     }
 
-    // Sanitize file name
+    // Sanitize file name and always output both .webp and .avif
     const rawFileName = path.basename(file.name, originalExt).replace(/[^a-zA-Z0-9.\-_]/g, '-')
-    const sanitizedFileName = `${rawFileName}-${Date.now()}${originalExt}`
-    const imagePath = `/images/gallery/${sanitizedFileName}`
-    const buffer = Buffer.from(await file.arrayBuffer())
+    const baseFileName = `${rawFileName}-${Date.now()}`
+    const webpFileName = `${baseFileName}.webp`
+    const avifFileName = `${baseFileName}.avif`
+    const imagePath = `/images/gallery/${webpFileName}`
+    const avifImagePath = `/images/gallery/${avifFileName}`
+    const rawBuffer = Buffer.from(await file.arrayBuffer())
+
+    // Automatically convert uploaded image to optimized .webp and .avif
+    const [webpBuffer, avifBuffer] = await Promise.all([
+      sharp(rawBuffer)
+        .resize({ width: 2000, withoutEnlargement: true })
+        .webp({ quality: 80 })
+        .toBuffer(),
+      sharp(rawBuffer)
+        .resize({ width: 2000, withoutEnlargement: true })
+        .avif({ quality: 65 })
+        .toBuffer(),
+    ])
 
     const publishedAt = new Date().toISOString()
     const markdownContent = `---
@@ -119,7 +135,8 @@ Photo added via Gallery Manager.
       if (!fs.existsSync(publicGalleryDir)) {
         fs.mkdirSync(publicGalleryDir, { recursive: true })
       }
-      fs.writeFileSync(path.join(publicGalleryDir, sanitizedFileName), buffer)
+      fs.writeFileSync(path.join(publicGalleryDir, webpFileName), webpBuffer)
+      fs.writeFileSync(path.join(publicGalleryDir, avifFileName), avifBuffer)
 
       const outstaticGalleryDir = path.join(process.cwd(), 'outstatic', 'content', 'gallery')
       if (!fs.existsSync(outstaticGalleryDir)) {
@@ -170,13 +187,15 @@ Photo added via Gallery Manager.
           return putRes.ok
         }
 
-        const imageBase64 = buffer.toString('base64')
+        const webpBase64 = webpBuffer.toString('base64')
+        const avifBase64 = avifBuffer.toString('base64')
         const mdBase64 = Buffer.from(markdownContent, 'utf8').toString('base64')
 
-        const imgOk = await commitGitHubFile(`public/images/gallery/${sanitizedFileName}`, imageBase64, `chore(gallery): upload ${sanitizedFileName}`)
+        const webpOk = await commitGitHubFile(`public/images/gallery/${webpFileName}`, webpBase64, `chore(gallery): upload ${webpFileName}`)
+        const avifOk = await commitGitHubFile(`public/images/gallery/${avifFileName}`, avifBase64, `chore(gallery): upload ${avifFileName}`)
         const mdOk = await commitGitHubFile(`outstatic/content/gallery/${baseSlug}.md`, mdBase64, `feat(gallery): add ${title}`)
 
-        githubCommitted = imgOk && mdOk
+        githubCommitted = webpOk && avifOk && mdOk
       } catch (ghErr) {
         console.error('Error committing gallery photo to GitHub:', ghErr)
       }
@@ -184,14 +203,16 @@ Photo added via Gallery Manager.
 
     return NextResponse.json({
       success: true,
-      fileName: sanitizedFileName,
+      fileName: webpFileName,
+      avifFileName,
       imagePath,
+      avifImagePath,
       slug: baseSlug,
       title,
       category,
       savedLocally,
       githubCommitted,
-      message: `"${title}" has been successfully added to the Gallery!`
+      message: `"${title}" has been automatically converted to .avif & .webp and added to the Gallery!`
     })
   } catch (error) {
     console.error('Error processing gallery upload:', error)

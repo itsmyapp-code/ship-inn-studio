@@ -1,6 +1,7 @@
 import Link from 'next/link'
 import HeroCarousel from '@/components/HeroCarousel'
 import NewsletterSignup from '@/components/NewsletterSignup'
+import SmartImage from '@/components/SmartImage'
 import { getPageData } from '@/lib/outstatic'
 import { TrackedFeatureCard, TrackedHeroButton } from '@/components/TrackedContactLinks'
 
@@ -59,9 +60,10 @@ export default function HomePage() {
           <div className="text-center max-w-6xl mx-auto px-6">
             {/* Logo Overlay */}
             <div className="bg-white rounded-full w-32 h-32 md:w-64 md:h-64 mx-auto mb-4 md:mb-8 flex items-center justify-center shadow-2xl overflow-hidden p-4 md:p-6 relative">
-              <img
+              <SmartImage
                 src="/images/the_ship_inn2.webp"
                 alt="The Ship Inn Logo"
+                priority
                 className="max-w-full max-h-full object-contain"
               />
             </div>

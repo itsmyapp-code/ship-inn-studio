@@ -1,6 +1,7 @@
 import 'outstatic/outstatic.css'
 import { Outstatic } from 'outstatic'
 import { OstClient } from 'outstatic/client'
+import OutstaticImageOptimizer from '@/components/OutstaticImageOptimizer'
 
 export default async function Page({ params }: { params: Promise<{ ost: string[] }> }) {
   const repoBranch = process.env.OST_REPO_BRANCH || 'main'
@@ -11,5 +12,10 @@ export default async function Page({ params }: { params: Promise<{ ost: string[]
     repoBranch,
   })
   const resolvedParams = await params
-  return <OstClient ostData={outstatic} params={resolvedParams} />
+  return (
+    <>
+      <OutstaticImageOptimizer />
+      <OstClient ostData={outstatic} params={resolvedParams} />
+    </>
+  )
 }

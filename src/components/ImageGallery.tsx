@@ -2,6 +2,7 @@
 
 import { useState } from 'react'
 import { trackGalleryInteraction } from '@/lib/analytics'
+import SmartImage from '@/components/SmartImage'
 
 interface GalleryImage {
   src: string
@@ -100,7 +101,7 @@ export default function ImageGallery({ images }: ImageGalleryProps) {
               className="relative group cursor-pointer overflow-hidden rounded-lg shadow-lg"
               onClick={() => openLightbox(index)}
             >
-              <img
+              <SmartImage
                 src={image.src}
                 alt={image.alt}
                 className="w-full h-auto object-cover transition-transform duration-300 group-hover:scale-105"
@@ -152,7 +153,7 @@ export default function ImageGallery({ images }: ImageGalleryProps) {
 
             {/* Main Image */}
             <div className="relative">
-              <img
+              <SmartImage
                 src={filteredImages[currentImageIndex].src}
                 alt={filteredImages[currentImageIndex].alt}
                 className="max-w-full max-h-[85vh] object-contain rounded-lg"

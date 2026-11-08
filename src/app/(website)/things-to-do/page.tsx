@@ -2,7 +2,7 @@
 
 
 import Link from 'next/link'
-import Image from 'next/image'
+import SmartImage from '@/components/SmartImage'
 import TideTimes from '@/components/TideTimes'
 import WeatherWidget from '@/components/WeatherWidget'
 import { getPageData } from '@/lib/outstatic'
@@ -119,7 +119,7 @@ export default function ThingsToDoPage() {
       <section className="relative h-64 bg-ship-green-600 flex items-center justify-center overflow-hidden">
         {heroImage && (
           <>
-            <Image
+            <SmartImage
               src={heroImage}
               alt={heroAlt}
               fill
@@ -179,7 +179,7 @@ export default function ThingsToDoPage() {
                   <div key={idx} className="bg-white rounded-lg shadow-lg overflow-hidden ship-card-hover group">
                     <div className="h-48 relative overflow-hidden bg-ship-green-200">
                       {item.image ? (
-                        <Image
+                        <SmartImage
                           src={item.image}
                           alt={item.name}
                           fill
@@ -231,7 +231,7 @@ export default function ThingsToDoPage() {
                 </div>
               </div>
               <div className="mt-8">
-                <img 
+                <SmartImage 
                   src="/images/porlock-weir-harbour.webp" 
                   alt="Porlock Weir Harbour"
                   className="h-64 w-full object-cover rounded-lg"

@@ -1,5 +1,5 @@
 import ContactForm from '@/components/ContactForm'
-import Image from 'next/image'
+import SmartImage from '@/components/SmartImage'
 import { getPageData } from '@/lib/outstatic'
 import {
   TrackedPhoneLink,
@@ -29,7 +29,7 @@ export default function ContactPage() {
     <div className="min-h-screen">
       {/* Hero Section */}
       <section className="relative h-64 bg-ship-blue-600 flex items-center justify-center overflow-hidden">
-        <Image
+        <SmartImage
           src={heroImage}
           alt={heroAlt}
           fill
@@ -173,7 +173,7 @@ export default function ContactPage() {
             {/* Contact Form */}
             <div className="bg-white p-6 sm:p-8 rounded-3xl border border-gray-100 shadow-xl shadow-slate-100">
               <div className="mb-6 overflow-hidden rounded-2xl">
-                <img
+                <SmartImage
                   src={heroImage}
                   alt={heroAlt}
                   className="w-full h-48 object-cover rounded-2xl shadow-inner transform hover:scale-102 transition-transform duration-500"

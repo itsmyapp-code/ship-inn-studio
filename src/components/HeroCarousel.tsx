@@ -1,7 +1,7 @@
 'use client'
 
 import React, { useState, useEffect, useCallback } from 'react'
-import Image from 'next/image'
+import SmartImage from '@/components/SmartImage'
 
 interface HeroCarouselProps {
   images: string[]
@@ -41,12 +41,11 @@ export default function HeroCarousel({ images, alt }: HeroCarouselProps) {
   if (validImages.length === 0) {
     return (
       <div className="absolute inset-0 hero-ken-burns">
-        <Image
+        <SmartImage
           src="/images/shipinn-011.webp"
           alt={alt}
-          fill
-          priority
-          className="object-cover"
+          fetchPriority="high"
+          className="w-full h-full object-cover"
         />
       </div>
     )
@@ -71,12 +70,12 @@ export default function HeroCarousel({ images, alt }: HeroCarouselProps) {
               animationDirection: index % 2 === 0 ? 'normal' : 'reverse',
             }}
           >
-            <Image
+            <SmartImage
               src={src}
               alt={`${alt} - View ${index + 1}`}
-              fill
-              priority={index === 0}
-              className="object-cover hero-crop-mobile"
+              loading={index === 0 ? 'eager' : 'lazy'}
+              fetchPriority={index === 0 ? 'high' : 'auto'}
+              className="w-full h-full object-cover hero-crop-mobile"
             />
           </div>
         </div>

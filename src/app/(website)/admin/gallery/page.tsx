@@ -2,6 +2,7 @@
 
 import React, { useState, useEffect, useRef } from 'react'
 import Link from 'next/link'
+import SmartImage from '@/components/SmartImage'
 
 interface GalleryItem {
   slug: string
@@ -704,7 +705,7 @@ export default function AdminGalleryPage() {
                 <div key={item.slug} className="group bg-gray-50 border border-gray-200 rounded-xl overflow-hidden flex flex-col shadow-xs hover:shadow-md transition-shadow">
                   <div className="relative h-44 bg-gray-200 overflow-hidden">
                     {item.coverImage ? (
-                      <img
+                      <SmartImage
                         src={item.coverImage.replace(/^\/+/, '/')}
                         alt={item.title}
                         className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"

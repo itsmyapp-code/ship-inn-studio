@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>The Ship Inn Porlock Weir: Complete Website Management Guide</title>
+    <title>The Ship Inn Porlock Weir — Website &amp; Content Management Guide (v3.0)</title>
     <style>
         :root {
             --primary: #1e3a8a;
@@ -48,7 +48,7 @@
         }
         .tagline {
             color: #64748b;
-            font-size: 1.1em;
+            font-size: 1.05em;
             margin: 0;
         }
         h2 {
@@ -125,6 +125,14 @@
         .note strong {
             color: #92400e;
         }
+        .success-box {
+            background: #ecfdf5;
+            border: 1px solid #a7f3d0;
+            border-left: 5px solid var(--success);
+            padding: 18px 22px;
+            border-radius: 6px;
+            margin: 20px 0;
+        }
         .badge {
             display: inline-block;
             background: #dbeafe;
@@ -175,59 +183,63 @@
 
 <div class="container">
     <div class="header">
-        <img src="/images/the_ship_inn2.webp" alt="The Ship Inn Logo" class="logo">
-        <h1>Website Management Guide</h1>
-        <p class="tagline">The Ship Inn Porlock Weir &bull; Admin Tools &amp; Outstatic CMS</p>
+        <picture>
+            <source srcset="/images/the_ship_inn2.avif" type="image/avif">
+            <source srcset="/images/the_ship_inn2.webp" type="image/webp">
+            <img src="/images/the_ship_inn2.webp" alt="The Ship Inn Logo" class="logo">
+        </picture>
+        <h1>The Ship Inn Porlock Weir — Website &amp; Content Management Guide</h1>
+        <p class="tagline"><strong>System:</strong> Dedicated Admin Tools, Outstatic CMS, Automatic AVIF/WebP Optimization &amp; PWA &bull; <strong>Version 3.0 (8 November 2026)</strong></p>
     </div>
 
     <div class="content">
         <div class="highlight-box">
             <h3 style="margin-top: 0; color: #1e3a8a;">⚡ Fast Track: Which Tool to Use?</h3>
-            <p style="margin-bottom: 12px;">We have built dedicated 1-minute admin tools for the most frequent website tasks:</p>
-            <ul style="margin: 0; padding-left: 20px; line-height: 1.8;">
-                <li><strong>To Upload or Update PDF Menus:</strong> Use the <a href="https://theshipinnporlockweir.co.uk/admin/menus" target="_blank"><strong>Menu Manager (/admin/menus)</strong></a></li>
-                <li><strong>To Add or Remove Gallery Photos:</strong> Use the <a href="https://theshipinnporlockweir.co.uk/admin/gallery" target="_blank"><strong>Gallery Manager (/admin/gallery)</strong></a></li>
-                <li><strong>To Edit Page Text, Hours, Contact Info, News, or Events:</strong> Use the <a href="https://theshipinnporlockweir.co.uk/outstatic" target="_blank"><strong>Outstatic CMS (/outstatic)</strong></a></li>
+            <ul style="margin: 0; padding-left: 20px; line-height: 1.9;">
+                <li><strong>To Upload or Update PDF Menus:</strong> Use the <strong>Menu Manager</strong> &mdash; <a href="https://theshipinnporlockweir.co.uk/admin/menus" target="_blank">https://theshipinnporlockweir.co.uk/admin/menus</a></li>
+                <li><strong>To Add or Remove Gallery Photos:</strong> Use the <strong>Gallery Manager</strong> &mdash; <a href="https://theshipinnporlockweir.co.uk/admin/gallery" target="_blank">https://theshipinnporlockweir.co.uk/admin/gallery</a></li>
+                <li><strong>To Edit Page Text, Hours, Contact Info, News, or Events:</strong> Use <strong>Outstatic CMS</strong> &mdash; <a href="https://theshipinnporlockweir.co.uk/outstatic" target="_blank">https://theshipinnporlockweir.co.uk/outstatic</a></li>
             </ul>
         </div>
 
         <h2>1. Dedicated Fast Admin Tools (1-Minute Updates)</h2>
 
         <h3>1.1 Menu Manager &amp; PDF Uploader</h3>
-        <p>Use this tool whenever you have a new season or updated menu PDF.</p>
+        <p>Use this dedicated tool whenever you have a new season or updated menu PDF:</p>
         <div class="step-box">
             <ol>
-                <li>Open your browser and visit: <strong><a href="https://theshipinnporlockweir.co.uk/admin/menus" target="_blank">theshipinnporlockweir.co.uk/admin/menus</a></strong></li>
+                <li>Open your browser and go to: <strong><a href="https://theshipinnporlockweir.co.uk/admin/menus" target="_blank">https://theshipinnporlockweir.co.uk/admin/menus</a></strong></li>
                 <li>Click the menu you want to update (<strong>Breakfast Menu</strong>, <strong>Lunch Menu</strong>, <strong>Evening Menu</strong>, <strong>Sunday Lunch Menu</strong>, or <strong>Custom Menu</strong>).</li>
-                <li>Enter the <strong>Season / Subtitle</strong> (e.g., <code>Autumn 2026</code> or <code>Served 12:00 PM – 3:00 PM</code>).</li>
-                <li>Click <strong>"Browse PDF file"</strong> and pick your <code>.pdf</code> document.</li>
-                <li>Click <strong>"Upload &amp; Publish Menu"</strong>. The website and Outstatic CMS will update automatically in 1–2 minutes!</li>
+                <li>Enter the <strong>Season / Subtitle</strong> (e.g. <code>Autumn/Winter 2026</code> or <code>Served 12:00 PM - 3:00 PM</code>).</li>
+                <li>Click <strong>"Browse PDF file"</strong> and choose your <code>.pdf</code> file.</li>
+                <li>Click <strong>"Upload &amp; Publish Menu"</strong>. The live website and Outstatic update automatically in 1–2 minutes!</li>
             </ol>
         </div>
 
-        <h3>1.2 Gallery Manager &amp; Photo Uploader</h3>
-        <p>Use this tool to add new photos to the website gallery or remove old ones without manual file coding.</p>
+        <h3>1.2 Gallery Manager &amp; Photo Uploader (with Auto-AVIF &amp; WebP Conversion)</h3>
+        <p>Use this dedicated tool to upload new photos to the gallery or delete old ones without having to manually resize images or copy file links:</p>
         <div class="step-box">
             <ol>
-                <li>Open your browser and visit: <strong><a href="https://theshipinnporlockweir.co.uk/admin/gallery" target="_blank">theshipinnporlockweir.co.uk/admin/gallery</a></strong></li>
-                <li>Choose your mode:
+                <li>Open your browser and go to: <strong><a href="https://theshipinnporlockweir.co.uk/admin/gallery" target="_blank">https://theshipinnporlockweir.co.uk/admin/gallery</a></strong></li>
+                <li>Choose your upload mode:
                     <ul>
-                        <li><strong>Single Photo Upload:</strong> Add a photo with a title and optional caption.</li>
-                        <li><strong>Batch Upload:</strong> Drop 3–10 photos at once into a chosen category.</li>
+                        <li><strong>Single Photo Upload:</strong> Add an individual photo with a custom title and caption.</li>
+                        <li><strong>Batch Upload:</strong> Upload multiple photos (3–10+ at once) into a chosen category.</li>
                     </ul>
                 </li>
-                <li>Click your target category (🍽️ <strong>Food &amp; Drink</strong>, 🪵 <strong>Interior &amp; Bar</strong>, 🏡 <strong>Exterior &amp; Garden</strong>, 🛏️ <strong>Rooms &amp; Cabins</strong>, 🌿 <strong>Surroundings</strong>, or <strong>Custom</strong>).</li>
-                <li>Click <strong>"Browse Image"</strong> to pick your photo (supports WebP, JPG, PNG, AVIF) and check the instant preview thumbnail.</li>
-                <li>Enter a <strong>Photo Title</strong> and optional <strong>Caption</strong>.</li>
-                <li>Click <strong>"Upload &amp; Publish Image"</strong>. The photo is published and synchronized with Outstatic immediately!</li>
+                <li>Click the matching category button (🍽️ <strong>Food &amp; Drink</strong>, 🪵 <strong>Interior &amp; Bar</strong>, 🏡 <strong>Exterior &amp; Garden</strong>, 🛏️ <strong>Rooms &amp; Cabins</strong>, 🌿 <strong>Surroundings &amp; Exmoor</strong>, or ✏️ <strong>Custom</strong>).</li>
+                <li>Click <strong>"Browse Image"</strong> to select your photo (supports <code>.jpg</code>, <code>.jpeg</code>, <code>.png</code>, <code>.webp</code>, <code>.avif</code>, <code>.jfif</code>, <code>.gif</code> up to 20MB) and verify the instant preview thumbnail.</li>
+                <li>Enter a descriptive <strong>Photo Title / Alt Text</strong> and optional <strong>Caption</strong>.</li>
+                <li>Click <strong>"Upload &amp; Publish Image"</strong>. Your photo is <strong>automatically converted into both <code>.avif</code> and <code>.webp</code></strong>, published live, and synced with Outstatic CMS!</li>
+                <li><strong>Deleting or Editing Existing Photos:</strong> Scroll down to the <strong>Current Gallery Photos</strong> grid at the bottom of <code>/admin/gallery</code> to filter by category, click <strong>🗑️ Delete</strong> to remove a photo immediately, or click <strong>✏️ Edit in Outstatic</strong>.</li>
             </ol>
         </div>
 
         <h2>2. How to Log In to Outstatic CMS</h2>
-        <p>Use Outstatic CMS when you need to edit written text across pages, change opening hours, post news stories, or add live events.</p>
+        <p>Use Outstatic CMS when you need to edit written text across website pages, change opening hours, post news stories, or add events:</p>
         <div class="step-box">
             <ol>
-                <li>Go to: <strong><a href="https://theshipinnporlockweir.co.uk/outstatic" target="_blank">theshipinnporlockweir.co.uk/outstatic</a></strong></li>
+                <li>In your browser, go to: <strong><a href="https://theshipinnporlockweir.co.uk/outstatic" target="_blank">https://theshipinnporlockweir.co.uk/outstatic</a></strong></li>
                 <li>Click <strong>"Sign in with GitHub"</strong>.</li>
                 <li>Enter Username: <code>hello@theshipinnporlockweir.co.uk</code> and Password: <code>theshipinnta248pb!</code></li>
                 <li>If prompted on screen, click <strong>"Authorize"</strong>.</li>
@@ -235,41 +247,41 @@
         </div>
 
         <h2>3. Understanding the Outstatic Dashboard</h2>
-        <p>The <strong>left sidebar</strong> provides access to all content sections:</p>
+        <p>The <strong>left sidebar</strong> of your Outstatic dashboard provides access to all content sections:</p>
         <ul>
-            <li><strong>Pages</strong> — Controls text and banners on core website pages (Home, Food &amp; Drink, Contact, Rooms, etc.).</li>
-            <li><strong>Menus</strong> — Shows your uploaded menus (where you can toggle Draft/Published to temporarily hide a menu).</li>
-            <li><strong>Gallery</strong> — Shows your gallery photo collection (where you can edit captions or toggle Draft/Published).</li>
-            <li><strong>Events</strong> — Add upcoming live music, pub quizzes, and seasonal celebrations.</li>
-            <li><strong>News</strong> — Post articles and announcements.</li>
-            <li><strong>Media Library</strong> — Central repository for all images used on website pages.</li>
+            <li><strong>Pages:</strong> Controls text and banners on core website pages (Home, Food &amp; Drink, Contact, Rooms, Things to Do, Gallery, News &amp; Events).</li>
+            <li><strong>Menus:</strong> Shows all uploaded menus (where you can toggle Draft/Published to temporarily hide a menu).</li>
+            <li><strong>Gallery:</strong> Shows your photo collection (where you can edit captions or toggle Draft/Published).</li>
+            <li><strong>Events:</strong> Add upcoming live music, pub quizzes, and seasonal celebrations.</li>
+            <li><strong>News:</strong> Post articles and announcements.</li>
+            <li><strong>Media Library:</strong> Central repository for all images used on website pages.</li>
         </ul>
 
-        <h2>4. How to Edit and Save Any Page</h2>
+        <h2>4. How to Edit and Save Any Page in Outstatic</h2>
         <div class="step-box">
             <ol>
-                <li>In the left sidebar, click <strong>Pages</strong>, then click the page you want to edit.</li>
-                <li><strong>Ignore the large centre text editor for Pages</strong> (it is not used on the live layout).</li>
-                <li>Scroll down the <strong>Right Sidebar</strong> to find all the customizable fields that control the website layout.</li>
-                <li>If a field shows <strong>+ Create</strong>, click it to open the input box, then type your updated text.</li>
-                <li>Ensure <strong>Status</strong> is set to <strong>"Published"</strong>.</li>
-                <li>Click the black <strong>Save</strong> button (top-right). Changes go live within 1–2 minutes!</li>
+                <li>In the left sidebar, click <strong>Pages</strong>, then click the page you want to update.</li>
+                <li>Focus on the <strong>Right Sidebar</strong> fields. <em>(The large centre editor is not used for page layouts).</em></li>
+                <li>If a field shows <strong>"+ Create"</strong>, click it to open the text input box.</li>
+                <li>Ensure <strong>Status</strong> is set to <strong>"Published"</strong> (not Draft).</li>
+                <li>Click the black <strong>"Save"</strong> button in the top-right corner.</li>
+                <li>Wait 1–2 minutes, then refresh your live website to see changes.</li>
             </ol>
         </div>
 
         <h2>5. Page-by-Page Field Reference</h2>
 
-        <h3>🏠 The Homepage</h3>
+        <h3>🏠 The Homepage (<code>home</code>)</h3>
         <div class="step-box">
             <ul>
-                <li><strong>Hero Image One, Two, Three:</strong> The large rotating background photos behind the main welcome text at the top of the homepage.</li>
-                <li><strong>Strapline:</strong> The italic text directly below the logo (e.g. <em>"Historic charm meets modern comfort"</em>).</li>
-                <li><strong>Intro Paragraphs One through Five:</strong> The core welcoming text in the middle section of the page.</li>
-                <li><strong>Feature One, Two, Three:</strong> The three promo cards at the bottom (Accommodation, Pub &amp; Restaurant, Location).</li>
+                <li><strong>Hero Image One, Two, Three:</strong> Giant rotating background photos behind the main welcome text.</li>
+                <li><strong>Strapline:</strong> The subtitle text directly below the logo (<em>"Historic charm meets modern comfort"</em>).</li>
+                <li><strong>Intro Paragraphs 1 to 5:</strong> The core welcoming text in the middle section of the home page.</li>
+                <li><strong>Feature Cards 1, 2, 3 (Title &amp; Desc):</strong> The three promotional cards at the bottom (Rooms, Pub &amp; Restaurant, Location).</li>
             </ul>
         </div>
 
-        <h3>🍷 The Food &amp; Drink Page</h3>
+        <h3>🍷 Food &amp; Drink Page (<code>food-drink</code>)</h3>
         <table>
             <tr>
                 <th>What you see on the website</th>
@@ -277,48 +289,76 @@
             </tr>
             <tr>
                 <td>Wide banner photo at the top</td>
-                <td>Cover Image (click to pick image from Media Library)</td>
+                <td><strong>Cover Image</strong> (click to choose from Media Library)</td>
             </tr>
             <tr>
                 <td>Left column introductory text</td>
-                <td>Food &amp; Drink Intro Para One</td>
+                <td><strong>Food &amp; Drink Intro One</strong> &amp; <strong>Food &amp; Drink Intro Two</strong></td>
             </tr>
             <tr>
-                <td>Lagers, Ciders, and Ales beer lists</td>
-                <td>Lagers List, Ciders List, Ales List</td>
+                <td>Lagers, Ciders, Ales beer lists</td>
+                <td><strong>Lagers</strong>, <strong>Ciders</strong>, <strong>Ales</strong> (comma-separated lists)</td>
             </tr>
             <tr>
                 <td>Breakfast serving details</td>
-                <td>Breakfast Description &amp; Times</td>
+                <td><strong>Breakfast Description</strong> &amp; <strong>Breakfast Times</strong></td>
             </tr>
             <tr>
                 <td>Downloadable PDF Menus</td>
-                <td>Managed automatically via <a href="https://theshipinnporlockweir.co.uk/admin/menus" target="_blank">/admin/menus</a></td>
+                <td>Managed via <a href="https://theshipinnporlockweir.co.uk/admin/menus" target="_blank">https://theshipinnporlockweir.co.uk/admin/menus</a></td>
             </tr>
         </table>
 
-        <h3>📞 Contact Page (Global Information)</h3>
-        <p><strong>Editing the Contact page updates contact details across the ENTIRE website</strong> (Footer, Header, Booking sections, Legal pages):</p>
+        <h3>📞 Contact Page (<code>contact</code> — Global Information)</h3>
+        <p><strong>Note:</strong> Editing the Contact page automatically updates contact details across the <strong>ENTIRE site</strong> (Footer, Header, Booking CTAs, Legal pages):</p>
         <table>
             <tr>
                 <th>What you see on the website</th>
                 <th>Field to edit in Outstatic (Right Sidebar)</th>
             </tr>
             <tr>
-                <td>Phone number &amp; Email address (everywhere)</td>
-                <td>Phone Number, Email Address</td>
+                <td>Phone &amp; Email everywhere</td>
+                <td><strong>Phone Number</strong>, <strong>Email Address</strong></td>
             </tr>
             <tr>
-                <td>Street address in Footer</td>
-                <td>Address Line One, Two, Town, Postcode</td>
+                <td>Address in Footer &amp; Contact Page</td>
+                <td><strong>Address Line One</strong>, <strong>Two</strong>, <strong>Town</strong>, <strong>Postcode</strong></td>
             </tr>
             <tr>
                 <td>Daily opening hours</td>
-                <td>Opening Hours (Monday - Sunday)</td>
+                <td><strong>Opening Hours (Monday - Sunday)</strong></td>
             </tr>
             <tr>
-                <td>Food serving hours in Footer</td>
-                <td>Kitchen Close Info</td>
+                <td>Food serving times in Footer &amp; Contact</td>
+                <td><strong>Kitchen Close Info</strong></td>
+            </tr>
+            <tr>
+                <td>Resident breakfast times &amp; seasonal notes</td>
+                <td><strong>Breakfast Times</strong>, <strong>Seasonal Note</strong></td>
+            </tr>
+        </table>
+
+        <h3>🛏️ Other Core Pages (<code>rooms</code>, <code>things-to-do</code>, <code>gallery</code>, <code>news-events</code>)</h3>
+        <table>
+            <tr>
+                <th>Page</th>
+                <th>Fields to edit in Outstatic (Right Sidebar)</th>
+            </tr>
+            <tr>
+                <td><strong>From the Cabins (<code>rooms</code>)</strong></td>
+                <td><strong>Cover Image</strong> (top hero banner) &amp; <strong>Hero Alt</strong></td>
+            </tr>
+            <tr>
+                <td><strong>Things to Do (<code>things-to-do</code>)</strong></td>
+                <td><strong>Cover Image</strong> (top hero banner) &amp; <strong>Hero Alt</strong></td>
+            </tr>
+            <tr>
+                <td><strong>Gallery (<code>gallery</code>)</strong></td>
+                <td><strong>Cover Image</strong> (top hero banner) &amp; <strong>Hero Alt</strong> (photos managed via <code>/admin/gallery</code>)</td>
+            </tr>
+            <tr>
+                <td><strong>News &amp; Events (<code>news-events</code>)</strong></td>
+                <td><strong>Cover Image</strong> (top hero banner) &amp; <strong>Hero Alt</strong></td>
             </tr>
         </table>
 
@@ -326,14 +366,41 @@
         <div class="step-box">
             <ol>
                 <li>Click <strong>Events</strong> or <strong>News</strong> in the left sidebar of Outstatic.</li>
-                <li>Click the black <strong>"New"</strong> button (top right).</li>
-                <li><strong>In the centre screen:</strong> Type your headline in the <strong>Title</strong> box, then write the story or event description below it.</li>
-                <li><strong>In the right sidebar:</strong> Pick the Date, add a Cover Image, and enter a short Description.</li>
-                <li>Change <strong>Status</strong> to <strong>"Published"</strong> and click <strong>Save</strong>.</li>
+                <li>Click the black <strong>"New"</strong> button in the top right.</li>
+                <li><strong>In the centre screen:</strong> Type your headline in the <strong>Title</strong> box and write your story or event description below it.</li>
+                <li><strong>In the right sidebar:</strong>
+                    <ul>
+                        <li><strong>For Events:</strong> Fill in <strong>eventDate</strong> (e.g. <code>2026-12-31</code>), <strong>eventTime</strong> (e.g. <code>8:00 PM</code>), <strong>location</strong> (e.g. <code>The Ship Inn Bar</code>), upload an image under <strong>Upload image</strong> (or Cover Image), and add a short <strong>Description</strong>. <em>(Note: Past events automatically hide from the website once their date has passed!)</em></li>
+                        <li><strong>For News:</strong> Select the <strong>Published At</strong> date, upload a <strong>Cover Image</strong>, and enter a short <strong>Description</strong>.</li>
+                    </ul>
+                </li>
+                <li>Set <strong>Status</strong> to <strong>"Published"</strong> and click <strong>Save</strong>.</li>
             </ol>
         </div>
 
-        <h2>7. Summary: Which Tool Should I Use?</h2>
+        <h2>7. Automatic Image Optimization (<code>.avif</code> &amp; <code>.webp</code>) — How It Works</h2>
+        <div class="success-box">
+            <h3 style="margin-top: 0; color: #065f46;">✨ Every Photo Uploaded Is Automatically Optimized</h3>
+            <p style="margin-bottom: 10px;">You never need to convert or compress photos before uploading them to the website:</p>
+            <ul style="margin: 0; padding-left: 20px;">
+                <li><strong>Via the Gallery Manager (<code>/admin/gallery</code>):</strong> When you upload any <code>.jpg</code>, <code>.png</code>, or <code>.webp</code> photo, the server automatically resizes it (max 2000px width) and generates both an ultra-fast <strong><code>.avif</code></strong> version and a <strong><code>.webp</code></strong> fallback version.</li>
+                <li><strong>Via Outstatic CMS (<code>/outstatic</code>):</strong> When you choose a <code>.jpg</code> or <code>.png</code> image inside Outstatic, it is automatically converted in your browser to <strong><code>.webp</code></strong> before saving, and the website build automatically creates its matching <strong><code>.avif</code></strong> version.</li>
+                <li><strong>On the Live Website:</strong> Every image on the site uses a smart <code>&lt;picture&gt;</code> tag that serves <code>.avif</code> first with a automatic <code>.webp</code> fallback for older browsers.</li>
+            </ul>
+        </div>
+
+        <h2>8. Progressive Web App (PWA) &amp; Offline Coastal Mode</h2>
+        <div class="step-box">
+            <p style="margin-top: 0;">The Ship Inn website is a full <strong>Progressive Web App (PWA)</strong> designed for visitors exploring Porlock Weir and the Exmoor coast:</p>
+            <ul>
+                <li><strong>Installable on Any Phone or Computer:</strong> Visitors can tap <strong>"Add to Home Screen"</strong> (iPhone/iPad Safari) or <strong>"Install App"</strong> (Android Chrome / Desktop) to install The Ship Inn with its own app icon.</li>
+                <li><strong>Quick-Action App Shortcuts:</strong> Long-pressing the installed app icon gives instant 1-tap shortcuts to <strong>Menus &amp; Dining</strong>, <strong>From the Cabins</strong>, and <strong>Contact &amp; Directions</strong>.</li>
+                <li><strong>Automatic Offline Caching:</strong> Once a visitor views your pages or opens your PDF menus, they are cached on their phone so they continue to work even if mobile signal drops along the coast path.</li>
+                <li><strong>Offline Coastal Fallback Card:</strong> If a visitor loses signal while trying to open an uncached page, a branded offline screen displays your telephone number (<strong>01643 863288</strong> with a 1-tap call button), address (<strong>Porlock Weir, TA24 8PB</strong>), and bar/food serving hours.</li>
+            </ul>
+        </div>
+
+        <h2>9. Summary: Which Tool Should I Use?</h2>
         <table>
             <tr>
                 <th>Task</th>
@@ -343,27 +410,32 @@
             <tr>
                 <td><strong>Upload a new PDF food menu</strong></td>
                 <td>Menu Manager</td>
-                <td><a href="https://theshipinnporlockweir.co.uk/admin/menus" target="_blank">/admin/menus</a></td>
+                <td><a href="https://theshipinnporlockweir.co.uk/admin/menus" target="_blank">https://theshipinnporlockweir.co.uk/admin/menus</a></td>
             </tr>
             <tr>
-                <td><strong>Add new photos to the gallery</strong></td>
-                <td>Gallery Manager</td>
-                <td><a href="https://theshipinnporlockweir.co.uk/admin/gallery" target="_blank">/admin/gallery</a></td>
+                <td><strong>Add or delete photos in the gallery</strong></td>
+                <td>Gallery Manager (auto-converts to AVIF/WebP)</td>
+                <td><a href="https://theshipinnporlockweir.co.uk/admin/gallery" target="_blank">https://theshipinnporlockweir.co.uk/admin/gallery</a></td>
             </tr>
             <tr>
                 <td><strong>Temporarily hide a menu or photo</strong></td>
-                <td>Outstatic (Switch to Draft)</td>
-                <td><a href="https://theshipinnporlockweir.co.uk/outstatic" target="_blank">/outstatic</a></td>
+                <td>Outstatic (Switch Status to Draft)</td>
+                <td><a href="https://theshipinnporlockweir.co.uk/outstatic" target="_blank">https://theshipinnporlockweir.co.uk/outstatic</a></td>
             </tr>
             <tr>
-                <td><strong>Update phone number, address, or hours</strong></td>
-                <td>Outstatic (Pages &rarr; Contact)</td>
-                <td><a href="https://theshipinnporlockweir.co.uk/outstatic" target="_blank">/outstatic</a></td>
+                <td><strong>Edit phone number, address, or hours</strong></td>
+                <td>Outstatic Pages (Contact)</td>
+                <td><a href="https://theshipinnporlockweir.co.uk/outstatic" target="_blank">https://theshipinnporlockweir.co.uk/outstatic</a></td>
             </tr>
             <tr>
-                <td><strong>Post a live music event or news story</strong></td>
-                <td>Outstatic (Events / News)</td>
-                <td><a href="https://theshipinnporlockweir.co.uk/outstatic" target="_blank">/outstatic</a></td>
+                <td><strong>Add an upcoming live music event</strong></td>
+                <td>Outstatic Events</td>
+                <td><a href="https://theshipinnporlockweir.co.uk/outstatic" target="_blank">https://theshipinnporlockweir.co.uk/outstatic</a></td>
+            </tr>
+            <tr>
+                <td><strong>Publish a news story or announcement</strong></td>
+                <td>Outstatic News</td>
+                <td><a href="https://theshipinnporlockweir.co.uk/outstatic" target="_blank">https://theshipinnporlockweir.co.uk/outstatic</a></td>
             </tr>
         </table>
 
@@ -371,14 +443,18 @@
 
     <div class="footer">
         <div class="footer-logo">
-            <img src="/images/itsmyapp_logo.png" alt="itsmyapp logo" style="height: 40px; object-fit: contain;">
+            <picture>
+                <source srcset="/images/itsmyapp_logo.avif" type="image/avif">
+                <source srcset="/images/itsmyapp_logo.webp" type="image/webp">
+                <img src="/images/itsmyapp_logo.webp" alt="itsmyapp logo" style="height: 40px; object-fit: contain;">
+            </picture>
         </div>
         <div class="footer-links">
             <a href="https://itsmyapp.co.uk" target="_blank">itsmyapp.co.uk</a>
             <a href="mailto:hello@itsmyapp.co.uk">hello@itsmyapp.co.uk</a>
         </div>
         <div class="footer-version">
-            Manual Version 2.0 &bull; Updated 23 September 2026
+            The Ship Inn, Porlock Weir &mdash; TA24 8PB &bull; Manual Version 3.0 &bull; Updated 8 November 2026
         </div>
     </div>
 </div>

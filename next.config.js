@@ -11,7 +11,7 @@ const nextConfig = {
         hostname: 'localhost',
       },
     ],
-    formats: ['image/webp', 'image/avif'],
+    formats: ['image/avif', 'image/webp'],
   },
   env: {
     OST_GITHUB_ID: process.env.OST_GITHUB_ID,

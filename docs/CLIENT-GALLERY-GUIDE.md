@@ -22,12 +22,12 @@ Use the dedicated **Gallery Manager** tool on your website:
    * 🌿 **Surroundings & Exmoor**
    * ✏️ **Custom Category** (enter any name you like)
 4. **Choose your Image File:**  
-   Click **"Browse Image"** (or drag & drop). Supports `.webp`, `.jpg`, `.jpeg`, `.png`, and `.avif`.
+   Click **"Browse Image"** (or drag & drop). Supports `.jpg`, `.jpeg`, `.png`, `.webp`, `.avif`, `.jfif`, and `.gif`. *(Every photo is automatically resized and converted into both `.avif` and `.webp` formats on upload—no manual conversion needed!)*
 5. **Enter Title & Optional Caption:**  
    * **Title / Alt Text:** (e.g., *“Fresh Local Crab Sandwich”* or *“Log Fireplace in the Bar”*).
    * **Caption:** (e.g., *“Served with homemade crisps and side salad”*).
 6. **Click "Upload & Publish Image":**  
-   The image is uploaded, synchronized with Outstatic CMS, and goes live on the website gallery!
+   The image is automatically converted to `.avif` and `.webp`, synchronized with Outstatic CMS, and goes live on the website gallery!
 
 ---
 

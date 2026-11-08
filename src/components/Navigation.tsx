@@ -2,6 +2,7 @@
 
 import Link from 'next/link'
 import { useState } from 'react'
+import SmartImage from '@/components/SmartImage'
 
 const navigation = [
   { name: 'From the Cabins', href: '/rooms' },
@@ -21,7 +22,7 @@ export default function Navigation() {
         <div className="flex justify-between items-center h-20">
           <div className="flex items-center">
             <Link href="/" className="flex items-center">
-              <img 
+              <SmartImage 
                 src="/images/the_ship_inn2.webp" 
                 alt="The Ship Inn Logo" 
                 className="h-16 w-auto mr-3"

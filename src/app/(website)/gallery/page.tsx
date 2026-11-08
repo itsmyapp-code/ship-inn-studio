@@ -1,6 +1,6 @@
 
 import ImageGallery from '@/components/ImageGallery'
-import Image from 'next/image'
+import SmartImage from '@/components/SmartImage'
 import { getPageData } from '@/lib/outstatic'
 import { getDocuments } from 'outstatic/server'
 
@@ -78,7 +78,7 @@ export default function GalleryPage() {
       <section className="relative h-64 bg-ship-green-600 flex items-center justify-center overflow-hidden">
         {heroImage && (
           <>
-            <Image
+            <SmartImage
               src={heroImage}
               alt={heroAlt}
               fill
@@ -102,8 +102,8 @@ export default function GalleryPage() {
             <p className="text-lg text-gray-600">Historic charm meets modern comfort</p>
           </div>
           <div className="relative">
-            <img
-              src="/images/Ship%20-new-thatch.jpg"
+            <SmartImage
+              src="/images/Ship%20-new-thatch.webp"
               alt="The Ship Inn Porlock Weir"
               className="w-full h-96 object-cover rounded-lg mb-8"
             />

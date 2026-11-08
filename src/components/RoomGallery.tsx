@@ -1,7 +1,7 @@
 'use client'
 
 import { useState } from 'react'
-import Image from 'next/image'
+import SmartImage from '@/components/SmartImage'
 
 interface RoomImage {
   src: string
@@ -58,7 +58,7 @@ export default function RoomGallery({ images, roomName }: RoomGalleryProps) {
           className="relative h-64 cursor-pointer group overflow-hidden rounded-lg"
           onClick={() => openLightbox(0)}
         >
-          <img
+          <SmartImage
             src={images[0].src}
             alt={images[0].alt}
             className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
@@ -79,7 +79,7 @@ export default function RoomGallery({ images, roomName }: RoomGalleryProps) {
                 className="relative h-16 cursor-pointer group overflow-hidden rounded"
                 onClick={() => openLightbox(index + 1)}
               >
-                <img
+                <SmartImage
                   src={image.src}
                   alt={image.alt}
                   className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
@@ -117,7 +117,7 @@ export default function RoomGallery({ images, roomName }: RoomGalleryProps) {
 
             {/* Main Image */}
             <div className="relative">
-              <img
+              <SmartImage
                 src={images[currentImageIndex].src}
                 alt={images[currentImageIndex].alt}
                 className="max-w-full max-h-[80vh] object-contain rounded-lg"
