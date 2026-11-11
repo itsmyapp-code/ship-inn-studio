@@ -1,5 +1,11 @@
 [
   {
+    "id": "blob-test",
+    "type": "news",
+    "title": "Blob Test",
+    "videoUrl": "blob:https://www.theshipinnporlockweir.co.uk/abcd-1234"
+  },
+  {
     "id": "shanties-nov-2026",
     "type": "event",
     "title": "Live Sea Shanties & Fireside Pints",
