@@ -115,9 +115,10 @@ export function getTestimonials(filter?: {
 export async function writeTestimonials(
   testimonials: Testimonial[],
   commitMessage = 'chore(testimonials): update testimonials data'
-): Promise<{ savedLocally: boolean; githubCommitted: boolean }> {
+): Promise<{ savedLocally: boolean; githubCommitted: boolean; error?: string }> {
   let savedLocally = false
   let githubCommitted = false
+  let ghError: string | undefined
 
   const contentJson = JSON.stringify(testimonials, null, 2)
 
@@ -135,7 +136,9 @@ export async function writeTestimonials(
 
   // 2. Commit to GitHub (for Vercel serverless production persistence)
   const { token, owner, repo, branch } = await getGitHubConfig()
-  if (token) {
+  if (!token) {
+    ghError = 'No GitHub token configured on server or session cookie.'
+  } else {
     try {
       const filePath = 'content/testimonials.json'
       const apiUrl = `https://api.github.com/repos/${owner}/${repo}/contents/${filePath}`
@@ -176,12 +179,14 @@ export async function writeTestimonials(
       if (!putRes.ok) {
         const errJson = await putRes.json().catch(() => ({}))
         console.error('GitHub API error during commit:', putRes.status, errJson)
+        ghError = `GitHub error ${putRes.status}: ${errJson.message || putRes.statusText}`
       }
     } catch (ghErr) {
       console.error('Error committing testimonials.json to GitHub:', ghErr)
+      ghError = ghErr instanceof Error ? ghErr.message : 'Network error connecting to GitHub'
     }
   }
 
-  return { savedLocally, githubCommitted }
+  return { savedLocally, githubCommitted, error: ghError }
 }
 

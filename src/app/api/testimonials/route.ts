@@ -114,6 +114,7 @@ export async function POST(request: Request) {
         {
           success: false,
           error:
+            syncRes.error ||
             'Review saved in session, but could not commit live to GitHub. Please click "Setup GitHub Sync" in the top bar to connect your GitHub token.'
         },
         { status: 400 }

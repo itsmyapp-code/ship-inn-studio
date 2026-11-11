@@ -19,6 +19,7 @@ export async function GET() {
     matchingKeys,
     allEnvKeys: Object.keys(process.env).sort(),
     VERCEL_ENV: process.env.VERCEL_ENV,
+    VERCEL_PROJECT_NAME: process.env.VERCEL_PROJECT_NAME,
     VERCEL_GIT_COMMIT_REF: process.env.VERCEL_GIT_COMMIT_REF,
     OST_GITHUB_TOKEN: process.env.OST_GITHUB_TOKEN ? 'SET' : 'NOT SET',
     DST_GITHUB_TOKEN: process.env.DST_GITHUB_TOKEN ? 'SET' : 'NOT SET',
