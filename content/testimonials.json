@@ -1,15 +1,15 @@
 [
   {
-    "id": "test-1794409629473-0vqg",
-    "name": ";,,",
-    "location": ",,",
+    "id": "test-1794409662978-buz9",
+    "name": "Sarah and David Miller",
+    "location": "Bristol",
     "rating": 5,
-    "stayOrVisitDate": "p,p,",
-    "title": "p,p",
-    "content": "p,p",
-    "source": "google",
+    "stayOrVisitDate": "October 2026",
+    "title": "Charming coastal retreat",
+    "content": "We had an unforgettable weekend stay. The harbour views were breathtaking and the seafood chowder in the saloon was exceptional.",
+    "source": "direct_submission",
     "status": "published",
-    "createdAt": "2026-11-11T15:07:09.473Z",
+    "createdAt": "2026-11-11T15:07:42.978Z",
     "verifiedStay": true
   }
 ]
