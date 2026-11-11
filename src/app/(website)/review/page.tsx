@@ -2,6 +2,7 @@
 
 import React, { useState, useRef } from 'react'
 import Link from 'next/link'
+import SmartImage from '@/components/SmartImage'
 import { compressImage, CompressionResult } from '@/lib/imageCompressor'
 import { StayType } from '@/lib/testimonials-types'
 
@@ -16,6 +17,7 @@ export default function GuestReviewPortalPage() {
   const [rating, setRating] = useState<number>(5)
   const [hoverRating, setHoverRating] = useState<number>(0)
   const [stayType, setStayType] = useState<StayType>('Stay')
+  const [title, setTitle] = useState('')
   const [name, setName] = useState('')
   const [location, setLocation] = useState('')
   const [visitDate, setVisitDate] = useState('')
@@ -82,6 +84,11 @@ export default function GuestReviewPortalPage() {
       return
     }
 
+    if (!title.trim()) {
+      setSubmitError('Please enter a headline or title for your review.')
+      return
+    }
+
     if (reviewText.trim().length < 50) {
       setSubmitError(`Please write at least 50 characters (currently ${reviewText.trim().length} characters).`)
       return
@@ -91,6 +98,7 @@ export default function GuestReviewPortalPage() {
 
     try {
       const payload = {
+        title: title.trim(),
         name: name.trim(),
         location: location.trim() || undefined,
         rating,
@@ -123,62 +131,81 @@ export default function GuestReviewPortalPage() {
   }
 
   return (
-    <div className="min-h-screen bg-slate-900 text-slate-100 py-12 px-4 sm:px-6 lg:px-8">
+    <div className="min-h-screen bg-slate-50 text-slate-800 py-12 px-4 sm:px-6 lg:px-8">
       <div className="max-w-3xl mx-auto">
         {/* Navigation Breadcrumb */}
-        <div className="flex items-center justify-between mb-8 pb-4 border-b border-slate-800">
+        <div className="flex items-center justify-between mb-8 pb-4 border-b border-slate-200">
           <Link
             href="/"
-            className="text-xs uppercase tracking-widest font-bold text-amber-400 hover:text-amber-300 transition flex items-center gap-1.5"
+            className="text-xs uppercase tracking-widest font-bold text-amber-800 hover:text-amber-900 transition flex items-center gap-1.5"
           >
             ← Back to The Ship Inn
           </Link>
           <Link
             href="/reviews"
-            className="text-xs text-slate-400 hover:text-white transition"
+            className="text-xs font-semibold text-slate-500 hover:text-slate-900 transition"
           >
             Read all guest reviews ↗
           </Link>
         </div>
 
-        {/* Header */}
+        {/* Header with Proper The Ship Inn Logo */}
         <div className="text-center mb-10">
-          <div className="w-16 h-16 bg-amber-400/10 text-amber-400 border border-amber-400/30 rounded-2xl flex items-center justify-center text-3xl mx-auto mb-4 shadow-lg shadow-amber-500/10">
-            ⚓
+          <div className="w-24 h-24 bg-white rounded-full p-2.5 mx-auto mb-4 shadow-md border border-slate-200/80 flex items-center justify-center overflow-hidden">
+            <SmartImage
+              src="/images/the_ship_inn2.webp"
+              alt="The Ship Inn Logo"
+              width={96}
+              height={96}
+              priority
+              className="object-contain"
+            />
           </div>
-          <span className="text-xs font-bold uppercase tracking-widest text-amber-400 block mb-2">
+          <span className="text-xs font-bold uppercase tracking-widest text-amber-800 block mb-2">
             The Ship Inn • Porlock Weir
           </span>
-          <h1 className="text-3xl sm:text-5xl font-serif font-bold text-white tracking-tight">
+          <h1 className="text-3xl sm:text-5xl font-serif font-bold text-slate-900 tracking-tight">
             Share Your Experience
           </h1>
-          <p className="text-slate-400 text-sm sm:text-base mt-3 max-w-xl mx-auto leading-relaxed">
+          <p className="text-slate-600 text-sm sm:text-base mt-3 max-w-xl mx-auto leading-relaxed">
             Whether you joined us for fresh Exmoor seafood, rested in our historic cabins, or enjoyed a fireside pint by the harbour—we’d love to hear your story.
           </p>
         </div>
 
-        {/* Success State Notification */}
+        {/* Success State Notification (Warm Pub Aesthetic with Proper Logo) */}
         {submittedSuccess ? (
-          <div className="bg-slate-950 border border-emerald-500/40 rounded-3xl p-8 sm:p-12 text-center shadow-2xl animate-fade-in">
-            <div className="w-20 h-20 bg-emerald-500/20 text-emerald-400 rounded-full flex items-center justify-center text-4xl mx-auto mb-6 border border-emerald-500/40">
-              ✓
+          <div className="bg-white border border-amber-200 rounded-3xl p-8 sm:p-12 text-center shadow-xl">
+            {/* Circular Badge with The Ship Inn Logo */}
+            <div className="w-28 h-28 bg-amber-50/80 rounded-full p-3 mx-auto mb-6 shadow-md border-2 border-amber-300 flex items-center justify-center overflow-hidden">
+              <SmartImage
+                src="/images/the_ship_inn2.webp"
+                alt="The Ship Inn Porlock Weir"
+                width={100}
+                height={100}
+                className="object-contain"
+              />
             </div>
-            <h2 className="text-2xl sm:text-3xl font-serif font-bold text-white mb-3">
+
+            <div className="inline-flex items-center gap-1.5 bg-emerald-50 text-emerald-800 border border-emerald-200 text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wider mb-3">
+              <span>✓ Review Received</span>
+            </div>
+
+            <h2 className="text-2xl sm:text-3xl font-serif font-bold text-slate-900 mb-3">
               Thank You for Your Review!
             </h2>
-            <p className="text-slate-300 text-base max-w-lg mx-auto mb-8 leading-relaxed">
-              Your words mean the world to our small coastal team. Your review has been received and will be published live on our website shortly following moderation.
+            <p className="text-slate-600 text-base max-w-lg mx-auto mb-8 leading-relaxed">
+              Your words mean the world to our small coastal team. Your review has been received and will appear on our website shortly following moderation.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <Link
                 href="/reviews"
-                className="px-6 py-3.5 bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold rounded-xl text-sm transition shadow-lg shadow-amber-500/20"
+                className="px-6 py-3.5 bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold rounded-xl text-sm transition shadow-md shadow-amber-500/20"
               >
                 View Live Guest Reviews →
               </Link>
               <Link
                 href="/"
-                className="px-6 py-3.5 bg-slate-800 hover:bg-slate-700 text-white font-semibold rounded-xl text-sm transition"
+                className="px-6 py-3.5 bg-slate-100 hover:bg-slate-200 text-slate-800 font-semibold rounded-xl text-sm transition"
               >
                 Return to Homepage
               </Link>
@@ -187,11 +214,11 @@ export default function GuestReviewPortalPage() {
         ) : (
           <form
             onSubmit={handleSubmit}
-            className="bg-slate-950/90 border border-slate-800 rounded-3xl p-6 sm:p-10 shadow-2xl backdrop-blur-md space-y-8"
+            className="bg-white border border-slate-200 rounded-3xl p-6 sm:p-10 shadow-xl space-y-8"
           >
             {/* 1. Overall Star Rating */}
             <div>
-              <label className="block text-sm font-bold text-amber-400 uppercase tracking-wider mb-2">
+              <label className="block text-xs font-bold text-slate-800 uppercase tracking-wider mb-2">
                 1. Your Overall Rating *
               </label>
               <div className="flex items-center gap-2">
@@ -209,7 +236,7 @@ export default function GuestReviewPortalPage() {
                     >
                       <span
                         className={`text-4xl transition-colors ${
-                          active ? 'text-amber-400' : 'text-slate-700'
+                          active ? 'text-amber-400' : 'text-slate-300'
                         }`}
                       >
                         ★
@@ -217,7 +244,7 @@ export default function GuestReviewPortalPage() {
                     </button>
                   )
                 })}
-                <span className="text-sm font-semibold text-slate-400 ml-3">
+                <span className="text-sm font-semibold text-slate-600 ml-3">
                   {rating === 5
                     ? 'Exceptional (5/5)'
                     : rating === 4
@@ -233,7 +260,7 @@ export default function GuestReviewPortalPage() {
 
             {/* 2. Visit Category */}
             <div>
-              <label className="block text-sm font-bold text-amber-400 uppercase tracking-wider mb-2">
+              <label className="block text-xs font-bold text-slate-800 uppercase tracking-wider mb-2">
                 2. What was the main reason for your visit? *
               </label>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
@@ -246,13 +273,13 @@ export default function GuestReviewPortalPage() {
                       onClick={() => setStayType(cat.value)}
                       className={`text-left p-4 rounded-2xl border transition cursor-pointer flex items-start gap-3 ${
                         isSelected
-                          ? 'bg-amber-400/15 border-amber-400 text-white shadow-md shadow-amber-500/10'
-                          : 'bg-slate-900/60 border-slate-800 text-slate-400 hover:border-slate-700 hover:text-slate-200'
+                          ? 'bg-amber-50 border-amber-500 text-slate-900 shadow-sm ring-1 ring-amber-500/20'
+                          : 'bg-slate-50/60 border-slate-200 text-slate-600 hover:border-slate-300 hover:bg-slate-50 hover:text-slate-900'
                       }`}
                     >
                       <span className="text-2xl shrink-0">{cat.icon}</span>
                       <div>
-                        <div className={`font-bold text-sm ${isSelected ? 'text-amber-300' : 'text-slate-200'}`}>
+                        <div className={`font-bold text-sm ${isSelected ? 'text-amber-900' : 'text-slate-800'}`}>
                           {cat.label}
                         </div>
                         <div className="text-xs text-slate-500 mt-0.5">{cat.desc}</div>
@@ -266,7 +293,7 @@ export default function GuestReviewPortalPage() {
             {/* 3. Guest Details */}
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
               <div>
-                <label className="block text-xs font-bold text-slate-300 uppercase tracking-wider mb-1.5">
+                <label className="block text-xs font-bold text-slate-800 uppercase tracking-wider mb-1.5">
                   Your Name *
                 </label>
                 <input
@@ -275,12 +302,12 @@ export default function GuestReviewPortalPage() {
                   value={name}
                   onChange={(e) => setName(e.target.value)}
                   placeholder="e.g. David Miller"
-                  className="w-full px-4 py-3 bg-slate-900 border border-slate-800 rounded-xl text-white placeholder-slate-600 text-sm focus:outline-none focus:ring-2 focus:ring-amber-500"
+                  className="w-full px-4 py-3 bg-slate-50 border border-slate-300 rounded-xl text-slate-900 placeholder-slate-400 text-sm focus:outline-none focus:bg-white focus:ring-2 focus:ring-amber-500 transition"
                 />
               </div>
 
               <div>
-                <label className="block text-xs font-bold text-slate-300 uppercase tracking-wider mb-1.5">
+                <label className="block text-xs font-bold text-slate-800 uppercase tracking-wider mb-1.5">
                   Home Location (Optional)
                 </label>
                 <input
@@ -288,12 +315,12 @@ export default function GuestReviewPortalPage() {
                   value={location}
                   onChange={(e) => setLocation(e.target.value)}
                   placeholder="e.g. Bristol, UK"
-                  className="w-full px-4 py-3 bg-slate-900 border border-slate-800 rounded-xl text-white placeholder-slate-600 text-sm focus:outline-none focus:ring-2 focus:ring-amber-500"
+                  className="w-full px-4 py-3 bg-slate-50 border border-slate-300 rounded-xl text-slate-900 placeholder-slate-400 text-sm focus:outline-none focus:bg-white focus:ring-2 focus:ring-amber-500 transition"
                 />
               </div>
 
               <div>
-                <label className="block text-xs font-bold text-slate-300 uppercase tracking-wider mb-1.5">
+                <label className="block text-xs font-bold text-slate-800 uppercase tracking-wider mb-1.5">
                   When did you visit?
                 </label>
                 <input
@@ -301,20 +328,35 @@ export default function GuestReviewPortalPage() {
                   value={visitDate}
                   onChange={(e) => setVisitDate(e.target.value)}
                   placeholder="e.g. November 2026"
-                  className="w-full px-4 py-3 bg-slate-900 border border-slate-800 rounded-xl text-white placeholder-slate-600 text-sm focus:outline-none focus:ring-2 focus:ring-amber-500"
+                  className="w-full px-4 py-3 bg-slate-50 border border-slate-300 rounded-xl text-slate-900 placeholder-slate-400 text-sm focus:outline-none focus:bg-white focus:ring-2 focus:ring-amber-500 transition"
                 />
               </div>
             </div>
 
-            {/* 4. Review Comments (50 char min) */}
+            {/* 4. Review Title / Headline */}
+            <div>
+              <label className="block text-xs font-bold text-slate-800 uppercase tracking-wider mb-1.5">
+                Review Title / Headline *
+              </label>
+              <input
+                type="text"
+                required
+                value={title}
+                onChange={(e) => setTitle(e.target.value)}
+                placeholder="e.g. A proper, honest West Country pub escape"
+                className="w-full px-4 py-3 bg-slate-50 border border-slate-300 rounded-xl text-slate-900 placeholder-slate-400 text-sm font-medium focus:outline-none focus:bg-white focus:ring-2 focus:ring-amber-500 transition"
+              />
+            </div>
+
+            {/* 5. Review Comments (50 char min) */}
             <div>
               <div className="flex items-center justify-between mb-1.5">
-                <label className="text-xs font-bold text-slate-300 uppercase tracking-wider">
+                <label className="text-xs font-bold text-slate-800 uppercase tracking-wider">
                   Your Review * (Minimum 50 characters)
                 </label>
                 <span
-                  className={`text-xs font-mono ${
-                    reviewText.trim().length >= 50 ? 'text-emerald-400' : 'text-slate-500'
+                  className={`text-xs font-mono font-medium ${
+                    reviewText.trim().length >= 50 ? 'text-emerald-700' : 'text-slate-400'
                   }`}
                 >
                   {reviewText.trim().length} / 50 min
@@ -326,14 +368,14 @@ export default function GuestReviewPortalPage() {
                 value={reviewText}
                 onChange={(e) => setReviewText(e.target.value)}
                 placeholder="Tell us about the atmosphere, the food, your room, or the local Exmoor walking trails..."
-                className="w-full px-4 py-3 bg-slate-900 border border-slate-800 rounded-xl text-white placeholder-slate-600 text-sm focus:outline-none focus:ring-2 focus:ring-amber-500 leading-relaxed"
+                className="w-full px-4 py-3 bg-slate-50 border border-slate-300 rounded-xl text-slate-900 placeholder-slate-400 text-sm focus:outline-none focus:bg-white focus:ring-2 focus:ring-amber-500 leading-relaxed transition"
               ></textarea>
             </div>
 
-            {/* 5. In-Browser Optimized Photo Uploader */}
+            {/* 6. In-Browser Optimized Photo Uploader */}
             <div>
               <div className="flex items-center justify-between mb-2">
-                <label className="text-xs font-bold text-slate-300 uppercase tracking-wider">
+                <label className="text-xs font-bold text-slate-800 uppercase tracking-wider">
                   Guest Photos (Optional, Max 2)
                 </label>
                 <span className="text-[11px] text-slate-500">
@@ -347,21 +389,21 @@ export default function GuestReviewPortalPage() {
                   {compressedPhotos.map((photo, idx) => (
                     <div
                       key={idx}
-                      className="relative bg-slate-900 rounded-2xl overflow-hidden border border-slate-800 group shadow-lg"
+                      className="relative bg-slate-100 rounded-2xl overflow-hidden border border-slate-200 group shadow-md"
                     >
                       <img
                         src={photo.dataUrl}
                         alt={`Preview ${idx + 1}`}
                         className="w-full h-40 object-cover"
                       />
-                      <div className="absolute inset-0 bg-gradient-to-t from-slate-950/80 via-transparent to-transparent flex items-end justify-between p-3">
-                        <span className="text-[11px] font-mono bg-slate-900/80 backdrop-blur-xs px-2 py-0.5 rounded text-amber-300 border border-amber-400/20">
+                      <div className="absolute inset-0 bg-gradient-to-t from-slate-950/70 via-transparent to-transparent flex items-end justify-between p-3">
+                        <span className="text-[11px] font-mono bg-white/90 backdrop-blur-xs px-2 py-0.5 rounded text-slate-900 font-bold border border-slate-200">
                           {photo.sizeKB} KB (WebP)
                         </span>
                         <button
                           type="button"
                           onClick={() => handleRemovePhoto(idx)}
-                          className="bg-red-600/90 hover:bg-red-500 text-white rounded-full w-7 h-7 flex items-center justify-center text-xs transition cursor-pointer"
+                          className="bg-red-600 hover:bg-red-700 text-white rounded-full w-7 h-7 flex items-center justify-center text-xs transition cursor-pointer shadow"
                           title="Remove photo"
                         >
                           ✕
@@ -386,31 +428,31 @@ export default function GuestReviewPortalPage() {
                   />
                   <label
                     htmlFor="guest-photo-input"
-                    className={`block border-2 border-dashed border-slate-800 hover:border-amber-400/50 rounded-2xl p-6 text-center cursor-pointer transition bg-slate-900/40 hover:bg-slate-900/80 ${
+                    className={`block border-2 border-dashed border-slate-300 hover:border-amber-500 rounded-2xl p-6 text-center cursor-pointer transition bg-slate-50 hover:bg-amber-50/30 ${
                       isCompressing ? 'opacity-50 pointer-events-none' : ''
                     }`}
                   >
                     <div className="text-3xl mb-2">📸</div>
-                    <span className="text-sm font-semibold text-white block">
+                    <span className="text-sm font-semibold text-slate-800 block">
                       {isCompressing
                         ? 'Optimizing and compressing photos in browser...'
                         : 'Tap or drop up to 2 photos from your stay'}
                     </span>
                     <span className="text-xs text-slate-500 mt-1 block">
-                      JPEG, PNG, HEIC from iPhone or Android — automatically compressed to WebP
+                      JPEG, PNG, HEIC from iPhone or Android — automatically converted to WebP
                     </span>
                   </label>
                 </div>
               )}
 
               {compressionError && (
-                <p className="text-red-400 text-xs mt-2 font-medium">{compressionError}</p>
+                <p className="text-red-600 text-xs mt-2 font-medium">{compressionError}</p>
               )}
             </div>
 
             {/* Error Message */}
             {submitError && (
-              <div className="p-4 bg-red-950/50 border border-red-500/40 text-red-200 text-sm rounded-xl">
+              <div className="p-4 bg-red-50 border border-red-200 text-red-800 text-sm rounded-xl">
                 {submitError}
               </div>
             )}
@@ -419,9 +461,9 @@ export default function GuestReviewPortalPage() {
             <button
               type="submit"
               disabled={isSubmitting || isCompressing}
-              className={`w-full py-4 rounded-2xl font-bold text-base transition shadow-xl cursor-pointer flex items-center justify-center gap-2 ${
+              className={`w-full py-4 rounded-2xl font-bold text-base transition shadow-md cursor-pointer flex items-center justify-center gap-2 ${
                 isSubmitting
-                  ? 'bg-slate-800 text-slate-500 cursor-not-allowed'
+                  ? 'bg-slate-200 text-slate-500 cursor-not-allowed'
                   : 'bg-amber-500 hover:bg-amber-400 text-slate-950 shadow-amber-500/20 hover:shadow-amber-500/30'
               }`}
             >
@@ -440,4 +482,3 @@ export default function GuestReviewPortalPage() {
     </div>
   )
 }
-

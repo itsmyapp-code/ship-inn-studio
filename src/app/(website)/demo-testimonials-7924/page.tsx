@@ -22,11 +22,11 @@ export default async function PrivateTestimonialsDemoPage() {
   const testimonials = await getTestimonials({ status: 'published' })
 
   // Hero images for carousel — fix Outstatic's double-slash paths
-  const fixPath = (p: string) => p.replace(/^\/\//, '/')
+  const fixPath = (p: string) => p ? p.replace(/^\/\//, '/') : ''
   const heroImage1 = fixPath(pageData?.heroImageOne || '/images/Ship -new-thatch.webp')
-  const heroImage2 = fixPath(pageData?.heroImageTwo || '/images/IMG_4404.webp')
+  const heroImage2 = fixPath(pageData?.heroImageTwo || '')
   const heroImage3 = fixPath(pageData?.heroImageThree || '')
-  const heroImages = [heroImage1, heroImage2, heroImage3]
+  const heroImages = [heroImage1, heroImage2, heroImage3].filter(Boolean)
   
   const heroAlt = pageData?.heroAlt || 'The Ship Inn Exterior'
   const strapline = pageData?.strapline || 'Historic charm meets modern comfort'

@@ -13,6 +13,7 @@ export async function POST(request: Request) {
   try {
     const body = await request.json()
     const {
+      title,
       name,
       location,
       rating,
@@ -91,7 +92,7 @@ export async function POST(request: Request) {
       stayType: cleanStayType,
       stayOrVisitDate: visitDate ? visitDate.trim() : undefined,
       visitDate: visitDate ? visitDate.trim() : undefined,
-      title: `${cleanStayType} Experience`,
+      title: title && typeof title === 'string' && title.trim() ? title.trim() : `${cleanStayType} Experience`,
       content: cleanText,
       reviewText: cleanText,
       photos: savedPhotoPaths,
