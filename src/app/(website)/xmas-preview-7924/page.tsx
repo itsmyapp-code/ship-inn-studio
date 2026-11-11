@@ -18,8 +18,8 @@ export default function SecretChristmasHomePreviewPage() {
   const pageData = getPageData('home')
 
   const fixPath = (p: string) => p.replace(/^\/\//, '/')
-  const heroImage1 = fixPath(pageData?.heroImageOne || '/images/shipinn-011.webp')
-  const heroImage2 = fixPath(pageData?.heroImageTwo || '')
+  const heroImage1 = fixPath(pageData?.heroImageOne || '/images/Ship -new-thatch.webp')
+  const heroImage2 = fixPath(pageData?.heroImageTwo || '/images/IMG_4404.webp')
   const heroImage3 = fixPath(pageData?.heroImageThree || '')
   const heroImages = [heroImage1, heroImage2, heroImage3]
 

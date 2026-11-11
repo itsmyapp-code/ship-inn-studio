@@ -42,7 +42,7 @@ export default function HeroCarousel({ images, alt }: HeroCarouselProps) {
     return (
       <div className="absolute inset-0 hero-ken-burns">
         <SmartImage
-          src="/images/shipinn-011.webp"
+          src="/images/Ship -new-thatch.webp"
           alt={alt}
           fetchPriority="high"
           className="w-full h-full object-cover"
