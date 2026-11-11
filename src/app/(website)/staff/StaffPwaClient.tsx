@@ -52,9 +52,11 @@ export default function StaffPwaClient() {
 
   // Media state
   const [mediaType, setMediaType] = useState<'video' | 'photo' | 'social'>('video')
+  const [videoFile, setVideoFile] = useState<File | null>(null)
   const [videoFileUrl, setVideoFileUrl] = useState<string | null>(null)
   const [videoFileName, setVideoFileName] = useState<string | null>(null)
   const [videoFileSize, setVideoFileSize] = useState<string | null>(null)
+  const [isUploadingVideo, setIsUploadingVideo] = useState(false)
   const [isSilentMode, setIsSilentMode] = useState(true)
   const [photoDataUrl, setPhotoDataUrl] = useState<string | null>(null)
   const [socialLink, setSocialLink] = useState('')
@@ -133,6 +135,7 @@ export default function StaffPwaClient() {
       return
     }
 
+    setVideoFile(file)
     const blobUrl = URL.createObjectURL(file)
     setVideoFileUrl(blobUrl)
     setVideoFileName(file.name)
@@ -158,9 +161,33 @@ export default function StaffPwaClient() {
     }
   }
 
-  const handlePublish = (e: React.FormEvent) => {
+  const handlePublish = async (e: React.FormEvent) => {
     e.preventDefault()
     if (!title.trim()) return
+
+    let finalVideoUrl = videoFileUrl || undefined
+
+    // 1. If staff uploaded a real video file, upload it to Vercel Blob for a permanent CDN stream URL!
+    if (mediaType === 'video' && videoFile) {
+      setIsUploadingVideo(true)
+      try {
+        const uploadRes = await fetch(`/api/upload-video?filename=${encodeURIComponent(videoFile.name)}`, {
+          method: 'POST',
+          body: videoFile
+        })
+        const uploadData = await uploadRes.json()
+        if (uploadData.success && uploadData.url) {
+          finalVideoUrl = uploadData.url
+        } else {
+          console.warn('Vercel Blob notice:', uploadData.error)
+          // Continues with local preview url if token not yet added in Vercel
+        }
+      } catch (err) {
+        console.error('Video upload error:', err)
+      } finally {
+        setIsUploadingVideo(false)
+      }
+    }
 
     const newItem: PublishedItem = {
       id: `post-${Date.now()}`,
@@ -177,7 +204,7 @@ export default function StaffPwaClient() {
       coverImage: photoDataUrl || (mediaType === 'photo' ? '/images/Ship -new-thatch.webp' : undefined),
       videoUrl:
         mediaType === 'video'
-          ? videoFileUrl || undefined
+          ? finalVideoUrl
           : mediaType === 'social'
           ? socialLink.trim() || undefined
           : undefined,
@@ -190,7 +217,7 @@ export default function StaffPwaClient() {
     const updated = [newItem, ...publishedItems]
     setPublishedItems(updated)
 
-    // Save to shared demo database API
+    // Save to shared demo database API & commit to GitHub
     fetch('/api/demo-posh', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
@@ -203,6 +230,7 @@ export default function StaffPwaClient() {
     // Reset Form
     setTitle('')
     setExcerpt('')
+    setVideoFile(null)
     setVideoFileUrl(null)
     setVideoFileName(null)
     setPhotoDataUrl(null)
