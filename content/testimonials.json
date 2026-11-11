@@ -1,15 +1,15 @@
 [
   {
-    "id": "test-1794409744289-14s2",
-    "name": "Martin",
-    "location": "Dartmouth",
+    "id": "test-1794409662978-buz9",
+    "name": "Sarah and David Miller",
+    "location": "Bristol",
     "rating": 5,
-    "stayOrVisitDate": "1/1/2026",
-    "title": "Wow",
-    "content": "Testing of the System",
+    "stayOrVisitDate": "October 2026",
+    "title": "Charming coastal retreat",
+    "content": "We had an unforgettable weekend stay. The harbour views were breathtaking and the seafood chowder in the saloon was exceptional.",
     "source": "direct_submission",
-    "status": "pending",
-    "createdAt": "2026-11-11T15:09:04.289Z",
+    "status": "published",
+    "createdAt": "2026-11-11T15:07:42.978Z",
     "verifiedStay": true
   }
 ]
