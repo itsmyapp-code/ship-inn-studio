@@ -36,18 +36,6 @@
     "isPast": false
   },
   {
-    "id": "summer-beer-fest",
-    "type": "event",
-    "title": "Harbour Ale & Craft Cider Showcase",
-    "eventDate": "2026-08-15",
-    "eventTime": "All Weekend",
-    "location": "Harbour Beer Garden",
-    "excerpt": "Over 16 guest ales and farm ciders from across Devon and Somerset with live acoustic sets on the quayside.",
-    "coverImage": "/images/Ship -new-thatch.webp",
-    "bookingRequired": false,
-    "isPast": true
-  },
-  {
     "id": "folk-night-autumn",
     "type": "event",
     "title": "Autumn Acoustic Folk & Fiddle Night",
@@ -60,4 +48,3 @@
     "isPast": true
   }
 ]
-
