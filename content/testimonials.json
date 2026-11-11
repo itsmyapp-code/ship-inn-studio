@@ -1,0 +1,42 @@
+[
+  {
+    "id": "test-001",
+    "name": "Sarah & David Jenkins",
+    "location": "Bristol",
+    "rating": 5,
+    "stayOrVisitDate": "October 2026",
+    "title": "A perfect weekend coastal escape",
+    "content": "We spent two nights in the Harbour Room. Waking up to the sea air, having a proper hearty breakfast, and settling in front of the log fire with a pint of local ale after walking Hurlstone Point made this our favourite pub stay in the West Country.",
+    "source": "google",
+    "status": "published",
+    "createdAt": "2026-10-18T14:30:00.000Z",
+    "verifiedStay": true
+  },
+  {
+    "id": "test-002",
+    "name": "Mark Thornton",
+    "location": "Bath",
+    "rating": 5,
+    "stayOrVisitDate": "September 2026",
+    "title": "Superb Saturday BBQ and real ales",
+    "content": "The Saturday braai was fantastic! Fresh grilled local seafood, friendly team behind the bar, and cold pints looking directly out over Porlock Weir harbour. Can't wait to return.",
+    "source": "tripadvisor",
+    "status": "published",
+    "createdAt": "2026-09-22T19:15:00.000Z",
+    "verifiedStay": false
+  },
+  {
+    "id": "test-003",
+    "name": "Emma W.",
+    "location": "Exeter",
+    "rating": 5,
+    "stayOrVisitDate": "November 2026",
+    "title": "Dog-friendly and exceptionally welcoming",
+    "content": "So rare to find a truly historic pub that genuinely welcomes dogs by the open fire. The staff brought over a water bowl and dog treats straight away. Delicious Sunday roast too!",
+    "source": "direct_submission",
+    "status": "published",
+    "createdAt": "2026-11-04T12:00:00.000Z",
+    "verifiedStay": true
+  }
+]
+

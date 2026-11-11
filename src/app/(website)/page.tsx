@@ -2,11 +2,14 @@ import Link from 'next/link'
 import HeroCarousel from '@/components/HeroCarousel'
 import NewsletterSignup from '@/components/NewsletterSignup'
 import SmartImage from '@/components/SmartImage'
+import TestimonialsSection from '@/components/TestimonialsSection'
+import { getTestimonials } from '@/lib/testimonials'
 import { getPageData } from '@/lib/outstatic'
 import { TrackedFeatureCard, TrackedHeroButton } from '@/components/TrackedContactLinks'
 
 export default function HomePage() {
   const pageData = getPageData('home')
+  const testimonials = getTestimonials({ status: 'published' })
 
   // Hero images for carousel — fix Outstatic's double-slash paths
   const fixPath = (p: string) => p.replace(/^\/\//, '/')
@@ -160,6 +163,9 @@ export default function HomePage() {
           </div>
         </div>
       </section>
+
+      {/* Customer Testimonials & Reviews */}
+      <TestimonialsSection initialTestimonials={testimonials} />
 
       {/* Call to Action */}
       <section className="relative py-20 bg-gradient-to-br from-slate-900 via-ship-blue-900 to-slate-950 text-white overflow-hidden">

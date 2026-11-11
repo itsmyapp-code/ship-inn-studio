@@ -268,6 +268,12 @@ export default function AdminGalleryPage() {
             {/* Quick Admin Navigation */}
             <div className="flex flex-wrap items-center gap-2">
               <Link
+                href="/admin/testimonials"
+                className="inline-flex items-center px-3.5 py-2 border border-gray-300 text-xs font-semibold rounded-lg text-gray-700 bg-white hover:bg-gray-50 shadow-xs transition-colors"
+              >
+                ⭐ Testimonials
+              </Link>
+              <Link
                 href="/admin/menus"
                 className="inline-flex items-center px-3.5 py-2 border border-gray-300 text-xs font-semibold rounded-lg text-gray-700 bg-white hover:bg-gray-50 shadow-xs transition-colors"
               >

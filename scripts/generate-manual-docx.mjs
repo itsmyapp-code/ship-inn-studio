@@ -142,7 +142,7 @@ async function generateDocx() {
                 size: 21
               }),
               new TextRun({
-                text: 'Dedicated Admin Tools, Outstatic CMS, Auto AVIF/WebP & PWA | Version 3.0 (8 November 2026)',
+                text: 'Dedicated Admin Tools, Outstatic CMS, Auto AVIF/WebP & PWA | Version 3.1 (11 November 2026)',
                 bold: true,
                 color: 'D97706',
                 size: 21
@@ -156,6 +156,7 @@ async function generateDocx() {
             [
               '• To Upload or Update PDF Menus: Use the Menu Manager — https://theshipinnporlockweir.co.uk/admin/menus',
               '• To Add or Remove Gallery Photos: Use the Gallery Manager — https://theshipinnporlockweir.co.uk/admin/gallery',
+              '• To Manage Customer Reviews & Testimonials: Use the Testimonials Manager — https://theshipinnporlockweir.co.uk/admin/testimonials',
               '• To Edit Page Text, Hours, Contact Info, News, or Events: Use Outstatic CMS — https://theshipinnporlockweir.co.uk/outstatic'
             ]
           ),
@@ -198,6 +199,23 @@ async function generateDocx() {
             '5. Enter a descriptive Photo Title / Alt Text and optional Caption.',
             '6. Click "Upload & Publish Image". Your photo is automatically converted into both .avif and .webp, goes live immediately, and syncs with Outstatic CMS!',
             '7. Deleting or Editing Existing Photos: Scroll down to the "Current Gallery Photos" section at the bottom of /admin/gallery to filter by category, click "Delete" to remove a photo, or click "Edit in Outstatic".'
+          ]),
+
+          new Paragraph({
+            spacing: { before: 200 },
+            children: [
+              new TextRun({ text: '1.3 Testimonials & Customer Reviews Manager', bold: true, size: 24, color: '1E3A8A' })
+            ]
+          }),
+          new Paragraph({
+            text: 'Use this dedicated tool to approve customer submissions from the website, manually transcribe reviews from Google or TripAdvisor, and manage what reviews appear on the homepage:'
+          }),
+          createStepBox([
+            '1. Open your browser and go to: https://theshipinnporlockweir.co.uk/admin/testimonials',
+            '2. Live Stats & Tabs: The dashboard displays live counts (Total Reviews, Average Star Rating, Pending Approvals, Published Reviews) and tabbed filters (All, Pending, Published, Archived).',
+            '3. Approving Guest Submissions: When guests leave a review via the website modal, it lands in "Pending" status. Click the green "Approve & Publish" button to immediately make it live on the homepage.',
+            '4. Manually Adding Reviews: Click the "+ Add New Review" button in the header. Enter the guest\'s name, rating (1–5 stars), visit date, source (Google, TripAdvisor, In Person / Guestbook, or Direct), review text, and optional verified stay badge. Click "Save & Publish".',
+            '5. Editing or Archiving: Click "Edit" on any review card to update wording or rating. Click "Archive / Hide" to remove a review from the homepage without permanently deleting it, or click "Delete" to remove it permanently.'
           ]),
 
           // Section 2: Outstatic CMS Login
@@ -338,6 +356,7 @@ async function generateDocx() {
             [
               ['Upload a new PDF food menu', 'Menu Manager', 'https://theshipinnporlockweir.co.uk/admin/menus'],
               ['Add or delete photos in the gallery', 'Gallery Manager (auto-AVIF/WebP)', 'https://theshipinnporlockweir.co.uk/admin/gallery'],
+              ['Approve guest reviews or add Google/TripAdvisor reviews', 'Testimonials Manager', 'https://theshipinnporlockweir.co.uk/admin/testimonials'],
               ['Temporarily hide a menu or photo', 'Outstatic (Switch to Draft)', 'https://theshipinnporlockweir.co.uk/outstatic'],
               ['Edit phone number, address, or hours', 'Outstatic Pages (Contact)', 'https://theshipinnporlockweir.co.uk/outstatic'],
               ['Add an upcoming live music event', 'Outstatic Events', 'https://theshipinnporlockweir.co.uk/outstatic'],
@@ -371,7 +390,7 @@ async function generateDocx() {
                 size: 18
               }),
               new TextRun({
-                text: 'Manual Version 3.0 • Updated 8 November 2026',
+                text: 'Manual Version 3.1 • Updated 11 November 2026',
                 italics: true,
                 color: '94A3B8',
                 size: 18
@@ -387,12 +406,16 @@ async function generateDocx() {
   const rootDir = process.cwd()
   const docsDir = path.join(rootDir, 'docs')
   const publicDocsDir = path.join(rootDir, 'public', 'docs')
+  const manualsDir = path.join(rootDir, '..', 'Manuals')
 
   if (!fs.existsSync(publicDocsDir)) {
     fs.mkdirSync(publicDocsDir, { recursive: true })
   }
 
   const targets = [
+    path.join(manualsDir, 'The-Ship-Inn-Website-Management-Guide 20261111.docx'),
+    path.join(manualsDir, 'The-Ship-Inn-Website-Management-Guide 20261108.docx'),
+    path.join(manualsDir, 'The-Ship-Inn-Website-Management-Guide.docx'),
     path.join(rootDir, 'The-Ship-Inn-Website-Management-Guide.docx'),
     path.join(docsDir, 'The-Ship-Inn-Website-Management-Guide.docx'),
     path.join(docsDir, 'The-Ship-Inn-CMS-User-Manual.docx'),
