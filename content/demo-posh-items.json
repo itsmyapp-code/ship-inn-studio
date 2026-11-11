@@ -13,16 +13,6 @@
     "isPast": false
   },
   {
-    "id": "news-winter-fire",
-    "type": "news",
-    "title": "The Fires Are Lit & New Winter Ale on Tap",
-    "excerpt": "Winter has arrived at the harbour. Come warm up by our 15th-century open fireplace with pints of Exmoor Ale and our fresh local game pie.",
-    "coverImage": "/images/Ship -new-thatch.webp",
-    "videoUrl": "https://youtube.com/shorts/5O9Yw7sZf7Q",
-    "publishedAt": "Today",
-    "isPast": false
-  },
-  {
     "id": "sunday-roast-special",
     "type": "event",
     "title": "Exmoor Beef & Fresh Local Catch Sunday Lunch",
