@@ -1,5 +1,27 @@
 [
   {
+    "id": "test-1794423123993-rt03",
+    "name": "Martin Cozens",
+    "location": "Dartmouth",
+    "rating": 5,
+    "stayType": "Stay",
+    "stayOrVisitDate": "1/11/2026",
+    "visitDate": "1/11/2026",
+    "title": "Stay Experience",
+    "content": "“Stayed two nights mid-week just to switch off and get some sea air. Room was spotless, bed was seriously comfortable, and having the harbour right outside the window meant you could actually hear the water instead of traffic for once. Downstairs has that rare thing now—a pub that still feels like a real local. Roaring fire on, decent Exmoor ales, and the staff actually have time for a chat without rushing you. We ate in both nights; the fish was fresh off the boat and the Sunday roast portions are no joke. Walked straight out onto the coastal path in the morning, came back muddy, grabbed a pint by the fire. Exactly what an English inn should be. We’ll definitely be back.”",
+    "reviewText": "“Stayed two nights mid-week just to switch off and get some sea air. Room was spotless, bed was seriously comfortable, and having the harbour right outside the window meant you could actually hear the water instead of traffic for once. Downstairs has that rare thing now—a pub that still feels like a real local. Roaring fire on, decent Exmoor ales, and the staff actually have time for a chat without rushing you. We ate in both nights; the fish was fresh off the boat and the Sunday roast portions are no joke. Walked straight out onto the coastal path in the morning, came back muddy, grabbed a pint by the fire. Exactly what an English inn should be. We’ll definitely be back.”",
+    "photos": [
+      "/images/testimonials/review-ploughmans-mwch54p0.webp",
+      "/images/testimonials/review-porlock_village-mwch5e4i.webp"
+    ],
+    "source": "direct_submission",
+    "status": "pending",
+    "createdAt": "2026-11-11T18:52:03.993Z",
+    "verified": false,
+    "verifiedStay": false,
+    "featured": false
+  },
+  {
     "id": "test-1794421851705-6wbq",
     "name": "Martin Cozens",
     "location": "Dartmouth",
