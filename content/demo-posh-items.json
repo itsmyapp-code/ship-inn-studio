@@ -1,15 +1,1 @@
-[
-  {
-    "id": "sunday-roast-special",
-    "type": "event",
-    "title": "Exmoor Beef & Fresh Local Catch Sunday Lunch",
-    "eventDate": "2026-11-22",
-    "eventTime": "12:00 PM - 3:30 PM",
-    "location": "The Galley Restaurant",
-    "excerpt": "Locally farmed Exmoor beef, giant Yorkshire puddings, seasonal vegetables, and fresh Porlock oysters.",
-    "coverImage": "/images/shipinn-031.webp",
-    "videoUrl": "https://youtube.com/shorts/5O9Yw7sZf7Q",
-    "bookingRequired": true,
-    "isPast": false
-  }
-]
+[]
