@@ -182,8 +182,6 @@ export default function AdminTestimonialsPage() {
     setFormContent(item.reviewText || item.content || '')
     setFormStayType(item.stayType || 'Stay')
     setFormPhotos(item.photos ? [...item.photos] : [])
-    setFormStayType(item.stayType || 'Stay')
-    setFormPhotos(item.photos ? [...item.photos] : [])
     setFormSource(item.source || 'direct_submission')
     setFormStatus(item.status || 'published')
     setFormVerified(Boolean(item.verifiedStay || item.verified))
@@ -371,7 +369,7 @@ export default function AdminTestimonialsPage() {
 
   // 2. Full Admin Dashboard
   return (
-    <div className="min-h-screen bg-slate-50">
+    <div className="min-h-screen bg-slate-50 font-sans">
       {/* Top Navigation Bar */}
       <div className="bg-slate-900 text-white border-b border-slate-800">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex flex-wrap items-center justify-between gap-4">
@@ -734,8 +732,8 @@ export default function AdminTestimonialsPage() {
 
       {/* Add / Edit Review Modal */}
       {isModalOpen && (
-        <div className="fixed inset-0 z-50 bg-slate-950/70 backdrop-blur-xs flex items-center justify-center p-4 overflow-y-auto">
-          <div className="bg-white rounded-3xl p-6 sm:p-8 max-w-xl w-full shadow-2xl my-8">
+        <div className="fixed inset-0 z-50 bg-slate-950/70 backdrop-blur-xs flex items-center justify-center p-4 overflow-y-auto font-sans">
+          <div className="bg-white rounded-3xl p-6 sm:p-8 max-w-xl w-full shadow-2xl my-8 font-sans">
             <h3 className="text-2xl font-serif font-bold text-slate-900 mb-1">
               {editingItem ? 'Edit Review' : 'Add Review Manually'}
             </h3>

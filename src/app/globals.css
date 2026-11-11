@@ -39,6 +39,11 @@
   font-family: 'Centaur', 'Palatino Linotype', 'Book Antiqua', Palatino, 'Times New Roman', serif;
 }
 
+/* Ensure form controls and numeric inputs always use clean sans-serif for legible numbers/dates */
+input, textarea, select {
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif !important;
+}
+
 /* Custom styles for The Ship Inn */
 @layer utilities {
   .ship-text-shadow {

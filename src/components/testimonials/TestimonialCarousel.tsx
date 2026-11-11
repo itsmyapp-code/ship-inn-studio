@@ -220,13 +220,13 @@ export default function TestimonialCarousel({
                 </div>
 
                 {/* Footer: Guest Name, Location & Date */}
-                <div className="pt-4 border-t border-slate-100 flex items-center justify-between text-xs text-slate-400">
+                <div className="pt-4 border-t border-slate-100 flex items-center justify-between text-xs text-slate-400 font-sans">
                   <div>
                     <span className="font-bold text-slate-900 block text-sm">{rev.name}</span>
                     {rev.location && <span className="text-slate-500">{rev.location}</span>}
                   </div>
                   {(rev.stayOrVisitDate || rev.visitDate) && (
-                    <span className="text-slate-400 text-[11px]">
+                    <span className="text-slate-500 text-xs font-sans font-medium tabular-nums">
                       {rev.stayOrVisitDate || rev.visitDate}
                     </span>
                   )}
