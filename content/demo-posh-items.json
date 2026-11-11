@@ -1,5 +1,16 @@
 [
   {
+    "id": "post-1794433684312",
+    "type": "news",
+    "title": "Test",
+    "excerpt": "Test",
+    "videoUrl": "blob:https://www.theshipinnporlockweir.co.uk/f8ef831b-3221-42de-bacc-ec834c9bf89e",
+    "videoFileName": "Screen Recording 2026-11-06 124622.mp4",
+    "isSilent": true,
+    "bookingRequired": false,
+    "publishedAt": "Just Now"
+  },
+  {
     "id": "post-1794432645801",
     "type": "event",
     "title": "Christmas",
