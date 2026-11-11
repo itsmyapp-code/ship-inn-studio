@@ -34,17 +34,5 @@
     "videoUrl": "https://youtube.com/shorts/5O9Yw7sZf7Q",
     "bookingRequired": true,
     "isPast": false
-  },
-  {
-    "id": "folk-night-autumn",
-    "type": "event",
-    "title": "Autumn Acoustic Folk & Fiddle Night",
-    "eventDate": "2026-10-10",
-    "eventTime": "8:00 PM",
-    "location": "The Ship Inn Bar",
-    "excerpt": "Intimate candlelit acoustic session with local folk musicians and seasonal mulled cider.",
-    "coverImage": "/images/IMG_4414.webp",
-    "bookingRequired": false,
-    "isPast": true
   }
 ]
