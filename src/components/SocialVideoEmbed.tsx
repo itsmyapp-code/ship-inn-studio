@@ -60,8 +60,25 @@ export default function SocialVideoEmbed({
 
   // Construct Facebook Reel Embed URL
   const getFacebookEmbedUrl = (raw: string) => {
-    const encoded = encodeURIComponent(raw)
-    return `https://www.facebook.com/plugins/video.php?height=580&href=${encoded}&show_text=false&width=320`
+    // If user pasted an iframe tag from Facebook
+    if (raw.includes('<iframe')) {
+      const srcMatch = raw.match(/src=["'](.*?)["']/)
+      if (srcMatch) return srcMatch[1]
+    }
+
+    // Clean URL: strip mibextid, tracking query parameters that break FB embed plugin
+    let clean = raw.trim()
+    try {
+      const u = new URL(clean)
+      u.searchParams.delete('mibextid')
+      u.searchParams.delete('rdid')
+      u.searchParams.delete('share_url')
+      u.searchParams.delete('sfnsn')
+      clean = u.origin + u.pathname
+    } catch {}
+
+    const encoded = encodeURIComponent(clean)
+    return `https://www.facebook.com/plugins/video.php?height=476&href=${encoded}&show_text=false&width=267&t=0`
   }
 
   // Vertical Aspect (9:16) for Reels & Shorts
@@ -136,32 +153,36 @@ export default function SocialVideoEmbed({
           className="w-full h-full object-cover"
         />
       ) : isFacebook ? (
-        <div className="relative w-full h-full bg-black flex items-center justify-center">
-          <iframe
-            src={getFacebookEmbedUrl(cleanUrl)}
-            className="w-full h-full border-none overflow-hidden"
-            scrolling="no"
-            frameBorder="0"
-            allowFullScreen={true}
-            allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share"
-            onError={() => setHasError(true)}
-          />
-          {hasError && (
-            <div className="absolute inset-0 bg-slate-900 flex flex-col items-center justify-center p-6 text-center text-white">
-              <p className="text-sm font-semibold mb-2">Facebook Privacy Block</p>
-              <p className="text-xs text-slate-400 mb-4">
-                Your browser privacy settings blocked the Facebook embed.
-              </p>
-              <a
-                href={cleanUrl}
-                target="_blank"
-                rel="noreferrer"
-                className="px-4 py-2 bg-blue-600 hover:bg-blue-500 rounded-xl text-xs font-bold text-white transition"
-              >
-                Watch Directly on Facebook ↗
-              </a>
-            </div>
-          )}
+        <div className="relative w-full h-full bg-black flex flex-col justify-between">
+          <div className="relative flex-1 w-full overflow-hidden flex items-center justify-center">
+            <iframe
+              src={getFacebookEmbedUrl(cleanUrl)}
+              className="w-full h-full border-none overflow-hidden"
+              scrolling="no"
+              frameBorder="0"
+              allowFullScreen={true}
+              allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share"
+              onError={() => setHasError(true)}
+            />
+          </div>
+          {/* Always-accessible Direct Action Bar for Fail-safe Native Viewing */}
+          <div className="bg-slate-900 border-t border-slate-800 p-2.5 flex items-center justify-between text-xs z-20">
+            <span className="text-slate-400 text-[11px] flex items-center gap-1.5 font-medium">
+              <svg className="w-3.5 h-3.5 fill-blue-500" viewBox="0 0 24 24">
+                <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z" />
+              </svg>
+              <span>Facebook Reel</span>
+            </span>
+            <a
+              href={cleanUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-1 bg-blue-600 hover:bg-blue-500 text-white font-bold text-[11px] px-3 py-1 rounded-lg transition"
+            >
+              <span>Watch on Facebook</span>
+              <span>↗</span>
+            </a>
+          </div>
         </div>
       ) : isYouTube ? (
         <iframe

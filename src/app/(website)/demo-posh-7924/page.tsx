@@ -27,8 +27,8 @@ const INITIAL_EVENTS: DemoEvent[] = [
     eventTime: '7:30 PM - 10:30 PM',
     location: 'Main Saloon & Fireside Bar',
     excerpt: 'Join us for an atmospheric evening of maritime folk and traditional West Country sea shanties by the roaring hearth.',
-    coverImage: '/images/gallery-3.webp',
-    videoUrl: 'https://www.facebook.com/reel/1015849382910284',
+    coverImage: '/images/Ship -new-thatch.webp',
+    videoUrl: 'https://youtube.com/shorts/5O9Yw7sZf7Q',
     bookingRequired: true,
     isPast: false
   },
@@ -282,14 +282,22 @@ export default function DemoPoshPage() {
                     <SocialVideoEmbed url={event.videoUrl} title={event.title} />
                   </div>
                 ) : (
-                  <div className="relative aspect-16/9 bg-slate-100 overflow-hidden group">
+                  <div className="relative h-72 sm:h-84 w-full bg-slate-950 overflow-hidden flex items-center justify-center group">
+                    {/* Ambient Blurred Background to frame flyer with no awkward empty voids */}
+                    <img
+                      src={event.coverImage}
+                      alt=""
+                      aria-hidden="true"
+                      className="absolute inset-0 w-full h-full object-cover blur-2xl opacity-40 scale-110 pointer-events-none"
+                    />
+                    {/* Full, Uncropped Flyer - preserves circular, square (1:1), portrait (4:5) or landscape (16:9) */}
                     <img
                       src={event.coverImage}
                       alt={event.title}
-                      className="w-full h-full object-cover group-hover:scale-105 transition duration-500"
+                      className="relative z-10 max-h-full max-w-full object-contain p-3 drop-shadow-2xl transition-transform duration-300 group-hover:scale-[1.02]"
                     />
-                    <div className="absolute top-3 left-3 bg-slate-950/80 backdrop-blur-xs text-white text-[11px] font-bold px-3 py-1 rounded-full border border-white/20">
-                      📷 High-Res Flyer
+                    <div className="absolute top-3 left-3 z-20 bg-slate-950/80 backdrop-blur-xs text-white text-[11px] font-bold px-3 py-1 rounded-full border border-white/20">
+                      📷 Full Event Flyer
                     </div>
                   </div>
                 )}
@@ -624,9 +632,9 @@ export default function DemoPoshPage() {
             </div>
 
             <div className="bg-slate-50 rounded-2xl overflow-hidden border border-slate-200">
-              <div className="aspect-16/9 bg-slate-200 relative">
+              <div className="aspect-16/9 bg-slate-200 relative overflow-hidden">
                 <img
-                  src="/images/gallery-3.webp"
+                  src="/images/Ship -new-thatch.webp"
                   alt="Facebook link card preview"
                   className="w-full h-full object-cover"
                 />
