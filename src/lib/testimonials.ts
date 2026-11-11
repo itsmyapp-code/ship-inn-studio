@@ -1,5 +1,7 @@
 import fs from 'fs'
 import path from 'path'
+import { cookies } from 'next/headers'
+import * as jose from 'jose'
 
 export interface Testimonial {
   id: string
@@ -17,9 +19,31 @@ export interface Testimonial {
 
 const TESTIMONIALS_FILE = path.join(process.cwd(), 'content', 'testimonials.json')
 
+export async function getAuthToken(): Promise<string | undefined> {
+  const envToken = process.env.GITHUB_TOKEN || process.env.OST_GITHUB_TOKEN || process.env.OST_TOKEN
+  if (envToken) return envToken
+
+  try {
+    const cookieStore = await cookies()
+    const tokenName = process.env.NEXT_PUBLIC_OST_TOKEN_NAME || 'ost_token'
+    const ostCookie = cookieStore.get(tokenName)?.value
+    const secret = process.env.OST_TOKEN_SECRET
+    if (ostCookie && secret) {
+      const { payload } = await jose.jwtVerify(ostCookie, new TextEncoder().encode(secret))
+      if (payload && typeof payload.access_token === 'string') {
+        return payload.access_token
+      }
+    }
+  } catch (err) {
+    // Cookie not found, not logged in, or signature mismatch
+  }
+
+  return undefined
+}
+
 // GitHub config helper mirroring gallery and menus
-function getGitHubConfig() {
-  const token = process.env.GITHUB_TOKEN || process.env.OST_GITHUB_TOKEN || process.env.OST_TOKEN
+export async function getGitHubConfig() {
+  const token = await getAuthToken()
   const owner = process.env.OST_REPO_OWNER || 'itsmyapp-code'
   const repo = process.env.OST_REPO_SLUG || 'ship-inn-studio'
   const branch = process.env.OST_REPO_BRANCH || 'main'
@@ -84,7 +108,7 @@ export async function writeTestimonials(
   }
 
   // 2. Commit to GitHub (for Vercel serverless production persistence)
-  const { token, owner, repo, branch } = getGitHubConfig()
+  const { token, owner, repo, branch } = await getGitHubConfig()
   if (token) {
     try {
       const filePath = 'content/testimonials.json'
@@ -94,10 +118,11 @@ export async function writeTestimonials(
       let sha: string | undefined
       const getRes = await fetch(`${apiUrl}?ref=${branch}`, {
         headers: {
-          Authorization: `token ${token}`,
+          Authorization: `Bearer ${token}`,
           Accept: 'application/vnd.github.v3+json',
           'User-Agent': 'The-Ship-Inn-Admin'
-        }
+        },
+        cache: 'no-store'
       })
       if (getRes.ok) {
         const fileData = await getRes.json()
@@ -108,7 +133,7 @@ export async function writeTestimonials(
       const putRes = await fetch(apiUrl, {
         method: 'PUT',
         headers: {
-          Authorization: `token ${token}`,
+          Authorization: `Bearer ${token}`,
           Accept: 'application/vnd.github.v3+json',
           'Content-Type': 'application/json',
           'User-Agent': 'The-Ship-Inn-Admin'
@@ -122,6 +147,10 @@ export async function writeTestimonials(
       })
 
       githubCommitted = putRes.ok
+      if (!putRes.ok) {
+        const errJson = await putRes.json().catch(() => ({}))
+        console.error('GitHub API error during commit:', putRes.status, errJson)
+      }
     } catch (ghErr) {
       console.error('Error committing testimonials.json to GitHub:', ghErr)
     }

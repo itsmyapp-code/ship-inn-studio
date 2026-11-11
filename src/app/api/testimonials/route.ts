@@ -3,7 +3,8 @@ import {
   Testimonial,
   readTestimonials,
   getTestimonials,
-  writeTestimonials
+  writeTestimonials,
+  getAuthToken
 } from '@/lib/testimonials'
 
 export const dynamic = 'force-dynamic'
@@ -14,6 +15,9 @@ export async function GET(request: Request) {
     const { searchParams } = new URL(request.url)
     const statusParam = (searchParams.get('status') || 'published') as 'published' | 'pending' | 'archived' | 'all'
     const items = getTestimonials({ status: statusParam })
+
+    // Check if the current requester is authorized to edit live site
+    const token = await getAuthToken()
 
     // Provide stats for the admin manager
     const all = readTestimonials()
@@ -28,7 +32,7 @@ export async function GET(request: Request) {
           : 5.0
     }
 
-    return NextResponse.json({ success: true, items, stats })
+    return NextResponse.json({ success: true, items, stats, authorized: Boolean(token) })
   } catch (error) {
     console.error('Error in GET /api/testimonials:', error)
     return NextResponse.json(
@@ -104,6 +108,17 @@ export async function POST(request: Request) {
         : `feat(testimonials): new pending review from ${newTestimonial.name}`
 
     const syncRes = await writeTestimonials(all, commitMsg)
+
+    if (!syncRes.savedLocally && !syncRes.githubCommitted) {
+      return NextResponse.json(
+        {
+          success: false,
+          error:
+            'Unable to save to the live site. Please sign in to Outstatic CMS at /outstatic first to authorize GitHub updates (or configure OST_GITHUB_TOKEN in Vercel).'
+        },
+        { status: 401 }
+      )
+    }
 
     return NextResponse.json({
       success: true,
@@ -181,6 +196,17 @@ export async function PATCH(request: Request) {
       `chore(testimonials): update review ${id} (${current.status})`
     )
 
+    if (!syncRes.savedLocally && !syncRes.githubCommitted) {
+      return NextResponse.json(
+        {
+          success: false,
+          error:
+            'Unable to save updates to the live site. Please sign in to Outstatic CMS at /outstatic first to authorize GitHub updates (or configure OST_GITHUB_TOKEN in Vercel).'
+        },
+        { status: 401 }
+      )
+    }
+
     return NextResponse.json({
       success: true,
       testimonial: current,
@@ -224,6 +250,17 @@ export async function DELETE(request: Request) {
       filtered,
       `chore(testimonials): delete review ${id}`
     )
+
+    if (!syncRes.savedLocally && !syncRes.githubCommitted) {
+      return NextResponse.json(
+        {
+          success: false,
+          error:
+            'Unable to delete from the live site. Please sign in to Outstatic CMS at /outstatic first to authorize GitHub updates (or configure OST_GITHUB_TOKEN in Vercel).'
+        },
+        { status: 401 }
+      )
+    }
 
     return NextResponse.json({
       success: true,

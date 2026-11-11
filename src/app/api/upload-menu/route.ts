@@ -1,6 +1,7 @@
 import { NextResponse } from 'next/server'
 import fs from 'fs'
 import path from 'path'
+import { getAuthToken } from '@/lib/testimonials'
 
 export const dynamic = 'force-dynamic'
 
@@ -63,8 +64,8 @@ Menu updated via Menu Manager.
       console.log('Local filesystem write failed or read-only:', fsErr)
     }
 
-    // If GitHub credentials are available in environment, commit to GitHub
-    const githubToken = process.env.GITHUB_TOKEN || process.env.OST_GITHUB_TOKEN || process.env.OST_TOKEN
+    // If GitHub credentials are available in environment or Outstatic session, commit to GitHub
+    const githubToken = await getAuthToken()
     const repoOwner = process.env.OST_REPO_OWNER || 'itsmyapp-code'
     const repoSlug = process.env.OST_REPO_SLUG || 'ship-inn-studio'
     const branch = process.env.OST_REPO_BRANCH || 'main'

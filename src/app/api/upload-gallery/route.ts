@@ -3,12 +3,13 @@ import fs from 'fs'
 import path from 'path'
 import matter from 'gray-matter'
 import sharp from 'sharp'
+import { getAuthToken } from '@/lib/testimonials'
 
 export const dynamic = 'force-dynamic'
 
 // Helper to get GitHub config
-function getGitHubConfig() {
-  const token = process.env.GITHUB_TOKEN || process.env.OST_GITHUB_TOKEN || process.env.OST_TOKEN
+async function getGitHubConfig() {
+  const token = await getAuthToken()
   const owner = process.env.OST_REPO_OWNER || 'itsmyapp-code'
   const repo = process.env.OST_REPO_SLUG || 'ship-inn-studio'
   const branch = process.env.OST_REPO_BRANCH || 'main'
@@ -149,7 +150,7 @@ Photo added via Gallery Manager.
     }
 
     // GitHub Commit Sync
-    const { token: githubToken, owner: repoOwner, repo: repoSlug, branch } = getGitHubConfig()
+    const { token: githubToken, owner: repoOwner, repo: repoSlug, branch } = await getGitHubConfig()
     let githubCommitted = false
 
     if (githubToken) {
@@ -249,7 +250,7 @@ export async function DELETE(request: Request) {
     }
 
     // GitHub Delete Sync
-    const { token: githubToken, owner: repoOwner, repo: repoSlug, branch } = getGitHubConfig()
+    const { token: githubToken, owner: repoOwner, repo: repoSlug, branch } = await getGitHubConfig()
     let githubDeleted = false
 
     if (githubToken) {

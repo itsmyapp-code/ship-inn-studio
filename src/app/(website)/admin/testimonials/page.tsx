@@ -33,6 +33,7 @@ export default function AdminTestimonialsPage() {
 
   // Deleting state
   const [deletingId, setDeletingId] = useState<string | null>(null)
+  const [authorized, setAuthorized] = useState<boolean | null>(null)
 
   const fetchItems = async () => {
     setIsLoading(true)
@@ -43,6 +44,9 @@ export default function AdminTestimonialsPage() {
         setItems(data.items || [])
         if (data.stats) {
           setStats(data.stats)
+        }
+        if (typeof data.authorized === 'boolean') {
+          setAuthorized(data.authorized)
         }
       }
     } catch (err) {
@@ -269,6 +273,30 @@ export default function AdminTestimonialsPage() {
             <span>Add Review Manually</span>
           </button>
         </div>
+
+        {/* Authorization Banner if not signed into Outstatic / no GitHub PAT */}
+        {authorized === false && (
+          <div className="bg-amber-50 border-l-4 border-amber-500 p-4 rounded-r-2xl mb-6 shadow-sm">
+            <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
+              <div className="flex items-start gap-3">
+                <span className="text-2xl leading-none">⚠️</span>
+                <div>
+                  <p className="text-sm font-bold text-amber-900">Sign-in Required to Save Live Changes</p>
+                  <p className="text-xs text-amber-800 mt-0.5">
+                    To approve, add, or delete reviews on the live website, please sign in once to Outstatic CMS. Your session will authorize GitHub updates.
+                  </p>
+                </div>
+              </div>
+              <Link
+                href="/outstatic"
+                target="_blank"
+                className="shrink-0 inline-flex items-center gap-1.5 px-4 py-2 bg-amber-600 hover:bg-amber-700 text-white text-xs font-bold rounded-xl shadow-xs transition"
+              >
+                ⚡ Sign in to Outstatic
+              </Link>
+            </div>
+          </div>
+        )}
 
         {/* Action Message Alert */}
         {actionMessage && (
