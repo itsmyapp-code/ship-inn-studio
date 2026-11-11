@@ -1,18 +1,5 @@
 [
   {
-    "id": "shanties-nov-2026",
-    "type": "event",
-    "title": "Live Sea Shanties & Fireside Pints",
-    "eventDate": "2026-11-28",
-    "eventTime": "7:30 PM - 10:30 PM",
-    "location": "Main Saloon & Fireside Bar",
-    "excerpt": "Join us for an atmospheric evening of maritime folk and traditional West Country sea shanties by the roaring hearth.",
-    "coverImage": "/images/Ship -new-thatch.webp",
-    "videoUrl": "https://youtube.com/shorts/5O9Yw7sZf7Q",
-    "bookingRequired": true,
-    "isPast": false
-  },
-  {
     "id": "sunday-roast-special",
     "type": "event",
     "title": "Exmoor Beef & Fresh Local Catch Sunday Lunch",
