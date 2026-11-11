@@ -1,10 +1,11 @@
 # THE SHIP INN
 ## The Ship Inn Porlock Weir — Website & Content Management Guide
-**System:** Dedicated Admin Tools, Outstatic CMS, Automatic AVIF/WebP Optimization & PWA | **Version 3.0 (8 November 2026)**
+**System:** Dedicated Admin Tools, Outstatic CMS, Automatic AVIF/WebP Optimization & PWA | **Version 3.1 (11 November 2026)**
 
 > ### ⚡ Fast Track: Which Tool to Use?
 > - **To Upload or Update PDF Menus:** Use the **Menu Manager** — https://theshipinnporlockweir.co.uk/admin/menus
 > - **To Add or Remove Gallery Photos:** Use the **Gallery Manager** — https://theshipinnporlockweir.co.uk/admin/gallery
+> - **To Manage Customer Reviews & Testimonials:** Use the **Testimonials Manager** — https://theshipinnporlockweir.co.uk/admin/testimonials
 > - **To Edit Page Text, Hours, Contact Info, News, or Events:** Use **Outstatic CMS** — https://theshipinnporlockweir.co.uk/outstatic
 
 ---
@@ -30,6 +31,15 @@ Use this dedicated tool to upload new photos to the gallery or delete old ones w
 5. Enter a descriptive **Photo Title / Alt Text** and optional **Caption**.
 6. Click **"Upload & Publish Image"**. Your photo is **automatically converted into both `.avif` and `.webp`**, goes live immediately, and syncs with Outstatic CMS!
 7. **Deleting or Editing Existing Photos:** Scroll down to the **Current Gallery Photos** section at the bottom of `/admin/gallery` to filter by category, click **🗑️ Delete** to remove a photo immediately, or click **✏️ Edit in Outstatic**.
+
+### 1.3 Testimonials & Customer Reviews Manager
+Use this dedicated tool to approve customer submissions from the website, manually transcribe reviews from Google or TripAdvisor, and manage what reviews appear on the homepage:
+1. Open your browser and go to: https://theshipinnporlockweir.co.uk/admin/testimonials
+2. **Live Stats & Tabs:** The dashboard displays live counts (Total Reviews, Average Star Rating, Pending Approvals, Published Reviews) and tabbed filters (All, Pending, Published, Archived).
+3. **Authorizing Live Changes:** To approve, add, or delete reviews on the live website, ensure you are signed into Outstatic CMS at https://theshipinnporlockweir.co.uk/outstatic (Section 2) so your session authorizes GitHub commits.
+4. **Approving Guest Submissions:** When guests leave a review via the website modal, it lands in "Pending" status. Click the green **"Approve & Publish"** button to immediately make it live on the homepage.
+5. **Manually Adding Reviews:** Click the **"+ Add Review Manually"** button in the header. Enter the guest's name, rating (1–5 stars), visit date, source (Google, TripAdvisor, In Person / Guestbook, or Direct), review text, and optional verified stay badge. Click **"Save & Publish"**.
+6. **Editing or Archiving:** Click **"Edit"** on any review card to update wording or rating. Click **"Archive / Hide"** to remove a review from the homepage without permanently deleting it, or click **"Delete"** to remove it permanently.
 
 ---
 
@@ -133,6 +143,7 @@ The Ship Inn website is an installable **Progressive Web App (PWA)** built for P
 | :--- | :--- | :--- |
 | Upload a new PDF food menu | **Menu Manager** | https://theshipinnporlockweir.co.uk/admin/menus |
 | Add or delete photos in the gallery | **Gallery Manager** (auto-AVIF/WebP) | https://theshipinnporlockweir.co.uk/admin/gallery |
+| Approve guest reviews or add Google/TripAdvisor reviews | **Testimonials Manager** | https://theshipinnporlockweir.co.uk/admin/testimonials |
 | Temporarily hide a menu or photo | **Outstatic** (Switch to Draft) | https://theshipinnporlockweir.co.uk/outstatic |
 | Edit phone number, address, or hours | **Outstatic Pages** (Contact) | https://theshipinnporlockweir.co.uk/outstatic |
 | Add an upcoming live music event | **Outstatic Events** | https://theshipinnporlockweir.co.uk/outstatic |
@@ -142,5 +153,5 @@ The Ship Inn website is an installable **Progressive Web App (PWA)** built for P
 
 **The Ship Inn, Porlock Weir — TA24 8PB**  
 Website & CMS Managed by itsmyapp (https://itsmyapp.co.uk)  
-*Manual Version 3.0 • Updated 8 November 2026*
+*Manual Version 3.1 • Updated 11 November 2026*
 
