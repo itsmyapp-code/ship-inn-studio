@@ -179,11 +179,18 @@ export default function StaffPwaClient() {
         if (uploadData.success && uploadData.url) {
           finalVideoUrl = uploadData.url
         } else {
-          console.warn('Vercel Blob notice:', uploadData.error)
-          // Continues with local preview url if token not yet added in Vercel
+          console.error('Vercel Blob upload failed:', uploadData.error)
+          alert('Video upload failed: ' + (uploadData.error || 'Server rejected video.'))
+          setIsUploadingVideo(false)
+          setIsSubmitting(false)
+          return
         }
-      } catch (err) {
+      } catch (err: any) {
         console.error('Video upload error:', err)
+        alert('Network error uploading video: ' + err.message)
+        setIsUploadingVideo(false)
+        setIsSubmitting(false)
+        return
       } finally {
         setIsUploadingVideo(false)
       }
