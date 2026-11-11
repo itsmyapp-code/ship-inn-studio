@@ -1,5 +1,5 @@
 import React from 'react'
-import { Testimonial } from '@/lib/testimonials'
+import { Testimonial } from '@/lib/testimonials-types'
 
 interface TestimonialCardProps {
   testimonial: Testimonial

@@ -4,19 +4,8 @@ import { cookies } from 'next/headers'
 import * as jose from 'jose'
 import { Outstatic } from 'outstatic'
 
-export interface Testimonial {
-  id: string
-  name: string
-  location?: string
-  rating: number // 1 to 5
-  stayOrVisitDate?: string
-  title?: string
-  content: string
-  source: 'google' | 'tripadvisor' | 'direct_submission' | 'in_person'
-  status: 'pending' | 'published' | 'archived'
-  createdAt: string
-  verifiedStay?: boolean
-}
+export * from './testimonials-types'
+import { Testimonial, StayType } from './testimonials-types'
 
 const TESTIMONIALS_FILE = path.join(process.cwd(), 'content', 'testimonials.json')
 
@@ -244,4 +233,60 @@ export async function writeTestimonials(
 
   return { savedLocally, githubCommitted, error: ghError }
 }
+
+/**
+ * Saves a compressed WebP review photo both locally and by committing to GitHub
+ */
+export async function saveReviewPhoto(
+  fileName: string,
+  buffer: Buffer
+): Promise<{ path: string; success: boolean }> {
+  const relPath = `/images/testimonials/${fileName}`
+  const localDir = path.join(process.cwd(), 'public', 'images', 'testimonials')
+  const localFilePath = path.join(localDir, fileName)
+
+  // 1. Try local write
+  try {
+    if (!fs.existsSync(localDir)) {
+      fs.mkdirSync(localDir, { recursive: true })
+    }
+    fs.writeFileSync(localFilePath, buffer)
+  } catch (err) {
+    console.warn('Could not write photo to local filesystem (expected on Vercel):', err)
+  }
+
+  // 2. Commit to GitHub so the image is deployed and permanently available
+  try {
+    const { token, owner, repo, branch } = await getGitHubConfig()
+    if (token) {
+      const gitFilePath = `public/images/testimonials/${fileName}`
+      const apiUrl = `https://api.github.com/repos/${owner}/${repo}/contents/${gitFilePath}`
+      const contentBase64 = buffer.toString('base64')
+
+      const putRes = await fetch(apiUrl, {
+        method: 'PUT',
+        headers: {
+          Authorization: `Bearer ${token}`,
+          Accept: 'application/vnd.github.v3+json',
+          'Content-Type': 'application/json',
+          'User-Agent': 'The-Ship-Inn-Admin'
+        },
+        body: JSON.stringify({
+          message: `chore(testimonials): upload guest review photo ${fileName}`,
+          content: contentBase64,
+          branch
+        })
+      })
+
+      if (!putRes.ok) {
+        console.error('GitHub API error uploading photo:', putRes.status)
+      }
+    }
+  } catch (err) {
+    console.error('Error committing photo to GitHub:', err)
+  }
+
+  return { path: relPath, success: true }
+}
+
 

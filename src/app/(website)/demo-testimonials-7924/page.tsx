@@ -71,13 +71,25 @@ export default async function PrivateTestimonialsDemoPage() {
               Guest Testimonials &amp; Reviews Module (Hidden from Public Website)
             </span>
           </div>
-          <div className="flex items-center gap-2">
+          <div className="flex flex-wrap items-center gap-2">
+            <Link
+              href="/reviews"
+              className="bg-slate-950 hover:bg-slate-800 text-white font-semibold px-3 py-1.5 rounded-lg transition text-xs"
+            >
+              ⭐ Full Reviews Directory (/reviews) ↗
+            </Link>
+            <Link
+              href="/review"
+              className="bg-slate-950 hover:bg-slate-800 text-white font-semibold px-3 py-1.5 rounded-lg transition text-xs"
+            >
+              ✍️ Guest Submission Portal (/review) ↗
+            </Link>
             <Link
               href="/admin/testimonials"
               target="_blank"
-              className="bg-slate-950 hover:bg-slate-800 text-white font-bold px-3 py-1.5 rounded-lg transition shadow-xs text-xs"
+              className="bg-slate-950 hover:bg-slate-800 text-amber-300 font-bold px-3 py-1.5 rounded-lg transition shadow-xs text-xs"
             >
-              Open Admin Manager (Passcode: theshipinnta248pb!) ↗
+              🔒 Admin Manager ↗
             </Link>
             <Link
               href="/"

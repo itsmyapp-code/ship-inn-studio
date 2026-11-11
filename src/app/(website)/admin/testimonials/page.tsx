@@ -40,7 +40,7 @@ export default function AdminTestimonialsPage() {
   const [formTitle, setFormTitle] = useState('')
   const [formContent, setFormContent] = useState('')
   const [formSource, setFormSource] = useState<'google' | 'tripadvisor' | 'direct_submission' | 'in_person'>('google')
-  const [formStatus, setFormStatus] = useState<'published' | 'pending' | 'archived'>('published')
+  const [formStatus, setFormStatus] = useState<'published' | 'pending' | 'archived' | 'draft'>('published')
   const [formVerified, setFormVerified] = useState(true)
   const [isSaving, setIsSaving] = useState(false)
 
@@ -550,8 +550,13 @@ export default function AdminTestimonialsPage() {
                     >
                       {item.status}
                     </span>
+                    {item.stayType && (
+                      <span className="text-[10px] font-bold uppercase tracking-wider bg-slate-100 text-slate-700 px-2 py-0.5 rounded-full border border-slate-200">
+                        {item.stayType}
+                      </span>
+                    )}
                     <span className="text-[10px] text-slate-400 font-medium">
-                      via {item.source.replace('_', ' ')}
+                      via {item.source?.replace('_', ' ') || 'direct'}
                     </span>
                   </div>
 
@@ -569,8 +574,32 @@ export default function AdminTestimonialsPage() {
                     </h4>
                   )}
                   <p className="text-slate-600 text-xs sm:text-sm line-clamp-4 leading-relaxed mb-4">
-                    {item.content}
+                    {item.content || item.reviewText}
                   </p>
+
+                  {/* Attached Photos in Admin Card */}
+                  {item.photos && item.photos.length > 0 && (
+                    <div className="flex items-center gap-2 mb-4 pb-2 border-b border-slate-100">
+                      {item.photos.map((photo, pIdx) => (
+                        <a
+                          key={pIdx}
+                          href={photo}
+                          target="_blank"
+                          rel="noreferrer"
+                          className="relative w-16 h-12 rounded-lg overflow-hidden border border-slate-200 block group"
+                        >
+                          <img
+                            src={photo}
+                            alt="Attached guest photo"
+                            className="w-full h-full object-cover group-hover:scale-105 transition"
+                          />
+                        </a>
+                      ))}
+                      <span className="text-[11px] text-slate-400">
+                        {item.photos.length} photo{item.photos.length > 1 ? 's' : ''} attached
+                      </span>
+                    </div>
+                  )}
                 </div>
 
                 <div className="pt-4 border-t border-slate-100">

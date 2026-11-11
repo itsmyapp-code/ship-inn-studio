@@ -1,7 +1,7 @@
 'use client'
 
 import React, { useState, useEffect } from 'react'
-import { Testimonial } from '@/lib/testimonials'
+import { Testimonial } from '@/lib/testimonials-types'
 import TestimonialCard from './TestimonialCard'
 import ReviewSubmissionModal from './ReviewSubmissionModal'
 
