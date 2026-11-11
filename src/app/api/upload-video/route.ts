@@ -24,7 +24,8 @@ export async function POST(request: Request): Promise<NextResponse> {
               'video/x-m4v',
               'image/jpeg',
               'image/png',
-              'image/webp'
+              'image/webp',
+              'application/pdf'
             ],
             addRandomSuffix: true,
             allowOverwrite: true,

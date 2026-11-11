@@ -16,6 +16,10 @@ interface DemoPostItem {
   excerpt: string
   coverImage: string
   videoUrl?: string
+  pdfUrl?: string
+  pdfFileName?: string
+  ctaText?: string
+  ctaLink?: string
   bookingRequired?: boolean
   isPast?: boolean
   publishedAt?: string
@@ -424,8 +428,29 @@ export default function DemoPoshPage() {
 
               {/* Action Buttons & Manual Delete Button */}
               <div className="p-6 sm:p-8 pt-0 border-t border-slate-100 mt-2 flex flex-col sm:flex-row items-center justify-between gap-3">
-                <div className="flex items-center gap-2 w-full sm:w-auto">
-                  {item.bookingRequired ? (
+                <div className="flex flex-wrap items-center gap-2 w-full sm:w-auto">
+                  {item.pdfUrl && (
+                    <a
+                      href={item.pdfUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="px-3 py-1.5 bg-red-50 hover:bg-red-100 text-red-700 border border-red-200 font-bold text-xs rounded-xl transition flex items-center gap-1.5 shadow-sm"
+                      title={item.pdfFileName || 'View PDF Attachment'}
+                    >
+                      <span className="text-sm">📄</span>
+                      <span>View Menu (PDF)</span>
+                    </a>
+                  )}
+
+                  {item.ctaLink && item.ctaText ? (
+                    <Link
+                      href={item.ctaLink}
+                      className="px-4 py-2 bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-600 hover:to-amber-700 text-slate-950 font-bold text-xs rounded-xl transition shadow flex items-center gap-1.5"
+                    >
+                      <span>{item.ctaText}</span>
+                      <span>→</span>
+                    </Link>
+                  ) : item.bookingRequired ? (
                     <Link
                       href="/contact"
                       className="px-4 py-2 bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold text-xs rounded-xl transition shadow text-center"

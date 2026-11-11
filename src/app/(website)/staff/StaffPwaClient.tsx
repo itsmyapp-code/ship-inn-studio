@@ -22,6 +22,10 @@ interface PublishedItem {
   videoFileName?: string
   isSilent?: boolean
   bookingRequired?: boolean
+  pdfUrl?: string
+  pdfFileName?: string
+  ctaText?: string
+  ctaLink?: string
   publishedAt: string
 }
 
@@ -62,6 +66,16 @@ export default function StaffPwaClient() {
   const [photoDataUrl, setPhotoDataUrl] = useState<string | null>(null)
   const [socialLink, setSocialLink] = useState('')
   const [isOptimizing, setIsOptimizing] = useState(false)
+
+  // Optional PDF Attachment State (e.g. Menu, Wine List)
+  const [pdfFile, setPdfFile] = useState<File | null>(null)
+  const [pdfFileName, setPdfFileName] = useState<string | null>(null)
+  const [isUploadingPdf, setIsUploadingPdf] = useState(false)
+
+  // Optional CTA Link State (Direct link to another page on the website)
+  const [ctaPreset, setCtaPreset] = useState<string>('none')
+  const [ctaCustomText, setCtaCustomText] = useState('')
+  const [ctaCustomLink, setCtaCustomLink] = useState('')
 
   // Published Items State
   const [publishedItems, setPublishedItems] = useState<PublishedItem[]>([])
@@ -192,6 +206,52 @@ export default function StaffPwaClient() {
       }
     }
 
+    // 2. Direct Client-to-Blob Upload for PDF Attachment (e.g. Menu, Wine List)
+    let finalPdfUrl: string | undefined = undefined
+    if (pdfFile) {
+      setIsUploadingPdf(true)
+      try {
+        const uniquePdfFilename = `menu-${Date.now()}-${pdfFile.name.replace(/[^a-zA-Z0-9.-]/g, '_')}`
+        const newPdfBlob = await upload(uniquePdfFilename, pdfFile, {
+          access: 'public',
+          handleUploadUrl: '/api/upload-video'
+        })
+        if (newPdfBlob && newPdfBlob.url) {
+          finalPdfUrl = newPdfBlob.url
+        }
+      } catch (err: any) {
+        console.error('PDF upload error:', err)
+        alert('PDF upload error: ' + (err.message || 'Upload failed'))
+        setIsUploadingPdf(false)
+        return
+      } finally {
+        setIsUploadingPdf(false)
+      }
+    }
+
+    // 3. Determine CTA Button link & text
+    let finalCtaText: string | undefined = undefined
+    let finalCtaLink: string | undefined = undefined
+    if (ctaPreset === 'table') {
+      finalCtaText = 'Reserve Table'
+      finalCtaLink = '/contact'
+    } else if (ctaPreset === 'rooms') {
+      finalCtaText = 'View Rooms & Stay'
+      finalCtaLink = '/rooms'
+    } else if (ctaPreset === 'xmas') {
+      finalCtaText = 'Festive & Christmas'
+      finalCtaLink = '/xmas-preview-7924'
+    } else if (ctaPreset === 'menu') {
+      finalCtaText = 'Explore Food & Drink'
+      finalCtaLink = '/eat-drink'
+    } else if (ctaPreset === 'gallery') {
+      finalCtaText = 'View Photo Gallery'
+      finalCtaLink = '/gallery'
+    } else if (ctaPreset === 'custom' && ctaCustomText.trim() && ctaCustomLink.trim()) {
+      finalCtaText = ctaCustomText.trim()
+      finalCtaLink = ctaCustomLink.trim()
+    }
+
     const newItem: PublishedItem = {
       id: `post-${Date.now()}`,
       type: postType,
@@ -214,6 +274,10 @@ export default function StaffPwaClient() {
       videoFileName: mediaType === 'video' ? videoFileName || undefined : undefined,
       isSilent: mediaType === 'video' ? isSilentMode : false,
       bookingRequired: postType === 'event' ? bookingRequired : false,
+      pdfUrl: finalPdfUrl,
+      pdfFileName: pdfFile ? pdfFile.name : undefined,
+      ctaText: finalCtaText,
+      ctaLink: finalCtaLink,
       publishedAt: 'Just Now'
     }
 
@@ -245,6 +309,11 @@ export default function StaffPwaClient() {
       setVideoFileName(null)
       setPhotoDataUrl(null)
       setSocialLink('')
+      setPdfFile(null)
+      setPdfFileName(null)
+      setCtaPreset('none')
+      setCtaCustomText('')
+      setCtaCustomLink('')
     } catch (err: any) {
       console.error('Failed to sync to demo API', err)
       alert('Error publishing item: ' + (err.message || 'Server error'))
@@ -664,13 +733,105 @@ export default function StaffPwaClient() {
             />
           </div>
 
+          {/* 5. Optional PDF Attachment (Menus, Wine Lists, Schedules) */}
+          <div>
+            <label className="block text-[11px] font-bold text-slate-600 uppercase tracking-wider mb-1.5 flex items-center justify-between">
+              <span>5. Attach Menu or Flyer (Optional PDF)</span>
+              <span className="text-[10px] text-slate-400 font-normal">Menus, Wine Lists, Schedules</span>
+            </label>
+            {!pdfFile ? (
+              <label className="flex items-center gap-2.5 px-3.5 py-2.5 bg-slate-50 hover:bg-slate-100 border border-slate-300 border-dashed rounded-xl cursor-pointer transition">
+                <span className="text-lg">📄</span>
+                <span className="text-xs font-semibold text-slate-700">Choose PDF Document (Menu/Flyer)...</span>
+                <input
+                  type="file"
+                  accept="application/pdf"
+                  className="hidden"
+                  onChange={(e) => {
+                    const file = e.target.files?.[0]
+                    if (file) {
+                      setPdfFile(file)
+                      setPdfFileName(file.name)
+                    }
+                  }}
+                />
+              </label>
+            ) : (
+              <div className="flex items-center justify-between p-2.5 bg-red-50/80 border border-red-200 rounded-xl text-xs">
+                <div className="flex items-center gap-2 min-w-0">
+                  <span className="bg-red-600 text-white font-bold text-[9px] px-1.5 py-0.5 rounded shadow-sm">PDF</span>
+                  <span className="font-semibold text-slate-800 truncate">{pdfFileName}</span>
+                </div>
+                <button
+                  type="button"
+                  onClick={() => {
+                    setPdfFile(null)
+                    setPdfFileName(null)
+                  }}
+                  className="text-red-600 hover:text-red-800 font-bold text-[11px] px-2 py-1 cursor-pointer"
+                >
+                  ✕ Remove
+                </button>
+              </div>
+            )}
+          </div>
+
+          {/* 6. Optional Direct Link / Call-to-Action (CTA) */}
+          <div>
+            <label className="block text-[11px] font-bold text-slate-600 uppercase tracking-wider mb-1.5 flex items-center justify-between">
+              <span>6. Button Link to Website Page (Optional CTA)</span>
+              <span className="text-[10px] text-slate-400 font-normal">Table, Rooms, Menus, Xmas</span>
+            </label>
+            <select
+              value={ctaPreset}
+              onChange={(e) => setCtaPreset(e.target.value)}
+              className="w-full px-3.5 py-2.5 bg-slate-50 border border-slate-300 rounded-xl text-slate-900 text-xs font-medium focus:outline-none focus:border-amber-500 transition cursor-pointer"
+            >
+              <option value="none">No Button Link</option>
+              <option value="table">🍽️ &ldquo;Reserve Table&rdquo; ➔ /contact</option>
+              <option value="xmas">🎄 &ldquo;Festive &amp; Christmas&rdquo; ➔ /xmas-preview-7924</option>
+              <option value="rooms">🛏️ &ldquo;View Rooms &amp; Stay&rdquo; ➔ /rooms</option>
+              <option value="menu">🍻 &ldquo;Explore Food &amp; Drink&rdquo; ➔ /eat-drink</option>
+              <option value="gallery">📸 &ldquo;View Photo Gallery&rdquo; ➔ /gallery</option>
+              <option value="custom">✏️ Custom Button &amp; Link...</option>
+            </select>
+
+            {ctaPreset === 'custom' && (
+              <div className="mt-2.5 p-3 bg-slate-50 border border-slate-200 rounded-xl space-y-2">
+                <input
+                  type="text"
+                  value={ctaCustomText}
+                  onChange={(e) => setCtaCustomText(e.target.value)}
+                  placeholder="Button label (e.g. Order Takeaway, Book Gig)"
+                  className="w-full px-3 py-2 bg-white border border-slate-300 rounded-lg text-slate-900 placeholder-slate-400 text-xs focus:outline-none focus:border-amber-500 transition"
+                />
+                <input
+                  type="text"
+                  value={ctaCustomLink}
+                  onChange={(e) => setCtaCustomLink(e.target.value)}
+                  placeholder="Destination URL (e.g. /contact or https://...)"
+                  className="w-full px-3 py-2 bg-white border border-slate-300 rounded-lg text-slate-900 placeholder-slate-400 text-xs focus:outline-none focus:border-amber-500 transition"
+                />
+              </div>
+            )}
+          </div>
+
           {/* Big Publish Button */}
           <button
             type="submit"
-            className="w-full py-4 bg-gradient-to-r from-amber-500 via-amber-600 to-amber-700 hover:from-amber-600 hover:to-amber-800 text-white font-extrabold text-sm rounded-xl shadow-md transition transform active:scale-98 cursor-pointer flex items-center justify-center gap-2"
+            disabled={isUploadingVideo || isUploadingPdf}
+            className="w-full py-4 bg-gradient-to-r from-amber-500 via-amber-600 to-amber-700 hover:from-amber-600 hover:to-amber-800 text-white font-extrabold text-sm rounded-xl shadow-md transition transform active:scale-98 cursor-pointer flex items-center justify-center gap-2 disabled:opacity-60"
           >
-            <span>🚀</span>
-            <span>Publish to The Ship Inn (1-Click)</span>
+            {isUploadingVideo ? (
+              <>⏳ Uploading Video to CDN...</>
+            ) : isUploadingPdf ? (
+              <>⏳ Uploading PDF Menu...</>
+            ) : (
+              <>
+                <span>🚀</span>
+                <span>Publish to The Ship Inn (1-Click)</span>
+              </>
+            )}
           </button>
         </form>
 
