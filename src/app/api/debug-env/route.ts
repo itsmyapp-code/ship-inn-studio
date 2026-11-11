@@ -17,6 +17,9 @@ export async function GET() {
   return NextResponse.json({
     cookieNames,
     matchingKeys,
+    allEnvKeys: Object.keys(process.env).sort(),
+    VERCEL_ENV: process.env.VERCEL_ENV,
+    VERCEL_GIT_COMMIT_REF: process.env.VERCEL_GIT_COMMIT_REF,
     OST_GITHUB_TOKEN: process.env.OST_GITHUB_TOKEN ? 'SET' : 'NOT SET',
     DST_GITHUB_TOKEN: process.env.DST_GITHUB_TOKEN ? 'SET' : 'NOT SET',
     GITHUB_TOKEN: process.env.GITHUB_TOKEN ? 'SET' : 'NOT SET',
