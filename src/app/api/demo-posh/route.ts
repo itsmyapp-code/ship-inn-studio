@@ -28,7 +28,7 @@ async function readItems(): Promise<any[]> {
       const { blobs } = await list({ prefix: BLOB_FEED_KEY, token })
       const feedBlob = blobs.find(b => b.pathname === BLOB_FEED_KEY)
       if (feedBlob && feedBlob.url) {
-        const res = await fetch(feedBlob.url, { cache: 'no-store' })
+        const res = await fetch(`${feedBlob.url}?t=${Date.now()}`, { cache: 'no-store' })
         if (res.ok) {
           const items = await res.json()
           if (Array.isArray(items)) return items
@@ -64,11 +64,13 @@ async function writeItems(items: any[]): Promise<boolean> {
       await put(BLOB_FEED_KEY, contentJson, {
         access: 'public',
         addRandomSuffix: false,
+        allowOverwrite: true,
         token
       })
       return true
-    } catch (blobErr) {
-      console.error('Failed to write feed to Vercel Blob:', blobErr)
+    } catch (blobErr: any) {
+      console.error('Failed to write feed to Vercel Blob:', blobErr.message || blobErr)
+      throw blobErr
     }
   }
 
@@ -80,11 +82,10 @@ async function writeItems(items: any[]): Promise<boolean> {
     }
     fs.writeFileSync(DATA_FILE, contentJson, 'utf-8')
     return true
-  } catch (err) {
+  } catch (err: any) {
     console.error('Failed to write demo-posh-items.json locally:', err)
+    throw err
   }
-
-  return false
 }
 
 // GET /api/demo-posh

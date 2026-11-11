@@ -217,27 +217,38 @@ export default function StaffPwaClient() {
       publishedAt: 'Just Now'
     }
 
-    const updated = [newItem, ...publishedItems]
-    setPublishedItems(updated)
+    try {
+      const res = await fetch('/api/demo-posh', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ item: newItem })
+      })
+      const data = await res.json()
+      if (!data.success) {
+        throw new Error(data.error || 'Server failed to save post')
+      }
 
-    // Save to shared demo database API & commit to GitHub
-    fetch('/api/demo-posh', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ item: newItem })
-    }).catch((err) => console.error('Failed to sync to demo API', err))
+      if (Array.isArray(data.items)) {
+        setPublishedItems(data.items)
+      } else {
+        setPublishedItems([newItem, ...publishedItems])
+      }
 
-    setLatestItem(newItem)
-    setShowSuccessModal(true)
+      setLatestItem(newItem)
+      setShowSuccessModal(true)
 
-    // Reset Form
-    setTitle('')
-    setExcerpt('')
-    setVideoFile(null)
-    setVideoFileUrl(null)
-    setVideoFileName(null)
-    setPhotoDataUrl(null)
-    setSocialLink('')
+      // Reset Form
+      setTitle('')
+      setExcerpt('')
+      setVideoFile(null)
+      setVideoFileUrl(null)
+      setVideoFileName(null)
+      setPhotoDataUrl(null)
+      setSocialLink('')
+    } catch (err: any) {
+      console.error('Failed to sync to demo API', err)
+      alert('Error publishing item: ' + (err.message || 'Server error'))
+    }
   }
 
   const handleDeleteItem = async (id: string, itemTitle: string) => {
