@@ -13,15 +13,6 @@ const nextConfig = {
     ],
     formats: ['image/avif', 'image/webp'],
   },
-  env: {
-    OST_GITHUB_ID: process.env.OST_GITHUB_ID,
-    OST_GITHUB_SECRET: process.env.OST_GITHUB_SECRET,
-    OST_REPO_SLUG: process.env.OST_REPO_SLUG,
-    OST_REPO_OWNER: process.env.OST_REPO_OWNER,
-    OST_TOKEN_SECRET: process.env.OST_TOKEN_SECRET,
-    OST_GITHUB_TOKEN: process.env.OST_GITHUB_TOKEN,
-    GITHUB_TOKEN: process.env.GITHUB_TOKEN,
-  },
 }
 
 module.exports = nextConfig
