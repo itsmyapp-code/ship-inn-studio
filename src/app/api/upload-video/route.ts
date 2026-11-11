@@ -1,3 +1,4 @@
+// Vercel Blob Video Streaming API (Connected: ship-inn-studio-blob)
 import { put } from '@vercel/blob'
 import { NextResponse } from 'next/server'
 

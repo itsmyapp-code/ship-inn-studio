@@ -97,7 +97,7 @@ export default function DemoPoshPage() {
           setEventsList(data.items)
         }
       })
-      .catch(() => {})
+      .catch(() => { })
   }, [])
 
   // Simulator Form State: Post Type ("event" or "news")
@@ -305,8 +305,8 @@ export default function DemoPoshPage() {
               type="button"
               onClick={() => setActiveTab('upcoming')}
               className={`px-4 sm:px-5 py-2 rounded-xl text-xs sm:text-sm font-bold transition cursor-pointer flex items-center gap-2 ${activeTab === 'upcoming'
-                  ? 'bg-white text-slate-950 shadow-sm'
-                  : 'text-slate-600 hover:text-slate-950'
+                ? 'bg-white text-slate-950 shadow-sm'
+                : 'text-slate-600 hover:text-slate-950'
                 }`}
             >
               <span>Upcoming Events</span>
@@ -319,8 +319,8 @@ export default function DemoPoshPage() {
               type="button"
               onClick={() => setActiveTab('news')}
               className={`px-4 sm:px-5 py-2 rounded-xl text-xs sm:text-sm font-bold transition cursor-pointer flex items-center gap-2 ${activeTab === 'news'
-                  ? 'bg-white text-slate-950 shadow-sm'
-                  : 'text-slate-600 hover:text-slate-950'
+                ? 'bg-white text-slate-950 shadow-sm'
+                : 'text-slate-600 hover:text-slate-950'
                 }`}
             >
               <span>📰 News &amp; Updates</span>
@@ -333,8 +333,8 @@ export default function DemoPoshPage() {
               type="button"
               onClick={() => setActiveTab('past')}
               className={`px-4 sm:px-5 py-2 rounded-xl text-xs sm:text-sm font-bold transition cursor-pointer flex items-center gap-2 ${activeTab === 'past'
-                  ? 'bg-white text-slate-950 shadow-sm'
-                  : 'text-slate-600 hover:text-slate-950'
+                ? 'bg-white text-slate-950 shadow-sm'
+                : 'text-slate-600 hover:text-slate-950'
                 }`}
             >
               <span>Past Events (Auto-Archive)</span>
