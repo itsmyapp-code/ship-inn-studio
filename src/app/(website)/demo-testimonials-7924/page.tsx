@@ -2,7 +2,7 @@ import Link from 'next/link'
 import HeroCarousel from '@/components/HeroCarousel'
 import NewsletterSignup from '@/components/NewsletterSignup'
 import SmartImage from '@/components/SmartImage'
-import TestimonialsSection from '@/components/TestimonialsSection'
+import TestimonialCarousel from '@/components/testimonials/TestimonialCarousel'
 import { getTestimonials } from '@/lib/testimonials'
 import { getPageData } from '@/lib/outstatic'
 import { TrackedFeatureCard, TrackedHeroButton } from '@/components/TrackedContactLinks'
@@ -214,8 +214,8 @@ export default async function PrivateTestimonialsDemoPage() {
         </div>
       </section>
 
-      {/* Customer Testimonials & Reviews (PRIVATE DEMO) */}
-      <TestimonialsSection initialTestimonials={testimonials} />
+      {/* Customer Testimonials & Reviews Carousel (PRIVATE DEMO of Future Homepage Feature) */}
+      <TestimonialCarousel testimonials={testimonials} />
 
       {/* Call to Action */}
       <section className="relative py-20 bg-gradient-to-br from-slate-900 via-ship-blue-900 to-slate-950 text-white overflow-hidden">
