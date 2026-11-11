@@ -1,41 +1,45 @@
 import { NextResponse } from 'next/server'
 import fs from 'fs'
 import path from 'path'
-import { getGitHubConfig } from '@/lib/testimonials'
+import { put, list } from '@vercel/blob'
 
 export const dynamic = 'force-dynamic'
 
 const DATA_FILE = path.join(process.cwd(), 'content', 'demo-posh-items.json')
-const GH_FILE_PATH = 'content/demo-posh-items.json'
+const BLOB_FEED_KEY = 'posh-feed.json'
 
-// 1. Read helper: tries GitHub in production (to avoid Vercel ephemeral filesystem wipe), falls back to local disk
+// Helper to get Blob token if available
+function getBlobToken(): string | undefined {
+  if (process.env.BLOB_READ_WRITE_TOKEN) return process.env.BLOB_READ_WRITE_TOKEN
+  const blobKeys = Object.keys(process.env).filter(
+    k => k.toUpperCase().includes('BLOB') || k.toUpperCase().includes('STORAGE')
+  )
+  const tokenKey = blobKeys.find(k => k.includes('TOKEN') || k.includes('READ_WRITE'))
+  return tokenKey ? process.env[tokenKey] : undefined
+}
+
+// 1. Read items: Prioritizes Vercel Blob (instant, zero-builds), falls back to local disk
 async function readItems(): Promise<any[]> {
-  try {
-    const { token, owner, repo, branch } = await getGitHubConfig()
-    if (token) {
-      const apiUrl = `https://api.github.com/repos/${owner}/${repo}/contents/${GH_FILE_PATH}?ref=${branch}`
-      const res = await fetch(apiUrl, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-          Accept: 'application/vnd.github.v3+json',
-          'User-Agent': 'The-Ship-Inn-Admin'
-        },
-        cache: 'no-store'
-      })
-      if (res.ok) {
-        const data = await res.json()
-        if (data && data.content) {
-          const raw = Buffer.from(data.content, 'base64').toString('utf8')
-          const parsed = JSON.parse(raw)
-          if (Array.isArray(parsed)) return parsed
+  const token = getBlobToken()
+
+  // Try Vercel Blob first
+  if (token) {
+    try {
+      const { blobs } = await list({ prefix: BLOB_FEED_KEY, token })
+      const feedBlob = blobs.find(b => b.pathname === BLOB_FEED_KEY)
+      if (feedBlob && feedBlob.url) {
+        const res = await fetch(feedBlob.url, { cache: 'no-store' })
+        if (res.ok) {
+          const items = await res.json()
+          if (Array.isArray(items)) return items
         }
       }
+    } catch (blobErr) {
+      console.warn('Notice reading feed from Vercel Blob:', blobErr)
     }
-  } catch (err) {
-    console.error('Error fetching demo-posh items from GitHub:', err)
   }
 
-  // Fallback to local disk file
+  // Fallback to local disk file (bundled content or local development)
   try {
     if (fs.existsSync(DATA_FILE)) {
       const content = fs.readFileSync(DATA_FILE, 'utf-8')
@@ -45,64 +49,39 @@ async function readItems(): Promise<any[]> {
   } catch (err) {
     console.error('Error reading demo-posh-items.json locally:', err)
   }
+
   return []
 }
 
-// 2. Write helper: writes to disk and commits to GitHub repo
-async function writeItems(items: any[], commitMessage: string) {
+// 2. Write items: Saves directly into Vercel Blob without making Git commits (ZERO Vercel build minutes!)
+async function writeItems(items: any[]): Promise<boolean> {
   const contentJson = JSON.stringify(items, null, 2)
+  const token = getBlobToken()
 
-  // A. Save locally
+  // Primary: Store directly in Vercel Blob Edge storage (instant, zero-rebuild)
+  if (token) {
+    try {
+      await put(BLOB_FEED_KEY, contentJson, {
+        access: 'public',
+        addRandomSuffix: false,
+        token
+      })
+      return true
+    } catch (blobErr) {
+      console.error('Failed to write feed to Vercel Blob:', blobErr)
+    }
+  }
+
+  // Secondary / Local: Write to local disk file
   try {
     const dir = path.dirname(DATA_FILE)
     if (!fs.existsSync(dir)) {
       fs.mkdirSync(dir, { recursive: true })
     }
     fs.writeFileSync(DATA_FILE, contentJson, 'utf-8')
+    return true
   } catch (err) {
     console.error('Failed to write demo-posh-items.json locally:', err)
-  }
-
-  // B. Commit to GitHub (persists permanently on Vercel and triggers redeploy)
-  try {
-    const { token, owner, repo, branch } = await getGitHubConfig()
-    if (token) {
-      const apiUrl = `https://api.github.com/repos/${owner}/${repo}/contents/${GH_FILE_PATH}`
-      let sha: string | undefined
-
-      const getRes = await fetch(`${apiUrl}?ref=${branch}`, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-          Accept: 'application/vnd.github.v3+json',
-          'User-Agent': 'The-Ship-Inn-Admin'
-        },
-        cache: 'no-store'
-      })
-      if (getRes.ok) {
-        const fileData = await getRes.json()
-        sha = fileData.sha
-      }
-
-      const contentBase64 = Buffer.from(contentJson, 'utf8').toString('base64')
-      await fetch(apiUrl, {
-        method: 'PUT',
-        headers: {
-          Authorization: `Bearer ${token}`,
-          Accept: 'application/vnd.github.v3+json',
-          'Content-Type': 'application/json',
-          'User-Agent': 'The-Ship-Inn-Admin'
-        },
-        body: JSON.stringify({
-          message: commitMessage,
-          content: contentBase64,
-          branch,
-          ...(sha ? { sha } : {})
-        })
-      })
-      return true
-    }
-  } catch (err) {
-    console.error('Failed to commit demo-posh-items.json to GitHub:', err)
   }
 
   return false
@@ -114,7 +93,7 @@ export async function GET() {
   return NextResponse.json({ success: true, items })
 }
 
-// POST /api/demo-posh (Create or Delete)
+// POST /api/demo-posh (Create or Delete without triggering Git commits or Vercel rebuilds)
 export async function POST(request: Request) {
   try {
     const body = await request.json()
@@ -123,15 +102,14 @@ export async function POST(request: Request) {
     let current = await readItems()
 
     if (action === 'delete') {
-      const targetItem = current.find((i: any) => i.id === id)
       current = current.filter((i: any) => i.id !== id)
-      await writeItems(current, `chore(posh): delete "${targetItem?.title || id}"`)
+      await writeItems(current)
       return NextResponse.json({ success: true, items: current })
     }
 
     if (item && item.title) {
       current = [item, ...current]
-      await writeItems(current, `feat(posh): publish "${item.title}"`)
+      await writeItems(current)
       return NextResponse.json({ success: true, items: current })
     }
 
