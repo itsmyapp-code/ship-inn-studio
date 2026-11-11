@@ -79,10 +79,22 @@ export default function DemoPoshPage() {
   const [simLocation, setSimLocation] = useState('The Ship Inn, Porlock Weir')
   const [simExcerpt, setSimExcerpt] = useState('')
   const [simVideoUrl, setSimVideoUrl] = useState('')
+  const [videoMode, setVideoMode] = useState<'link' | 'upload'>('link')
+  const [uploadedVideoName, setUploadedVideoName] = useState<string | null>(null)
+  const [uploadedVideoSize, setUploadedVideoSize] = useState<string | null>(null)
   const [simBooking, setSimBooking] = useState(false)
   const [simPhotoUrl, setSimPhotoUrl] = useState<string>('/images/shipinn-197.webp')
   const [isCompressing, setIsCompressing] = useState(false)
   const [simSuccess, setSimSuccess] = useState(false)
+
+  const handleVideoUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0]
+    if (!file) return
+    const blobUrl = URL.createObjectURL(file)
+    setSimVideoUrl(blobUrl)
+    setUploadedVideoName(file.name)
+    setUploadedVideoSize((file.size / (1024 * 1024)).toFixed(1) + ' MB')
+  }
 
   const handlePhotoUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0]
@@ -239,11 +251,10 @@ export default function DemoPoshPage() {
             <button
               type="button"
               onClick={() => setActiveTab('upcoming')}
-              className={`px-5 py-2 rounded-xl text-xs sm:text-sm font-bold transition cursor-pointer flex items-center gap-2 ${
-                activeTab === 'upcoming'
+              className={`px-5 py-2 rounded-xl text-xs sm:text-sm font-bold transition cursor-pointer flex items-center gap-2 ${activeTab === 'upcoming'
                   ? 'bg-white text-slate-950 shadow-sm'
                   : 'text-slate-600 hover:text-slate-950'
-              }`}
+                }`}
             >
               <span>Upcoming Events</span>
               <span className="bg-amber-100 text-amber-900 text-xs px-2 py-0.5 rounded-full font-mono">
@@ -254,11 +265,10 @@ export default function DemoPoshPage() {
             <button
               type="button"
               onClick={() => setActiveTab('past')}
-              className={`px-5 py-2 rounded-xl text-xs sm:text-sm font-bold transition cursor-pointer flex items-center gap-2 ${
-                activeTab === 'past'
+              className={`px-5 py-2 rounded-xl text-xs sm:text-sm font-bold transition cursor-pointer flex items-center gap-2 ${activeTab === 'past'
                   ? 'bg-white text-slate-950 shadow-sm'
                   : 'text-slate-600 hover:text-slate-950'
-              }`}
+                }`}
             >
               <span>Past Events (Auto-Archive)</span>
               <span className="bg-slate-300 text-slate-700 text-xs px-2 py-0.5 rounded-full font-mono">
@@ -450,46 +460,111 @@ export default function DemoPoshPage() {
               </div>
             </div>
 
-            {/* Video / Reel URL Input with One-Click Sample Presets */}
+            {/* Media Selector: Either Paste Social Reel/Post Link OR Directly Upload a Video */}
             <div>
-              <div className="flex items-center justify-between mb-1.5">
-                <label className="text-xs font-bold text-slate-300 uppercase tracking-wider flex items-center gap-1.5">
-                  <span>3. Facebook Reel, Instagram Reel, or YouTube Shorts (Optional)</span>
+              <div className="flex items-center justify-between mb-2">
+                <label className="text-xs font-bold text-slate-300 uppercase tracking-wider">
+                  3. Video / Media (Optional)
                 </label>
-                <span className="text-[11px] text-amber-400">Zero Server Storage Bloat</span>
-              </div>
-              <input
-                type="url"
-                value={simVideoUrl}
-                onChange={(e) => setSimVideoUrl(e.target.value)}
-                placeholder="Paste Facebook Reel URL e.g. https://www.facebook.com/reel/..."
-                className="w-full px-4 py-3 bg-slate-900 border border-slate-700 rounded-xl text-white placeholder-slate-500 text-sm focus:outline-none focus:border-amber-400 transition"
-              />
-              <div className="flex flex-wrap gap-2 mt-2">
-                <button
-                  type="button"
-                  onClick={() => setSimVideoUrl('https://www.facebook.com/reel/1015849382910284')}
-                  className="text-[11px] bg-slate-800 hover:bg-slate-700 text-slate-300 px-2.5 py-1 rounded-lg border border-slate-700 transition cursor-pointer"
-                >
-                  + Use Sample Facebook Reel
-                </button>
-                <button
-                  type="button"
-                  onClick={() => setSimVideoUrl('https://youtube.com/shorts/5O9Yw7sZf7Q')}
-                  className="text-[11px] bg-slate-800 hover:bg-slate-700 text-slate-300 px-2.5 py-1 rounded-lg border border-slate-700 transition cursor-pointer"
-                >
-                  + Use Sample YouTube Short
-                </button>
-                {simVideoUrl && (
+                <div className="flex items-center gap-1 bg-slate-900 p-1 rounded-xl border border-slate-700">
                   <button
                     type="button"
-                    onClick={() => setSimVideoUrl('')}
-                    className="text-[11px] text-red-400 hover:text-red-300 underline cursor-pointer"
+                    onClick={() => setVideoMode('link')}
+                    className={`px-3 py-1 rounded-lg text-xs font-bold transition cursor-pointer ${
+                      videoMode === 'link'
+                        ? 'bg-amber-500 text-slate-950 shadow-xs'
+                        : 'text-slate-400 hover:text-white'
+                    }`}
                   >
-                    Clear URL
+                    🔗 Paste Social Link
                   </button>
-                )}
+                  <button
+                    type="button"
+                    onClick={() => setVideoMode('upload')}
+                    className={`px-3 py-1 rounded-lg text-xs font-bold transition cursor-pointer ${
+                      videoMode === 'upload'
+                        ? 'bg-amber-500 text-slate-950 shadow-xs'
+                        : 'text-slate-400 hover:text-white'
+                    }`}
+                  >
+                    🎥 Upload Video File
+                  </button>
+                </div>
               </div>
+
+              {videoMode === 'link' ? (
+                <div>
+                  <input
+                    type="text"
+                    value={simVideoUrl}
+                    onChange={(e) => setSimVideoUrl(e.target.value)}
+                    placeholder="Paste Facebook Reel, Facebook Photo, or YouTube link..."
+                    className="w-full px-4 py-3 bg-slate-900 border border-slate-700 rounded-xl text-white placeholder-slate-500 text-sm focus:outline-none focus:border-amber-400 transition"
+                  />
+                  <div className="flex flex-wrap gap-2 mt-2">
+                    <button
+                      type="button"
+                      onClick={() =>
+                        setSimVideoUrl('https://www.facebook.com/photo/?fbid=122145032073039461&set=a.122102688105039461')
+                      }
+                      className="text-[11px] bg-slate-800 hover:bg-slate-700 text-slate-300 px-2.5 py-1 rounded-lg border border-slate-700 transition cursor-pointer"
+                    >
+                      + Use Your Facebook Photo Post
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => setSimVideoUrl('https://youtube.com/shorts/5O9Yw7sZf7Q')}
+                      className="text-[11px] bg-slate-800 hover:bg-slate-700 text-slate-300 px-2.5 py-1 rounded-lg border border-slate-700 transition cursor-pointer"
+                    >
+                      + Use Sample YouTube Short
+                    </button>
+                    {simVideoUrl && (
+                      <button
+                        type="button"
+                        onClick={() => {
+                          setSimVideoUrl('')
+                          setUploadedVideoName(null)
+                          setUploadedVideoSize(null)
+                        }}
+                        className="text-[11px] text-red-400 hover:text-red-300 underline cursor-pointer"
+                      >
+                        Clear Media
+                      </button>
+                    )}
+                  </div>
+                  <p className="text-[11px] text-slate-500 mt-1.5">
+                    💡 Automatically routes Facebook Reels to the video player, and Facebook Photos/Posts to the interactive post card!
+                  </p>
+                </div>
+              ) : (
+                <div className="p-4 bg-slate-900 border border-slate-700 rounded-xl">
+                  <input
+                    type="file"
+                    accept="video/mp4,video/quicktime,video/webm,video/*"
+                    onChange={handleVideoUpload}
+                    className="text-xs text-slate-300 file:mr-3 file:py-2 file:px-4 file:rounded-xl file:border-0 file:text-xs file:font-bold file:bg-amber-500 file:text-slate-950 hover:file:bg-amber-400 file:cursor-pointer"
+                  />
+                  {uploadedVideoName && (
+                    <div className="mt-3 flex items-center justify-between text-xs text-emerald-400 bg-emerald-950/60 p-2.5 rounded-lg border border-emerald-800">
+                      <span>✓ Video Attached: {uploadedVideoName} ({uploadedVideoSize})</span>
+                      <button
+                        type="button"
+                        onClick={() => {
+                          setSimVideoUrl('')
+                          setUploadedVideoName(null)
+                          setUploadedVideoSize(null)
+                        }}
+                        className="text-red-400 hover:text-red-300 underline font-semibold cursor-pointer"
+                      >
+                        Remove
+                      </button>
+                    </div>
+                  )}
+                  <p className="text-[11px] text-slate-400 mt-2">
+                    Supports MP4, MOV (iPhone), and WebM files directly from your phone camera roll.
+                  </p>
+                </div>
+              )}
             </div>
 
             {/* Camera Roll Flyer Upload */}
