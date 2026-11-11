@@ -26,6 +26,8 @@ export async function POST(request: Request): Promise<NextResponse> {
               'image/png',
               'image/webp'
             ],
+            addRandomSuffix: true,
+            allowOverwrite: true,
             tokenPayload: JSON.stringify({})
           }
         },

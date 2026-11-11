@@ -96,7 +96,7 @@ export default function StaffPwaClient() {
           setPublishedItems(data.items)
         }
       })
-      .catch(() => {})
+      .catch(() => { })
 
     return () => window.removeEventListener('beforeinstallprompt', handleBeforeInstall)
   }, [])
@@ -172,7 +172,8 @@ export default function StaffPwaClient() {
     if (mediaType === 'video' && videoFile) {
       setIsUploadingVideo(true)
       try {
-        const newBlob = await upload(videoFile.name, videoFile, {
+        const uniqueFilename = `video-${Date.now()}-${videoFile.name.replace(/[^a-zA-Z0-9.-]/g, '_')}`
+        const newBlob = await upload(uniqueFilename, videoFile, {
           access: 'public',
           handleUploadUrl: '/api/upload-video'
         })
@@ -208,8 +209,8 @@ export default function StaffPwaClient() {
         mediaType === 'video'
           ? finalVideoUrl
           : mediaType === 'social'
-          ? socialLink.trim() || undefined
-          : undefined,
+            ? socialLink.trim() || undefined
+            : undefined,
       videoFileName: mediaType === 'video' ? videoFileName || undefined : undefined,
       isSilent: mediaType === 'video' ? isSilentMode : false,
       bookingRequired: postType === 'event' ? bookingRequired : false,
@@ -413,11 +414,10 @@ export default function StaffPwaClient() {
               <button
                 type="button"
                 onClick={() => setPostType('event')}
-                className={`py-2.5 px-3 rounded-lg text-xs font-bold transition flex items-center justify-center gap-1.5 cursor-pointer ${
-                  postType === 'event'
+                className={`py-2.5 px-3 rounded-lg text-xs font-bold transition flex items-center justify-center gap-1.5 cursor-pointer ${postType === 'event'
                     ? 'bg-amber-500 text-white shadow-xs'
                     : 'text-slate-600 hover:text-slate-950'
-                }`}
+                  }`}
               >
                 <span>📅 Scheduled Event</span>
               </button>
@@ -425,11 +425,10 @@ export default function StaffPwaClient() {
               <button
                 type="button"
                 onClick={() => setPostType('news')}
-                className={`py-2.5 px-3 rounded-lg text-xs font-bold transition flex items-center justify-center gap-1.5 cursor-pointer ${
-                  postType === 'news'
+                className={`py-2.5 px-3 rounded-lg text-xs font-bold transition flex items-center justify-center gap-1.5 cursor-pointer ${postType === 'news'
                     ? 'bg-blue-800 text-white shadow-xs'
                     : 'text-slate-600 hover:text-slate-950'
-                }`}
+                  }`}
               >
                 <span>📰 Pub News / Special</span>
               </button>
@@ -512,11 +511,10 @@ export default function StaffPwaClient() {
               <button
                 type="button"
                 onClick={() => setMediaType('video')}
-                className={`py-2 rounded-lg transition cursor-pointer flex items-center justify-center gap-1 ${
-                  mediaType === 'video'
+                className={`py-2 rounded-lg transition cursor-pointer flex items-center justify-center gap-1 ${mediaType === 'video'
                     ? 'bg-amber-500 text-white shadow-xs'
                     : 'text-slate-600 hover:text-slate-950'
-                }`}
+                  }`}
               >
                 <span>🎥 Video</span>
               </button>
@@ -524,11 +522,10 @@ export default function StaffPwaClient() {
               <button
                 type="button"
                 onClick={() => setMediaType('photo')}
-                className={`py-2 rounded-lg transition cursor-pointer flex items-center justify-center gap-1 ${
-                  mediaType === 'photo'
+                className={`py-2 rounded-lg transition cursor-pointer flex items-center justify-center gap-1 ${mediaType === 'photo'
                     ? 'bg-amber-500 text-white shadow-xs'
                     : 'text-slate-600 hover:text-slate-950'
-                }`}
+                  }`}
               >
                 <span>🖼️ Photo/Flyer</span>
               </button>
@@ -536,11 +533,10 @@ export default function StaffPwaClient() {
               <button
                 type="button"
                 onClick={() => setMediaType('social')}
-                className={`py-2 rounded-lg transition cursor-pointer flex items-center justify-center gap-1 ${
-                  mediaType === 'social'
+                className={`py-2 rounded-lg transition cursor-pointer flex items-center justify-center gap-1 ${mediaType === 'social'
                     ? 'bg-amber-500 text-white shadow-xs'
                     : 'text-slate-600 hover:text-slate-950'
-                }`}
+                  }`}
               >
                 <span>🔗 Social Link</span>
               </button>
@@ -689,9 +685,8 @@ export default function StaffPwaClient() {
                 >
                   <div className="min-w-0 flex-1">
                     <div className="flex items-center gap-2 mb-1">
-                      <span className={`text-[9px] font-bold px-2 py-0.5 rounded-full uppercase ${
-                        item.type === 'event' ? 'bg-amber-100 text-amber-900' : 'bg-blue-100 text-blue-900'
-                      }`}>
+                      <span className={`text-[9px] font-bold px-2 py-0.5 rounded-full uppercase ${item.type === 'event' ? 'bg-amber-100 text-amber-900' : 'bg-blue-100 text-blue-900'
+                        }`}>
                         {item.type}
                       </span>
                       {item.eventDate && (
