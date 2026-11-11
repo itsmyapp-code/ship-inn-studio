@@ -20,7 +20,11 @@ export interface Testimonial {
 const TESTIMONIALS_FILE = path.join(process.cwd(), 'content', 'testimonials.json')
 
 export async function getAuthToken(): Promise<string | undefined> {
-  const envToken = process.env.GITHUB_TOKEN || process.env.OST_GITHUB_TOKEN || process.env.OST_TOKEN
+  const envToken =
+    process.env.GITHUB_TOKEN ||
+    process.env.OST_GITHUB_TOKEN ||
+    process.env.DST_GITHUB_TOKEN ||
+    process.env.OST_TOKEN
   if (envToken) return envToken
 
   try {
