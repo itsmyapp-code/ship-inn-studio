@@ -7,9 +7,9 @@ import { getTestimonials } from '@/lib/testimonials'
 import { getPageData } from '@/lib/outstatic'
 import { TrackedFeatureCard, TrackedHeroButton } from '@/components/TrackedContactLinks'
 
-export default function HomePage() {
+export default async function HomePage() {
   const pageData = getPageData('home')
-  const testimonials = getTestimonials({ status: 'published' })
+  const testimonials = await getTestimonials({ status: 'published' })
 
   // Hero images for carousel — fix Outstatic's double-slash paths
   const fixPath = (p: string) => p.replace(/^\/\//, '/')

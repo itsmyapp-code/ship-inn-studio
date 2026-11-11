@@ -14,13 +14,13 @@ export async function GET(request: Request) {
   try {
     const { searchParams } = new URL(request.url)
     const statusParam = (searchParams.get('status') || 'published') as 'published' | 'pending' | 'archived' | 'all'
-    const items = getTestimonials({ status: statusParam })
+    const items = await getTestimonials({ status: statusParam })
 
     // Check if the current requester is authorized to edit live site
     const token = await getAuthToken()
 
     // Provide stats for the admin manager
-    const all = readTestimonials()
+    const all = await readTestimonials()
     const stats = {
       total: all.length,
       published: all.filter((t) => t.status === 'published').length,
@@ -81,7 +81,7 @@ export async function POST(request: Request) {
       )
     }
 
-    const all = readTestimonials()
+    const all = await readTestimonials()
     const newId = `test-${Date.now()}-${Math.random().toString(36).substring(2, 6)}`
 
     const newTestimonial: Testimonial = {
@@ -154,7 +154,7 @@ export async function PATCH(request: Request) {
       )
     }
 
-    const all = readTestimonials()
+    const all = await readTestimonials()
     const index = all.findIndex((t) => t.id === id)
     if (index === -1) {
       return NextResponse.json(
@@ -237,7 +237,7 @@ export async function DELETE(request: Request) {
       )
     }
 
-    const all = readTestimonials()
+    const all = await readTestimonials()
     const filtered = all.filter((t) => t.id !== id)
 
     if (filtered.length === all.length) {

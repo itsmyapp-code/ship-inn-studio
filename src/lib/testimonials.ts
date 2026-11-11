@@ -76,7 +76,35 @@ export async function getGitHubConfig() {
   return { token, owner, repo, branch }
 }
 
-export function readTestimonials(): Testimonial[] {
+export async function readTestimonials(): Promise<Testimonial[]> {
+  // First attempt: fetch real-time from GitHub if token is available
+  try {
+    const { token, owner, repo, branch } = await getGitHubConfig()
+    if (token) {
+      const filePath = 'content/testimonials.json'
+      const apiUrl = `https://api.github.com/repos/${owner}/${repo}/contents/${filePath}?ref=${branch}`
+      const res = await fetch(apiUrl, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+          Accept: 'application/vnd.github.v3+json',
+          'User-Agent': 'The-Ship-Inn-Admin'
+        },
+        cache: 'no-store'
+      })
+      if (res.ok) {
+        const data = await res.json()
+        if (data && data.content) {
+          const raw = Buffer.from(data.content, 'base64').toString('utf8')
+          const parsed = JSON.parse(raw)
+          if (Array.isArray(parsed)) return parsed
+        }
+      }
+    }
+  } catch (err) {
+    console.error('Error fetching testimonials from GitHub:', err)
+  }
+
+  // Fallback: read from local disk
   try {
     if (!fs.existsSync(TESTIMONIALS_FILE)) {
       const dir = path.dirname(TESTIMONIALS_FILE)
@@ -90,15 +118,26 @@ export function readTestimonials(): Testimonial[] {
     const parsed = JSON.parse(raw)
     return Array.isArray(parsed) ? parsed : []
   } catch (err) {
-    console.error('Error reading testimonials.json:', err)
+    console.error('Error reading testimonials.json locally:', err)
     return []
   }
 }
 
-export function getTestimonials(filter?: {
+export function readTestimonialsSync(): Testimonial[] {
+  try {
+    if (!fs.existsSync(TESTIMONIALS_FILE)) return []
+    const raw = fs.readFileSync(TESTIMONIALS_FILE, 'utf8')
+    const parsed = JSON.parse(raw)
+    return Array.isArray(parsed) ? parsed : []
+  } catch {
+    return []
+  }
+}
+
+export async function getTestimonials(filter?: {
   status?: 'published' | 'pending' | 'archived' | 'all'
-}): Testimonial[] {
-  const all = readTestimonials()
+}): Promise<Testimonial[]> {
+  const all = await readTestimonials()
   const statusFilter = filter?.status || 'published'
 
   let filtered = all
@@ -107,6 +146,22 @@ export function getTestimonials(filter?: {
   }
 
   // Sort newest first
+  return filtered.sort((a, b) => {
+    return new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
+  })
+}
+
+export function getTestimonialsSync(filter?: {
+  status?: 'published' | 'pending' | 'archived' | 'all'
+}): Testimonial[] {
+  const all = readTestimonialsSync()
+  const statusFilter = filter?.status || 'published'
+
+  let filtered = all
+  if (statusFilter !== 'all') {
+    filtered = all.filter((t) => t.status === statusFilter)
+  }
+
   return filtered.sort((a, b) => {
     return new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
   })
