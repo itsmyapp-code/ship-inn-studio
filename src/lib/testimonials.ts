@@ -2,6 +2,7 @@ import fs from 'fs'
 import path from 'path'
 import { cookies } from 'next/headers'
 import * as jose from 'jose'
+import { Outstatic } from 'outstatic'
 
 export interface Testimonial {
   id: string
@@ -21,17 +22,27 @@ const TESTIMONIALS_FILE = path.join(process.cwd(), 'content', 'testimonials.json
 
 export async function getAuthToken(): Promise<string | undefined> {
   const envToken =
-    process.env.GITHUB_TOKEN ||
     process.env.OST_GITHUB_TOKEN ||
+    process.env.GITHUB_TOKEN ||
     process.env.DST_GITHUB_TOKEN ||
     process.env.OST_TOKEN
   if (envToken) return envToken
+
+  // Try Outstatic official session loader
+  try {
+    const ostData = await Outstatic()
+    if (ostData?.session?.access_token) {
+      return ostData.session.access_token
+    }
+  } catch (err) {
+    // Fallback to cookie check if Outstatic() throws
+  }
 
   try {
     const cookieStore = await cookies()
     const tokenName = process.env.NEXT_PUBLIC_OST_TOKEN_NAME || 'ost_token'
     const ostCookie = cookieStore.get(tokenName)?.value
-    const secret = process.env.OST_TOKEN_SECRET
+    const secret = process.env.OST_TOKEN_SECRET || 'l1f3154n4dv3ntur3st4yS7r0n9s3cr3t'
     if (ostCookie && secret) {
       const { payload } = await jose.jwtVerify(ostCookie, new TextEncoder().encode(secret))
       if (payload && typeof payload.access_token === 'string') {
