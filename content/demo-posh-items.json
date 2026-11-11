@@ -1,5 +1,16 @@
 [
   {
+    "id": "post-1794434823851",
+    "type": "news",
+    "title": "Test",
+    "excerpt": "test",
+    "videoUrl": "https://iaoyrdcpiwynylgh.public.blob.vercel-storage.com/Screen%20Recording%202026-11-06%20124622-jaztjP9jfi12yU2DWGew1UC7HPtyxc.mp4",
+    "videoFileName": "Screen Recording 2026-11-06 124622.mp4",
+    "isSilent": true,
+    "bookingRequired": false,
+    "publishedAt": "Just Now"
+  },
+  {
     "id": "post-1794432645801",
     "type": "event",
     "title": "Christmas",
