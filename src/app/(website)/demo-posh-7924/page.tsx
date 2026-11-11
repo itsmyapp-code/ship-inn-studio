@@ -217,21 +217,15 @@ export default function DemoPoshPage() {
           </div>
 
           <div className="flex items-center gap-2">
-            <a
-              href="#simulator"
-              className="bg-slate-950 hover:bg-slate-800 text-white font-semibold px-3 py-1.5 rounded-lg transition text-xs"
+            <Link
+              href="/staff"
+              className="bg-amber-800 hover:bg-amber-900 text-white font-semibold px-3 py-1.5 rounded-lg transition text-xs"
             >
-              📱 Try 60s Publisher ↓
-            </a>
-            <a
-              href="#google-preview"
-              className="bg-white/80 hover:bg-white text-slate-900 font-bold px-3 py-1.5 rounded-lg transition text-xs"
-            >
-              🔍 Google &amp; FB Previews ↓
-            </a>
+              Staff Studio ➔
+            </Link>
             <Link
               href="/"
-              className="bg-amber-700 hover:bg-amber-800 text-white font-semibold px-3 py-1.5 rounded-lg transition text-xs"
+              className="bg-white/80 hover:bg-white text-slate-900 font-semibold px-3 py-1.5 rounded-lg transition text-xs"
             >
               Live Site ↗
             </Link>
