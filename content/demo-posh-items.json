@@ -1,0 +1,63 @@
+[
+  {
+    "id": "shanties-nov-2026",
+    "type": "event",
+    "title": "Live Sea Shanties & Fireside Pints",
+    "eventDate": "2026-11-28",
+    "eventTime": "7:30 PM - 10:30 PM",
+    "location": "Main Saloon & Fireside Bar",
+    "excerpt": "Join us for an atmospheric evening of maritime folk and traditional West Country sea shanties by the roaring hearth.",
+    "coverImage": "/images/Ship -new-thatch.webp",
+    "videoUrl": "https://youtube.com/shorts/5O9Yw7sZf7Q",
+    "bookingRequired": true,
+    "isPast": false
+  },
+  {
+    "id": "news-winter-fire",
+    "type": "news",
+    "title": "The Fires Are Lit & New Winter Ale on Tap",
+    "excerpt": "Winter has arrived at the harbour. Come warm up by our 15th-century open fireplace with pints of Exmoor Ale and our fresh local game pie.",
+    "coverImage": "/images/Ship -new-thatch.webp",
+    "videoUrl": "https://youtube.com/shorts/5O9Yw7sZf7Q",
+    "publishedAt": "Today",
+    "isPast": false
+  },
+  {
+    "id": "sunday-roast-special",
+    "type": "event",
+    "title": "Exmoor Beef & Fresh Local Catch Sunday Lunch",
+    "eventDate": "2026-11-22",
+    "eventTime": "12:00 PM - 3:30 PM",
+    "location": "The Galley Restaurant",
+    "excerpt": "Locally farmed Exmoor beef, giant Yorkshire puddings, seasonal vegetables, and fresh Porlock oysters.",
+    "coverImage": "/images/shipinn-031.webp",
+    "videoUrl": "https://youtube.com/shorts/5O9Yw7sZf7Q",
+    "bookingRequired": true,
+    "isPast": false
+  },
+  {
+    "id": "summer-beer-fest",
+    "type": "event",
+    "title": "Harbour Ale & Craft Cider Showcase",
+    "eventDate": "2026-08-15",
+    "eventTime": "All Weekend",
+    "location": "Harbour Beer Garden",
+    "excerpt": "Over 16 guest ales and farm ciders from across Devon and Somerset with live acoustic sets on the quayside.",
+    "coverImage": "/images/Ship -new-thatch.webp",
+    "bookingRequired": false,
+    "isPast": true
+  },
+  {
+    "id": "folk-night-autumn",
+    "type": "event",
+    "title": "Autumn Acoustic Folk & Fiddle Night",
+    "eventDate": "2026-10-10",
+    "eventTime": "8:00 PM",
+    "location": "The Ship Inn Bar",
+    "excerpt": "Intimate candlelit acoustic session with local folk musicians and seasonal mulled cider.",
+    "coverImage": "/images/IMG_4414.webp",
+    "bookingRequired": false,
+    "isPast": true
+  }
+]
+

@@ -1,6 +1,6 @@
 'use client'
 
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import Link from 'next/link'
 import SmartImage from '@/components/SmartImage'
 import SocialVideoEmbed from '@/components/SocialVideoEmbed'
@@ -88,6 +88,18 @@ export default function DemoPoshPage() {
   const [activeTab, setActiveTab] = useState<'upcoming' | 'past' | 'news'>('upcoming')
   const [eventsList, setEventsList] = useState<DemoPostItem[]>(INITIAL_EVENTS)
 
+  // Fetch shared demo items from /api/demo-posh so updates made from /staff immediately show here!
+  useEffect(() => {
+    fetch('/api/demo-posh')
+      .then((res) => res.json())
+      .then((data) => {
+        if (data.success && Array.isArray(data.items) && data.items.length > 0) {
+          setEventsList(data.items)
+        }
+      })
+      .catch(() => {})
+  }, [])
+
   // Simulator Form State: Post Type ("event" or "news")
   const [simPostType, setSimPostType] = useState<'event' | 'news'>('event')
   const [simTitle, setSimTitle] = useState('')
@@ -105,9 +117,18 @@ export default function DemoPoshPage() {
   const [simSuccess, setSimSuccess] = useState(false)
 
   // Manual Delete Handler
-  const handleDeleteItem = (id: string, itemTitle: string) => {
+  const handleDeleteItem = async (id: string, itemTitle: string) => {
     if (window.confirm(`Are you sure you want to delete "${itemTitle}"? This will remove it immediately.`)) {
       setEventsList((prev) => prev.filter((item) => item.id !== id))
+      try {
+        await fetch('/api/demo-posh', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ action: 'delete', id })
+        })
+      } catch (err) {
+        console.error('Delete sync error', err)
+      }
     }
   }
 
@@ -138,7 +159,7 @@ export default function DemoPoshPage() {
     }
   }
 
-  const handleSimSubmit = (e: React.FormEvent) => {
+  const handleSimSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     if (!simTitle.trim()) return
 
@@ -160,6 +181,17 @@ export default function DemoPoshPage() {
     setEventsList((prev) => [newItem, ...prev])
     setSimSuccess(true)
     setActiveTab(simPostType === 'event' ? 'upcoming' : 'news')
+
+    try {
+      await fetch('/api/demo-posh', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ item: newItem })
+      })
+    } catch (err) {
+      console.error('Error posting item to demo API', err)
+    }
+
     setTimeout(() => setSimSuccess(false), 5000)
   }
 

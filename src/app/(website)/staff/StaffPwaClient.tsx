@@ -86,13 +86,15 @@ export default function StaffPwaClient() {
     }
     window.addEventListener('beforeinstallprompt', handleBeforeInstall)
 
-    // Load local items
-    try {
-      const local = localStorage.getItem('ship_staff_posts')
-      if (local) {
-        setPublishedItems(JSON.parse(local))
-      }
-    } catch {}
+    // Load items from shared /api/demo-posh endpoint so it updates demo-posh-7924 live
+    fetch('/api/demo-posh')
+      .then((res) => res.json())
+      .then((data) => {
+        if (data.success && Array.isArray(data.items)) {
+          setPublishedItems(data.items)
+        }
+      })
+      .catch(() => {})
 
     return () => window.removeEventListener('beforeinstallprompt', handleBeforeInstall)
   }, [])
@@ -180,9 +182,13 @@ export default function StaffPwaClient() {
 
     const updated = [newItem, ...publishedItems]
     setPublishedItems(updated)
-    try {
-      localStorage.setItem('ship_staff_posts', JSON.stringify(updated))
-    } catch {}
+
+    // Save to shared demo database API so https://theshipinnporlockweir.co.uk/demo-posh-7924 updates instantly!
+    fetch('/api/demo-posh', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ item: newItem })
+    }).catch((err) => console.error('Failed to sync to demo API', err))
 
     setLatestItem(newItem)
     setShowSuccessModal(true)
@@ -196,13 +202,21 @@ export default function StaffPwaClient() {
     setSocialLink('')
   }
 
-  const handleDeleteItem = (id: string, itemTitle: string) => {
+  const handleDeleteItem = async (id: string, itemTitle: string) => {
     if (confirm(`Delete "${itemTitle}" from the website?`)) {
       const updated = publishedItems.filter((i) => i.id !== id)
       setPublishedItems(updated)
+      
+      // Delete from shared demo database API
       try {
-        localStorage.setItem('ship_staff_posts', JSON.stringify(updated))
-      } catch {}
+        await fetch('/api/demo-posh', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ action: 'delete', id })
+        })
+      } catch (err) {
+        console.error('Failed to sync delete to demo API', err)
+      }
     }
   }
 
@@ -647,11 +661,11 @@ export default function StaffPwaClient() {
                   <div className="flex items-center gap-1.5 shrink-0">
                     <button
                       type="button"
-                      onClick={() =>
-                        alert(
-                          `Simulated Share Link copied!\nhttps://theshipinnporlockweir.co.uk/${item.type === 'event' ? 'events' : 'news'}/${item.id}\n\nWhen pasted to Facebook, this creates an instant high-res link card!`
-                        )
-                      }
+                      onClick={() => {
+                        const targetUrl = `https://theshipinnporlockweir.co.uk/demo-posh-7924`
+                        navigator.clipboard?.writeText(targetUrl)
+                        alert(`Share Link copied!\n${targetUrl}\n\nWhen pasted to Facebook, this creates an instant high-res link card!`)
+                      }}
                       className="p-2 bg-slate-800 hover:bg-slate-700 text-blue-400 rounded-lg text-xs transition cursor-pointer"
                       title="Share link"
                     >
@@ -695,10 +709,9 @@ export default function StaffPwaClient() {
               <button
                 type="button"
                 onClick={() => {
-                  navigator.clipboard?.writeText(
-                    `https://theshipinnporlockweir.co.uk/${latestItem.type === 'event' ? 'events' : 'news'}/${latestItem.id}`
-                  )
-                  alert('Copied to clipboard!')
+                  const targetUrl = `https://theshipinnporlockweir.co.uk/demo-posh-7924`
+                  navigator.clipboard?.writeText(targetUrl)
+                  alert(`Share link copied!\n${targetUrl}`)
                 }}
                 className="w-full py-2 bg-blue-600 hover:bg-blue-500 text-white font-bold text-xs rounded-lg transition flex items-center justify-center gap-1.5 cursor-pointer"
               >
