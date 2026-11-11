@@ -4,6 +4,7 @@ import React, { useState, useEffect } from 'react'
 import Link from 'next/link'
 import SmartImage from '@/components/SmartImage'
 import { compressImage, CompressionResult } from '@/lib/imageCompressor'
+import { upload } from '@vercel/blob/client'
 
 // Simple default PIN for staff authentication
 const STAFF_DEFAULT_PIN = '1572'
@@ -167,26 +168,22 @@ export default function StaffPwaClient() {
 
     let finalVideoUrl = videoFileUrl || undefined
 
-    // 1. If staff uploaded a real video file, upload it to Vercel Blob for a permanent CDN stream URL!
+    // 1. Direct Client-to-Blob Upload (Bypasses the 4.5MB Serverless limit, supports camera roll videos up to 500MB!)
     if (mediaType === 'video' && videoFile) {
       setIsUploadingVideo(true)
       try {
-        const uploadRes = await fetch(`/api/upload-video?filename=${encodeURIComponent(videoFile.name)}`, {
-          method: 'POST',
-          body: videoFile
+        const newBlob = await upload(videoFile.name, videoFile, {
+          access: 'public',
+          handleUploadUrl: '/api/upload-video'
         })
-        const uploadData = await uploadRes.json()
-        if (uploadData.success && uploadData.url) {
-          finalVideoUrl = uploadData.url
+        if (newBlob && newBlob.url) {
+          finalVideoUrl = newBlob.url
         } else {
-          console.error('Vercel Blob upload failed:', uploadData.error)
-          alert('Video upload failed: ' + (uploadData.error || 'Server rejected video.'))
-          setIsUploadingVideo(false)
-          return
+          throw new Error('No URL returned from Blob storage')
         }
       } catch (err: any) {
         console.error('Video upload error:', err)
-        alert('Network error uploading video: ' + err.message)
+        alert('Video upload error: ' + (err.message || 'Upload failed'))
         setIsUploadingVideo(false)
         return
       } finally {

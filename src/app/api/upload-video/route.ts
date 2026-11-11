@@ -1,10 +1,44 @@
-// Vercel Blob Video Streaming API (Connected: ship-inn-studio-blob)
+import { handleUpload, type HandleUploadBody } from '@vercel/blob/client'
 import { put } from '@vercel/blob'
 import { NextResponse } from 'next/server'
 
 export const dynamic = 'force-dynamic'
 
 export async function POST(request: Request): Promise<NextResponse> {
+  const contentType = request.headers.get('content-type') || ''
+
+  // 1. Client Direct Upload Authorization (Bypasses the 4.5MB Vercel Serverless payload limit!)
+  // Allows camera roll videos up to 500MB to stream directly from phone to Vercel Blob CDN.
+  if (contentType.includes('application/json')) {
+    try {
+      const body = (await request.json()) as HandleUploadBody
+      const jsonResponse = await handleUpload({
+        body,
+        request,
+        onBeforeGenerateToken: async () => {
+          return {
+            allowedContentTypes: [
+              'video/mp4',
+              'video/quicktime',
+              'video/webm',
+              'video/x-m4v',
+              'image/jpeg',
+              'image/png',
+              'image/webp'
+            ],
+            tokenPayload: JSON.stringify({})
+          }
+        },
+        onUploadCompleted: async () => {}
+      })
+      return NextResponse.json(jsonResponse)
+    } catch (error: any) {
+      console.error('Error in handleUpload:', error)
+      return NextResponse.json({ error: error.message }, { status: 400 })
+    }
+  }
+
+  // 2. Direct binary fallback for small files
   const { searchParams } = new URL(request.url)
   const filename = searchParams.get('filename') || `video-${Date.now()}.mp4`
 
@@ -13,28 +47,13 @@ export async function POST(request: Request): Promise<NextResponse> {
   }
 
   try {
-    // Check all environment variables related to Blob
-    const blobEnvKeys = Object.keys(process.env).filter(k => k.toUpperCase().includes('BLOB') || k.toUpperCase().includes('STORAGE'))
-    const token = process.env.BLOB_READ_WRITE_TOKEN || 
-                  (blobEnvKeys.length > 0 ? process.env[blobEnvKeys.find(k => k.includes('TOKEN') || k.includes('READ_WRITE')) || ''] : undefined)
-
-    if (token || process.env.BLOB_READ_WRITE_TOKEN) {
-      const blob = await put(filename, request.body, {
-        access: 'public',
-        addRandomSuffix: true,
-        token: token || process.env.BLOB_READ_WRITE_TOKEN
-      })
-      return NextResponse.json({ success: true, url: blob.url })
-    }
-
-    return NextResponse.json({
-      success: false,
-      error: 'BLOB_READ_WRITE_TOKEN missing. Please connect a Blob Store in your Vercel Dashboard.',
-      availableBlobKeys: blobEnvKeys
-    }, { status: 500 })
+    const blob = await put(filename, request.body, {
+      access: 'public',
+      addRandomSuffix: true
+    })
+    return NextResponse.json({ success: true, url: blob.url })
   } catch (error: any) {
     console.error('Error uploading video to Vercel Blob:', error)
     return NextResponse.json({ success: false, error: error.message }, { status: 500 })
   }
 }
-
