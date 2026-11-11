@@ -182,14 +182,12 @@ export default function StaffPwaClient() {
           console.error('Vercel Blob upload failed:', uploadData.error)
           alert('Video upload failed: ' + (uploadData.error || 'Server rejected video.'))
           setIsUploadingVideo(false)
-          setIsSubmitting(false)
           return
         }
       } catch (err: any) {
         console.error('Video upload error:', err)
         alert('Network error uploading video: ' + err.message)
         setIsUploadingVideo(false)
-        setIsSubmitting(false)
         return
       } finally {
         setIsUploadingVideo(false)
