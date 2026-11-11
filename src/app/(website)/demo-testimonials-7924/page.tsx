@@ -7,6 +7,8 @@ import { getTestimonials } from '@/lib/testimonials'
 import { getPageData } from '@/lib/outstatic'
 import { TrackedFeatureCard, TrackedHeroButton } from '@/components/TrackedContactLinks'
 
+export const dynamic = 'force-dynamic'
+
 export const metadata = {
   title: 'Private Demo • Guest Reviews & Testimonials — The Ship Inn Porlock Weir',
   robots: {

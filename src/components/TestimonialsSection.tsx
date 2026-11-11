@@ -1,6 +1,6 @@
 'use client'
 
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { Testimonial } from '@/lib/testimonials'
 import TestimonialCard from './TestimonialCard'
 import ReviewSubmissionModal from './ReviewSubmissionModal'
@@ -22,6 +22,11 @@ export default function TestimonialsSection({
 }: TestimonialsSectionProps) {
   const [testimonials, setTestimonials] = useState<Testimonial[]>(initialTestimonials)
   const [isModalOpen, setIsModalOpen] = useState(false)
+
+  // Revalidate reviews on mount
+  useEffect(() => {
+    refreshReviews()
+  }, [])
 
   // Calculate average rating
   const averageRating =
