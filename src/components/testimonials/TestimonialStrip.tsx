@@ -58,7 +58,7 @@ export default function TestimonialStrip({
           {published.map((rev) => {
             const verified = isVerifiedGuest(rev)
             const text = getReviewText(rev)
-            const photo = rev.photos && rev.photos.length > 0 ? rev.photos[0] : null
+            const photos = rev.photos || []
 
             return (
               <div
@@ -89,14 +89,27 @@ export default function TestimonialStrip({
                     {text}
                   </p>
 
-                  {photo && (
-                    <div className="mb-4 rounded-xl overflow-hidden aspect-16/9 bg-slate-100 border border-slate-200">
-                      <img
-                        src={photo}
-                        alt={`Photo by ${rev.name}`}
-                        className="w-full h-full object-cover"
-                        loading="lazy"
-                      />
+                  {photos.length > 0 && (
+                    <div
+                      className={`mb-4 gap-2 ${
+                        photos.length === 1 ? 'grid grid-cols-1' : 'grid grid-cols-2'
+                      }`}
+                    >
+                      {photos.map((src, pIdx) => (
+                        <div
+                          key={pIdx}
+                          className={`rounded-xl overflow-hidden bg-slate-100 border border-slate-200 ${
+                            photos.length === 1 ? 'aspect-16/9' : 'aspect-4/3'
+                          }`}
+                        >
+                          <img
+                            src={src}
+                            alt={`Photo by ${rev.name} (${pIdx + 1})`}
+                            className="w-full h-full object-cover"
+                            loading="lazy"
+                          />
+                        </div>
+                      ))}
                     </div>
                   )}
                 </div>

@@ -41,7 +41,10 @@ export default function AdminTestimonialsPage() {
   const [formContent, setFormContent] = useState('')
   const [formSource, setFormSource] = useState<'google' | 'tripadvisor' | 'direct_submission' | 'in_person'>('google')
   const [formStatus, setFormStatus] = useState<'published' | 'pending' | 'archived' | 'draft'>('published')
+  const [formStayType, setFormStayType] = useState<string>('Stay')
+  const [formPhotos, setFormPhotos] = useState<string[]>([])
   const [formVerified, setFormVerified] = useState(true)
+  const [expandedAdminReviews, setExpandedAdminReviews] = useState<Record<string, boolean>>({})
   const [isSaving, setIsSaving] = useState(false)
 
   // Deleting state
@@ -161,6 +164,8 @@ export default function AdminTestimonialsPage() {
     setFormStayDate('')
     setFormTitle('')
     setFormContent('')
+    setFormStayType('Stay')
+    setFormPhotos([])
     setFormSource('google')
     setFormStatus('published')
     setFormVerified(true)
@@ -172,12 +177,16 @@ export default function AdminTestimonialsPage() {
     setFormName(item.name || '')
     setFormLocation(item.location || '')
     setFormRating(item.rating || 5)
-    setFormStayDate(item.stayOrVisitDate || '')
+    setFormStayDate(item.stayOrVisitDate || item.visitDate || '')
     setFormTitle(item.title || '')
-    setFormContent(item.content || '')
+    setFormContent(item.reviewText || item.content || '')
+    setFormStayType(item.stayType || 'Stay')
+    setFormPhotos(item.photos ? [...item.photos] : [])
+    setFormStayType(item.stayType || 'Stay')
+    setFormPhotos(item.photos ? [...item.photos] : [])
     setFormSource(item.source || 'direct_submission')
     setFormStatus(item.status || 'published')
-    setFormVerified(Boolean(item.verifiedStay))
+    setFormVerified(Boolean(item.verifiedStay || item.verified))
     setIsModalOpen(true)
   }
 
@@ -197,10 +206,13 @@ export default function AdminTestimonialsPage() {
             location: formLocation,
             rating: formRating,
             stayOrVisitDate: formStayDate,
+            stayType: formStayType,
             title: formTitle,
             content: formContent,
+            reviewText: formContent,
             status: formStatus,
-            verifiedStay: formVerified
+            verifiedStay: formVerified,
+            photos: formPhotos
           })
         })
         const data = await res.json()
@@ -220,8 +232,10 @@ export default function AdminTestimonialsPage() {
             location: formLocation,
             rating: formRating,
             stayOrVisitDate: formStayDate,
+            stayType: formStayType,
             title: formTitle,
             content: formContent,
+            photos: formPhotos,
             source: formSource,
             status: formStatus,
             verifiedStay: formVerified
@@ -573,9 +587,29 @@ export default function AdminTestimonialsPage() {
                       &ldquo;{item.title}&rdquo;
                     </h4>
                   )}
-                  <p className="text-slate-600 text-xs sm:text-sm line-clamp-4 leading-relaxed mb-4">
-                    {item.content || item.reviewText}
-                  </p>
+                  <div className="mb-4">
+                    <p
+                      className={`text-slate-600 text-xs sm:text-sm leading-relaxed ${
+                        expandedAdminReviews[item.id] ? 'whitespace-pre-line' : 'line-clamp-4'
+                      }`}
+                    >
+                      {item.content || item.reviewText}
+                    </p>
+                    {((item.content || item.reviewText || '').length > 180) && (
+                      <button
+                        type="button"
+                        onClick={() =>
+                          setExpandedAdminReviews((prev) => ({
+                            ...prev,
+                            [item.id]: !prev[item.id]
+                          }))
+                        }
+                        className="text-[11px] font-bold text-amber-800 hover:text-amber-900 mt-1 cursor-pointer transition inline-flex items-center gap-1"
+                      >
+                        {expandedAdminReviews[item.id] ? 'Show less ↑' : 'Read full text ↓'}
+                      </button>
+                    )}
+                  </div>
 
                   {/* Attached Photos in Admin Card */}
                   {item.photos && item.photos.length > 0 && (
@@ -735,7 +769,7 @@ export default function AdminTestimonialsPage() {
                 </div>
               </div>
 
-              <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+              <div className="grid grid-cols-1 sm:grid-cols-4 gap-4">
                 <div>
                   <label className="block text-xs font-bold text-slate-700 mb-1">Star Rating</label>
                   <select
@@ -748,6 +782,20 @@ export default function AdminTestimonialsPage() {
                     <option value={3}>3 Stars ★★★☆☆</option>
                     <option value={2}>2 Stars ★★☆☆☆</option>
                     <option value={1}>1 Star ★☆☆☆☆</option>
+                  </select>
+                </div>
+
+                <div>
+                  <label className="block text-xs font-bold text-slate-700 mb-1">Category</label>
+                  <select
+                    value={formStayType}
+                    onChange={(e) => setFormStayType(e.target.value)}
+                    className="w-full px-3.5 py-2 border border-slate-300 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-amber-500 bg-white"
+                  >
+                    <option value="Stay">Cabins / Stay</option>
+                    <option value="Dine">Galley Dining</option>
+                    <option value="Drink & Fire">Pub & Fireside</option>
+                    <option value="Walking / Dog Break">Dog / Walking</option>
                   </select>
                 </div>
 
@@ -805,12 +853,65 @@ export default function AdminTestimonialsPage() {
                 <label className="block text-xs font-bold text-slate-700 mb-1">Review Comments *</label>
                 <textarea
                   required
-                  rows={4}
+                  rows={6}
                   value={formContent}
                   onChange={(e) => setFormContent(e.target.value)}
                   placeholder="Paste or type guest comments..."
-                  className="w-full px-3.5 py-2 border border-slate-300 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-amber-500"
+                  className="w-full px-3.5 py-2.5 border border-slate-300 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-amber-500 leading-relaxed"
                 />
+              </div>
+
+              {/* Attached Photos Management with Visual Previews and Delete Option */}
+              <div>
+                <div className="flex items-center justify-between mb-2">
+                  <label className="block text-xs font-bold text-slate-700">
+                    Attached Guest Photos ({formPhotos.length})
+                  </label>
+                  {formPhotos.length > 0 && (
+                    <span className="text-[11px] text-slate-400">
+                      Click &ldquo;✕ Remove&rdquo; to delete a photo
+                    </span>
+                  )}
+                </div>
+
+                {formPhotos.length === 0 ? (
+                  <div className="p-3.5 bg-slate-50 border border-dashed border-slate-200 rounded-xl text-center text-xs text-slate-400">
+                    No guest photos attached to this review.
+                  </div>
+                ) : (
+                  <div className="grid grid-cols-2 gap-3">
+                    {formPhotos.map((photoUrl, idx) => (
+                      <div
+                        key={idx}
+                        className="relative bg-slate-50 rounded-xl overflow-hidden border border-slate-200 p-2 shadow-2xs"
+                      >
+                        <div className="relative aspect-4/3 rounded-lg overflow-hidden bg-slate-200">
+                          <img
+                            src={photoUrl}
+                            alt={`Review photo ${idx + 1}`}
+                            className="w-full h-full object-cover"
+                          />
+                        </div>
+                        <div className="mt-2 flex items-center justify-between">
+                          <span className="text-[11px] font-mono font-semibold text-slate-600">
+                            Photo {idx + 1}
+                          </span>
+                          <button
+                            type="button"
+                            onClick={() => {
+                              setFormPhotos(formPhotos.filter((_, i) => i !== idx))
+                            }}
+                            className="inline-flex items-center gap-1 px-2.5 py-1 bg-red-50 hover:bg-red-100 text-red-700 border border-red-200 rounded-lg text-xs font-bold transition cursor-pointer"
+                            title="Delete this photo from the review"
+                          >
+                            <span>✕</span>
+                            <span>Remove</span>
+                          </button>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                )}
               </div>
 
               <div className="flex items-center gap-2 pt-1">

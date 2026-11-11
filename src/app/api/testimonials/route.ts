@@ -145,7 +145,19 @@ export async function POST(request: Request) {
 export async function PATCH(request: Request) {
   try {
     const body = await request.json()
-    const { id, status, rating, title, content, name, location, stayOrVisitDate, verifiedStay } = body
+    const {
+      id,
+      status,
+      rating,
+      title,
+      content,
+      name,
+      location,
+      stayOrVisitDate,
+      verifiedStay,
+      photos,
+      stayType
+    } = body
 
     if (!id) {
       return NextResponse.json(
@@ -176,6 +188,7 @@ export async function PATCH(request: Request) {
     }
     if (content !== undefined) {
       current.content = content.trim()
+      current.reviewText = content.trim()
     }
     if (name !== undefined) {
       current.name = name.trim()
@@ -188,6 +201,12 @@ export async function PATCH(request: Request) {
     }
     if (verifiedStay !== undefined) {
       current.verifiedStay = Boolean(verifiedStay)
+    }
+    if (photos !== undefined && Array.isArray(photos)) {
+      current.photos = photos
+    }
+    if (stayType !== undefined) {
+      current.stayType = stayType
     }
 
     all[index] = current

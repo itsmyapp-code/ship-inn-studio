@@ -20,6 +20,12 @@ export default function TestimonialCarousel({
 
   const [currentIndex, setCurrentIndex] = useState(0)
   const [isPaused, setIsPaused] = useState(false)
+  const [selectedPhoto, setSelectedPhoto] = useState<string | null>(null)
+  const [expandedReviews, setExpandedReviews] = useState<Record<string, boolean>>({})
+
+  const toggleExpand = (id: string) => {
+    setExpandedReviews((prev) => ({ ...prev, [id]: !prev[id] }))
+  }
 
   const total = published.length
 
@@ -119,7 +125,7 @@ export default function TestimonialCarousel({
           {published.map((rev, idx) => {
             const verified = isVerifiedGuest(rev)
             const text = getReviewText(rev)
-            const photo = rev.photos && rev.photos.length > 0 ? rev.photos[0] : null
+            const photos = rev.photos || []
             const isSlideActive = idx === currentIndex
 
             return (
@@ -161,20 +167,54 @@ export default function TestimonialCarousel({
                     </h3>
                   )}
 
-                  {/* Review Excerpt */}
-                  <p className="text-slate-600 text-sm leading-relaxed font-light line-clamp-4 mb-4">
-                    {text}
-                  </p>
+                  {/* Review Text with Expand / Read More toggle */}
+                  <div className="mb-4">
+                    <p
+                      className={`text-slate-600 text-sm leading-relaxed font-light ${
+                        expandedReviews[rev.id] ? 'whitespace-pre-line' : 'line-clamp-4'
+                      }`}
+                    >
+                      {text}
+                    </p>
+                    {text.length > 180 && (
+                      <button
+                        type="button"
+                        onClick={() => toggleExpand(rev.id)}
+                        className="text-xs font-bold text-amber-800 hover:text-amber-900 mt-1.5 cursor-pointer transition inline-flex items-center gap-1"
+                      >
+                        {expandedReviews[rev.id] ? 'Show less ↑' : 'Read full review ↓'}
+                      </button>
+                    )}
+                  </div>
 
-                  {/* Customer Photo Thumbnail (if provided) */}
-                  {photo && (
-                    <div className="mb-4 rounded-2xl overflow-hidden aspect-16/9 bg-slate-100 border border-slate-200 shadow-2xs">
-                      <img
-                        src={photo}
-                        alt={`Photo by ${rev.name}`}
-                        className="w-full h-full object-cover hover:scale-105 transition duration-500"
-                        loading="lazy"
-                      />
+                  {/* Customer Photos: single photo or 2-column grid */}
+                  {photos.length > 0 && (
+                    <div
+                      className={`mb-4 gap-2 ${
+                        photos.length === 1 ? 'grid grid-cols-1' : 'grid grid-cols-2'
+                      }`}
+                    >
+                      {photos.map((src, pIdx) => (
+                        <button
+                          key={pIdx}
+                          type="button"
+                          onClick={() => setSelectedPhoto(src)}
+                          className={`relative rounded-2xl overflow-hidden bg-slate-100 border border-slate-200 group cursor-pointer shadow-2xs hover:opacity-95 transition ${
+                            photos.length === 1 ? 'aspect-16/9' : 'aspect-4/3'
+                          }`}
+                          title="Click to view full photo"
+                        >
+                          <img
+                            src={src}
+                            alt={`Photo by ${rev.name} (${pIdx + 1})`}
+                            className="w-full h-full object-cover group-hover:scale-105 transition duration-300"
+                            loading="lazy"
+                          />
+                          <div className="absolute inset-0 bg-slate-950/20 opacity-0 group-hover:opacity-100 transition flex items-center justify-center text-white text-[11px] font-semibold backdrop-blur-2xs">
+                            🔍 View
+                          </div>
+                        </button>
+                      ))}
                     </div>
                   )}
                 </div>
@@ -225,6 +265,33 @@ export default function TestimonialCarousel({
           </div>
         </div>
       </div>
+
+      {/* Lightbox Modal for Photo Zoom */}
+      {selectedPhoto && (
+        <div
+          className="fixed inset-0 z-50 bg-slate-950/80 backdrop-blur-sm flex items-center justify-center p-4"
+          onClick={() => setSelectedPhoto(null)}
+        >
+          <div
+            className="relative max-w-4xl max-h-[90vh] bg-white rounded-3xl p-3 shadow-2xl overflow-hidden"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <button
+              type="button"
+              onClick={() => setSelectedPhoto(null)}
+              className="absolute top-4 right-4 z-10 w-9 h-9 bg-slate-900/80 hover:bg-slate-900 text-white rounded-full flex items-center justify-center text-sm font-bold shadow-md cursor-pointer transition"
+              title="Close photo"
+            >
+              ✕
+            </button>
+            <img
+              src={selectedPhoto}
+              alt="Guest review photo"
+              className="max-h-[80vh] w-auto rounded-2xl object-contain mx-auto"
+            />
+          </div>
+        </div>
+      )}
     </section>
   )
 }
