@@ -1,8 +1,12 @@
 import { NextResponse } from 'next/server'
+import { cookies } from 'next/headers'
 
 export const dynamic = 'force-dynamic'
 
 export async function GET() {
+  const cookieStore = await cookies()
+  const cookieNames = cookieStore.getAll().map(c => c.name)
+
   const matchingKeys: Record<string, string> = {}
   for (const [k, v] of Object.entries(process.env)) {
     if (k.toLowerCase().includes('token') || k.toLowerCase().includes('github') || k.toLowerCase().includes('ost') || k.toLowerCase().includes('dst')) {
@@ -11,6 +15,7 @@ export async function GET() {
   }
 
   return NextResponse.json({
+    cookieNames,
     matchingKeys,
     OST_GITHUB_TOKEN: process.env.OST_GITHUB_TOKEN ? 'SET' : 'NOT SET',
     DST_GITHUB_TOKEN: process.env.DST_GITHUB_TOKEN ? 'SET' : 'NOT SET',

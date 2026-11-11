@@ -26,7 +26,18 @@ export async function getAuthToken(): Promise<string | undefined> {
     process.env.GITHUB_TOKEN ||
     process.env.DST_GITHUB_TOKEN ||
     process.env.OST_TOKEN
-  if (envToken) return envToken
+  if (envToken && envToken.trim()) return envToken.trim()
+
+  // Check admin-configured token cookie
+  try {
+    const cookieStore = await cookies()
+    const adminToken = cookieStore.get('ship_github_token')?.value
+    if (adminToken && adminToken.trim()) {
+      return adminToken.trim()
+    }
+  } catch (err) {
+    // Non-request context
+  }
 
   // Try Outstatic official session loader
   try {

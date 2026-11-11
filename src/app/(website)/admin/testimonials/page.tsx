@@ -17,7 +17,20 @@ export default function AdminTestimonialsPage() {
   const [isLoading, setIsLoading] = useState(true)
   const [actionMessage, setActionMessage] = useState<{ type: 'success' | 'error'; text: string } | null>(null)
 
-  // Add/Edit Modal state
+  // Passcode Authentication state
+  const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false)
+  const [isCheckingAuth, setIsCheckingAuth] = useState<boolean>(true)
+  const [passcode, setPasscode] = useState('')
+  const [authError, setAuthError] = useState<string | null>(null)
+  const [isLoggingIn, setIsLoggingIn] = useState(false)
+
+  // GitHub Token Configuration Modal
+  const [isTokenModalOpen, setIsTokenModalOpen] = useState(false)
+  const [tokenInput, setTokenInput] = useState('')
+  const [isSavingToken, setIsSavingToken] = useState(false)
+  const [tokenConfigured, setTokenConfigured] = useState<boolean>(false)
+
+  // Add/Edit Review Modal state
   const [isModalOpen, setIsModalOpen] = useState(false)
   const [editingItem, setEditingItem] = useState<Testimonial | null>(null)
   const [formName, setFormName] = useState('')
@@ -33,7 +46,34 @@ export default function AdminTestimonialsPage() {
 
   // Deleting state
   const [deletingId, setDeletingId] = useState<string | null>(null)
-  const [authorized, setAuthorized] = useState<boolean | null>(null)
+
+  // Check auth session on mount
+  useEffect(() => {
+    const checkAuth = async () => {
+      try {
+        const res = await fetch('/api/admin-auth')
+        const data = await res.json()
+        setIsAuthenticated(Boolean(data.authenticated))
+      } catch {
+        setIsAuthenticated(false)
+      } finally {
+        setIsCheckingAuth(false)
+      }
+    }
+
+    const checkToken = async () => {
+      try {
+        const res = await fetch('/api/admin-token')
+        const data = await res.json()
+        setTokenConfigured(Boolean(data.configured))
+      } catch {
+        setTokenConfigured(false)
+      }
+    }
+
+    checkAuth()
+    checkToken()
+  }, [])
 
   const fetchItems = async () => {
     setIsLoading(true)
@@ -45,9 +85,6 @@ export default function AdminTestimonialsPage() {
         if (data.stats) {
           setStats(data.stats)
         }
-        if (typeof data.authorized === 'boolean') {
-          setAuthorized(data.authorized)
-        }
       }
     } catch (err) {
       console.error('Failed to load testimonials:', err)
@@ -57,8 +94,64 @@ export default function AdminTestimonialsPage() {
   }
 
   useEffect(() => {
-    fetchItems()
-  }, [activeTab])
+    if (isAuthenticated) {
+      fetchItems()
+    }
+  }, [activeTab, isAuthenticated])
+
+  const handlePasscodeSubmit = async (e: React.FormEvent) => {
+    e.preventDefault()
+    setIsLoggingIn(true)
+    setAuthError(null)
+
+    try {
+      const res = await fetch('/api/admin-auth', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ passcode })
+      })
+      const data = await res.json()
+      if (data.success) {
+        setIsAuthenticated(true)
+      } else {
+        setAuthError(data.error || 'Incorrect passcode.')
+      }
+    } catch {
+      setAuthError('Connection error. Please try again.')
+    } finally {
+      setIsLoggingIn(false)
+    }
+  }
+
+  const handleLogout = async () => {
+    await fetch('/api/admin-auth', { method: 'DELETE' })
+    setIsAuthenticated(false)
+  }
+
+  const handleSaveToken = async (e: React.FormEvent) => {
+    e.preventDefault()
+    setIsSavingToken(true)
+    try {
+      const res = await fetch('/api/admin-token', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ token: tokenInput })
+      })
+      const data = await res.json()
+      if (data.success) {
+        setTokenConfigured(true)
+        setIsTokenModalOpen(false)
+        setTokenInput('')
+        setActionMessage({ type: 'success', text: data.message })
+      } else {
+        alert(data.error || 'Failed to save token.')
+      }
+    } catch (err) {
+      alert('Error connecting token.')
+    } finally {
+      setIsSavingToken(false)
+    }
+  }
 
   const openAddModal = () => {
     setEditingItem(null)
@@ -95,7 +188,6 @@ export default function AdminTestimonialsPage() {
 
     try {
       if (editingItem) {
-        // PATCH
         const res = await fetch('/api/testimonials', {
           method: 'PATCH',
           headers: { 'Content-Type': 'application/json' },
@@ -107,16 +199,19 @@ export default function AdminTestimonialsPage() {
             stayOrVisitDate: formStayDate,
             title: formTitle,
             content: formContent,
-            source: formSource,
             status: formStatus,
             verifiedStay: formVerified
           })
         })
         const data = await res.json()
-        if (!res.ok || !data.success) throw new Error(data.error || 'Failed to update review')
-        setActionMessage({ type: 'success', text: `Review from "${formName}" updated successfully.` })
+        if (data.success) {
+          setActionMessage({ type: 'success', text: `Review from "${formName}" updated successfully!` })
+          setIsModalOpen(false)
+          fetchItems()
+        } else {
+          throw new Error(data.error || 'Failed to update review.')
+        }
       } else {
-        // POST
         const res = await fetch('/api/testimonials', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
@@ -133,12 +228,17 @@ export default function AdminTestimonialsPage() {
           })
         })
         const data = await res.json()
-        if (!res.ok || !data.success) throw new Error(data.error || 'Failed to add review')
-        setActionMessage({ type: 'success', text: `Review from "${formName}" added successfully.` })
+        if (data.success) {
+          setActionMessage({
+            type: 'success',
+            text: `Review from "${formName}" has been added and saved live!`
+          })
+          setIsModalOpen(false)
+          fetchItems()
+        } else {
+          throw new Error(data.error || 'Failed to add review.')
+        }
       }
-
-      setIsModalOpen(false)
-      fetchItems()
     } catch (err) {
       setActionMessage({ type: 'error', text: err instanceof Error ? err.message : 'Error saving review' })
     } finally {
@@ -146,7 +246,6 @@ export default function AdminTestimonialsPage() {
     }
   }
 
-  // Quick Action: Approve & Publish
   const handleApprove = async (id: string, name: string) => {
     try {
       const res = await fetch('/api/testimonials', {
@@ -156,7 +255,7 @@ export default function AdminTestimonialsPage() {
       })
       const data = await res.json()
       if (data.success) {
-        setActionMessage({ type: 'success', text: `Review from "${name}" approved & published live to the website!` })
+        setActionMessage({ type: 'success', text: `Review from "${name}" approved & published live!` })
         fetchItems()
       } else {
         throw new Error(data.error)
@@ -166,7 +265,6 @@ export default function AdminTestimonialsPage() {
     }
   }
 
-  // Quick Action: Unpublish / Archive
   const handleArchive = async (id: string, name: string) => {
     try {
       const res = await fetch('/api/testimonials', {
@@ -186,7 +284,6 @@ export default function AdminTestimonialsPage() {
     }
   }
 
-  // Delete Action
   const handleDelete = async (id: string, name: string) => {
     if (!confirm(`Are you sure you want to permanently delete the review from "${name}"?`)) {
       return
@@ -197,7 +294,7 @@ export default function AdminTestimonialsPage() {
       const res = await fetch(`/api/testimonials?id=${id}`, { method: 'DELETE' })
       const data = await res.json()
       if (data.success) {
-        setActionMessage({ type: 'success', text: `Review from "${name}" has been permanently deleted.` })
+        setActionMessage({ type: 'success', text: `Review from "${name}" deleted.` })
         fetchItems()
       } else {
         throw new Error(data.error)
@@ -209,6 +306,56 @@ export default function AdminTestimonialsPage() {
     }
   }
 
+  // 1. Passcode Screen if not logged in
+  if (isCheckingAuth) {
+    return (
+      <div className="min-h-screen bg-slate-900 flex items-center justify-center">
+        <p className="text-white text-sm">Checking admin session...</p>
+      </div>
+    )
+  }
+
+  if (!isAuthenticated) {
+    return (
+      <div className="min-h-screen bg-slate-950 flex items-center justify-center p-4">
+        <div className="bg-white rounded-3xl p-8 max-w-md w-full shadow-2xl border border-slate-800 text-center">
+          <div className="w-16 h-16 bg-amber-100 text-amber-700 rounded-2xl flex items-center justify-center text-3xl mx-auto mb-4">
+            ⚓
+          </div>
+          <h2 className="text-2xl font-serif font-bold text-slate-900">The Ship Inn</h2>
+          <p className="text-xs uppercase tracking-widest font-bold text-amber-700 mt-1">Admin Portal • Testimonials</p>
+          <p className="text-slate-600 text-sm mt-3 mb-6">
+            Please enter the pub admin passcode to manage reviews and guest testimonials.
+          </p>
+
+          <form onSubmit={handlePasscodeSubmit} className="space-y-4">
+            <input
+              type="password"
+              value={passcode}
+              onChange={(e) => setPasscode(e.target.value)}
+              placeholder="Enter admin passcode"
+              className="w-full px-4 py-3 border border-slate-300 rounded-xl text-center text-lg tracking-wider focus:outline-none focus:ring-2 focus:ring-amber-500"
+              autoFocus
+            />
+            {authError && <p className="text-red-600 text-xs font-semibold">{authError}</p>}
+            <button
+              type="submit"
+              disabled={isLoggingIn}
+              className="w-full py-3 bg-slate-900 hover:bg-slate-800 text-white font-bold rounded-xl transition shadow text-sm"
+            >
+              {isLoggingIn ? 'Checking...' : 'Unlock Admin Portal →'}
+            </button>
+          </form>
+
+          <div className="mt-6 pt-4 border-t border-slate-100 text-xs text-slate-400">
+            Passcode: <code className="bg-slate-100 px-2 py-0.5 rounded text-slate-600 font-mono">theshipinnta248pb!</code>
+          </div>
+        </div>
+      </div>
+    )
+  }
+
+  // 2. Full Admin Dashboard
   return (
     <div className="min-h-screen bg-slate-50">
       {/* Top Navigation Bar */}
@@ -223,7 +370,7 @@ export default function AdminTestimonialsPage() {
               <span className="text-xs text-amber-300 font-semibold">Testimonials &amp; Review Manager</span>
             </div>
           </div>
-          <div className="flex items-center gap-2 text-xs">
+          <div className="flex flex-wrap items-center gap-2 text-xs">
             <Link
               href="/admin/menus"
               className="px-3 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-300 transition"
@@ -245,6 +392,17 @@ export default function AdminTestimonialsPage() {
             >
               Outstatic CMS
             </Link>
+            <button
+              onClick={() => setIsTokenModalOpen(true)}
+              className={`px-3 py-1.5 rounded-lg font-semibold transition flex items-center gap-1.5 ${
+                tokenConfigured
+                  ? 'bg-emerald-950 text-emerald-300 border border-emerald-700 hover:bg-emerald-900'
+                  : 'bg-amber-950 text-amber-300 border border-amber-700 hover:bg-amber-900'
+              }`}
+            >
+              <span className={`w-2 h-2 rounded-full ${tokenConfigured ? 'bg-emerald-400' : 'bg-amber-400 animate-pulse'}`}></span>
+              <span>{tokenConfigured ? 'GitHub Live Sync Active' : 'Setup GitHub Sync'}</span>
+            </button>
             <Link
               href="/"
               target="_blank"
@@ -252,6 +410,13 @@ export default function AdminTestimonialsPage() {
             >
               View Site ↗
             </Link>
+            <button
+              onClick={handleLogout}
+              className="px-2.5 py-1.5 rounded-lg bg-slate-800 hover:bg-red-950 text-slate-400 hover:text-red-300 transition"
+              title="Lock Admin Portal"
+            >
+              🔒 Lock
+            </button>
           </div>
         </div>
       </div>
@@ -267,36 +432,12 @@ export default function AdminTestimonialsPage() {
           </div>
           <button
             onClick={openAddModal}
-            className="bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold text-sm px-6 py-3 rounded-2xl shadow-sm hover:shadow transition inline-flex items-center justify-center gap-2 shrink-0"
+            className="bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold text-sm px-6 py-3 rounded-2xl shadow-sm hover:shadow transition inline-flex items-center justify-center gap-2 shrink-0 cursor-pointer"
           >
             <span className="text-lg leading-none">+</span>
             <span>Add Review Manually</span>
           </button>
         </div>
-
-        {/* Authorization Banner if not signed into Outstatic / no GitHub PAT */}
-        {authorized === false && (
-          <div className="bg-amber-50 border-l-4 border-amber-500 p-4 rounded-r-2xl mb-6 shadow-sm">
-            <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
-              <div className="flex items-start gap-3">
-                <span className="text-2xl leading-none">⚠️</span>
-                <div>
-                  <p className="text-sm font-bold text-amber-900">Sign-in Required to Save Live Changes</p>
-                  <p className="text-xs text-amber-800 mt-0.5">
-                    To approve, add, or delete reviews on the live website, please sign in once to Outstatic CMS. Your session will authorize GitHub updates.
-                  </p>
-                </div>
-              </div>
-              <Link
-                href="/outstatic"
-                target="_blank"
-                className="shrink-0 inline-flex items-center gap-1.5 px-4 py-2 bg-amber-600 hover:bg-amber-700 text-white text-xs font-bold rounded-xl shadow-xs transition"
-              >
-                ⚡ Sign in to Outstatic
-              </Link>
-            </div>
-          </div>
-        )}
 
         {/* Action Message Alert */}
         {actionMessage && (
@@ -310,7 +451,7 @@ export default function AdminTestimonialsPage() {
             <span>{actionMessage.text}</span>
             <button
               onClick={() => setActionMessage(null)}
-              className="text-xs font-bold uppercase tracking-wider underline ml-4"
+              className="text-xs font-bold uppercase tracking-wider underline ml-4 cursor-pointer"
             >
               Dismiss
             </button>
@@ -326,211 +467,156 @@ export default function AdminTestimonialsPage() {
             <span className="text-3xl font-serif font-bold text-slate-900">{stats.total}</span>
           </div>
 
-          <div
-            onClick={() => setActiveTab('pending')}
-            className={`p-5 rounded-2xl border shadow-sm cursor-pointer transition ${
-              stats.pending > 0
-                ? 'bg-amber-50 border-amber-300 hover:border-amber-400'
-                : 'bg-white border-slate-200'
-            }`}
-          >
-            <div className="flex items-center justify-between mb-1">
-              <span className="text-xs font-bold text-amber-800 uppercase tracking-wider block">
-                Pending Approval
-              </span>
-              {stats.pending > 0 && (
-                <span className="w-2.5 h-2.5 rounded-full bg-amber-500 animate-pulse" />
-              )}
-            </div>
-            <span className="text-3xl font-serif font-bold text-amber-900">{stats.pending}</span>
+          <div className="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm">
+            <span className="text-xs font-bold text-amber-600 uppercase tracking-wider block mb-1">
+              Pending Approval
+            </span>
+            <span className="text-3xl font-serif font-bold text-amber-600">{stats.pending}</span>
           </div>
 
-          <div
-            onClick={() => setActiveTab('published')}
-            className="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm cursor-pointer hover:border-slate-300 transition"
-          >
-            <span className="text-xs font-bold text-emerald-700 uppercase tracking-wider block mb-1">
+          <div className="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm">
+            <span className="text-xs font-bold text-emerald-600 uppercase tracking-wider block mb-1">
               Published Live
             </span>
-            <span className="text-3xl font-serif font-bold text-emerald-800">{stats.published}</span>
+            <span className="text-3xl font-serif font-bold text-emerald-600">{stats.published}</span>
           </div>
 
           <div className="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm">
             <span className="text-xs font-bold text-slate-400 uppercase tracking-wider block mb-1">
               Average Rating
             </span>
-            <div className="flex items-center gap-1.5">
+            <div className="flex items-baseline gap-1">
               <span className="text-3xl font-serif font-bold text-slate-900">{stats.averageRating}</span>
-              <span className="text-amber-400 text-xl">★</span>
+              <span className="text-amber-500 text-lg">★</span>
             </div>
           </div>
         </div>
 
-        {/* Filter Tabs */}
-        <div className="flex items-center gap-2 border-b border-slate-200 pb-3 mb-6 overflow-x-auto">
-          {[
-            { id: 'pending', label: 'Pending Approval', count: stats.pending },
-            { id: 'published', label: 'Published Live', count: stats.published },
-            { id: 'archived', label: 'Archived', count: stats.archived },
-            { id: 'all', label: 'All Reviews', count: stats.total }
-          ].map((tab) => (
+        {/* Tab Filters */}
+        <div className="flex items-center space-x-2 border-b border-slate-200 mb-6 overflow-x-auto pb-2">
+          {(['pending', 'published', 'archived', 'all'] as const).map((tab) => (
             <button
-              key={tab.id}
-              onClick={() => setActiveTab(tab.id as any)}
-              className={`px-4 py-2 rounded-xl text-xs sm:text-sm font-bold transition flex items-center gap-2 shrink-0 ${
-                activeTab === tab.id
-                  ? 'bg-ship-blue-600 text-white shadow-sm'
-                  : 'text-slate-600 hover:bg-slate-200/60'
+              key={tab}
+              onClick={() => setActiveTab(tab)}
+              className={`px-4 py-2 rounded-xl text-xs font-bold uppercase tracking-wider transition whitespace-nowrap cursor-pointer ${
+                activeTab === tab
+                  ? 'bg-slate-900 text-white shadow-sm'
+                  : 'text-slate-600 hover:text-slate-900 hover:bg-slate-100'
               }`}
             >
-              <span>{tab.label}</span>
-              <span
-                className={`text-[11px] px-2 py-0.5 rounded-full ${
-                  activeTab === tab.id ? 'bg-white/20 text-white' : 'bg-slate-200 text-slate-700'
-                }`}
-              >
-                {tab.count}
-              </span>
+              {tab === 'pending'
+                ? `Pending Approval (${stats.pending})`
+                : tab === 'published'
+                ? `Published Live (${stats.published})`
+                : tab === 'archived'
+                ? `Archived (${stats.archived})`
+                : `All Reviews (${stats.total})`}
             </button>
           ))}
         </div>
 
-        {/* Reviews List */}
+        {/* Review List */}
         {isLoading ? (
-          <div className="text-center py-16 bg-white rounded-2xl border border-slate-200">
-            <div className="inline-block animate-spin w-8 h-8 border-4 border-ship-blue-600 border-t-transparent rounded-full mb-3" />
-            <p className="text-slate-500 text-sm">Loading testimonials...</p>
+          <div className="text-center py-16 bg-white rounded-2xl border border-slate-200 shadow-sm">
+            <p className="text-slate-500 text-sm">Loading reviews...</p>
           </div>
         ) : items.length === 0 ? (
-          <div className="text-center py-16 bg-white rounded-2xl border border-slate-200 p-6">
-            <span className="text-4xl block mb-2">📜</span>
-            <h3 className="text-lg font-bold text-slate-800">No {activeTab} reviews found</h3>
-            <p className="text-slate-500 text-sm max-w-md mx-auto mt-1 mb-6">
+          <div className="text-center py-16 bg-white rounded-2xl border border-slate-200 shadow-sm p-8">
+            <div className="text-4xl mb-3">📜</div>
+            <h3 className="text-lg font-serif font-bold text-slate-800">No {activeTab} reviews found</h3>
+            <p className="text-slate-500 text-sm mt-1 max-w-md mx-auto">
               {activeTab === 'pending'
-                ? 'All customer submissions have been reviewed and published!'
-                : 'Add a new review from Google, TripAdvisor, or customer feedback.'}
+                ? 'There are currently no guest submissions waiting for approval.'
+                : 'Click "+ Add Review Manually" above to transcribe reviews from Google, TripAdvisor, or your guestbook.'}
             </p>
-            <button
-              onClick={openAddModal}
-              className="bg-ship-blue-600 text-white font-bold text-xs px-5 py-2.5 rounded-xl shadow transition"
-            >
-              Add Review Manually
-            </button>
           </div>
         ) : (
-          <div className="space-y-4">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {items.map((item) => (
               <div
                 key={item.id}
-                className={`bg-white rounded-2xl p-5 sm:p-6 border shadow-sm transition flex flex-col md:flex-row md:items-center justify-between gap-4 ${
-                  item.status === 'pending'
-                    ? 'border-amber-300 bg-amber-50/20'
-                    : item.status === 'archived'
-                    ? 'border-slate-200 opacity-70'
-                    : 'border-slate-200 hover:border-slate-300'
-                }`}
+                className="bg-white rounded-2xl border border-slate-200 p-6 shadow-sm flex flex-col justify-between hover:border-slate-300 transition"
               >
-                {/* Review Details */}
-                <div className="space-y-2 flex-grow max-w-3xl">
-                  <div className="flex flex-wrap items-center gap-2">
-                    {/* Status Badge */}
+                <div>
+                  <div className="flex items-center justify-between mb-3">
                     <span
-                      className={`text-[10px] font-extrabold uppercase tracking-wider px-2 py-0.5 rounded-full ${
+                      className={`text-[10px] font-bold uppercase tracking-wider px-2.5 py-1 rounded-full ${
                         item.status === 'published'
-                          ? 'bg-emerald-100 text-emerald-800 border border-emerald-300'
+                          ? 'bg-emerald-100 text-emerald-800'
                           : item.status === 'pending'
-                          ? 'bg-amber-100 text-amber-900 border border-amber-300 animate-pulse'
-                          : 'bg-slate-100 text-slate-600 border border-slate-300'
+                          ? 'bg-amber-100 text-amber-900'
+                          : 'bg-slate-100 text-slate-700'
                       }`}
                     >
-                      {item.status.toUpperCase()}
+                      {item.status}
                     </span>
-
-                    {/* Source */}
-                    <span className="text-[11px] font-semibold text-slate-500 bg-slate-100 px-2 py-0.5 rounded">
-                      Source: {item.source}
+                    <span className="text-[10px] text-slate-400 font-medium">
+                      via {item.source.replace('_', ' ')}
                     </span>
-
-                    {/* Verified */}
-                    {item.verifiedStay && (
-                      <span className="text-[10px] font-bold text-blue-700 bg-blue-50 px-2 py-0.5 rounded">
-                        ✓ Verified Stay / Dine
-                      </span>
-                    )}
-
-                    {/* Stars */}
-                    <div className="flex items-center text-amber-400 ml-1">
-                      {[1, 2, 3, 4, 5].map((star) => (
-                        <span key={star} className={star <= item.rating ? 'text-amber-400' : 'text-slate-200'}>
-                          ★
-                        </span>
-                      ))}
-                    </div>
                   </div>
 
-                  {/* Title & Content */}
+                  <div className="flex items-center text-amber-400 mb-2">
+                    {[1, 2, 3, 4, 5].map((s) => (
+                      <span key={s} className="text-base">
+                        {s <= item.rating ? '★' : '☆'}
+                      </span>
+                    ))}
+                  </div>
+
                   {item.title && (
-                    <h4 className="font-serif font-bold text-slate-900 text-base sm:text-lg">
+                    <h4 className="font-serif font-bold text-slate-900 text-base mb-1">
                       &ldquo;{item.title}&rdquo;
                     </h4>
                   )}
-                  <p className="text-slate-700 text-sm leading-relaxed italic">
-                    &ldquo;{item.content}&rdquo;
+                  <p className="text-slate-600 text-xs sm:text-sm line-clamp-4 leading-relaxed mb-4">
+                    {item.content}
                   </p>
-
-                  {/* Author meta */}
-                  <div className="text-xs text-slate-500 flex flex-wrap items-center gap-2 pt-1">
-                    <span className="font-bold text-slate-900">{item.name}</span>
-                    {item.location && <span>• {item.location}</span>}
-                    {item.stayOrVisitDate && <span>• Visit: {item.stayOrVisitDate}</span>}
-                    <span>• Submitted: {new Date(item.createdAt).toLocaleDateString()}</span>
-                  </div>
                 </div>
 
-                {/* Action Buttons */}
-                <div className="flex items-center gap-2 shrink-0 md:self-center">
-                  {item.status === 'pending' && (
+                <div className="pt-4 border-t border-slate-100">
+                  <div className="text-xs text-slate-700 font-bold mb-3">
+                    {item.name}
+                    {item.location && <span className="font-normal text-slate-400"> • {item.location}</span>}
+                    {item.stayOrVisitDate && (
+                      <span className="font-normal text-slate-400"> ({item.stayOrVisitDate})</span>
+                    )}
+                  </div>
+
+                  {/* Actions */}
+                  <div className="flex items-center justify-between gap-2 text-xs">
+                    <div className="flex items-center gap-1.5">
+                      {item.status !== 'published' && (
+                        <button
+                          onClick={() => handleApprove(item.id, item.name)}
+                          className="px-2.5 py-1.5 bg-emerald-600 hover:bg-emerald-700 text-white font-bold rounded-lg transition cursor-pointer"
+                        >
+                          Approve
+                        </button>
+                      )}
+                      {item.status === 'published' && (
+                        <button
+                          onClick={() => handleArchive(item.id, item.name)}
+                          className="px-2.5 py-1.5 bg-slate-100 hover:bg-slate-200 text-slate-700 font-semibold rounded-lg transition cursor-pointer"
+                        >
+                          Archive
+                        </button>
+                      )}
+                      <button
+                        onClick={() => openEditModal(item)}
+                        className="px-2.5 py-1.5 bg-slate-100 hover:bg-slate-200 text-slate-700 font-semibold rounded-lg transition cursor-pointer"
+                      >
+                        Edit
+                      </button>
+                    </div>
+
                     <button
-                      onClick={() => handleApprove(item.id, item.name)}
-                      className="bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs px-4 py-2 rounded-xl shadow-sm transition flex items-center gap-1.5"
+                      onClick={() => handleDelete(item.id, item.name)}
+                      disabled={deletingId === item.id}
+                      className="px-2 py-1.5 text-red-600 hover:text-red-800 hover:bg-red-50 rounded-lg transition cursor-pointer font-medium"
                     >
-                      <span>✓ Approve &amp; Publish</span>
+                      {deletingId === item.id ? 'Deleting...' : 'Delete'}
                     </button>
-                  )}
-
-                  {item.status === 'published' && (
-                    <button
-                      onClick={() => handleArchive(item.id, item.name)}
-                      className="bg-slate-100 hover:bg-slate-200 text-slate-700 font-semibold text-xs px-3 py-2 rounded-xl transition"
-                    >
-                      Archive / Hide
-                    </button>
-                  )}
-
-                  {item.status === 'archived' && (
-                    <button
-                      onClick={() => handleApprove(item.id, item.name)}
-                      className="bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs px-3 py-2 rounded-xl transition"
-                    >
-                      Re-Publish
-                    </button>
-                  )}
-
-                  <button
-                    onClick={() => openEditModal(item)}
-                    className="bg-slate-100 hover:bg-slate-200 text-slate-700 font-semibold text-xs px-3 py-2 rounded-xl transition"
-                  >
-                    Edit
-                  </button>
-
-                  <button
-                    disabled={deletingId === item.id}
-                    onClick={() => handleDelete(item.id, item.name)}
-                    className="text-red-600 hover:bg-red-50 p-2 rounded-xl text-xs font-semibold transition"
-                    title="Delete review"
-                  >
-                    🗑️
-                  </button>
+                  </div>
                 </div>
               </div>
             ))}
@@ -538,176 +624,193 @@ export default function AdminTestimonialsPage() {
         )}
       </div>
 
+      {/* GitHub Token Modal for Master Setup */}
+      {isTokenModalOpen && (
+        <div className="fixed inset-0 z-50 bg-slate-950/70 backdrop-blur-xs flex items-center justify-center p-4">
+          <div className="bg-white rounded-3xl p-6 sm:p-8 max-w-lg w-full shadow-2xl">
+            <h3 className="text-xl font-serif font-bold text-slate-900">Configure GitHub Live Sync</h3>
+            <p className="text-slate-600 text-xs sm:text-sm mt-1 mb-4">
+              Connect your GitHub Personal Access Token once so that all review updates and approvals commit straight to the website repository without relying on Vercel settings.
+            </p>
+
+            <form onSubmit={handleSaveToken} className="space-y-4">
+              <div>
+                <label className="block text-xs font-bold text-slate-700 mb-1">
+                  GitHub Personal Access Token (starts with ghp_)
+                </label>
+                <input
+                  type="password"
+                  value={tokenInput}
+                  onChange={(e) => setTokenInput(e.target.value)}
+                  placeholder="ghp_xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
+                  className="w-full px-3.5 py-2.5 border border-slate-300 rounded-xl text-sm font-mono focus:outline-none focus:ring-2 focus:ring-amber-500"
+                  required
+                />
+              </div>
+
+              <div className="flex items-center justify-end gap-3 pt-2">
+                <button
+                  type="button"
+                  onClick={() => setIsTokenModalOpen(false)}
+                  className="px-4 py-2 border border-slate-300 rounded-xl text-xs font-semibold text-slate-700 hover:bg-slate-50 cursor-pointer"
+                >
+                  Cancel
+                </button>
+                <button
+                  type="submit"
+                  disabled={isSavingToken}
+                  className="px-5 py-2 bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs rounded-xl shadow cursor-pointer"
+                >
+                  {isSavingToken ? 'Testing & Connecting...' : 'Connect & Save'}
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      )}
+
       {/* Add / Edit Review Modal */}
       {isModalOpen && (
-        <div className="fixed inset-0 z-50 overflow-y-auto bg-slate-950/70 backdrop-blur-sm flex items-center justify-center p-4">
-          <div className="bg-white rounded-3xl max-w-lg w-full p-6 sm:p-8 shadow-2xl border border-slate-100 relative">
-            <button
-              onClick={() => setIsModalOpen(false)}
-              className="absolute top-5 right-5 text-slate-400 hover:text-slate-700 text-xl p-1"
-            >
-              ✕
-            </button>
-
+        <div className="fixed inset-0 z-50 bg-slate-950/70 backdrop-blur-xs flex items-center justify-center p-4 overflow-y-auto">
+          <div className="bg-white rounded-3xl p-6 sm:p-8 max-w-xl w-full shadow-2xl my-8">
             <h3 className="text-2xl font-serif font-bold text-slate-900 mb-1">
               {editingItem ? 'Edit Review' : 'Add Review Manually'}
             </h3>
-            <p className="text-slate-500 text-xs mb-5">
-              Copy/paste reviews from Google, TripAdvisor, guestbooks, or customer notes.
+            <p className="text-slate-500 text-xs mb-6">
+              Transcribe reviews directly from Google, TripAdvisor, or guestbooks.
             </p>
 
             <form onSubmit={handleSaveModal} className="space-y-4">
-              {/* Rating & Source */}
-              <div className="grid grid-cols-2 gap-3">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div>
-                  <label className="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1">
-                    Rating (1-5 Stars)
-                  </label>
-                  <select
-                    value={formRating}
-                    onChange={(e) => setFormRating(Number(e.target.value))}
-                    className="w-full text-sm px-3 py-2 rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-ship-blue-500"
-                  >
-                    <option value={5}>★★★★★ (5 Stars)</option>
-                    <option value={4}>★★★★☆ (4 Stars)</option>
-                    <option value={3}>★★★☆☆ (3 Stars)</option>
-                    <option value={2}>★★☆☆☆ (2 Stars)</option>
-                    <option value={1}>★☆☆☆☆ (1 Star)</option>
-                  </select>
-                </div>
-
-                <div>
-                  <label className="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1">
-                    Review Source
-                  </label>
-                  <select
-                    value={formSource}
-                    onChange={(e) => setFormSource(e.target.value as any)}
-                    className="w-full text-sm px-3 py-2 rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-ship-blue-500"
-                  >
-                    <option value="google">Google Review</option>
-                    <option value="tripadvisor">TripAdvisor</option>
-                    <option value="in_person">Guestbook / In Person</option>
-                    <option value="direct_submission">Direct Website</option>
-                  </select>
-                </div>
-              </div>
-
-              {/* Name & Location */}
-              <div className="grid grid-cols-2 gap-3">
-                <div>
-                  <label className="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1">
-                    Guest Name *
-                  </label>
+                  <label className="block text-xs font-bold text-slate-700 mb-1">Guest Name *</label>
                   <input
                     type="text"
                     required
-                    placeholder="e.g. John &amp; Mary"
                     value={formName}
                     onChange={(e) => setFormName(e.target.value)}
-                    className="w-full text-sm px-3 py-2 rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-ship-blue-500"
+                    placeholder="e.g. John &amp; Mary Smith"
+                    className="w-full px-3.5 py-2 border border-slate-300 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-amber-500"
                   />
                 </div>
 
                 <div>
-                  <label className="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1">
-                    Location
-                  </label>
+                  <label className="block text-xs font-bold text-slate-700 mb-1">Location (Optional)</label>
                   <input
                     type="text"
-                    placeholder="e.g. Bristol, London"
                     value={formLocation}
                     onChange={(e) => setFormLocation(e.target.value)}
-                    className="w-full text-sm px-3 py-2 rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-ship-blue-500"
+                    placeholder="e.g. Bristol, London, Local"
+                    className="w-full px-3.5 py-2 border border-slate-300 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-amber-500"
                   />
                 </div>
               </div>
 
-              {/* Visit Date & Title */}
-              <div className="grid grid-cols-2 gap-3">
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
                 <div>
-                  <label className="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1">
-                    Visit / Stay Date
-                  </label>
-                  <input
-                    type="text"
-                    placeholder="e.g. November 2026"
-                    value={formStayDate}
-                    onChange={(e) => setFormStayDate(e.target.value)}
-                    className="w-full text-sm px-3 py-2 rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-ship-blue-500"
-                  />
+                  <label className="block text-xs font-bold text-slate-700 mb-1">Star Rating</label>
+                  <select
+                    value={formRating}
+                    onChange={(e) => setFormRating(Number(e.target.value))}
+                    className="w-full px-3.5 py-2 border border-slate-300 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-amber-500 bg-white"
+                  >
+                    <option value={5}>5 Stars ★★★★★</option>
+                    <option value={4}>4 Stars ★★★★☆</option>
+                    <option value={3}>3 Stars ★★★☆☆</option>
+                    <option value={2}>2 Stars ★★☆☆☆</option>
+                    <option value={1}>1 Star ★☆☆☆☆</option>
+                  </select>
                 </div>
 
                 <div>
-                  <label className="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1">
-                    Status
-                  </label>
+                  <label className="block text-xs font-bold text-slate-700 mb-1">Source</label>
+                  <select
+                    value={formSource}
+                    onChange={(e) => setFormSource(e.target.value as any)}
+                    className="w-full px-3.5 py-2 border border-slate-300 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-amber-500 bg-white"
+                  >
+                    <option value="google">Google Review</option>
+                    <option value="tripadvisor">TripAdvisor</option>
+                    <option value="in_person">In Person / Guestbook</option>
+                    <option value="direct_submission">Direct Submission</option>
+                  </select>
+                </div>
+
+                <div>
+                  <label className="block text-xs font-bold text-slate-700 mb-1">Status</label>
                   <select
                     value={formStatus}
                     onChange={(e) => setFormStatus(e.target.value as any)}
-                    className="w-full text-sm px-3 py-2 rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-ship-blue-500"
+                    className="w-full px-3.5 py-2 border border-slate-300 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-amber-500 bg-white"
                   >
-                    <option value="published">Published (Visible on site)</option>
-                    <option value="pending">Pending (Hidden)</option>
+                    <option value="published">Published (Live)</option>
+                    <option value="pending">Pending</option>
                     <option value="archived">Archived (Hidden)</option>
                   </select>
                 </div>
               </div>
 
               <div>
-                <label className="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1">
-                  Headline (optional)
-                </label>
+                <label className="block text-xs font-bold text-slate-700 mb-1">Visit / Stay Date (Optional)</label>
                 <input
                   type="text"
-                  placeholder="e.g. Great coastal pub with wonderful views"
-                  value={formTitle}
-                  onChange={(e) => setFormTitle(e.target.value)}
-                  className="w-full text-sm px-3 py-2 rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-ship-blue-500"
+                  value={formStayDate}
+                  onChange={(e) => setFormStayDate(e.target.value)}
+                  placeholder="e.g. November 2026 or Autumn 2026"
+                  className="w-full px-3.5 py-2 border border-slate-300 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-amber-500"
                 />
               </div>
 
-              {/* Content */}
               <div>
-                <label className="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1">
-                  Review Text *
-                </label>
+                <label className="block text-xs font-bold text-slate-700 mb-1">Review Headline / Title (Optional)</label>
+                <input
+                  type="text"
+                  value={formTitle}
+                  onChange={(e) => setFormTitle(e.target.value)}
+                  placeholder="e.g. Outstanding Sunday roast and cosy harbour fire"
+                  className="w-full px-3.5 py-2 border border-slate-300 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-amber-500"
+                />
+              </div>
+
+              <div>
+                <label className="block text-xs font-bold text-slate-700 mb-1">Review Comments *</label>
                 <textarea
                   required
                   rows={4}
-                  placeholder="Paste or write the review comments..."
                   value={formContent}
                   onChange={(e) => setFormContent(e.target.value)}
-                  className="w-full text-sm px-3 py-2 rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-ship-blue-500"
+                  placeholder="Paste or type guest comments..."
+                  className="w-full px-3.5 py-2 border border-slate-300 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-amber-500"
                 />
               </div>
 
-              {/* Verified stay */}
-              <label className="flex items-center gap-2 cursor-pointer text-xs text-slate-600">
+              <div className="flex items-center gap-2 pt-1">
                 <input
                   type="checkbox"
+                  id="verifiedStay"
                   checked={formVerified}
                   onChange={(e) => setFormVerified(e.target.checked)}
-                  className="rounded text-ship-blue-600"
+                  className="rounded border-slate-300 text-amber-600 focus:ring-amber-500"
                 />
-                <span>Verified Stay / Dine Guest</span>
-              </label>
+                <label htmlFor="verifiedStay" className="text-xs text-slate-600 font-medium">
+                  Mark as &ldquo;Verified Stay / Visit&rdquo;
+                </label>
+              </div>
 
-              {/* Submit */}
-              <div className="pt-3 flex justify-end gap-3 border-t border-slate-100">
+              <div className="flex items-center justify-end gap-3 pt-4 border-t border-slate-100">
                 <button
                   type="button"
                   onClick={() => setIsModalOpen(false)}
-                  className="px-4 py-2 rounded-xl text-slate-600 hover:bg-slate-100 text-xs font-semibold transition"
+                  className="px-4 py-2 border border-slate-300 rounded-xl text-xs font-semibold text-slate-700 hover:bg-slate-50 cursor-pointer"
                 >
                   Cancel
                 </button>
                 <button
                   type="submit"
                   disabled={isSaving}
-                  className="bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold px-6 py-2.5 rounded-xl text-xs shadow-md transition disabled:opacity-50"
+                  className="px-6 py-2 bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold text-xs rounded-xl shadow cursor-pointer"
                 >
-                  {isSaving ? 'Saving...' : editingItem ? 'Save Changes' : 'Publish Review'}
+                  {isSaving ? 'Saving...' : editingItem ? 'Update Review' : 'Save & Publish'}
                 </button>
               </div>
             </form>
@@ -717,4 +820,3 @@ export default function AdminTestimonialsPage() {
     </div>
   )
 }
-

@@ -114,9 +114,9 @@ export async function POST(request: Request) {
         {
           success: false,
           error:
-            'Unable to save to the live site. Please sign in to Outstatic CMS at /outstatic first to authorize GitHub updates (or configure OST_GITHUB_TOKEN in Vercel).'
+            'Review saved in session, but could not commit live to GitHub. Please click "Setup GitHub Sync" in the top bar to connect your GitHub token.'
         },
-        { status: 401 }
+        { status: 400 }
       )
     }
 
@@ -201,9 +201,9 @@ export async function PATCH(request: Request) {
         {
           success: false,
           error:
-            'Unable to save updates to the live site. Please sign in to Outstatic CMS at /outstatic first to authorize GitHub updates (or configure OST_GITHUB_TOKEN in Vercel).'
+            'Review updated, but could not commit live to GitHub. Please click "Setup GitHub Sync" in the top bar to connect your GitHub token.'
         },
-        { status: 401 }
+        { status: 400 }
       )
     }
 
@@ -256,9 +256,9 @@ export async function DELETE(request: Request) {
         {
           success: false,
           error:
-            'Unable to delete from the live site. Please sign in to Outstatic CMS at /outstatic first to authorize GitHub updates (or configure OST_GITHUB_TOKEN in Vercel).'
+            'Review removed from list, but could not commit live to GitHub. Please click "Setup GitHub Sync" in the top bar to connect your GitHub token.'
         },
-        { status: 401 }
+        { status: 400 }
       )
     }
 
