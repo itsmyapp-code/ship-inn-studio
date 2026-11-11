@@ -6,22 +6,25 @@ import SmartImage from '@/components/SmartImage'
 import SocialVideoEmbed from '@/components/SocialVideoEmbed'
 import { compressImage, CompressionResult } from '@/lib/imageCompressor'
 
-interface DemoEvent {
+interface DemoPostItem {
   id: string
+  type: 'event' | 'news'
   title: string
-  eventDate: string
-  eventTime: string
-  location: string
+  eventDate?: string
+  eventTime?: string
+  location?: string
   excerpt: string
   coverImage: string
   videoUrl?: string
-  bookingRequired: boolean
+  bookingRequired?: boolean
   isPast?: boolean
+  publishedAt?: string
 }
 
-const INITIAL_EVENTS: DemoEvent[] = [
+const INITIAL_EVENTS: DemoPostItem[] = [
   {
     id: 'shanties-nov-2026',
+    type: 'event',
     title: 'Live Sea Shanties & Fireside Pints',
     eventDate: '2026-11-28',
     eventTime: '7:30 PM - 10:30 PM',
@@ -33,7 +36,18 @@ const INITIAL_EVENTS: DemoEvent[] = [
     isPast: false
   },
   {
+    id: 'news-winter-fire',
+    type: 'news',
+    title: 'The Fires Are Lit & New Winter Ale on Tap',
+    excerpt: 'Winter has arrived at the harbour. Come warm up by our 15th-century open fireplace with pints of Exmoor Ale and our fresh local game pie.',
+    coverImage: '/images/Ship -new-thatch.webp',
+    videoUrl: 'https://youtube.com/shorts/5O9Yw7sZf7Q',
+    publishedAt: 'Today',
+    isPast: false
+  },
+  {
     id: 'sunday-roast-special',
+    type: 'event',
     title: 'Exmoor Beef & Fresh Local Catch Sunday Lunch',
     eventDate: '2026-11-22',
     eventTime: '12:00 PM - 3:30 PM',
@@ -46,6 +60,7 @@ const INITIAL_EVENTS: DemoEvent[] = [
   },
   {
     id: 'summer-beer-fest',
+    type: 'event',
     title: 'Harbour Ale & Craft Cider Showcase',
     eventDate: '2026-08-15',
     eventTime: 'All Weekend',
@@ -57,6 +72,7 @@ const INITIAL_EVENTS: DemoEvent[] = [
   },
   {
     id: 'folk-night-autumn',
+    type: 'event',
     title: 'Autumn Acoustic Folk & Fiddle Night',
     eventDate: '2026-10-10',
     eventTime: '8:00 PM',
@@ -69,10 +85,11 @@ const INITIAL_EVENTS: DemoEvent[] = [
 ]
 
 export default function DemoPoshPage() {
-  const [activeTab, setActiveTab] = useState<'upcoming' | 'past'>('upcoming')
-  const [eventsList, setEventsList] = useState<DemoEvent[]>(INITIAL_EVENTS)
+  const [activeTab, setActiveTab] = useState<'upcoming' | 'past' | 'news'>('upcoming')
+  const [eventsList, setEventsList] = useState<DemoPostItem[]>(INITIAL_EVENTS)
 
-  // Simulator Form State
+  // Simulator Form State: Post Type ("event" or "news")
+  const [simPostType, setSimPostType] = useState<'event' | 'news'>('event')
   const [simTitle, setSimTitle] = useState('')
   const [simDate, setSimDate] = useState('2026-12-05')
   const [simTime, setSimTime] = useState('7:00 PM')
@@ -86,6 +103,13 @@ export default function DemoPoshPage() {
   const [simPhotoUrl, setSimPhotoUrl] = useState<string>('/images/shipinn-197.webp')
   const [isCompressing, setIsCompressing] = useState(false)
   const [simSuccess, setSimSuccess] = useState(false)
+
+  // Manual Delete Handler
+  const handleDeleteItem = (id: string, itemTitle: string) => {
+    if (window.confirm(`Are you sure you want to delete "${itemTitle}"? This will remove it immediately.`)) {
+      setEventsList((prev) => prev.filter((item) => item.id !== id))
+    }
+  }
 
   const handleVideoUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0]
@@ -118,27 +142,30 @@ export default function DemoPoshPage() {
     e.preventDefault()
     if (!simTitle.trim()) return
 
-    const newEvt: DemoEvent = {
+    const newItem: DemoPostItem = {
       id: `sim-${Date.now()}`,
+      type: simPostType,
       title: simTitle.trim(),
-      eventDate: simDate,
-      eventTime: simTime,
-      location: simLocation,
-      excerpt: simExcerpt.trim() || 'A special upcoming event at The Ship Inn Porlock Weir.',
+      eventDate: simPostType === 'event' ? simDate : undefined,
+      eventTime: simPostType === 'event' ? simTime : undefined,
+      location: simPostType === 'event' ? simLocation : undefined,
+      publishedAt: simPostType === 'news' ? 'Just Now' : undefined,
+      excerpt: simExcerpt.trim() || (simPostType === 'event' ? 'A special upcoming event at The Ship Inn Porlock Weir.' : 'Latest update from The Ship Inn Porlock Weir.'),
       coverImage: simPhotoUrl,
       videoUrl: simVideoUrl.trim() || undefined,
-      bookingRequired: simBooking,
+      bookingRequired: simPostType === 'event' ? simBooking : false,
       isPast: false
     }
 
-    setEventsList((prev) => [newEvt, ...prev])
+    setEventsList((prev) => [newItem, ...prev])
     setSimSuccess(true)
-    setActiveTab('upcoming')
+    setActiveTab(simPostType === 'event' ? 'upcoming' : 'news')
     setTimeout(() => setSimSuccess(false), 5000)
   }
 
-  const upcomingEvents = eventsList.filter((e) => !e.isPast)
-  const pastEvents = eventsList.filter((e) => e.isPast)
+  const upcomingEvents = eventsList.filter((e) => e.type === 'event' && !e.isPast)
+  const pastEvents = eventsList.filter((e) => e.type === 'event' && e.isPast)
+  const newsItems = eventsList.filter((e) => e.type === 'news')
 
   return (
     <div className="min-h-screen bg-slate-50 font-sans text-slate-800">
@@ -247,11 +274,11 @@ export default function DemoPoshPage() {
           </div>
 
           {/* Dynamic Tabs */}
-          <div className="flex items-center gap-2 bg-slate-200/80 p-1.5 rounded-2xl shrink-0">
+          <div className="flex flex-wrap items-center gap-2 bg-slate-200/80 p-1.5 rounded-2xl shrink-0">
             <button
               type="button"
               onClick={() => setActiveTab('upcoming')}
-              className={`px-5 py-2 rounded-xl text-xs sm:text-sm font-bold transition cursor-pointer flex items-center gap-2 ${activeTab === 'upcoming'
+              className={`px-4 sm:px-5 py-2 rounded-xl text-xs sm:text-sm font-bold transition cursor-pointer flex items-center gap-2 ${activeTab === 'upcoming'
                   ? 'bg-white text-slate-950 shadow-sm'
                   : 'text-slate-600 hover:text-slate-950'
                 }`}
@@ -264,8 +291,22 @@ export default function DemoPoshPage() {
 
             <button
               type="button"
+              onClick={() => setActiveTab('news')}
+              className={`px-4 sm:px-5 py-2 rounded-xl text-xs sm:text-sm font-bold transition cursor-pointer flex items-center gap-2 ${activeTab === 'news'
+                  ? 'bg-white text-slate-950 shadow-sm'
+                  : 'text-slate-600 hover:text-slate-950'
+                }`}
+            >
+              <span>📰 News &amp; Updates</span>
+              <span className="bg-blue-100 text-blue-900 text-xs px-2 py-0.5 rounded-full font-mono">
+                {newsItems.length}
+              </span>
+            </button>
+
+            <button
+              type="button"
               onClick={() => setActiveTab('past')}
-              className={`px-5 py-2 rounded-xl text-xs sm:text-sm font-bold transition cursor-pointer flex items-center gap-2 ${activeTab === 'past'
+              className={`px-4 sm:px-5 py-2 rounded-xl text-xs sm:text-sm font-bold transition cursor-pointer flex items-center gap-2 ${activeTab === 'past'
                   ? 'bg-white text-slate-950 shadow-sm'
                   : 'text-slate-600 hover:text-slate-950'
                 }`}
@@ -278,54 +319,60 @@ export default function DemoPoshPage() {
           </div>
         </div>
 
-        {/* Event Cards Showcase */}
+        {/* Event / News Cards Showcase */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-          {(activeTab === 'upcoming' ? upcomingEvents : pastEvents).map((event) => (
+          {(activeTab === 'upcoming' ? upcomingEvents : activeTab === 'news' ? newsItems : pastEvents).map((item) => (
             <div
-              key={event.id}
+              key={item.id}
               className="bg-white rounded-3xl overflow-hidden border border-slate-200/90 shadow-sm hover:shadow-xl transition-all duration-300 flex flex-col justify-between"
             >
               <div>
                 {/* Media Container: Either Facebook Reel or Flyer Image */}
-                {event.videoUrl ? (
+                {item.videoUrl ? (
                   <div className="p-4 bg-slate-900 border-b border-slate-800">
-                    <SocialVideoEmbed url={event.videoUrl} title={event.title} />
+                    <SocialVideoEmbed url={item.videoUrl} title={item.title} />
                   </div>
                 ) : (
                   <div className="relative h-72 sm:h-84 w-full bg-slate-950 overflow-hidden flex items-center justify-center group">
                     {/* Ambient Blurred Background to frame flyer with no awkward empty voids */}
                     <img
-                      src={event.coverImage}
+                      src={item.coverImage}
                       alt=""
                       aria-hidden="true"
                       className="absolute inset-0 w-full h-full object-cover blur-2xl opacity-40 scale-110 pointer-events-none"
                     />
                     {/* Full, Uncropped Flyer - preserves circular, square (1:1), portrait (4:5) or landscape (16:9) */}
                     <img
-                      src={event.coverImage}
-                      alt={event.title}
+                      src={item.coverImage}
+                      alt={item.title}
                       className="relative z-10 max-h-full max-w-full object-contain p-3 drop-shadow-2xl transition-transform duration-300 group-hover:scale-[1.02]"
                     />
                     <div className="absolute top-3 left-3 z-20 bg-slate-950/80 backdrop-blur-xs text-white text-[11px] font-bold px-3 py-1 rounded-full border border-white/20">
-                      📷 Full Event Flyer
+                      {item.type === 'news' ? '📰 News Photo' : '📷 Full Event Flyer'}
                     </div>
                   </div>
                 )}
 
-                {/* Event Details */}
+                {/* Event or News Details */}
                 <div className="p-6 sm:p-8">
-                  <div className="flex items-center justify-between gap-2 mb-3">
-                    <span className="text-xs font-bold uppercase tracking-wider text-amber-800 bg-amber-50 px-2.5 py-1 rounded-full border border-amber-200">
-                      📅 {event.eventDate} • {event.eventTime}
-                    </span>
+                  <div className="flex flex-wrap items-center justify-between gap-2 mb-3">
+                    {item.type === 'event' ? (
+                      <span className="text-xs font-bold uppercase tracking-wider text-amber-800 bg-amber-50 px-2.5 py-1 rounded-full border border-amber-200">
+                        📅 {item.eventDate} {item.eventTime ? `• ${item.eventTime}` : ''}
+                      </span>
+                    ) : (
+                      <span className="text-xs font-bold uppercase tracking-wider text-blue-800 bg-blue-50 px-2.5 py-1 rounded-full border border-blue-200">
+                        📰 Pub News • {item.publishedAt || 'Latest'}
+                      </span>
+                    )}
 
-                    {event.bookingRequired && (
+                    {item.bookingRequired && (
                       <span className="text-xs font-bold bg-emerald-50 text-emerald-800 border border-emerald-200 px-2.5 py-1 rounded-full">
                         ✓ Booking Advised
                       </span>
                     )}
 
-                    {event.isPast && (
+                    {item.isPast && (
                       <span className="text-xs font-bold bg-slate-100 text-slate-600 px-2.5 py-1 rounded-full">
                         Archived
                       </span>
@@ -333,46 +380,65 @@ export default function DemoPoshPage() {
                   </div>
 
                   <h3 className="text-xl sm:text-2xl font-serif font-bold text-slate-900 mb-2 leading-snug">
-                    {event.title}
+                    {item.title}
                   </h3>
 
-                  <p className="text-xs font-semibold text-slate-500 mb-3 flex items-center gap-1.5">
-                    <span>📍</span>
-                    <span>{event.location}</span>
-                  </p>
+                  {item.location && (
+                    <p className="text-xs font-semibold text-slate-500 mb-3 flex items-center gap-1.5">
+                      <span>📍</span>
+                      <span>{item.location}</span>
+                    </p>
+                  )}
 
                   <p className="text-slate-600 text-sm leading-relaxed mb-6 font-light">
-                    {event.excerpt}
+                    {item.excerpt}
                   </p>
                 </div>
               </div>
 
-              {/* Action Buttons */}
+              {/* Action Buttons & Manual Delete Button */}
               <div className="p-6 sm:p-8 pt-0 border-t border-slate-100 mt-2 flex flex-col sm:flex-row items-center justify-between gap-3">
-                {event.bookingRequired ? (
-                  <Link
-                    href="/contact"
-                    className="w-full sm:w-auto px-5 py-2.5 bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold text-xs rounded-xl transition shadow text-center"
-                  >
-                    Reserve a Table →
-                  </Link>
-                ) : (
-                  <span className="text-xs text-slate-500 font-medium">Free Entry • All Welcome</span>
-                )}
+                <div className="flex items-center gap-2 w-full sm:w-auto">
+                  {item.bookingRequired ? (
+                    <Link
+                      href="/contact"
+                      className="px-4 py-2 bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold text-xs rounded-xl transition shadow text-center"
+                    >
+                      Reserve Table →
+                    </Link>
+                  ) : item.type === 'event' ? (
+                    <span className="text-xs text-slate-500 font-medium">Free Entry • All Welcome</span>
+                  ) : (
+                    <span className="text-xs text-blue-600 font-medium">Pub Update</span>
+                  )}
 
+                  <button
+                    type="button"
+                    onClick={() =>
+                      alert(
+                        `Simulated Share Link copied!\nhttps://theshipinnporlockweir.co.uk/${item.type === 'event' ? 'events' : 'news'}/${item.id}\n\nWhen pasted to Facebook, this creates an instant high-res link card!`
+                      )
+                    }
+                    className="px-3 py-2 bg-slate-100 hover:bg-slate-200 text-slate-700 font-semibold text-xs rounded-xl transition cursor-pointer flex items-center gap-1"
+                  >
+                    <svg className="w-3.5 h-3.5 fill-blue-600" viewBox="0 0 24 24">
+                      <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z" />
+                    </svg>
+                    <span>Share</span>
+                  </button>
+                </div>
+
+                {/* Staff Delete Button (Manual Item Removal) */}
                 <button
                   type="button"
-                  onClick={() =>
-                    alert(
-                      `Simulated Share Link copied!\nhttps://theshipinnporlockweir.co.uk/events/${event.id}\n\nWhen pasted to Facebook, this creates an instant high-res link card!`
-                    )
-                  }
-                  className="w-full sm:w-auto px-4 py-2 bg-slate-100 hover:bg-slate-200 text-slate-700 font-semibold text-xs rounded-xl transition cursor-pointer flex items-center justify-center gap-1.5"
+                  onClick={() => handleDeleteItem(item.id, item.title)}
+                  className="w-full sm:w-auto px-3 py-1.5 text-red-600 hover:text-white hover:bg-red-600 border border-red-200 hover:border-red-600 font-semibold text-xs rounded-xl transition cursor-pointer flex items-center justify-center gap-1.5"
+                  title="Remove this post"
                 >
-                  <svg className="w-3.5 h-3.5 fill-blue-600" viewBox="0 0 24 24">
-                    <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z" />
+                  <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
                   </svg>
-                  <span>Copy Link for Facebook</span>
+                  <span>Delete Post</span>
                 </button>
               </div>
             </div>
@@ -405,60 +471,101 @@ export default function DemoPoshPage() {
             onSubmit={handleSimSubmit}
             className="bg-slate-950 border border-slate-800 rounded-3xl p-6 sm:p-10 shadow-2xl space-y-6"
           >
+            {/* Post Category Toggle: Event vs News / Update */}
+            <div>
+              <label className="block text-xs font-bold text-slate-300 uppercase tracking-wider mb-2">
+                Post Category
+              </label>
+              <div className="grid grid-cols-2 gap-3 p-1.5 bg-slate-900 rounded-2xl border border-slate-800">
+                <button
+                  type="button"
+                  onClick={() => setSimPostType('event')}
+                  className={`py-3 px-4 rounded-xl text-xs sm:text-sm font-bold transition flex items-center justify-center gap-2 cursor-pointer ${
+                    simPostType === 'event'
+                      ? 'bg-amber-500 text-slate-950 shadow-md'
+                      : 'text-slate-400 hover:text-white'
+                  }`}
+                >
+                  <span>📅 Scheduled Event</span>
+                  <span className="text-[11px] opacity-80">(With date &amp; time)</span>
+                </button>
+
+                <button
+                  type="button"
+                  onClick={() => setSimPostType('news')}
+                  className={`py-3 px-4 rounded-xl text-xs sm:text-sm font-bold transition flex items-center justify-center gap-2 cursor-pointer ${
+                    simPostType === 'news'
+                      ? 'bg-blue-600 text-white shadow-md'
+                      : 'text-slate-400 hover:text-white'
+                  }`}
+                >
+                  <span>📰 Pub News / Update</span>
+                  <span className="text-[11px] opacity-80">(Food specials, ales, weather)</span>
+                </button>
+              </div>
+            </div>
+
             <div>
               <label className="block text-xs font-bold text-slate-300 uppercase tracking-wider mb-1.5">
-                1. Event Headline / Title *
+                1. {simPostType === 'event' ? 'Event Headline / Title *' : 'News Headline *'}
               </label>
               <input
                 type="text"
                 required
                 value={simTitle}
                 onChange={(e) => setSimTitle(e.target.value)}
-                placeholder="e.g. Stumpy Oak Live Acoustic &amp; Cider Night"
+                placeholder={
+                  simPostType === 'event'
+                    ? 'e.g. Stumpy Oak Live Acoustic & Cider Night'
+                    : 'e.g. Fresh Porlock Bay Oysters & New Winter Game Pie on the Board'
+                }
                 className="w-full px-4 py-3 bg-slate-900 border border-slate-700 rounded-xl text-white placeholder-slate-500 text-sm focus:outline-none focus:border-amber-400 transition"
               />
             </div>
 
-            <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-              <div>
-                <label className="block text-xs font-bold text-slate-300 uppercase tracking-wider mb-1.5">
-                  2. Date *
-                </label>
-                <input
-                  type="date"
-                  required
-                  value={simDate}
-                  onChange={(e) => setSimDate(e.target.value)}
-                  className="w-full px-4 py-3 bg-slate-900 border border-slate-700 rounded-xl text-white text-sm focus:outline-none focus:border-amber-400 transition"
-                />
-              </div>
+            {/* Event-Only Fields: Date, Time, Location */}
+            {simPostType === 'event' && (
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                <div>
+                  <label className="block text-xs font-bold text-slate-300 uppercase tracking-wider mb-1.5">
+                    2. Date *
+                  </label>
+                  <input
+                    type="date"
+                    required
+                    value={simDate}
+                    onChange={(e) => setSimDate(e.target.value)}
+                    className="w-full px-4 py-3 bg-slate-900 border border-slate-700 rounded-xl text-white text-sm focus:outline-none focus:border-amber-400 transition"
+                  />
+                </div>
 
-              <div>
-                <label className="block text-xs font-bold text-slate-300 uppercase tracking-wider mb-1.5">
-                  Time
-                </label>
-                <input
-                  type="text"
-                  value={simTime}
-                  onChange={(e) => setSimTime(e.target.value)}
-                  placeholder="e.g. 7:30 PM"
-                  className="w-full px-4 py-3 bg-slate-900 border border-slate-700 rounded-xl text-white placeholder-slate-500 text-sm focus:outline-none focus:border-amber-400 transition"
-                />
-              </div>
+                <div>
+                  <label className="block text-xs font-bold text-slate-300 uppercase tracking-wider mb-1.5">
+                    Time
+                  </label>
+                  <input
+                    type="text"
+                    value={simTime}
+                    onChange={(e) => setSimTime(e.target.value)}
+                    placeholder="e.g. 7:30 PM"
+                    className="w-full px-4 py-3 bg-slate-900 border border-slate-700 rounded-xl text-white placeholder-slate-500 text-sm focus:outline-none focus:border-amber-400 transition"
+                  />
+                </div>
 
-              <div>
-                <label className="block text-xs font-bold text-slate-300 uppercase tracking-wider mb-1.5">
-                  Location
-                </label>
-                <input
-                  type="text"
-                  value={simLocation}
-                  onChange={(e) => setSimLocation(e.target.value)}
-                  placeholder="e.g. Saloon Bar or Garden"
-                  className="w-full px-4 py-3 bg-slate-900 border border-slate-700 rounded-xl text-white placeholder-slate-500 text-sm focus:outline-none focus:border-amber-400 transition"
-                />
+                <div>
+                  <label className="block text-xs font-bold text-slate-300 uppercase tracking-wider mb-1.5">
+                    Location
+                  </label>
+                  <input
+                    type="text"
+                    value={simLocation}
+                    onChange={(e) => setSimLocation(e.target.value)}
+                    placeholder="e.g. Saloon Bar or Garden"
+                    className="w-full px-4 py-3 bg-slate-900 border border-slate-700 rounded-xl text-white placeholder-slate-500 text-sm focus:outline-none focus:border-amber-400 transition"
+                  />
+                </div>
               </div>
-            </div>
+            )}
 
             {/* Media Selector: Either Paste Social Reel/Post Link OR Directly Upload a Video */}
             <div>
