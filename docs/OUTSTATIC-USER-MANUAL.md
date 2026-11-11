@@ -35,11 +35,11 @@ Use this dedicated tool to upload new photos to the gallery or delete old ones w
 ### 1.3 Testimonials & Customer Reviews Manager
 Use this dedicated tool to approve customer submissions from the website, manually transcribe reviews from Google or TripAdvisor, and manage what reviews appear on the homepage:
 1. Open your browser and go to: https://theshipinnporlockweir.co.uk/admin/testimonials
-2. **Live Stats & Tabs:** The dashboard displays live counts (Total Reviews, Average Star Rating, Pending Approvals, Published Reviews) and tabbed filters (All, Pending, Published, Archived).
-3. **Authorizing Live Changes:** To approve, add, or delete reviews on the live website, ensure you are signed into Outstatic CMS at https://theshipinnporlockweir.co.uk/outstatic (Section 2) so your session authorizes GitHub commits.
+2. **Enter Admin Passcode:** When prompted, enter the pub passcode `theshipinnta248pb!` to unlock the manager. (No GitHub account, sign-in, or token is required for staff or clients; all authorized edits sync automatically).
+3. **Live Stats & Tabs:** The dashboard displays live counts (Total Reviews, Average Star Rating, Pending Approvals, Published Reviews) and tabbed filters (All, Pending, Published, Archived).
 4. **Approving Guest Submissions:** When guests leave a review via the website modal, it lands in "Pending" status. Click the green **"Approve & Publish"** button to immediately make it live on the homepage.
 5. **Manually Adding Reviews:** Click the **"+ Add Review Manually"** button in the header. Enter the guest's name, rating (1–5 stars), visit date, source (Google, TripAdvisor, In Person / Guestbook, or Direct), review text, and optional verified stay badge. Click **"Save & Publish"**.
-6. **Editing or Archiving:** Click **"Edit"** on any review card to update wording or rating. Click **"Archive / Hide"** to remove a review from the homepage without permanently deleting it, or click **"Delete"** to remove it permanently.
+6. **Editing, Archiving & Deleting:** Click **"Edit"** on any review card to update wording or rating. Click **"Archive"** to remove a review from the homepage without permanently deleting it, or click **"Delete"** to remove it permanently.
 
 ---
 
