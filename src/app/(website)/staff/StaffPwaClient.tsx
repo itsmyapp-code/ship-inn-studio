@@ -296,7 +296,7 @@ export default function StaffPwaClient() {
         (postType === 'event'
           ? 'Upcoming event at The Ship Inn Porlock Weir.'
           : 'Latest update from The Ship Inn Porlock Weir.'),
-      coverImage: photoDataUrl || (mediaType === 'photo' ? '/images/Ship -new-thatch.webp' : undefined),
+      coverImage: photoDataUrl || '/images/Ship -new-thatch.webp',
       videoUrl:
         mediaType === 'video'
           ? finalVideoUrl
@@ -936,6 +936,63 @@ export default function StaffPwaClient() {
             )}
           </div>
 
+          {/* 7. Live Social Share Preview (Facebook & WhatsApp) */}
+          <div className="p-3.5 bg-slate-50 border border-slate-200 rounded-2xl space-y-2.5">
+            <div className="flex items-center justify-between">
+              <span className="text-[11px] font-bold text-slate-700 uppercase tracking-wider flex items-center gap-1.5">
+                <span>📱</span> Facebook &amp; WhatsApp Card Preview
+              </span>
+              <span className="text-[10px] bg-blue-100 text-blue-800 font-bold px-2 py-0.5 rounded-full">
+                What Followers See
+              </span>
+            </div>
+            <p className="text-[11px] text-slate-500 leading-snug">
+              This card is generated automatically when you share this post to Facebook, Instagram Stories, or WhatsApp:
+            </p>
+
+            {/* Social Card Mockup */}
+            <div className="bg-white border border-slate-300 rounded-xl overflow-hidden shadow-xs">
+              <div className="relative aspect-video w-full bg-slate-900 flex items-center justify-center overflow-hidden">
+                {photoDataUrl ? (
+                  <img src={photoDataUrl} alt="Preview" className="w-full h-full object-cover" />
+                ) : videoFileUrl ? (
+                  <div className="relative w-full h-full">
+                    <video src={videoFileUrl} className="w-full h-full object-cover" />
+                    <div className="absolute inset-0 bg-black/30 flex items-center justify-center">
+                      <span className="w-12 h-12 rounded-full bg-white/90 text-blue-600 flex items-center justify-center text-xl shadow-lg font-bold pl-1">
+                        ▶
+                      </span>
+                    </div>
+                  </div>
+                ) : (
+                  <img
+                    src="/images/Ship -new-thatch.webp"
+                    alt="The Ship Inn"
+                    className="w-full h-full object-cover"
+                  />
+                )}
+                <div className="absolute top-2 right-2 bg-black/70 text-white text-[10px] font-bold px-2 py-0.5 rounded-md backdrop-blur-xs">
+                  {mediaType === 'video' ? '🎬 VIDEO' : mediaType === 'social' ? '🔗 SOCIAL' : '📸 PHOTO'}
+                </div>
+              </div>
+
+              <div className="p-3 bg-slate-100 border-t border-slate-200 text-left">
+                <div className="text-[10px] font-bold uppercase tracking-wider text-slate-500">
+                  THESHIPINNPORLOCKWEIR.CO.UK
+                </div>
+                <div className="text-sm font-bold text-slate-900 line-clamp-2 mt-0.5">
+                  {title.trim() || 'Your Post Headline Will Appear Here'}
+                </div>
+                <div className="text-xs text-slate-600 line-clamp-2 mt-1">
+                  {excerpt.trim() ||
+                    (postType === 'event'
+                      ? 'Upcoming event at The Ship Inn Porlock Weir.'
+                      : 'Latest update from The Ship Inn Porlock Weir.')}
+                </div>
+              </div>
+            </div>
+          </div>
+
           {/* Big Publish Button */}
           <button
             type="submit"
@@ -993,7 +1050,7 @@ export default function StaffPwaClient() {
                     <button
                       type="button"
                       onClick={async () => {
-                        const targetUrl = `https://www.theshipinnporlockweir.co.uk/demo-posh-7924#${item.id}`
+                        const targetUrl = `https://www.theshipinnporlockweir.co.uk/demo-posh-7924?post=${item.id}#${item.id}`
                         await copyToClipboard(targetUrl)
                         setCopiedItemId(item.id)
                         setTimeout(() => setCopiedItemId(null), 2500)
@@ -1047,6 +1104,28 @@ export default function StaffPwaClient() {
               </p>
             </div>
 
+            {/* Social Card Preview in Modal */}
+            <div className="bg-slate-50 border border-slate-300 rounded-xl overflow-hidden text-left shadow-xs">
+              <div className="relative aspect-video w-full bg-slate-900 overflow-hidden">
+                <img
+                  src={latestItem.coverImage || '/images/Ship -new-thatch.webp'}
+                  alt={latestItem.title}
+                  className="w-full h-full object-cover"
+                />
+              </div>
+              <div className="p-2.5 bg-slate-100 border-t border-slate-200">
+                <div className="text-[9px] font-bold uppercase tracking-wider text-slate-500">
+                  THESHIPINNPORLOCKWEIR.CO.UK
+                </div>
+                <div className="text-xs font-bold text-slate-900 line-clamp-1 mt-0.5">
+                  {latestItem.title}
+                </div>
+                <div className="text-[11px] text-slate-600 line-clamp-1 mt-0.5">
+                  {latestItem.excerpt}
+                </div>
+              </div>
+            </div>
+
             <div className="p-3 bg-slate-50 rounded-xl border border-slate-200 text-left space-y-2">
               <p className="text-[10px] font-bold uppercase tracking-wider text-amber-800">Next Step: Social Syndication</p>
               <p className="text-xs text-slate-600 leading-relaxed">
@@ -1055,7 +1134,7 @@ export default function StaffPwaClient() {
               <button
                 type="button"
                 onClick={async () => {
-                  const targetUrl = `https://www.theshipinnporlockweir.co.uk/demo-posh-7924#${latestItem.id}`
+                  const targetUrl = `https://www.theshipinnporlockweir.co.uk/demo-posh-7924?post=${latestItem.id}#${latestItem.id}`
                   await copyToClipboard(targetUrl)
                   setModalCopied(true)
                   setTimeout(() => setModalCopied(false), 3000)
@@ -1068,6 +1147,18 @@ export default function StaffPwaClient() {
               >
                 <span>{modalCopied ? '✓ Link Copied to Clipboard!' : '📋 Copy Facebook Link'}</span>
               </button>
+
+              <a
+                href={`https://developers.facebook.com/tools/debug/?q=${encodeURIComponent(
+                  `https://www.theshipinnporlockweir.co.uk/demo-posh-7924?post=${latestItem.id}`
+                )}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="w-full py-2 bg-white hover:bg-slate-100 border border-slate-300 text-slate-700 font-semibold text-[11px] rounded-lg transition flex items-center justify-center gap-1.5 cursor-pointer"
+              >
+                <span>🔍 Test in Facebook Debugger</span>
+                <span className="text-[10px] text-slate-400">↗</span>
+              </a>
             </div>
 
             <button
