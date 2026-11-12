@@ -266,7 +266,7 @@ async function generateDocx() {
                 size: 21
               }),
               new TextRun({
-                text: 'Dedicated Staff Mobile App (PWA), Video & Reel Hosting, Fast Admin Tools | Version 4.0 (11 November 2026)',
+                text: 'Dedicated Staff Mobile App (PWA), Video & Reel Hosting, Fast Admin Tools | Version 4.1 (12 November 2026)',
                 bold: true,
                 color: 'D97706',
                 size: 21
@@ -310,17 +310,23 @@ async function generateDocx() {
           createStepBox([
             '1. Open Safari (iPhone) or Chrome (Android) and go to: https://theshipinnporlockweir.co.uk/staff',
             '2. Add to Home Screen (Optional but Recommended): Tap the Share button in Safari and tap "Add to Home Screen" to install The Ship Inn app icon directly on your phone.',
-            '3. Enter Staff PIN: Enter the 4-digit pub passcode 1572 to unlock the publisher.',
+            '3. Enter Staff PIN: Enter the 4-digit pub passcode 1572 (or 7924) to unlock the publisher.',
             '4. Choose What You Are Posting:',
             '   • 📅 Scheduled Event: For live music, quiz nights, holiday feasts (requires date, time, and optional table booking prompt).',
             '   • 📰 Pub News / Special: For daily chalkboard specials, seasonal ale taps, local seafood catch, or harbour weather updates.',
             '5. Enter Headline & Description: Type a punchy title and optional short summary.',
             '6. Choose Media (Direct Camera Roll or Social Link):',
-            '   • 🎥 Video Upload: Pick an MP4 or MOV clip straight from your phone camera roll. Keep "Silent Video Mode" switched ON to guarantee zero copyright audio blocks.',
+            '   • 🎥 Phone Camera Roll Video: Select any MP4 or MOV clip straight from your phone camera roll. The studio automatically extracts a crisp video frame thumbnail for your Facebook/WhatsApp preview card! Keep "Silent Video Mode" switched ON for ambient website looping with zero copyright audio blocks.',
             '   • 🖼️ Photo / Flyer: Pick an event poster or food photo. It automatically optimizes and compresses in your phone browser in 0.5 seconds.',
             '   • 🔗 Social Link: Paste a public Facebook Reel, Instagram Reel, or YouTube Shorts link.',
-            '7. Click "Publish to The Ship Inn (1-Click)": Your post goes live immediately in the website feed, complete with Google Search Event Schema!',
-            '8. Share to Facebook: An instant "Copy Facebook Link" button appears on screen. Tap it and paste the link onto the pub\'s Facebook page for a high-res preview card driving direct bookings.'
+            '7. Attach PDF Menu or Flyer (Optional): Tap "Choose PDF Document" to attach seasonal food menus, Christmas menus, or wine lists directly to the post.',
+            '8. Button Link to Website (Optional CTA): Choose a high-converting button link ("Reserve Table", "Festive & Christmas", "View Rooms & Stay", "Explore Food & Drink", or Custom).',
+            '9. Check the Live Social Card Preview: Right above the publish button, view the live preview of what followers will see on Facebook, Instagram, and WhatsApp.',
+            '10. Click "Publish to The Ship Inn (1-Click)": Your post goes live immediately with zero build wait time and £0 in build costs (stored directly on Vercel Edge storage).',
+            '11. One-Tap Social Syndication:',
+            '   • "Copy Facebook Post (with Menu & CTA)": Copies a pre-formatted post with headline, description, video link, and direct links to the menu and reservations. Just open Facebook and tap Paste!',
+            '   • "Copy Link Only": Copies just the direct post URL.',
+            '   • "Test in Facebook Debugger": Opens Meta\'s official tool to verify how Facebook renders the card without posting publicly.'
           ]),
 
           new Paragraph({ spacing: { before: 280, after: 120 } }),
@@ -564,7 +570,7 @@ async function generateDocx() {
             alignment: AlignmentType.CENTER,
             children: [
               new TextRun({
-                text: 'Manual Version 4.0 • Updated 11 November 2026',
+                text: 'Manual Version 4.1 • Updated 12 November 2026',
                 size: 18,
                 bold: true,
                 color: '64748B'
@@ -577,14 +583,16 @@ async function generateDocx() {
   })
 
   const buffer = await Packer.toBuffer(doc)
-  const outputPath = path.join(
-    process.cwd(),
-    'public',
-    'docs',
-    'The-Ship-Inn-Website-Management-Guide-20261111-Updated.docx'
-  )
-  fs.writeFileSync(outputPath, buffer)
-  console.log('Successfully created:', outputPath)
+  const paths = [
+    path.join(process.cwd(), 'public', 'docs', 'The-Ship-Inn-Website-Management-Guide-20261111-Updated.docx'),
+    path.join(process.cwd(), 'public', 'docs', 'The-Ship-Inn-Website-Management-Guide.docx'),
+    path.join(process.cwd(), 'docs', 'The-Ship-Inn-Website-Management-Guide.docx')
+  ]
+
+  for (const p of paths) {
+    fs.writeFileSync(p, buffer)
+    console.log('Successfully created:', p)
+  }
 }
 
 generateDocx().catch((err) => {
