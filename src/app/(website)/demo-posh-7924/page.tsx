@@ -91,6 +91,41 @@ const INITIAL_EVENTS: DemoPostItem[] = [
 export default function DemoPoshPage() {
   const [activeTab, setActiveTab] = useState<'upcoming' | 'past' | 'news'>('upcoming')
   const [eventsList, setEventsList] = useState<DemoPostItem[]>(INITIAL_EVENTS)
+  const [copiedId, setCopiedId] = useState<string | null>(null)
+
+  const handleCopyLink = async (item: DemoPostItem) => {
+    const targetUrl = `https://www.theshipinnporlockweir.co.uk/demo-posh-7924#${item.id}`
+    let copied = false
+
+    try {
+      if (navigator.clipboard && window.isSecureContext) {
+        await navigator.clipboard.writeText(targetUrl)
+        copied = true
+      }
+    } catch (e) {
+      // Fallback below
+    }
+
+    if (!copied) {
+      try {
+        const textArea = document.createElement('textarea')
+        textArea.value = targetUrl
+        textArea.style.position = 'fixed'
+        textArea.style.left = '-999999px'
+        textArea.style.top = '-999999px'
+        document.body.appendChild(textArea)
+        textArea.focus()
+        textArea.select()
+        copied = document.execCommand('copy')
+        textArea.remove()
+      } catch (err) {
+        console.error('Fallback copy error:', err)
+      }
+    }
+
+    setCopiedId(item.id)
+    setTimeout(() => setCopiedId(null), 3000)
+  }
 
   // Fetch shared demo items from /api/demo-posh so updates made from /staff immediately show here!
   useEffect(() => {
@@ -465,17 +500,27 @@ export default function DemoPoshPage() {
 
                   <button
                     type="button"
-                    onClick={() =>
-                      alert(
-                        `Simulated Share Link copied!\nhttps://theshipinnporlockweir.co.uk/${item.type === 'event' ? 'events' : 'news'}/${item.id}\n\nWhen pasted to Facebook, this creates an instant high-res link card!`
-                      )
-                    }
-                    className="px-3 py-2 bg-slate-100 hover:bg-slate-200 text-slate-700 font-semibold text-xs rounded-xl transition cursor-pointer flex items-center gap-1"
+                    onClick={() => handleCopyLink(item)}
+                    className={`px-3 py-2 font-semibold text-xs rounded-xl transition cursor-pointer flex items-center gap-1.5 ${
+                      copiedId === item.id
+                        ? 'bg-emerald-100 text-emerald-800 border border-emerald-300'
+                        : 'bg-slate-100 hover:bg-slate-200 text-slate-700'
+                    }`}
+                    title="Copy share link for Facebook or WhatsApp"
                   >
-                    <svg className="w-3.5 h-3.5 fill-blue-600" viewBox="0 0 24 24">
-                      <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z" />
-                    </svg>
-                    <span>Share</span>
+                    {copiedId === item.id ? (
+                      <>
+                        <span className="text-emerald-700 font-bold">✓</span>
+                        <span>Copied!</span>
+                      </>
+                    ) : (
+                      <>
+                        <svg className="w-3.5 h-3.5 fill-blue-600" viewBox="0 0 24 24">
+                          <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z" />
+                        </svg>
+                        <span>Share Link</span>
+                      </>
+                    )}
                   </button>
                 </div>
 

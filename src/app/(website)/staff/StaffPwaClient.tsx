@@ -81,6 +81,38 @@ export default function StaffPwaClient() {
   const [publishedItems, setPublishedItems] = useState<PublishedItem[]>([])
   const [showSuccessModal, setShowSuccessModal] = useState(false)
   const [latestItem, setLatestItem] = useState<PublishedItem | null>(null)
+  const [copiedItemId, setCopiedItemId] = useState<string | null>(null)
+  const [modalCopied, setModalCopied] = useState(false)
+
+  const copyToClipboard = async (text: string) => {
+    let copied = false
+    try {
+      if (navigator.clipboard && window.isSecureContext) {
+        await navigator.clipboard.writeText(text)
+        copied = true
+      }
+    } catch {
+      // Fallback below
+    }
+
+    if (!copied) {
+      try {
+        const textArea = document.createElement('textarea')
+        textArea.value = text
+        textArea.style.position = 'fixed'
+        textArea.style.left = '-999999px'
+        textArea.style.top = '-999999px'
+        document.body.appendChild(textArea)
+        textArea.focus()
+        textArea.select()
+        copied = document.execCommand('copy')
+        textArea.remove()
+      } catch (err) {
+        console.error('Fallback copy error:', err)
+      }
+    }
+    return copied
+  }
 
   // Initialize Auth & Load Items
   useEffect(() => {
@@ -309,6 +341,11 @@ export default function StaffPwaClient() {
       setVideoFileName(null)
       setPhotoDataUrl(null)
       setSocialLink('')
+      setPdfFile(null)
+      setPdfFileName(null)
+      setCtaPreset('none')
+      setCtaCustomText('')
+      setCtaCustomLink('')
       setPdfFile(null)
       setPdfFileName(null)
       setCtaPreset('none')
@@ -816,6 +853,89 @@ export default function StaffPwaClient() {
             )}
           </div>
 
+          {/* 5. Optional PDF Attachment (Menus, Wine Lists, Schedules) */}
+          <div>
+            <label className="block text-[11px] font-bold text-slate-600 uppercase tracking-wider mb-1.5 flex items-center justify-between">
+              <span>5. Attach Menu or Flyer (Optional PDF)</span>
+              <span className="text-[10px] text-slate-400 font-normal">Menus, Wine Lists, Schedules</span>
+            </label>
+            {!pdfFile ? (
+              <label className="flex items-center gap-2.5 px-3.5 py-2.5 bg-slate-50 hover:bg-slate-100 border border-slate-300 border-dashed rounded-xl cursor-pointer transition">
+                <span className="text-lg">📄</span>
+                <span className="text-xs font-semibold text-slate-700">Choose PDF Document (Menu/Flyer)...</span>
+                <input
+                  type="file"
+                  accept="application/pdf"
+                  className="hidden"
+                  onChange={(e) => {
+                    const file = e.target.files?.[0]
+                    if (file) {
+                      setPdfFile(file)
+                      setPdfFileName(file.name)
+                    }
+                  }}
+                />
+              </label>
+            ) : (
+              <div className="flex items-center justify-between p-2.5 bg-red-50/80 border border-red-200 rounded-xl text-xs">
+                <div className="flex items-center gap-2 min-w-0">
+                  <span className="bg-red-600 text-white font-bold text-[9px] px-1.5 py-0.5 rounded shadow-sm">PDF</span>
+                  <span className="font-semibold text-slate-800 truncate">{pdfFileName}</span>
+                </div>
+                <button
+                  type="button"
+                  onClick={() => {
+                    setPdfFile(null)
+                    setPdfFileName(null)
+                  }}
+                  className="text-red-600 hover:text-red-800 font-bold text-[11px] px-2 py-1 cursor-pointer"
+                >
+                  ✕ Remove
+                </button>
+              </div>
+            )}
+          </div>
+
+          {/* 6. Optional Direct Link / Call-to-Action (CTA) */}
+          <div>
+            <label className="block text-[11px] font-bold text-slate-600 uppercase tracking-wider mb-1.5 flex items-center justify-between">
+              <span>6. Button Link to Website Page (Optional CTA)</span>
+              <span className="text-[10px] text-slate-400 font-normal">Table, Rooms, Menus, Xmas</span>
+            </label>
+            <select
+              value={ctaPreset}
+              onChange={(e) => setCtaPreset(e.target.value)}
+              className="w-full px-3.5 py-2.5 bg-slate-50 border border-slate-300 rounded-xl text-slate-900 text-xs font-medium focus:outline-none focus:border-amber-500 transition cursor-pointer"
+            >
+              <option value="none">No Button Link</option>
+              <option value="table">🍽️ &ldquo;Reserve Table&rdquo; ➔ /contact</option>
+              <option value="xmas">🎄 &ldquo;Festive &amp; Christmas&rdquo; ➔ /xmas-preview-7924</option>
+              <option value="rooms">🛏️ &ldquo;View Rooms &amp; Stay&rdquo; ➔ /rooms</option>
+              <option value="menu">🍻 &ldquo;Explore Food &amp; Drink&rdquo; ➔ /eat-drink</option>
+              <option value="gallery">📸 &ldquo;View Photo Gallery&rdquo; ➔ /gallery</option>
+              <option value="custom">✏️ Custom Button &amp; Link...</option>
+            </select>
+
+            {ctaPreset === 'custom' && (
+              <div className="mt-2.5 p-3 bg-slate-50 border border-slate-200 rounded-xl space-y-2">
+                <input
+                  type="text"
+                  value={ctaCustomText}
+                  onChange={(e) => setCtaCustomText(e.target.value)}
+                  placeholder="Button label (e.g. Order Takeaway, Book Gig)"
+                  className="w-full px-3 py-2 bg-white border border-slate-300 rounded-lg text-slate-900 placeholder-slate-400 text-xs focus:outline-none focus:border-amber-500 transition"
+                />
+                <input
+                  type="text"
+                  value={ctaCustomLink}
+                  onChange={(e) => setCtaCustomLink(e.target.value)}
+                  placeholder="Destination URL (e.g. /contact or https://...)"
+                  className="w-full px-3 py-2 bg-white border border-slate-300 rounded-lg text-slate-900 placeholder-slate-400 text-xs focus:outline-none focus:border-amber-500 transition"
+                />
+              </div>
+            )}
+          </div>
+
           {/* Big Publish Button */}
           <button
             type="submit"
@@ -872,15 +992,30 @@ export default function StaffPwaClient() {
                   <div className="flex items-center gap-1.5 shrink-0">
                     <button
                       type="button"
-                      onClick={() => {
-                        const targetUrl = `https://theshipinnporlockweir.co.uk/demo-posh-7924`
-                        navigator.clipboard?.writeText(targetUrl)
-                        alert(`Share Link copied!\n${targetUrl}\n\nWhen pasted to Facebook, this creates an instant high-res link card!`)
+                      onClick={async () => {
+                        const targetUrl = `https://www.theshipinnporlockweir.co.uk/demo-posh-7924#${item.id}`
+                        await copyToClipboard(targetUrl)
+                        setCopiedItemId(item.id)
+                        setTimeout(() => setCopiedItemId(null), 2500)
                       }}
-                      className="p-2 bg-slate-200 hover:bg-slate-300 text-blue-700 rounded-lg text-xs transition cursor-pointer"
-                      title="Share link"
+                      className={`px-2.5 py-1.5 rounded-lg text-xs font-semibold transition cursor-pointer flex items-center gap-1 ${
+                        copiedItemId === item.id
+                          ? 'bg-emerald-100 text-emerald-800 border border-emerald-300'
+                          : 'bg-slate-200 hover:bg-slate-300 text-blue-700'
+                      }`}
+                      title="Copy link for Facebook or WhatsApp"
                     >
-                      🔗
+                      {copiedItemId === item.id ? (
+                        <>
+                          <span className="text-emerald-700 font-bold">✓</span>
+                          <span>Copied</span>
+                        </>
+                      ) : (
+                        <>
+                          <span>🔗</span>
+                          <span className="text-[11px]">Link</span>
+                        </>
+                      )}
                     </button>
                     <button
                       type="button"
@@ -919,14 +1054,19 @@ export default function StaffPwaClient() {
               </p>
               <button
                 type="button"
-                onClick={() => {
-                  const targetUrl = `https://theshipinnporlockweir.co.uk/demo-posh-7924`
-                  navigator.clipboard?.writeText(targetUrl)
-                  alert(`Share link copied!\n${targetUrl}`)
+                onClick={async () => {
+                  const targetUrl = `https://www.theshipinnporlockweir.co.uk/demo-posh-7924#${latestItem.id}`
+                  await copyToClipboard(targetUrl)
+                  setModalCopied(true)
+                  setTimeout(() => setModalCopied(false), 3000)
                 }}
-                className="w-full py-2 bg-blue-700 hover:bg-blue-600 text-white font-bold text-xs rounded-lg transition flex items-center justify-center gap-1.5 cursor-pointer"
+                className={`w-full py-2.5 font-bold text-xs rounded-xl transition flex items-center justify-center gap-1.5 cursor-pointer ${
+                  modalCopied
+                    ? 'bg-emerald-600 text-white shadow-sm'
+                    : 'bg-blue-700 hover:bg-blue-600 text-white shadow-sm'
+                }`}
               >
-                <span>📋 Copy Facebook Link</span>
+                <span>{modalCopied ? '✓ Link Copied to Clipboard!' : '📋 Copy Facebook Link'}</span>
               </button>
             </div>
 
