@@ -61,6 +61,8 @@ export default function StaffPwaClient() {
   const [videoFileUrl, setVideoFileUrl] = useState<string | null>(null)
   const [videoFileName, setVideoFileName] = useState<string | null>(null)
   const [videoFileSize, setVideoFileSize] = useState<string | null>(null)
+  const [videoThumbnailBlob, setVideoThumbnailBlob] = useState<Blob | null>(null)
+  const [videoThumbnailPreview, setVideoThumbnailPreview] = useState<string | null>(null)
   const [isUploadingVideo, setIsUploadingVideo] = useState(false)
   const [isSilentMode, setIsSilentMode] = useState(true)
   const [photoDataUrl, setPhotoDataUrl] = useState<string | null>(null)
@@ -83,6 +85,7 @@ export default function StaffPwaClient() {
   const [latestItem, setLatestItem] = useState<PublishedItem | null>(null)
   const [copiedItemId, setCopiedItemId] = useState<string | null>(null)
   const [modalCopied, setModalCopied] = useState(false)
+  const [modalTextCopied, setModalTextCopied] = useState(false)
 
   const copyToClipboard = async (text: string) => {
     let copied = false
@@ -173,7 +176,53 @@ export default function StaffPwaClient() {
     }
   }
 
-  const handleVideoFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const extractVideoThumbnail = (file: File): Promise<Blob | null> => {
+    return new Promise((resolve) => {
+      const video = document.createElement('video')
+      video.preload = 'auto'
+      video.muted = true
+      video.playsInline = true
+      const url = URL.createObjectURL(file)
+      video.src = url
+
+      video.onloadeddata = () => {
+        const seekTime = video.duration > 1 ? 1.0 : video.duration > 0 ? video.duration / 2 : 0.1
+        video.currentTime = seekTime
+      }
+
+      video.onseeked = () => {
+        try {
+          const canvas = document.createElement('canvas')
+          canvas.width = video.videoWidth || 640
+          canvas.height = video.videoHeight || 360
+          const ctx = canvas.getContext('2d')
+          if (ctx) {
+            ctx.drawImage(video, 0, 0, canvas.width, canvas.height)
+            canvas.toBlob(
+              (blob) => {
+                URL.revokeObjectURL(url)
+                resolve(blob)
+              },
+              'image/jpeg',
+              0.88
+            )
+            return
+          }
+        } catch (err) {
+          console.warn('Could not extract video frame', err)
+        }
+        URL.revokeObjectURL(url)
+        resolve(null)
+      }
+
+      video.onerror = () => {
+        URL.revokeObjectURL(url)
+        resolve(null)
+      }
+    })
+  }
+
+  const handleVideoFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0]
     if (!file) return
 
@@ -187,6 +236,13 @@ export default function StaffPwaClient() {
     setVideoFileUrl(blobUrl)
     setVideoFileName(file.name)
     setVideoFileSize((file.size / (1024 * 1024)).toFixed(1) + ' MB')
+
+    // Automatically capture still frame from video for Facebook og:image & preview card
+    const thumbBlob = await extractVideoThumbnail(file)
+    if (thumbBlob) {
+      setVideoThumbnailBlob(thumbBlob)
+      setVideoThumbnailPreview(URL.createObjectURL(thumbBlob))
+    }
   }
 
   const handlePhotoFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -235,6 +291,23 @@ export default function StaffPwaClient() {
         return
       } finally {
         setIsUploadingVideo(false)
+      }
+    }
+
+    // 1b. Direct Client-to-Blob Upload for captured Video Thumbnail (for Facebook & WhatsApp og:image)
+    let finalThumbnailUrl: string | undefined = undefined
+    if (mediaType === 'video' && videoThumbnailBlob) {
+      try {
+        const thumbFilename = `thumb-${Date.now()}-${videoFile ? videoFile.name.replace(/[^a-zA-Z0-9.-]/g, '_') : 'video'}.jpg`
+        const thumbBlob = await upload(thumbFilename, videoThumbnailBlob, {
+          access: 'public',
+          handleUploadUrl: '/api/upload-video'
+        })
+        if (thumbBlob && thumbBlob.url) {
+          finalThumbnailUrl = thumbBlob.url
+        }
+      } catch (thumbErr) {
+        console.warn('Could not upload video thumbnail:', thumbErr)
       }
     }
 
@@ -296,7 +369,7 @@ export default function StaffPwaClient() {
         (postType === 'event'
           ? 'Upcoming event at The Ship Inn Porlock Weir.'
           : 'Latest update from The Ship Inn Porlock Weir.'),
-      coverImage: photoDataUrl || '/images/Ship -new-thatch.webp',
+      coverImage: photoDataUrl || finalThumbnailUrl || '/images/Ship -new-thatch.webp',
       videoUrl:
         mediaType === 'video'
           ? finalVideoUrl
@@ -339,6 +412,8 @@ export default function StaffPwaClient() {
       setVideoFile(null)
       setVideoFileUrl(null)
       setVideoFileName(null)
+      setVideoThumbnailBlob(null)
+      setVideoThumbnailPreview(null)
       setPhotoDataUrl(null)
       setSocialLink('')
       setPdfFile(null)
@@ -955,6 +1030,15 @@ export default function StaffPwaClient() {
               <div className="relative aspect-video w-full bg-slate-900 flex items-center justify-center overflow-hidden">
                 {photoDataUrl ? (
                   <img src={photoDataUrl} alt="Preview" className="w-full h-full object-cover" />
+                ) : videoThumbnailPreview ? (
+                  <div className="relative w-full h-full">
+                    <img src={videoThumbnailPreview} alt="Video Frame" className="w-full h-full object-cover" />
+                    <div className="absolute inset-0 bg-black/30 flex items-center justify-center">
+                      <span className="w-12 h-12 rounded-full bg-white/90 text-blue-600 flex items-center justify-center text-xl shadow-lg font-bold pl-1">
+                        ▶
+                      </span>
+                    </div>
+                  </div>
                 ) : videoFileUrl ? (
                   <div className="relative w-full h-full">
                     <video src={videoFileUrl} className="w-full h-full object-cover" />
@@ -1134,18 +1218,45 @@ export default function StaffPwaClient() {
               <button
                 type="button"
                 onClick={async () => {
-                  const targetUrl = `https://www.theshipinnporlockweir.co.uk/demo-posh-7924?post=${latestItem.id}#${latestItem.id}`
-                  await copyToClipboard(targetUrl)
-                  setModalCopied(true)
-                  setTimeout(() => setModalCopied(false), 3000)
+                  const postUrl = `https://www.theshipinnporlockweir.co.uk/demo-posh-7924?post=${latestItem.id}`
+                  let postText = `${latestItem.title}\n\n${latestItem.excerpt}\n\n👉 See full post & video:\n${postUrl}`
+                  if (latestItem.pdfUrl) {
+                    postText += `\n\n📄 Download Menu: ${latestItem.pdfUrl}`
+                  }
+                  if (latestItem.ctaText && latestItem.ctaLink) {
+                    const ctaFullUrl = latestItem.ctaLink.startsWith('http')
+                      ? latestItem.ctaLink
+                      : `https://www.theshipinnporlockweir.co.uk${latestItem.ctaLink}`
+                    postText += `\n🍽️ ${latestItem.ctaText}: ${ctaFullUrl}`
+                  }
+                  await copyToClipboard(postText)
+                  setModalTextCopied(true)
+                  setTimeout(() => setModalTextCopied(false), 3000)
                 }}
                 className={`w-full py-2.5 font-bold text-xs rounded-xl transition flex items-center justify-center gap-1.5 cursor-pointer ${
-                  modalCopied
+                  modalTextCopied
                     ? 'bg-emerald-600 text-white shadow-sm'
                     : 'bg-blue-700 hover:bg-blue-600 text-white shadow-sm'
                 }`}
               >
-                <span>{modalCopied ? '✓ Link Copied to Clipboard!' : '📋 Copy Facebook Link'}</span>
+                <span>{modalTextCopied ? '✓ Post Text & Links Copied!' : '📋 Copy Facebook Post (with Menu & CTA)'}</span>
+              </button>
+
+              <button
+                type="button"
+                onClick={async () => {
+                  const targetUrl = `https://www.theshipinnporlockweir.co.uk/demo-posh-7924?post=${latestItem.id}`
+                  await copyToClipboard(targetUrl)
+                  setModalCopied(true)
+                  setTimeout(() => setModalCopied(false), 3000)
+                }}
+                className={`w-full py-2 font-semibold text-xs rounded-lg transition flex items-center justify-center gap-1.5 cursor-pointer ${
+                  modalCopied
+                    ? 'bg-emerald-100 text-emerald-800 border border-emerald-300'
+                    : 'bg-slate-100 hover:bg-slate-200 text-slate-700 border border-slate-300'
+                }`}
+              >
+                <span>{modalCopied ? '✓ Link Only Copied!' : '🔗 Copy Link Only'}</span>
               </button>
 
               <a
