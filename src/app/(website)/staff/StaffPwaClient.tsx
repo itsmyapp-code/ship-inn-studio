@@ -117,6 +117,15 @@ export default function StaffPwaClient() {
     return copied
   }
 
+  const getShareUrl = (item: PublishedItem) => {
+    const slug = (item.title || 'post')
+      .toLowerCase()
+      .replace(/[^a-z0-9]+/g, '-')
+      .replace(/^-|-$/g, '')
+      .slice(0, 45)
+    return `https://www.theshipinnporlockweir.co.uk/demo-posh-7924?post=${item.id}&utm_source=facebook&utm_medium=reel&utm_campaign=${slug || 'reel'}`
+  }
+
   // Initialize Auth & Load Items
   useEffect(() => {
     const savedAuth = sessionStorage.getItem('ship_staff_auth')
@@ -1134,7 +1143,7 @@ export default function StaffPwaClient() {
                     <button
                       type="button"
                       onClick={async () => {
-                        const targetUrl = `https://www.theshipinnporlockweir.co.uk/demo-posh-7924?post=${item.id}#${item.id}`
+                        const targetUrl = getShareUrl(item)
                         await copyToClipboard(targetUrl)
                         setCopiedItemId(item.id)
                         setTimeout(() => setCopiedItemId(null), 2500)
@@ -1218,7 +1227,7 @@ export default function StaffPwaClient() {
               <button
                 type="button"
                 onClick={async () => {
-                  const postUrl = `https://www.theshipinnporlockweir.co.uk/demo-posh-7924?post=${latestItem.id}`
+                  const postUrl = getShareUrl(latestItem)
                   let postText = `${latestItem.title}\n\n${latestItem.excerpt}\n\n👉 See full post & video:\n${postUrl}`
                   if (latestItem.pdfUrl) {
                     postText += `\n\n📄 Download Menu: ${latestItem.pdfUrl}`
@@ -1245,7 +1254,7 @@ export default function StaffPwaClient() {
               <button
                 type="button"
                 onClick={async () => {
-                  const targetUrl = `https://www.theshipinnporlockweir.co.uk/demo-posh-7924?post=${latestItem.id}`
+                  const targetUrl = getShareUrl(latestItem)
                   await copyToClipboard(targetUrl)
                   setModalCopied(true)
                   setTimeout(() => setModalCopied(false), 3000)
@@ -1261,7 +1270,7 @@ export default function StaffPwaClient() {
 
               <a
                 href={`https://developers.facebook.com/tools/debug/?q=${encodeURIComponent(
-                  `https://www.theshipinnporlockweir.co.uk/demo-posh-7924?post=${latestItem.id}`
+                  getShareUrl(latestItem)
                 )}`}
                 target="_blank"
                 rel="noopener noreferrer"

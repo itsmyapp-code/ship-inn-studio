@@ -5,6 +5,7 @@ import Link from 'next/link'
 import SmartImage from '@/components/SmartImage'
 import SocialVideoEmbed from '@/components/SocialVideoEmbed'
 import { compressImage, CompressionResult } from '@/lib/imageCompressor'
+import { trackEvent } from '@/lib/analytics'
 
 interface DemoPostItem {
   id: string
@@ -93,8 +94,17 @@ export default function DemoPoshClient({ initialPostId }: { initialPostId?: stri
   const [eventsList, setEventsList] = useState<DemoPostItem[]>(INITIAL_EVENTS)
   const [copiedId, setCopiedId] = useState<string | null>(null)
 
+  const getShareUrl = (item: DemoPostItem) => {
+    const slug = (item.title || 'post')
+      .toLowerCase()
+      .replace(/[^a-z0-9]+/g, '-')
+      .replace(/^-|-$/g, '')
+      .slice(0, 45)
+    return `https://www.theshipinnporlockweir.co.uk/demo-posh-7924?post=${item.id}&utm_source=facebook&utm_medium=reel&utm_campaign=${slug || 'reel'}`
+  }
+
   const handleCopyLink = async (item: DemoPostItem) => {
-    const targetUrl = `https://www.theshipinnporlockweir.co.uk/demo-posh-7924?post=${item.id}#${item.id}`
+    const targetUrl = getShareUrl(item)
     let copied = false
 
     try {
@@ -127,7 +137,7 @@ export default function DemoPoshClient({ initialPostId }: { initialPostId?: stri
     setTimeout(() => setCopiedId(null), 3000)
   }
 
-  // Switch to the linked post's tab and scroll into view if initialPostId is provided
+  // Switch to the linked post's tab, scroll into view, and log Vercel Analytics event
   useEffect(() => {
     if (initialPostId && eventsList.length > 0) {
       const match = eventsList.find((i) => i.id === initialPostId)
@@ -139,6 +149,15 @@ export default function DemoPoshClient({ initialPostId }: { initialPostId?: stri
         } else {
           setActiveTab('upcoming')
         }
+
+        // Log custom Vercel Analytics Reel View event
+        trackEvent('Social Reel Visit', {
+          post_id: match.id,
+          post_title: match.title,
+          post_type: match.type,
+          media_type: match.videoUrl ? 'video' : 'photo',
+          referrer: typeof document !== 'undefined' ? document.referrer || 'direct' : 'unknown'
+        })
       }
       setTimeout(() => {
         const el = document.getElementById(initialPostId)
@@ -491,6 +510,13 @@ export default function DemoPoshClient({ initialPostId }: { initialPostId?: stri
                       href={item.pdfUrl}
                       target="_blank"
                       rel="noopener noreferrer"
+                      onClick={() =>
+                        trackEvent('Social Menu Download', {
+                          post_id: item.id,
+                          post_title: item.title,
+                          pdf_name: item.pdfFileName || 'menu.pdf'
+                        })
+                      }
                       className="px-3 py-1.5 bg-red-50 hover:bg-red-100 text-red-700 border border-red-200 font-bold text-xs rounded-xl transition flex items-center gap-1.5 shadow-sm"
                       title={item.pdfFileName || 'View PDF Attachment'}
                     >
@@ -502,6 +528,14 @@ export default function DemoPoshClient({ initialPostId }: { initialPostId?: stri
                   {item.ctaLink && item.ctaText ? (
                     <Link
                       href={item.ctaLink}
+                      onClick={() =>
+                        trackEvent('Social CTA Click', {
+                          post_id: item.id,
+                          post_title: item.title,
+                          cta_text: item.ctaText,
+                          cta_link: item.ctaLink
+                        })
+                      }
                       className="px-4 py-2 bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-600 hover:to-amber-700 text-slate-950 font-bold text-xs rounded-xl transition shadow flex items-center gap-1.5"
                     >
                       <span>{item.ctaText}</span>
@@ -510,6 +544,14 @@ export default function DemoPoshClient({ initialPostId }: { initialPostId?: stri
                   ) : item.bookingRequired ? (
                     <Link
                       href="/contact"
+                      onClick={() =>
+                        trackEvent('Social CTA Click', {
+                          post_id: item.id,
+                          post_title: item.title,
+                          cta_text: 'Reserve Table',
+                          cta_link: '/contact'
+                        })
+                      }
                       className="px-4 py-2 bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold text-xs rounded-xl transition shadow text-center"
                     >
                       Reserve Table →
