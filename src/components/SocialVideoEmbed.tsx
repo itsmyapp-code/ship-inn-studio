@@ -1,6 +1,8 @@
 'use client'
 
 import React, { useState } from 'react'
+import { useCookieConsent } from '@/lib/hooks/useCookieConsent'
+import { normalizeSocialUrl } from '@/lib/socialUrlHelper'
 
 interface SocialVideoEmbedProps {
   url: string
@@ -15,15 +17,13 @@ export default function SocialVideoEmbed({
 }: SocialVideoEmbedProps) {
   const [loadIframe, setLoadIframe] = useState(false)
   const [hasError, setHasError] = useState(false)
+  const { consent } = useCookieConsent()
 
   if (!url || typeof url !== 'string' || !url.trim()) return null
 
   const cleanUrl = url.trim()
 
   // 1. Detect Facebook Reels & Videos vs Photos & Posts
-  // Formats:
-  // - Reels/Videos: facebook.com/reel/, fb.watch/, facebook.com/watch/, /videos/
-  // - Photos/Posts: facebook.com/photo/, facebook.com/photos/, fbid=, /posts/
   const isFacebook =
     cleanUrl.includes('facebook.com') ||
     cleanUrl.includes('fb.watch') ||
@@ -38,7 +38,10 @@ export default function SocialVideoEmbed({
       cleanUrl.includes('/share/p/'))
 
   // 2. Detect Instagram Reels
-  const isInstagram = cleanUrl.includes('instagram.com/reel/') || cleanUrl.includes('instagram.com/p/')
+  const isInstagram =
+    cleanUrl.includes('instagram.com/reel/') ||
+    cleanUrl.includes('instagram.com/reels/') ||
+    cleanUrl.includes('instagram.com/p/')
 
   // 3. Detect YouTube Shorts & Videos
   const isYouTubeShort = cleanUrl.includes('youtube.com/shorts/')
@@ -53,7 +56,8 @@ export default function SocialVideoEmbed({
     cleanUrl.endsWith('.mov') ||
     cleanUrl.includes('.mp4?') ||
     cleanUrl.includes('.mov?') ||
-    cleanUrl.includes('.webm?')
+    cleanUrl.includes('.webm?') ||
+    cleanUrl.includes('blob.vercel-storage.com')
 
   // Construct YouTube Embed URL
   const getYouTubeEmbedUrl = (raw: string) => {
@@ -74,13 +78,11 @@ export default function SocialVideoEmbed({
 
   // Construct Facebook Reel or Post Embed URL
   const getFacebookEmbedUrl = (raw: string) => {
-    // If user pasted an iframe tag from Facebook
     if (raw.includes('<iframe')) {
       const srcMatch = raw.match(/src=["'](.*?)["']/)
       if (srcMatch) return srcMatch[1]
     }
 
-    // Clean URL: strip mibextid, tracking query parameters that break FB embed plugin
     let clean = raw.trim()
     try {
       const u = new URL(clean)
@@ -97,10 +99,28 @@ export default function SocialVideoEmbed({
 
     const encoded = encodeURIComponent(clean)
     if (isFacebookPhotoOrPost) {
-      return `https://www.facebook.com/plugins/post.php?href=${encoded}&width=350&show_text=true`
+      return `https://www.facebook.com/plugins/post.php?href=${encoded}&width=350&show_text=true&mute=1`
     }
-    return `https://www.facebook.com/plugins/video.php?height=476&href=${encoded}&show_text=false&width=267&t=0`
+    return `https://www.facebook.com/plugins/video.php?height=476&href=${encoded}&show_text=false&width=267&mute=1`
   }
+
+  // Construct Instagram Direct Embed URL (Clean 9:16 direct embed without embed.js)
+  const getInstagramEmbedInfo = (raw: string) => {
+    try {
+      const norm = normalizeSocialUrl(raw)
+      if (norm.platform === 'instagram') {
+        return { embedUrl: norm.embedUrl, canonicalUrl: norm.url }
+      }
+    } catch {}
+    const match = raw.match(/\/(reel|reels|p)\/([a-zA-Z0-9_-]+)/)
+    const shortcode = match ? match[2] : ''
+    return {
+      embedUrl: shortcode ? `https://www.instagram.com/reel/${shortcode}/embed/` : raw,
+      canonicalUrl: shortcode ? `https://www.instagram.com/reel/${shortcode}/` : raw,
+    }
+  }
+
+  const instagramInfo = isInstagram ? getInstagramEmbedInfo(cleanUrl) : null
 
   // Vertical Aspect (9:16) for Reels & Shorts
   const isVertical = isFacebook || isInstagram || isYouTubeShort
@@ -111,8 +131,44 @@ export default function SocialVideoEmbed({
         isVertical ? 'max-w-[340px] mx-auto aspect-9/16' : 'w-full aspect-16/9'
       } ${className}`}
     >
-      {/* Click-to-Play Facade for Zero Page Bloat & High Privacy (Direct videos play immediately) */}
-      {!loadIframe && !isDirectVideo ? (
+      {/* Cookie Consent Denied Fallback Card */}
+      {consent === 'denied' && (isFacebook || isInstagram || isYouTube) ? (
+        <div className="absolute inset-0 flex flex-col items-center justify-between p-6 text-center bg-gradient-to-b from-slate-900 via-slate-950 to-slate-950 text-white">
+          <div className="w-full flex items-center justify-between text-xs text-slate-400">
+            <span className="font-semibold text-amber-400">
+              {isInstagram ? '📸 Instagram Reel' : isFacebook ? '📘 Facebook Video' : '▶️ YouTube Video'}
+            </span>
+            <span className="bg-slate-800 px-2 py-0.5 rounded text-[10px] font-mono text-slate-300">
+              Cookies Required
+            </span>
+          </div>
+
+          <div className="my-auto flex flex-col items-center">
+            <span className="text-3xl mb-2">{isInstagram ? '📸' : '📘'}</span>
+            <p className="text-sm font-semibold text-white">{title || 'Social Video'}</p>
+            <p className="text-xs text-slate-400 max-w-[240px] mt-1.5 leading-relaxed">
+              Third-party cookies are blocked. You can watch this video directly on {isInstagram ? 'Instagram' : 'Facebook'}.
+            </p>
+            <a
+              href={instagramInfo?.canonicalUrl || cleanUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className={`mt-4 px-4 py-2 text-white font-bold text-xs rounded-full shadow-lg transition ${
+                isInstagram
+                  ? 'bg-gradient-to-r from-purple-600 via-pink-600 to-amber-500 hover:opacity-90'
+                  : 'bg-blue-600 hover:bg-blue-500'
+              }`}
+            >
+              Open on {isInstagram ? 'Instagram' : 'Facebook'} &rarr;
+            </a>
+          </div>
+
+          <div className="w-full pt-3 border-t border-slate-800 text-center">
+            <span className="text-slate-500 text-[11px]">The Ship Inn, Porlock Weir</span>
+          </div>
+        </div>
+      ) : !loadIframe && !isDirectVideo ? (
+        /* Click-to-Play Facade for Zero Page Bloat & High Privacy */
         <div className="absolute inset-0 flex flex-col items-center justify-between p-6 text-center bg-gradient-to-b from-slate-900 via-slate-950 to-slate-950 text-white">
           <div className="w-full flex items-center justify-between text-xs text-slate-400">
             <span className="flex items-center gap-1.5 font-semibold text-amber-400">
@@ -124,7 +180,7 @@ export default function SocialVideoEmbed({
                   <span>{isFacebookPhotoOrPost ? 'Facebook Post / Photo' : 'Facebook Reel'}</span>
                 </>
               )}
-              {isInstagram && <span>Instagram Reel</span>}
+              {isInstagram && <span>📸 Instagram Reel</span>}
               {isYouTube && <span>YouTube Video</span>}
             </span>
             <span className="bg-slate-800 px-2 py-0.5 rounded text-[11px] font-mono text-slate-300">
@@ -150,12 +206,10 @@ export default function SocialVideoEmbed({
               )}
             </button>
             <p className="text-sm font-semibold text-white drop-shadow-sm">
-              {isFacebookPhotoOrPost ? 'Tap to Load Facebook Post' : 'Tap to Play Reel'}
+              {isFacebookPhotoOrPost ? 'Tap to Load Facebook Post' : isInstagram ? 'Tap to Play Instagram Reel' : 'Tap to Play Reel'}
             </p>
             <p className="text-xs text-slate-400 max-w-[240px] mt-1 leading-relaxed">
-              {isFacebookPhotoOrPost
-                ? 'Loads the interactive Facebook photo card right here'
-                : 'Plays seamlessly right here on the pub website'}
+              Plays seamlessly right here on the pub website
             </p>
           </div>
 
@@ -164,7 +218,7 @@ export default function SocialVideoEmbed({
               {title}
             </span>
             <a
-              href={cleanUrl}
+              href={instagramInfo?.canonicalUrl || cleanUrl}
               target="_blank"
               rel="noopener noreferrer"
               className="text-amber-400 hover:text-amber-300 font-semibold underline underline-offset-2 flex items-center gap-1 text-[11px]"
@@ -205,7 +259,6 @@ export default function SocialVideoEmbed({
               onError={() => setHasError(true)}
             />
           </div>
-          {/* Always-accessible Direct Action Bar for Fail-safe Native Viewing */}
           <div className="bg-slate-900 border-t border-slate-800 p-2.5 flex items-center justify-between text-xs z-20">
             <span className="text-slate-400 text-[11px] flex items-center gap-1.5 font-medium">
               <svg className="w-3.5 h-3.5 fill-blue-500" viewBox="0 0 24 24">
@@ -224,19 +277,23 @@ export default function SocialVideoEmbed({
             </a>
           </div>
         </div>
+      ) : isInstagram && instagramInfo ? (
+        /* Pure 9:16 borderless Instagram player matching Facebook pixel-for-pixel */
+        <iframe
+          src={instagramInfo.embedUrl}
+          title={title || 'Instagram Reel'}
+          className="w-full h-full aspect-9/16 border-0 overflow-hidden"
+          loading="lazy"
+          allowFullScreen
+          scrolling="no"
+          onError={() => setHasError(true)}
+        />
       ) : isYouTube ? (
         <iframe
           src={getYouTubeEmbedUrl(cleanUrl)}
           title={title}
           className="w-full h-full border-none"
           allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-          allowFullScreen
-        />
-      ) : isInstagram ? (
-        <iframe
-          src={`${cleanUrl.replace(/\/$/, '')}/embed/captioned/`}
-          title={title}
-          className="w-full h-full border-none bg-white"
           allowFullScreen
         />
       ) : (
@@ -255,4 +312,3 @@ export default function SocialVideoEmbed({
     </div>
   )
 }
-

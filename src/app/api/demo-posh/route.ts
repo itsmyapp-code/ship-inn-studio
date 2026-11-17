@@ -21,6 +21,7 @@ function getBlobToken(): string | undefined {
 // 1. Read items: Prioritizes Vercel Blob (instant, zero-builds), falls back to local disk
 async function readItems(): Promise<any[]> {
   const token = getBlobToken()
+  let rawItems: any[] = []
 
   // Try Vercel Blob first
   if (token) {
@@ -31,7 +32,7 @@ async function readItems(): Promise<any[]> {
         const res = await fetch(`${feedBlob.url}?t=${Date.now()}`, { cache: 'no-store' })
         if (res.ok) {
           const items = await res.json()
-          if (Array.isArray(items)) return items
+          if (Array.isArray(items)) rawItems = items
         }
       }
     } catch (blobErr) {
@@ -40,17 +41,31 @@ async function readItems(): Promise<any[]> {
   }
 
   // Fallback to local disk file (bundled content or local development)
-  try {
-    if (fs.existsSync(DATA_FILE)) {
-      const content = fs.readFileSync(DATA_FILE, 'utf-8')
-      const parsed = JSON.parse(content)
-      if (Array.isArray(parsed)) return parsed
+  if (rawItems.length === 0) {
+    try {
+      if (fs.existsSync(DATA_FILE)) {
+        const content = fs.readFileSync(DATA_FILE, 'utf-8')
+        const parsed = JSON.parse(content)
+        if (Array.isArray(parsed)) rawItems = parsed
+      }
+    } catch (err) {
+      console.error('Error reading demo-posh-items.json locally:', err)
     }
-  } catch (err) {
-    console.error('Error reading demo-posh-items.json locally:', err)
   }
 
-  return []
+  // Backward compatibility: default social entries without a platform to 'facebook'
+  return rawItems.map((item) => {
+    const videoUrl = item.videoUrl || item.url || ''
+    if (!item.platform && videoUrl) {
+      if (videoUrl.includes('instagram.com')) {
+        return { ...item, platform: 'instagram' }
+      }
+      if (videoUrl.includes('facebook.com') || videoUrl.includes('fb.watch')) {
+        return { ...item, platform: 'facebook' }
+      }
+    }
+    return item
+  })
 }
 
 // 2. Write items: Saves directly into Vercel Blob without making Git commits (ZERO Vercel build minutes!)
