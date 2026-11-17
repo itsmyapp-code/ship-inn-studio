@@ -465,8 +465,9 @@ export default function StaffPwaClient() {
 
 ${item.excerpt}
 
-${item.ctaText && item.ctaLink ? `👉 ${item.ctaText}: https://www.theshipinnporlockweir.co.uk${item.ctaLink}\n` : ''}
-⚡ View on our Website: ${shareUrl}
+⚡ Watch on our Website: ${shareUrl}
+${item.ctaText && item.ctaLink ? `\n👉 ${item.ctaText}: https://www.theshipinnporlockweir.co.uk${item.ctaLink}` : ''}
+
 #TheShipInn #PorlockWeir #Exmoor #SomersetPub`
 
     navigator.clipboard.writeText(text)

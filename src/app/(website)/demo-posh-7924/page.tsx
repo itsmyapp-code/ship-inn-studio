@@ -109,7 +109,9 @@ export async function generateMetadata({ searchParams }: Props): Promise<Metadat
   }
 
   let imageUrl = post.coverImage || DEFAULT_IMAGE
-  if (imageUrl.startsWith('/')) {
+  if (imageUrl.startsWith('data:image')) {
+    imageUrl = `https://www.theshipinnporlockweir.co.uk/api/demo-posh/image?id=${post.id}`
+  } else if (imageUrl.startsWith('/')) {
     imageUrl = `https://www.theshipinnporlockweir.co.uk${encodeURI(imageUrl)}`
   }
 
