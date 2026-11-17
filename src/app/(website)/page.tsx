@@ -17,10 +17,10 @@ export default async function HomePage() {
   const heroImage2 = fixPath(pageData?.heroImageTwo || '')
   const heroImage3 = fixPath(pageData?.heroImageThree || '')
   const heroImages = [heroImage1, heroImage2, heroImage3].filter(Boolean)
-  
+
   const heroAlt = pageData?.heroAlt || 'The Ship Inn Exterior'
   const strapline = pageData?.strapline || 'Historic charm meets modern comfort'
-  
+
   const introParagraphs = [
     pageData?.introParagraphOne,
     pageData?.introParagraphTwo,
@@ -42,10 +42,10 @@ export default async function HomePage() {
 
   const feature1Title = pageData?.featureOneTitle || 'Comfortable Accommodation'
   const feature1Desc = pageData?.featureOneDesc || 'Three beautifully appointed rooms, each with modern amenities and traditional charm.'
-  
+
   const feature2Title = pageData?.featureTwoTitle || 'Traditional Pub & Restaurant'
   const feature2Desc = pageData?.featureTwoDesc || 'Enjoy locally sourced food and fine ales in our historic pub with harbour views.'
-  
+
   const feature3Title = pageData?.featureThreeTitle || 'Perfect Location'
   const feature3Desc = pageData?.featureThreeDesc || 'Situated in the heart of Porlock Weir with easy access to Exmoor National Park.'
 

@@ -71,8 +71,8 @@ export async function generateMetadata({ searchParams }: Props): Promise<Metadat
     typeof params.post === 'string'
       ? params.post
       : typeof params.id === 'string'
-      ? params.id
-      : undefined
+        ? params.id
+        : undefined
 
   if (!postId) {
     return {
@@ -151,7 +151,7 @@ export default async function DemoPoshPage({ searchParams }: Props) {
     typeof params.post === 'string'
       ? params.post
       : typeof params.id === 'string'
-      ? params.id
-      : undefined
+        ? params.id
+        : undefined
   return <DemoPoshClient initialPostId={postId} />
 }
