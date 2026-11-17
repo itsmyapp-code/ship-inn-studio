@@ -591,8 +591,12 @@ ${item.ctaText && item.ctaLink ? `👉 ${item.ctaText}: https://www.theshipinnpo
         <div className="bg-white border border-slate-200 rounded-3xl p-4 sm:p-6 shadow-sm space-y-4">
           {/* Composer Header */}
           <div className="flex items-center gap-3 pb-3 border-b border-slate-100">
-            <div className="w-10 h-10 rounded-full bg-amber-50 border border-amber-200 flex items-center justify-center shrink-0">
-              <span className="text-xl">⚓</span>
+            <div className="w-11 h-11 rounded-full bg-white border border-slate-200 shadow-xs flex items-center justify-center shrink-0 overflow-hidden p-1.5">
+              <SmartImage
+                src="/images/the_ship_inn2.webp"
+                alt="The Ship Inn Logo"
+                className="w-full h-full object-contain"
+              />
             </div>
             <div>
               <h2 className="text-sm font-bold text-slate-900 leading-tight">Post an update to the website</h2>
