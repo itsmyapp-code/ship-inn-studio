@@ -2,15 +2,12 @@ import Link from 'next/link'
 import HeroCarousel from '@/components/HeroCarousel'
 import NewsletterSignup from '@/components/NewsletterSignup'
 import SmartImage from '@/components/SmartImage'
-import TestimonialCarousel from '@/components/testimonials/TestimonialCarousel'
 import ChristmasCTAButton from '@/components/ChristmasCTAButton'
-import { getTestimonials } from '@/lib/testimonials'
 import { getPageData } from '@/lib/outstatic'
 import { TrackedFeatureCard, TrackedHeroButton } from '@/components/TrackedContactLinks'
 
 export default async function HomePage() {
   const pageData = getPageData('home')
-  const testimonials = await getTestimonials({ status: 'published' })
 
   // Hero images for carousel — fix Outstatic's double-slash paths
   const fixPath = (p: string) => p ? p.replace(/^\/\//, '/') : ''
@@ -172,8 +169,6 @@ export default async function HomePage() {
         </div>
       </section>
 
-      {/* Customer Testimonials & Reviews Carousel */}
-      <TestimonialCarousel testimonials={testimonials} />
 
       {/* Call to Action */}
       <section className="relative py-20 bg-gradient-to-br from-slate-900 via-ship-blue-900 to-slate-950 text-white overflow-hidden">
