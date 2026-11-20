@@ -1,6 +1,7 @@
 'use client'
 
 import React, { useRef, useState, useEffect } from 'react'
+import { trackChristmasVideo } from '@/lib/analytics'
 
 interface ChristmasVideoPlayerProps {
   src?: string
@@ -38,7 +39,10 @@ export default function ChristmasVideoPlayer({
         setIsHoldingFrame(false)
         videoRef.current
           .play()
-          .then(() => setIsPlaying(true))
+          .then(() => {
+            setIsPlaying(true)
+            trackChristmasVideo('play', { source: 'initial_play_after_hold' })
+          })
           .catch(() => setIsPlaying(false))
       }
     }, initialHoldMs)
@@ -51,13 +55,17 @@ export default function ChristmasVideoPlayer({
     if (isPlaying) {
       video.pause()
       setIsPlaying(false)
+      trackChristmasVideo('pause', { time: Math.round(video.currentTime) })
     } else {
       if (!hasStarted) {
         handlePlayWithHold()
       } else {
         video
           .play()
-          .then(() => setIsPlaying(true))
+          .then(() => {
+            setIsPlaying(true)
+            trackChristmasVideo('play', { source: 'resume' })
+          })
           .catch(() => setIsPlaying(false))
       }
     }
@@ -68,11 +76,13 @@ export default function ChristmasVideoPlayer({
     if (!video) return
     video.muted = !video.muted
     setIsMuted(video.muted)
+    trackChristmasVideo('mute_toggle', { muted: video.muted })
   }
 
   const handleEnded = () => {
     const video = videoRef.current
     if (!video) return
+    trackChristmasVideo('ended')
 
     // Loop back: reset to start, hold first frame for initialHoldMs, then play again
     video.currentTime = 0
@@ -100,15 +110,32 @@ export default function ChristmasVideoPlayer({
     <div className="relative w-full max-w-4xl mx-auto rounded-3xl overflow-hidden shadow-2xl border-2 border-amber-500/40 bg-slate-950 group">
       {/* Video Element */}
       <div className="relative aspect-video w-full bg-black flex items-center justify-center">
+        {/* Fallback image poster before playback starts */}
+        {!hasStarted && (
+          <div
+            className="absolute inset-0 z-10 cursor-pointer overflow-hidden"
+            onClick={togglePlay}
+          >
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              src={poster}
+              alt="Santa at The Ship Inn Porlock Weir"
+              className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+            />
+            <div className="absolute inset-0 bg-gradient-to-t from-slate-950/70 via-transparent to-slate-950/30" />
+          </div>
+        )}
+
         <video
           ref={videoRef}
           src={src}
           poster={poster}
+          preload="metadata"
           playsInline
           muted={isMuted}
           onEnded={handleEnded}
           onClick={togglePlay}
-          className="w-full h-full object-contain cursor-pointer"
+          className="w-full h-full object-contain cursor-pointer relative z-0"
         />
 
         {/* First-frame holding indicator */}

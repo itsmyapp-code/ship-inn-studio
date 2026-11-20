@@ -3,6 +3,7 @@
 import React from 'react'
 import Link from 'next/link'
 import SmartImage from '@/components/SmartImage'
+import { trackChristmasAction } from '@/lib/analytics'
 
 interface ChristmasCTAButtonProps {
   /** Destination link when clicked (defaults to /food-drink) */
@@ -36,6 +37,7 @@ export default function ChristmasCTAButton({
       <Link
         href={href}
         aria-label="Christmas is Coming — View Festive Menus & Book Now"
+        onClick={() => trackChristmasAction('Homepage Hero Christmas Medallion Click', { target_url: href })}
         className="group relative block rounded-full focus:outline-none"
       >
         {/* 12 Outward-Radiating Golden Stars */}

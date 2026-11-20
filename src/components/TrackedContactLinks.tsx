@@ -11,6 +11,7 @@ import {
   trackHeroCta,
   trackPromoClick,
   trackArticleClick,
+  trackChristmasAction,
 } from '@/lib/analytics'
 
 interface TrackedPhoneLinkProps extends React.AnchorHTMLAttributes<HTMLAnchorElement> {
@@ -289,5 +290,36 @@ export function TrackedArticleLink({
     </Link>
   )
 }
+
+interface TrackedChristmasLinkProps extends React.AnchorHTMLAttributes<HTMLAnchorElement> {
+  action: string
+  href: string
+  children: React.ReactNode
+  menuTitle?: string
+}
+
+export function TrackedChristmasLink({
+  action,
+  href,
+  children,
+  className,
+  menuTitle,
+  ...props
+}: TrackedChristmasLinkProps) {
+  const handleClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
+    trackChristmasAction(action, { target_url: href })
+    if (menuTitle || href.endsWith('.pdf')) {
+      trackMenuClick(menuTitle || 'Christmas Festive Menu', href)
+    }
+    if (props.onClick) props.onClick(e)
+  }
+
+  return (
+    <a href={href} className={className} onClick={handleClick} {...props}>
+      {children}
+    </a>
+  )
+}
+
 
 

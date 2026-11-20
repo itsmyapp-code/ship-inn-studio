@@ -3,7 +3,7 @@ import path from 'path'
 import Link from 'next/link'
 import SmartImage from '@/components/SmartImage'
 import { getSharedContactData } from '@/lib/outstatic'
-import { TrackedPhoneLink, TrackedEmailLink } from '@/components/TrackedContactLinks'
+import { TrackedPhoneLink, TrackedEmailLink, TrackedChristmasLink } from '@/components/TrackedContactLinks'
 import ChristmasVideoPlayer from '@/components/ChristmasVideoPlayer'
 
 export const metadata = {
@@ -35,7 +35,7 @@ Any Dietary Requirements / Notes:
 Name:
 Contact Telephone:
 
-Thank you!`
+Thank you`
 
   return (
     <div className="min-h-screen bg-slate-950 text-slate-100">
@@ -77,7 +77,8 @@ Thank you!`
 
             {/* Primary Hero CTAs */}
             <div className="flex flex-col sm:flex-row flex-wrap gap-4 justify-center lg:justify-start">
-              <a
+              <TrackedChristmasLink
+                action="Hero Download Festive Menu Click"
                 href={festivePdfPath}
                 target="_blank"
                 rel="noopener noreferrer"
@@ -92,9 +93,10 @@ Thank you!`
                   />
                 </svg>
                 <span>Download Festive Menu (PDF)</span>
-              </a>
+              </TrackedChristmasLink>
 
-              <a
+              <TrackedChristmasLink
+                action="Hero Book Table Click"
                 href="#book-christmas"
                 className="bg-red-800/85 hover:bg-red-700 text-white border-2 border-amber-300/70 font-semibold px-8 py-4 rounded-full text-base sm:text-lg shadow-xl hover:scale-105 transition-all inline-flex items-center justify-center gap-2.5 backdrop-blur-md"
               >
@@ -107,7 +109,7 @@ Thank you!`
                   />
                 </svg>
                 <span>Book Your Christmas Table</span>
-              </a>
+              </TrackedChristmasLink>
             </div>
           </div>
 
@@ -290,12 +292,13 @@ Thank you!`
                     No booking needed for fireside drinks &amp; mince pies!
                   </div>
                 </div>
-                <a
+                <TrackedChristmasLink
+                  action="Fireside Reserve Table Click"
                   href="#book-christmas"
                   className="shrink-0 bg-amber-400 hover:bg-amber-300 text-slate-950 font-bold text-xs px-4 py-2.5 rounded-lg shadow transition"
                 >
                   Reserve Dining Table →
-                </a>
+                </TrackedChristmasLink>
               </div>
             </div>
           </div>
@@ -331,9 +334,10 @@ Thank you!`
                 <span>3 Courses £35.50</span>
               </div>
 
-              {/* Primary Download Button (Opens in New Window) */}
+              {/* Primary Download Button */}
               <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
-                <a
+                <TrackedChristmasLink
+                  action="Menu Section Download PDF Click"
                   href={festivePdfPath}
                   target="_blank"
                   rel="noopener noreferrer"
@@ -343,14 +347,7 @@ Thank you!`
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.2} d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
                   </svg>
                   <span>Download Festive Menu (PDF)</span>
-                  <svg className="w-5 h-5 opacity-70 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
-                  </svg>
-                </a>
-              </div>
-
-              <div className="mt-5 text-xs text-amber-200/60 font-sans">
-                ✦ Opens in a new window • Full uncropped printable A4 PDF menu
+                </TrackedChristmasLink>
               </div>
             </div>
           </div>

@@ -158,4 +158,30 @@ export function trackGalleryInteraction(action: 'filter' | 'lightbox_open', labe
   })
 }
 
+/**
+ * Track Christmas CTA and campaign events
+ */
+export function trackChristmasAction(action: string, details?: Record<string, AllowedValue>) {
+  trackEvent('Christmas CTA Click', {
+    action,
+    campaign: 'Christmas 2026',
+    page: typeof window !== 'undefined' ? window.location.pathname : '/christmas',
+    ...details,
+  })
+}
+
+/**
+ * Track Christmas Video engagement (play, pause, ended, mute_toggle)
+ */
+export function trackChristmasVideo(action: 'play' | 'pause' | 'ended' | 'mute_toggle', details?: Record<string, AllowedValue>) {
+  trackEvent('Christmas Video Interaction', {
+    video: 'Santa at The Ship Inn',
+    action,
+    campaign: 'Christmas 2026',
+    page: typeof window !== 'undefined' ? window.location.pathname : '/christmas',
+    ...details,
+  })
+}
+
+
 
