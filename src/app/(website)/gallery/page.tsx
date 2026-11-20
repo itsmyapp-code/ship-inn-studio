@@ -94,26 +94,6 @@ export default function GalleryPage() {
         </div>
       </section>
 
-      {/* Featured Image - Using actual Ship Inn front view */}
-      <section className="py-16 bg-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-8">
-            <h2 className="text-3xl font-bold text-gray-900 mb-4">The Ship Inn Porlock Weir</h2>
-            <p className="text-lg text-gray-600">Historic charm meets modern comfort</p>
-          </div>
-          <div className="relative">
-            <SmartImage
-              src="/images/Ship%20-new-thatch.webp"
-              alt="The Ship Inn Porlock Weir"
-              className="w-full h-96 object-cover rounded-lg mb-8"
-            />
-          </div>
-          <p className="text-center text-gray-600">
-            Our historic inn sits at the heart of Porlock Weir, just steps from the harbour and coastal paths
-          </p>
-        </div>
-      </section>
-
       {/* Main Gallery */}
       <section className="py-16 bg-gray-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
