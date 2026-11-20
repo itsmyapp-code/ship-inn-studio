@@ -3,6 +3,7 @@ import HeroCarousel from '@/components/HeroCarousel'
 import NewsletterSignup from '@/components/NewsletterSignup'
 import SmartImage from '@/components/SmartImage'
 import TestimonialCarousel from '@/components/testimonials/TestimonialCarousel'
+import ChristmasCTAButton from '@/components/ChristmasCTAButton'
 import { getTestimonials } from '@/lib/testimonials'
 import { getPageData } from '@/lib/outstatic'
 import { TrackedFeatureCard, TrackedHeroButton } from '@/components/TrackedContactLinks'
@@ -58,6 +59,13 @@ export default async function HomePage() {
 
         {/* Overlay */}
         <div className="absolute inset-0 bg-black/40"></div>
+
+        {/* Live Christmas CTA Button */}
+        <ChristmasCTAButton
+          href="/christmas"
+          position="top-right"
+          glowStyle="gold"
+        />
 
         <div className="relative z-10 flex items-center justify-center h-full">
           <div className="text-center max-w-6xl mx-auto px-6">

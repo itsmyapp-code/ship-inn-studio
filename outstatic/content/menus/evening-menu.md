@@ -6,7 +6,7 @@ author:
   picture: ''
 slug: 'evening-menu'
 description: 'Locally sourced meats, fresh fish, and seasonal flavours'
-subtitle: 'Sept 2026'
+subtitle: ''
 pdfFile: '/menus/Evening Menu - Sept 2026.pdf'
 order: 3
 publishedAt: '2026-09-23T07:00:00.000Z'

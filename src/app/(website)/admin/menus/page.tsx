@@ -12,17 +12,18 @@ interface MenuOption {
 }
 
 const PRESET_MENUS: MenuOption[] = [
-  { slug: 'breakfast-menu', title: 'Breakfast Menu', defaultOrder: 1, currentPdf: '/menus/Breakfast Menu - Sept 2026.pdf', currentSubtitle: 'Sept 2026' },
-  { slug: 'lunch-menu', title: 'Lunch Menu', defaultOrder: 2, currentPdf: '/menus/Lunch Menu - Sept 2026.pdf', currentSubtitle: 'Sept 2026' },
-  { slug: 'evening-menu', title: 'Evening Menu', defaultOrder: 3, currentPdf: '/menus/Evening Menu - Sept 2026.pdf', currentSubtitle: 'Sept 2026' },
-  { slug: 'sunday-lunch-menu', title: 'Sunday Lunch Menu', defaultOrder: 4, currentPdf: '/menus/Sunday Lunch Menu - Sept 2026.pdf', currentSubtitle: 'Sept 2026' },
+  { slug: 'breakfast-menu', title: 'Breakfast Menu', defaultOrder: 1, currentPdf: '/menus/Breakfast Menu - Sept 2026.pdf', currentSubtitle: '' },
+  { slug: 'lunch-menu', title: 'Lunch Menu', defaultOrder: 2, currentPdf: '/menus/Lunch Menu - Sept 2026.pdf', currentSubtitle: '' },
+  { slug: 'evening-menu', title: 'Evening Menu', defaultOrder: 3, currentPdf: '/menus/Evening Menu - Sept 2026.pdf', currentSubtitle: '' },
+  { slug: 'sunday-lunch-menu', title: 'Sunday Lunch Menu', defaultOrder: 4, currentPdf: '/menus/Sunday Lunch Menu - Sept 2026.pdf', currentSubtitle: '' },
+  { slug: 'christmas-menu', title: 'Christmas Menu', defaultOrder: 5, currentPdf: '/menus/The-Ship-Inn-Festive-Menu.pdf', currentSubtitle: '' },
 ]
 
 export default function AdminMenusPage() {
-  const [selectedMenuSlug, setSelectedMenuSlug] = useState('lunch-menu')
+  const [selectedMenuSlug, setSelectedMenuSlug] = useState('christmas-menu')
   const [customTitle, setCustomTitle] = useState('')
-  const [subtitle, setSubtitle] = useState('Sept 2026')
-  const [order, setOrder] = useState(2)
+  const [subtitle, setSubtitle] = useState('')
+  const [order, setOrder] = useState(5)
   const [file, setFile] = useState<File | null>(null)
   const [isUploading, setIsUploading] = useState(false)
   const [result, setResult] = useState<{ success: boolean; message?: string; pdfPath?: string; error?: string } | null>(null)
@@ -34,10 +35,10 @@ export default function AdminMenusPage() {
     if (preset) {
       setCustomTitle(preset.title)
       setOrder(preset.defaultOrder)
-      setSubtitle(preset.currentSubtitle || 'Sept 2026')
+      setSubtitle(preset.currentSubtitle || '')
     } else {
       setCustomTitle('')
-      setOrder(5)
+      setOrder(6)
       setSubtitle('')
     }
   }

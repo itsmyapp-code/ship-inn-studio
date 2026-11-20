@@ -6,7 +6,7 @@ author:
   picture: ''
 slug: 'lunch-menu'
 description: 'Hearty pub lunches, fresh sandwiches, and classic favourites'
-subtitle: 'Sept 2026'
+subtitle: ''
 pdfFile: '/menus/Lunch Menu - Sept 2026.pdf'
 order: 2
 publishedAt: '2026-09-23T07:00:00.000Z'
