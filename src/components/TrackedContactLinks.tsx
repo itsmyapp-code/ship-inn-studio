@@ -50,12 +50,16 @@ export function TrackedPhoneLink({
 interface TrackedEmailLinkProps extends React.AnchorHTMLAttributes<HTMLAnchorElement> {
   email: string
   location: string
+  subject?: string
+  body?: string
   children?: React.ReactNode
 }
 
 export function TrackedEmailLink({
   email,
   location,
+  subject,
+  body,
   children,
   className,
   ...props
@@ -67,9 +71,18 @@ export function TrackedEmailLink({
     }
   }
 
+  const params: string[] = []
+  if (subject) {
+    params.push(`subject=${encodeURIComponent(subject)}`)
+  }
+  if (body) {
+    params.push(`body=${encodeURIComponent(body)}`)
+  }
+  const mailtoHref = params.length > 0 ? `mailto:${email}?${params.join('&')}` : `mailto:${email}`
+
   return (
     <a
-      href={`mailto:${email}`}
+      href={mailtoHref}
       className={className}
       onClick={handleClick}
       {...props}
