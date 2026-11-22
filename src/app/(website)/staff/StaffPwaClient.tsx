@@ -83,7 +83,15 @@ export default function StaffPwaClient() {
 
   // Secondary Options Drawer
   const [showMoreOptions, setShowMoreOptions] = useState(false)
+  const [showSocialInput, setShowSocialInput] = useState(false)
+  const [showSummaryInput, setShowSummaryInput] = useState(false)
+  const [showPdfDrawer, setShowPdfDrawer] = useState(false)
+  const [isDragging, setIsDragging] = useState(false)
+  const [isLockHovered, setIsLockHovered] = useState(false)
   const [postType, setPostType] = useState<'event' | 'news'>('news')
+  const unifiedFileInputRef = useRef<HTMLInputElement | null>(null)
+  const photoOnlyInputRef = useRef<HTMLInputElement | null>(null)
+  const videoOnlyInputRef = useRef<HTMLInputElement | null>(null)
   const [eventDate, setEventDate] = useState(() => {
     const tomorrow = new Date()
     tomorrow.setDate(tomorrow.getDate() + 1)
@@ -189,22 +197,71 @@ export default function StaffPwaClient() {
     }
   }
 
+  // Unified File Handler (Photos OR Videos via click or drag-and-drop)
+  const processUnifiedFile = async (file: File) => {
+    if (!file) return
+    setShowSocialInput(false)
+    setSocialLink('')
+    setNormalizedSocial(null)
+    setSocialParseError(null)
+
+    if (file.type.startsWith('image/')) {
+      setMediaTab('photo')
+      setVideoFile(null)
+      setVideoFileUrl(null)
+      setVideoThumbnailPreview(null)
+      setVideoFileSize(null)
+      setPhotoFile(file)
+      setIsCompressingPhoto(true)
+      try {
+        const res = await compressImage(file, { maxWidthOrHeight: 1200, quality: 0.8 })
+        setPhotoDataUrl(res.dataUrl)
+      } catch {
+        setPhotoDataUrl(URL.createObjectURL(file))
+      } finally {
+        setIsCompressingPhoto(false)
+      }
+      return
+    }
+
+    if (file.type.startsWith('video/')) {
+      setMediaTab('video')
+      setPhotoFile(null)
+      setPhotoDataUrl(null)
+      const sizeMB = (file.size / (1024 * 1024)).toFixed(1)
+      setVideoFile(file)
+      setVideoFileSize(`${sizeMB} MB`)
+      const blobUrl = URL.createObjectURL(file)
+      setVideoFileUrl(blobUrl)
+
+      const video = document.createElement('video')
+      video.src = blobUrl
+      video.muted = true
+      video.playsInline = true
+      video.currentTime = 1.0
+      video.onloadeddata = () => {
+        video.currentTime = Math.min(1.0, video.duration / 2)
+      }
+      video.onseeked = () => {
+        try {
+          const canvas = document.createElement('canvas')
+          canvas.width = video.videoWidth || 640
+          canvas.height = video.videoHeight || 360
+          const ctx = canvas.getContext('2d')
+          if (ctx) {
+            ctx.drawImage(video, 0, 0, canvas.width, canvas.height)
+            setVideoThumbnailPreview(canvas.toDataURL('image/jpeg', 0.85))
+          }
+        } catch {}
+      }
+    }
+  }
+
   // Photo Selection with WebP compression
   const handlePhotoSelect = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0]
     if (!file) return
-
-    setPhotoFile(file)
-    setIsCompressingPhoto(true)
-    try {
-      const res = await compressImage(file, { maxWidthOrHeight: 1200, quality: 0.8 })
-      setPhotoDataUrl(res.dataUrl)
-    } catch (err: any) {
-      const objUrl = URL.createObjectURL(file)
-      setPhotoDataUrl(objUrl)
-    } finally {
-      setIsCompressingPhoto(false)
-    }
+    await processUnifiedFile(file)
   }
 
   // Video Selection & Canvas Frame Extraction
@@ -475,11 +532,11 @@ ${item.ctaText && item.ctaLink ? `\n👉 ${item.ctaText}: https://www.theshipinn
     setTimeout(() => setCopyFeedback(null), 3000)
   }
 
-  // 1. PIN LOCK SCREEN
+  // 1. PIN LOCK SCREEN (with clear Red Closed Padlock)
   if (!isAuthenticated) {
     return (
-      <div className="min-h-screen bg-slate-50 text-slate-800 flex flex-col justify-between p-6">
-        <div className="pt-8 text-center max-w-sm mx-auto w-full">
+      <div className="min-h-screen bg-slate-100 text-slate-800 flex flex-col items-center justify-center p-4 sm:p-6">
+        <div className="max-w-sm w-full bg-white border border-slate-200 rounded-3xl p-7 shadow-lg text-center">
           <div className="mb-4 flex justify-center">
             <SmartImage
               src="/images/the_ship_inn2.webp"
@@ -488,10 +545,17 @@ ${item.ctaText && item.ctaLink ? `\n👉 ${item.ctaText}: https://www.theshipinn
             />
           </div>
 
+          <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-red-50 border border-red-200 text-red-700 text-[11px] font-bold uppercase tracking-wider mb-3">
+            <svg className="w-3.5 h-3.5 text-red-600" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+              <rect width="18" height="11" x="3" y="11" rx="2" ry="2" />
+              <path d="M7 11V7a5 5 0 0 1 10 0v4" />
+            </svg>
+            <span>Locked • Staff Access</span>
+          </div>
+
           <h1 className="text-2xl font-serif font-bold text-blue-950 tracking-wide">The Ship Inn</h1>
-          <p className="text-xs uppercase tracking-widest text-amber-700 font-bold mt-1">Staff Mobile Publisher</p>
-          <p className="text-xs text-slate-600 mt-2 leading-relaxed">
-            Enter the 4-digit staff passcode to upload events, chalkboard flyers, or phone videos.
+          <p className="text-xs text-slate-500 mt-1.5 leading-relaxed">
+            Enter your 4-digit staff passcode to post photos, videos, or events.
           </p>
 
           <form onSubmit={handlePinSubmit} className="mt-6 space-y-4">
@@ -503,536 +567,622 @@ ${item.ctaText && item.ctaLink ? `\n👉 ${item.ctaText}: https://www.theshipinn
               autoFocus
               value={pinInput}
               onChange={(e) => setPinInput(e.target.value)}
-              placeholder="Enter PIN"
-              className="w-full text-center tracking-[0.5em] text-2xl py-3.5 bg-white border-2 border-slate-300 rounded-2xl text-slate-900 placeholder-slate-400 focus:outline-none focus:border-amber-500 font-mono shadow-sm transition"
+              placeholder="••••"
+              className="w-full text-center tracking-[0.5em] text-2xl py-3.5 bg-slate-50 border-2 border-slate-200 rounded-2xl text-slate-900 placeholder-slate-300 focus:outline-none focus:bg-white focus:border-blue-600 font-mono transition"
             />
 
             {pinError && (
-              <p className="text-xs text-red-600 font-medium">
+              <p className="text-xs text-red-600 bg-red-50 border border-red-200 rounded-xl px-3 py-2 font-medium">
                 Incorrect PIN. (Tip: Demo default is <span className="font-mono font-bold">1572</span> or <span className="font-mono font-bold">7924</span>)
               </p>
             )}
 
             <button
               type="submit"
-              className="w-full min-h-[44px] py-3.5 bg-gradient-to-r from-amber-500 via-amber-600 to-amber-700 hover:from-amber-600 hover:to-amber-800 text-white font-bold text-sm rounded-2xl shadow-md transition transform active:scale-95 cursor-pointer"
+              className="w-full min-h-[46px] py-3.5 bg-[#1877F2] hover:bg-blue-700 text-white font-bold text-sm rounded-xl shadow-md transition transform active:scale-95 cursor-pointer"
             >
-              Unlock Staff App →
+              Unlock Staff Publisher
             </button>
           </form>
         </div>
 
-        <div className="text-center text-[11px] text-slate-500 pb-4">
+        <div className="text-center text-[11px] text-slate-400 mt-6">
           The Ship Inn, Porlock Weir • Internal Staff Tool
         </div>
       </div>
     )
   }
 
-  // 2. MAIN COMPOSER & TIMELINE VIEW (Strictly 360px+ responsive, zero horizontal clipping)
+  // 2. MAIN COMPOSER & TIMELINE VIEW (Facebook-Style Clean Light-Mode UI)
   return (
-    <div className="min-h-screen bg-slate-100 text-slate-800 pb-20 font-sans overflow-x-hidden">
-      {/* Top Header: 2-Row Responsive Layout */}
-      <header className="sticky top-0 z-40 bg-white/95 backdrop-blur-md border-b border-slate-200 px-4 py-3 shadow-xs">
-        <div className="max-w-xl mx-auto flex flex-col sm:flex-row sm:items-center justify-between gap-2.5">
-          {/* Row 1: Logo & Brand */}
-          <div className="flex items-center justify-between sm:justify-start gap-3">
-            <Link href="/" className="flex items-center gap-2.5 group">
-              <SmartImage
-                src="/images/the_ship_inn2.webp"
-                alt="The Ship Inn Logo"
-                className="h-9 w-auto shrink-0"
-              />
-              <div>
-                <h1 className="text-sm font-serif font-bold text-blue-950 leading-tight">The Ship Inn</h1>
-                <p className="text-[10px] text-emerald-700 flex items-center gap-1 font-semibold">
-                  <span className="w-1.5 h-1.5 rounded-full bg-emerald-600 animate-pulse"></span>
-                  <span>Staff Publisher</span>
-                </p>
-              </div>
-            </Link>
+    <div className="min-h-screen bg-slate-100 text-slate-900 pb-20 font-sans overflow-x-hidden py-5 px-3 sm:px-6">
+      <div className="max-w-xl mx-auto space-y-6">
+        {/* Clean Minimal Header (No Live Site clutter, Large Green Open / Red Closed Padlock) */}
+        <header className="bg-white border border-slate-200 rounded-2xl px-4 py-3 shadow-sm flex items-center justify-between gap-3">
+          <div className="flex items-center gap-3 min-w-0">
+            <SmartImage
+              src="/images/the_ship_inn2.webp"
+              alt="The Ship Inn Logo"
+              className="h-9 w-auto shrink-0"
+            />
+            <div className="min-w-0">
+              <h1 className="text-base sm:text-lg font-extrabold text-slate-900 tracking-tight truncate">
+                Create Post
+              </h1>
+              <p className="text-[11px] text-slate-500 truncate">The Ship Inn, Porlock Weir</p>
+            </div>
           </div>
 
-          {/* Row 2 on mobile: Actions */}
-          <div className="flex items-center gap-2 flex-wrap">
+          <div className="flex items-center gap-2 shrink-0">
             <Link
               href="/demo-posh-7924"
               target="_blank"
-              className="min-h-[38px] text-xs text-amber-900 bg-amber-50 hover:bg-amber-100 font-semibold px-2.5 py-1.5 rounded-lg border border-amber-200 transition flex items-center gap-1"
+              className="min-h-[44px] px-3 py-2 text-xs font-bold text-slate-700 bg-slate-100 hover:bg-blue-50 hover:text-blue-700 rounded-xl border border-slate-200 hover:border-blue-200 transition flex items-center gap-1.5"
             >
-              <span>⚡</span>
-              <span>Public Feed ↗</span>
+              <span className="hidden sm:inline">Public Feed</span>
+              <span className="sm:hidden">Feed</span>
             </Link>
-            <Link
-              href="/"
-              target="_blank"
-              className="min-h-[38px] text-xs text-slate-600 hover:text-slate-900 font-medium px-2.5 py-1.5 rounded-lg border border-slate-200 hover:bg-slate-50 transition flex items-center"
-            >
-              Live Site ↗
-            </Link>
+
+            {/* Large Visual Padlock Button: Green Open when unlocked, Red Closed on hover/lock */}
             <button
               type="button"
+              onMouseEnter={() => setIsLockHovered(true)}
+              onMouseLeave={() => setIsLockHovered(false)}
               onClick={() => {
                 sessionStorage.removeItem('ship_staff_auth')
                 setIsAuthenticated(false)
               }}
-              className="min-h-[38px] text-xs text-slate-500 hover:text-red-600 px-2 py-1.5 transition flex items-center cursor-pointer"
-            >
-              Lock
-            </button>
-          </div>
-        </div>
-      </header>
-
-      {/* Main Container */}
-      <main className="max-w-xl mx-auto px-4 pt-4 space-y-6">
-        {/* ============================================================== */}
-        {/* FACEBOOK-STYLE CREATE POST COMPOSER CARD                      */}
-        {/* ============================================================== */}
-        <div className="bg-white border border-slate-200 rounded-3xl p-4 sm:p-6 shadow-sm space-y-4">
-          {/* Composer Header */}
-          <div className="flex items-center gap-3 pb-3 border-b border-slate-100">
-            <div className="w-11 h-11 rounded-full bg-white border border-slate-200 shadow-xs flex items-center justify-center shrink-0 overflow-hidden p-1.5">
-              <SmartImage
-                src="/images/the_ship_inn2.webp"
-                alt="The Ship Inn Logo"
-                className="w-full h-full object-contain"
-              />
-            </div>
-            <div>
-              <h2 className="text-sm font-bold text-slate-900 leading-tight">Post an update to the website</h2>
-              <p className="text-[11px] text-slate-500">Facebook-style mobile composer for The Ship Inn</p>
-            </div>
-          </div>
-
-          {/* Facebook-Style Status Caption Box */}
-          <div>
-            <textarea
-              rows={3}
-              value={caption}
-              onChange={(e) => setCaption(e.target.value)}
-              placeholder="Write a short headline or caption (optional)..."
-              className="w-full bg-slate-50 border border-slate-200 hover:border-slate-300 rounded-2xl p-3.5 text-sm text-slate-900 placeholder:text-slate-400 focus:bg-white focus:ring-2 focus:ring-amber-500 focus:border-amber-500 focus:outline-none transition resize-none"
-            />
-          </div>
-
-          {/* 3-Button Facebook-Style Action Bar */}
-          <div className="grid grid-cols-3 gap-1.5 p-1 bg-slate-100 rounded-2xl border border-slate-200">
-            <button
-              type="button"
-              onClick={() => setMediaTab('social')}
-              className={`min-h-[44px] py-2 px-1 text-xs font-bold rounded-xl transition-all flex items-center justify-center gap-1.5 cursor-pointer ${
-                mediaTab === 'social'
-                  ? 'bg-white text-amber-900 shadow-sm border border-slate-200'
-                  : 'text-slate-600 hover:text-slate-900'
+              title="Unlocked — Click to lock Staff Publisher"
+              aria-label="Lock Staff Publisher"
+              className={`min-h-[44px] px-3.5 py-2 rounded-xl border-2 font-bold text-xs transition-all flex items-center gap-2 cursor-pointer shadow-xs ${
+                isLockHovered
+                  ? 'bg-red-50 border-red-400 text-red-600'
+                  : 'bg-emerald-50 border-emerald-400 text-emerald-700'
               }`}
             >
-              <span>🔗</span>
-              <span className="truncate">Social Link</span>
-            </button>
-
-            <button
-              type="button"
-              onClick={() => setMediaTab('photo')}
-              className={`min-h-[44px] py-2 px-1 text-xs font-bold rounded-xl transition-all flex items-center justify-center gap-1.5 cursor-pointer ${
-                mediaTab === 'photo'
-                  ? 'bg-white text-amber-900 shadow-sm border border-slate-200'
-                  : 'text-slate-600 hover:text-slate-900'
-              }`}
-            >
-              <span>🖼️</span>
-              <span className="truncate">Flyer</span>
-            </button>
-
-            <button
-              type="button"
-              onClick={() => setMediaTab('video')}
-              className={`min-h-[44px] py-2 px-1 text-xs font-bold rounded-xl transition-all flex items-center justify-center gap-1.5 cursor-pointer ${
-                mediaTab === 'video'
-                  ? 'bg-white text-amber-900 shadow-sm border border-slate-200'
-                  : 'text-slate-600 hover:text-slate-900'
-              }`}
-            >
-              <span>🎥</span>
-              <span className="truncate">Video</span>
+              {isLockHovered ? (
+                <>
+                  <svg className="w-5 h-5 text-red-600 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                    <rect width="18" height="11" x="3" y="11" rx="2" ry="2" />
+                    <path d="M7 11V7a5 5 0 0 1 10 0v4" />
+                  </svg>
+                  <span>Lock</span>
+                </>
+              ) : (
+                <>
+                  <svg className="w-5 h-5 text-emerald-600 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                    <rect width="18" height="11" x="3" y="11" rx="2" ry="2" />
+                    <path d="M7 11V7a5 5 0 0 1 9.9-1" />
+                  </svg>
+                  <span className="hidden sm:inline">Unlocked</span>
+                </>
+              )}
             </button>
           </div>
+        </header>
 
-          {/* Contextual Input & Live Preview Area */}
-          <div className="space-y-3">
-            {/* 1. SOCIAL LINK TAB */}
-            {mediaTab === 'social' && (
-              <div className="space-y-3 p-3.5 bg-slate-50 border border-slate-200 rounded-2xl">
-                <div className="flex items-center justify-between">
-                  <span className="text-xs font-bold text-slate-800">
-                    Paste Facebook or Instagram Reel Link
-                  </span>
-                  {normalizedSocial && (
-                    <span
-                      className={`text-[10px] font-bold px-2 py-0.5 rounded-full ${
-                        normalizedSocial.platform === 'instagram'
-                          ? 'bg-gradient-to-r from-purple-500 to-pink-500 text-white'
-                          : 'bg-[#1877F2] text-white'
-                      }`}
-                    >
-                      {normalizedSocial.platform === 'instagram' ? '📸 Instagram Reel' : '📘 Facebook Reel'}
-                    </span>
-                  )}
+        {/* Main Composer Card */}
+        <main className="space-y-6">
+          <div className="bg-white border border-slate-200 rounded-3xl shadow-sm overflow-hidden">
+            <div className="p-4 sm:p-6 space-y-4">
+              {/* Top Facebook-Style Pill Bar (Post Type) */}
+              <div className="flex flex-wrap items-center gap-2">
+                <button
+                  type="button"
+                  onClick={() => setPostType('news')}
+                  className={`inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full border text-xs font-semibold transition cursor-pointer ${
+                    postType === 'news'
+                      ? 'bg-blue-50 border-blue-300 text-blue-700'
+                      : 'bg-slate-50 hover:bg-slate-100 border-slate-200 text-slate-700'
+                  }`}
+                >
+                  <span>Pub News</span>
+                </button>
+                <button
+                  type="button"
+                  onClick={() => setPostType('event')}
+                  className={`inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full border text-xs font-semibold transition cursor-pointer ${
+                    postType === 'event'
+                      ? 'bg-blue-50 border-blue-300 text-blue-700'
+                      : 'bg-slate-50 hover:bg-slate-100 border-slate-200 text-slate-700'
+                  }`}
+                >
+                  <span>Calendar Event</span>
+                </button>
+                <button
+                  type="button"
+                  onClick={() => setShowPdfDrawer(!showPdfDrawer)}
+                  className={`inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full border text-xs font-semibold transition cursor-pointer ${
+                    pdfFileName || showPdfDrawer
+                      ? 'bg-emerald-50 border-emerald-300 text-emerald-700'
+                      : 'bg-slate-50 hover:bg-slate-100 border-slate-200 text-slate-700'
+                  }`}
+                >
+                  <span>{pdfFileName ? 'PDF Attached ✓' : 'Attach Menu PDF'}</span>
+                </button>
+              </div>
+
+              {/* Event Details Drawer (shown cleanly when Calendar Event is selected) */}
+              {postType === 'event' && (
+                <div className="p-3.5 bg-blue-50/50 border border-blue-200/80 rounded-2xl space-y-3">
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
+                    <div>
+                      <label className="block text-[10px] font-bold text-slate-600 uppercase mb-1">Event Date</label>
+                      <input
+                        type="date"
+                        value={eventDate}
+                        onChange={(e) => setEventDate(e.target.value)}
+                        className="w-full bg-white border border-slate-200 rounded-xl px-3 py-2 text-xs text-slate-900 focus:outline-none focus:border-blue-500"
+                      />
+                    </div>
+                    <div>
+                      <label className="block text-[10px] font-bold text-slate-600 uppercase mb-1">Event Time</label>
+                      <input
+                        type="text"
+                        value={eventTime}
+                        onChange={(e) => setEventTime(e.target.value)}
+                        placeholder="e.g. 7:30 PM"
+                        className="w-full bg-white border border-slate-200 rounded-xl px-3 py-2 text-xs text-slate-900 focus:outline-none focus:border-blue-500"
+                      />
+                    </div>
+                  </div>
+                  <div className="flex flex-col sm:flex-row sm:items-center gap-2.5">
+                    <input
+                      type="text"
+                      value={location}
+                      onChange={(e) => setLocation(e.target.value)}
+                      placeholder="Location"
+                      className="flex-1 bg-white border border-slate-200 rounded-xl px-3 py-2 text-xs text-slate-900 focus:outline-none focus:border-blue-500"
+                    />
+                    <label className="inline-flex items-center gap-2 text-xs font-semibold text-slate-700 cursor-pointer shrink-0">
+                      <input
+                        type="checkbox"
+                        checked={bookingRequired}
+                        onChange={(e) => setBookingRequired(e.target.checked)}
+                        className="w-4 h-4 rounded text-blue-600 cursor-pointer"
+                      />
+                      <span>Booking Required</span>
+                    </label>
+                  </div>
                 </div>
+              )}
 
-                <div className="flex items-center gap-2">
+              {/* Optional Menu PDF Drawer */}
+              {showPdfDrawer && (
+                <div className="p-3.5 bg-slate-50 border border-slate-200 rounded-2xl space-y-2">
+                  <label className="block text-xs font-bold text-slate-800">Attach Menu or Wine List PDF</label>
                   <input
-                    type="url"
-                    value={socialLink}
-                    onChange={(e) => handleSocialUrlChange(e.target.value)}
-                    placeholder="Paste Facebook or Instagram Reel link..."
-                    className="flex-1 min-h-[44px] bg-white border border-slate-300 rounded-xl px-3.5 py-2.5 text-xs text-slate-900 focus:ring-2 focus:ring-amber-500 focus:outline-none"
+                    type="file"
+                    accept=".pdf"
+                    onChange={handlePdfSelect}
+                    className="w-full text-xs text-slate-600 file:mr-2 file:py-1.5 file:px-3 file:rounded-lg file:border-0 file:text-xs file:font-bold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100 file:cursor-pointer"
+                  />
+                  {pdfFileName && <p className="text-[11px] text-emerald-700 font-semibold">✓ Attached: {pdfFileName}</p>}
+                </div>
+              )}
+
+              {/* Facebook-Style Main Status / Caption Box */}
+              <div className="rounded-2xl border border-slate-200 bg-white focus-within:border-blue-500 focus-within:ring-2 focus-within:ring-blue-500/15 transition">
+                <textarea
+                  rows={3}
+                  value={caption}
+                  onChange={(e) => setCaption(e.target.value)}
+                  placeholder="What's on at The Ship Inn today?"
+                  className="w-full bg-transparent px-4 pt-3.5 pb-2 text-base sm:text-[15px] text-slate-900 placeholder:text-slate-400 focus:outline-none resize-none leading-relaxed"
+                />
+                {showSummaryInput && (
+                  <div className="px-4 pb-3 pt-1 border-t border-slate-100">
+                    <textarea
+                      rows={2}
+                      value={extendedSummary}
+                      onChange={(e) => setExtendedSummary(e.target.value)}
+                      placeholder="Add extra description or menu notes..."
+                      className="w-full bg-slate-50 border border-slate-200 rounded-xl px-3 py-2 text-xs text-slate-800 placeholder:text-slate-400 focus:bg-white focus:border-blue-500 focus:outline-none resize-none"
+                    />
+                  </div>
+                )}
+              </div>
+
+              {/* Hidden File Inputs */}
+              <input
+                ref={unifiedFileInputRef}
+                type="file"
+                accept="image/*,video/mp4,video/quicktime,video/webm"
+                onChange={(e) => {
+                  const file = e.target.files?.[0]
+                  if (file) processUnifiedFile(file)
+                  e.target.value = ''
+                }}
+                className="hidden"
+              />
+              <input
+                ref={photoOnlyInputRef}
+                type="file"
+                accept="image/*"
+                onChange={(e) => {
+                  const file = e.target.files?.[0]
+                  if (file) processUnifiedFile(file)
+                  e.target.value = ''
+                }}
+                className="hidden"
+              />
+              <input
+                ref={videoOnlyInputRef}
+                type="file"
+                accept="video/mp4,video/quicktime,video/webm"
+                onChange={(e) => {
+                  const file = e.target.files?.[0]
+                  if (file) processUnifiedFile(file)
+                  e.target.value = ''
+                }}
+                className="hidden"
+              />
+
+              {/* Unified Drag-and-Drop Media Zone (Facebook "Add photos or videos / or drag and drop") */}
+              {!photoDataUrl && !videoFileUrl && !showSocialInput && (
+                <div
+                  role="button"
+                  tabIndex={0}
+                  onClick={() => unifiedFileInputRef.current?.click()}
+                  onKeyDown={(e) => {
+                    if (e.key === 'Enter' || e.key === ' ') unifiedFileInputRef.current?.click()
+                  }}
+                  onDragOver={(e) => {
+                    e.preventDefault()
+                    setIsDragging(true)
+                  }}
+                  onDragLeave={() => setIsDragging(false)}
+                  onDrop={(e) => {
+                    e.preventDefault()
+                    setIsDragging(false)
+                    const file = e.dataTransfer.files?.[0]
+                    if (file) processUnifiedFile(file)
+                  }}
+                  className={`flex flex-col items-center justify-center min-h-[148px] rounded-2xl border-2 border-dashed transition-all cursor-pointer p-6 text-center ${
+                    isDragging
+                      ? 'border-blue-600 bg-blue-50/70 scale-[1.01]'
+                      : 'border-slate-300 bg-slate-50/60 hover:bg-slate-50 hover:border-blue-400'
+                  }`}
+                >
+                  <div className="w-11 h-11 rounded-full bg-white border border-slate-200 shadow-xs flex items-center justify-center text-slate-700 mb-2.5">
+                    <svg className="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                      <rect width="18" height="18" x="3" y="3" rx="2" ry="2" />
+                      <circle cx="9" cy="9" r="2" />
+                      <path d="m21 15-3.086-3.086a2 2 0 0 0-2.828 0L6 21" />
+                    </svg>
+                  </div>
+                  <span className="text-sm font-bold text-slate-900">Add photos or videos</span>
+                  <span className="text-xs text-slate-500 mt-0.5">or drag and drop</span>
+                </div>
+              )}
+
+              {isCompressingPhoto && (
+                <p className="text-xs text-blue-600 font-semibold animate-pulse text-center py-2">
+                  Optimizing photo to lightweight WebP...
+                </p>
+              )}
+
+              {photoDataUrl && (
+                <div className="relative rounded-2xl overflow-hidden border border-slate-200 bg-slate-50 p-3 flex justify-center">
+                  <img
+                    src={photoDataUrl}
+                    alt="Attached preview"
+                    className="max-h-[340px] w-auto rounded-xl object-contain shadow-xs"
                   />
                   <button
                     type="button"
-                    onClick={handlePasteFromClipboard}
-                    className="min-h-[44px] px-3.5 py-2.5 bg-slate-200 hover:bg-slate-300 text-slate-800 text-xs font-bold rounded-xl transition shrink-0 flex items-center gap-1 cursor-pointer"
-                    title="Paste from clipboard"
+                    onClick={() => {
+                      setPhotoFile(null)
+                      setPhotoDataUrl(null)
+                    }}
+                    aria-label="Remove photo"
+                    className="absolute top-3 right-3 w-8 h-8 rounded-full bg-white/95 hover:bg-red-50 text-slate-700 hover:text-red-600 border border-slate-200 shadow-sm flex items-center justify-center font-bold cursor-pointer transition"
                   >
-                    <span>📋</span>
-                    <span>Paste</span>
+                    ×
                   </button>
                 </div>
+              )}
 
-                {socialParseError && (
-                  <p className="text-[11px] text-amber-700 bg-amber-50 border border-amber-200 rounded-lg p-2 font-medium">
-                    {socialParseError}
-                  </p>
-                )}
-
-                {/* Instant Live 9:16 Preview */}
-                {normalizedSocial && (
-                  <div className="pt-2">
-                    <span className="text-[10px] font-bold text-slate-500 uppercase tracking-wider block mb-1.5">
-                      Live 9:16 Preview
+              {videoFileUrl && (
+                <div className="relative rounded-2xl overflow-hidden border border-slate-200 bg-slate-50 p-3">
+                  <div className="flex items-center justify-between mb-2 px-1">
+                    <span className="text-xs font-bold text-slate-700">
+                      Video Ready {videoFileSize ? `(${videoFileSize})` : ''}
                     </span>
-                    <SocialVideoEmbed url={normalizedSocial.url} />
-                  </div>
-                )}
-              </div>
-            )}
-
-            {/* 2. FLYER / PHOTO TAB */}
-            {mediaTab === 'photo' && (
-              <div className="space-y-3 p-3.5 bg-slate-50 border border-slate-200 rounded-2xl">
-                <span className="text-xs font-bold text-slate-800 block">
-                  Upload Flyer, Chalkboard Special, or Photo (.PNG, .JPG, .WebP)
-                </span>
-
-                <label className="flex flex-col items-center justify-center min-h-[110px] border-2 border-dashed border-slate-300 hover:border-amber-500 rounded-2xl bg-white p-4 cursor-pointer transition">
-                  <span className="text-2xl mb-1">🖼️</span>
-                  <span className="text-xs font-bold text-slate-700">Tap to choose flyer or photo</span>
-                  <span className="text-[10px] text-slate-400 mt-0.5">Optimized automatically to lightweight WebP</span>
-                  <input
-                    type="file"
-                    accept="image/*"
-                    onChange={handlePhotoSelect}
-                    className="hidden"
-                  />
-                </label>
-
-                {isCompressingPhoto && (
-                  <p className="text-xs text-amber-600 font-semibold animate-pulse">Compressing flyer image...</p>
-                )}
-
-                {photoDataUrl && (
-                  <div className="relative mt-2 max-w-[260px] mx-auto rounded-2xl overflow-hidden border border-slate-200 shadow-sm">
-                    <img src={photoDataUrl} alt="Flyer Preview" className="w-full h-auto object-cover" />
-                    <button
-                      type="button"
-                      onClick={() => {
-                        setPhotoFile(null)
-                        setPhotoDataUrl(null)
-                      }}
-                      className="absolute top-2 right-2 w-7 h-7 bg-black/75 hover:bg-black text-white rounded-full flex items-center justify-center text-xs font-bold cursor-pointer"
-                      title="Remove image"
-                    >
-                      ×
-                    </button>
-                  </div>
-                )}
-              </div>
-            )}
-
-            {/* 3. DIRECT VIDEO TAB */}
-            {mediaTab === 'video' && (
-              <div className="space-y-3 p-3.5 bg-slate-50 border border-slate-200 rounded-2xl">
-                <div className="flex items-center justify-between">
-                  <span className="text-xs font-bold text-slate-800">Direct Video (.MP4 / .MOV)</span>
-                  {videoFileSize && <span className="text-[10px] text-amber-700 font-mono font-bold">{videoFileSize}</span>}
-                </div>
-
-                <label className="flex flex-col items-center justify-center min-h-[110px] border-2 border-dashed border-slate-300 hover:border-amber-500 rounded-2xl bg-white p-4 cursor-pointer transition">
-                  <span className="text-2xl mb-1">📱</span>
-                  <span className="text-xs font-bold text-slate-700">Tap to choose video from phone</span>
-                  <span className="text-[10px] text-slate-400 mt-0.5">Vertical 9:16 videos display best</span>
-                  <input
-                    type="file"
-                    accept="video/mp4,video/quicktime,video/webm"
-                    onChange={handleVideoSelect}
-                    className="hidden"
-                  />
-                </label>
-
-                {videoFileUrl && (
-                  <div className="relative mt-2 max-w-[260px] mx-auto">
                     <button
                       type="button"
                       onClick={() => {
                         setVideoFile(null)
                         setVideoFileUrl(null)
                         setVideoThumbnailPreview(null)
+                        setVideoFileSize(null)
                       }}
-                      className="absolute top-2 right-2 z-30 w-7 h-7 bg-black/80 hover:bg-black text-white rounded-full flex items-center justify-center text-xs font-bold cursor-pointer"
-                      title="Remove video"
+                      aria-label="Remove video"
+                      className="w-7 h-7 rounded-full bg-white hover:bg-red-50 text-slate-600 hover:text-red-600 border border-slate-200 flex items-center justify-center font-bold cursor-pointer transition"
                     >
                       ×
                     </button>
-                    <span className="text-[10px] font-bold text-slate-500 uppercase tracking-wider block mb-1">
-                      Live Video Preview
-                    </span>
+                  </div>
+                  <div className="max-w-[260px] mx-auto">
                     <SocialVideoEmbed url={videoFileUrl} />
                   </div>
-                )}
-              </div>
-            )}
-          </div>
+                </div>
+              )}
 
-          {/* ============================================================== */}
-          {/* EXPANDABLE "MORE OPTIONS (EVENT DETAILS, PDF, LINKS & EXTRAS)" */}
-          {/* ============================================================== */}
-          <div className="border border-slate-200 rounded-2xl overflow-hidden bg-slate-50/60">
-            <button
-              type="button"
-              onClick={() => setShowMoreOptions(!showMoreOptions)}
-              className="w-full min-h-[44px] px-4 py-2.5 flex items-center justify-between text-xs font-bold text-slate-700 hover:text-amber-700 transition cursor-pointer"
-            >
-              <span className="flex items-center gap-1.5">
-                <span>⚙️</span>
-                <span>More Options (Event Details, Menu PDF &amp; Links)</span>
-              </span>
-              <span>{showMoreOptions ? '▲' : '▼'}</span>
-            </button>
-
-            {showMoreOptions && (
-              <div className="p-4 border-t border-slate-200 space-y-4 bg-white text-xs">
-                {/* Event vs News Type Selector */}
-                <div>
-                  <label className="block text-[10.5px] font-bold text-slate-700 uppercase tracking-wider mb-1">
-                    Post Category
-                  </label>
-                  <div className="grid grid-cols-2 gap-2">
+              {showSocialInput && (
+                <div className="space-y-3 p-4 bg-slate-50 border border-slate-200 rounded-2xl">
+                  <div className="flex items-center justify-between">
+                    <span className="text-xs font-bold text-slate-800">
+                      Paste Facebook or Instagram Reel Link
+                    </span>
                     <button
                       type="button"
-                      onClick={() => setPostType('news')}
-                      className={`min-h-[40px] py-2 rounded-xl text-xs font-bold border transition ${
-                        postType === 'news'
-                          ? 'bg-amber-500 text-white border-amber-600 shadow-xs'
-                          : 'bg-slate-50 text-slate-700 border-slate-200'
-                      }`}
+                      onClick={() => {
+                        setShowSocialInput(false)
+                        setSocialLink('')
+                        setNormalizedSocial(null)
+                        setSocialParseError(null)
+                      }}
+                      className="text-slate-400 hover:text-slate-700 px-1.5 font-bold cursor-pointer"
+                      aria-label="Close social link input"
                     >
-                      📰 Pub News / Announcement
+                      ×
                     </button>
+                  </div>
+
+                  <div className="flex items-center gap-2">
+                    <input
+                      type="url"
+                      value={socialLink}
+                      onChange={(e) => {
+                        setMediaTab('social')
+                        handleSocialUrlChange(e.target.value)
+                      }}
+                      placeholder="https://www.facebook.com/reel/..."
+                      className="flex-1 min-h-[42px] bg-white border border-slate-300 rounded-xl px-3.5 py-2 text-xs text-slate-900 focus:ring-2 focus:ring-blue-600 focus:outline-none"
+                    />
                     <button
                       type="button"
-                      onClick={() => setPostType('event')}
-                      className={`min-h-[40px] py-2 rounded-xl text-xs font-bold border transition ${
-                        postType === 'event'
-                          ? 'bg-amber-500 text-white border-amber-600 shadow-xs'
-                          : 'bg-slate-50 text-slate-700 border-slate-200'
-                      }`}
+                      onClick={() => {
+                        setMediaTab('social')
+                        handlePasteFromClipboard()
+                      }}
+                      className="min-h-[42px] px-3.5 py-2 bg-white hover:bg-slate-100 text-slate-800 border border-slate-300 text-xs font-bold rounded-xl transition shrink-0 cursor-pointer"
                     >
-                      📅 Calendar Event
+                      Paste
                     </button>
                   </div>
-                </div>
 
-                {/* Event Details if postType === 'event' */}
-                {postType === 'event' && (
-                  <div className="space-y-3 p-3 bg-amber-50/50 border border-amber-200 rounded-xl">
-                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
-                      <div>
-                        <label className="block text-[10px] font-bold text-slate-700 uppercase mb-1">Event Date</label>
-                        <input
-                          type="date"
-                          value={eventDate}
-                          onChange={(e) => setEventDate(e.target.value)}
-                          className="w-full bg-white border border-slate-300 rounded-lg p-2 text-xs text-slate-900"
-                        />
-                      </div>
-                      <div>
-                        <label className="block text-[10px] font-bold text-slate-700 uppercase mb-1">Event Time</label>
-                        <input
-                          type="text"
-                          value={eventTime}
-                          onChange={(e) => setEventTime(e.target.value)}
-                          placeholder="e.g. 7:30 PM"
-                          className="w-full bg-white border border-slate-300 rounded-lg p-2 text-xs text-slate-900"
-                        />
-                      </div>
-                    </div>
+                  {socialParseError && (
+                    <p className="text-[11px] text-amber-800 bg-amber-50 border border-amber-200 rounded-xl px-3 py-2 font-medium">
+                      {socialParseError}
+                    </p>
+                  )}
 
-                    <div>
-                      <label className="block text-[10px] font-bold text-slate-700 uppercase mb-1">Location</label>
-                      <input
-                        type="text"
-                        value={location}
-                        onChange={(e) => setLocation(e.target.value)}
-                        className="w-full bg-white border border-slate-300 rounded-lg p-2 text-xs text-slate-900"
-                      />
-                    </div>
-
-                    <label className="flex items-center gap-2 cursor-pointer pt-1">
-                      <input
-                        type="checkbox"
-                        checked={bookingRequired}
-                        onChange={(e) => setBookingRequired(e.target.checked)}
-                        className="w-4 h-4 rounded text-amber-600 focus:ring-0 cursor-pointer"
-                      />
-                      <span className="text-[11px] text-slate-700 font-semibold">
-                        Table / Ticket Booking Required
-                      </span>
-                    </label>
-                  </div>
-                )}
-
-                {/* Extended Details */}
-                <div>
-                  <label className="block text-[10.5px] font-bold text-slate-700 uppercase tracking-wider mb-1">
-                    Extended Summary / Description
-                  </label>
-                  <textarea
-                    rows={2}
-                    value={extendedSummary}
-                    onChange={(e) => setExtendedSummary(e.target.value)}
-                    placeholder="Additional details for the post..."
-                    className="w-full bg-slate-50 border border-slate-200 rounded-xl p-2.5 text-xs text-slate-900 focus:ring-2 focus:ring-amber-500 focus:outline-none resize-none"
-                  />
-                </div>
-
-                {/* PDF Menu / Wine List Attachment */}
-                <div>
-                  <label className="block text-[10.5px] font-bold text-slate-700 uppercase tracking-wider mb-1">
-                    Attach Menu or PDF (Optional)
-                  </label>
-                  <input
-                    type="file"
-                    accept=".pdf"
-                    onChange={handlePdfSelect}
-                    className="w-full text-xs text-slate-600 file:mr-2 file:py-1.5 file:px-3 file:rounded-lg file:border-0 file:text-xs file:font-bold file:bg-amber-100 file:text-amber-900 hover:file:bg-amber-200 file:cursor-pointer"
-                  />
-                  {pdfFileName && <p className="text-[10px] text-emerald-700 font-mono mt-1">✓ Attached: {pdfFileName}</p>}
-                </div>
-
-                {/* Call to Action Button Preset */}
-                <div>
-                  <label className="block text-[10.5px] font-bold text-slate-700 uppercase tracking-wider mb-1">
-                    Call to Action Button
-                  </label>
-                  <select
-                    value={ctaPreset}
-                    onChange={(e) => setCtaPreset(e.target.value)}
-                    className="w-full min-h-[40px] bg-slate-50 border border-slate-200 rounded-xl px-3 py-2 text-xs text-slate-900 focus:ring-2 focus:ring-amber-500 focus:outline-none"
-                  >
-                    <option value="none">No button</option>
-                    <option value="book">Reserve Table (/contact)</option>
-                    <option value="rooms">View Rooms &amp; Stay (/rooms)</option>
-                    <option value="xmas">Festive &amp; Christmas Menu (/xmas-preview-7924)</option>
-                    <option value="menu">Explore Food &amp; Drink (/eat-drink)</option>
-                    <option value="gallery">View Photo Gallery (/gallery)</option>
-                    <option value="custom">Custom Button Label &amp; URL</option>
-                  </select>
-
-                  {ctaPreset === 'custom' && (
-                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 mt-2">
-                      <input
-                        type="text"
-                        placeholder="Button Text"
-                        value={ctaCustomText}
-                        onChange={(e) => setCtaCustomText(e.target.value)}
-                        className="bg-slate-50 border border-slate-200 rounded-xl px-2.5 py-2 text-xs text-slate-900 focus:outline-none"
-                      />
-                      <input
-                        type="url"
-                        placeholder="Button Link (/page or https://)"
-                        value={ctaCustomLink}
-                        onChange={(e) => setCtaCustomLink(e.target.value)}
-                        className="bg-slate-50 border border-slate-200 rounded-xl px-2.5 py-2 text-xs text-slate-900 focus:outline-none"
-                      />
+                  {normalizedSocial && (
+                    <div className="pt-1 max-w-[260px] mx-auto">
+                      <SocialVideoEmbed url={normalizedSocial.url} />
                     </div>
                   )}
                 </div>
+              )}
 
-                {/* Silent Ambient Mode Checkbox */}
-                <label className="flex items-center gap-2 cursor-pointer pt-1">
-                  <input
-                    type="checkbox"
-                    checked={isSilentMode}
-                    onChange={(e) => setIsSilentMode(e.target.checked)}
-                    className="w-4 h-4 rounded text-amber-600 focus:ring-0 cursor-pointer"
-                  />
-                  <span className="text-[11px] text-slate-700">
-                    Silent Ambient Mode (Strictly muted by default for smooth website autoplay)
-                  </span>
-                </label>
+              {/* Facebook-Style 4-Tile Quick Action Strip */}
+              <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
+                <button
+                  type="button"
+                  onClick={() => photoOnlyInputRef.current?.click()}
+                  className={`flex flex-col items-center justify-center gap-1.5 py-3 px-2 rounded-xl border text-xs font-semibold transition cursor-pointer ${
+                    mediaTab === 'photo' && photoDataUrl
+                      ? 'bg-emerald-50 border-emerald-300 text-emerald-700'
+                      : 'bg-white border-slate-200 hover:bg-slate-50 text-slate-700'
+                  }`}
+                >
+                  <svg className="w-4.5 h-4.5 text-emerald-600" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                    <rect width="18" height="18" x="3" y="3" rx="2" ry="2" />
+                    <circle cx="9" cy="9" r="2" />
+                    <path d="m21 15-3.086-3.086a2 2 0 0 0-2.828 0L6 21" />
+                  </svg>
+                  <span>Photo / Flyer</span>
+                </button>
 
-                {/* POSH Tips & PIN Info */}
-                <div className="p-3 bg-amber-50/70 border border-amber-200 rounded-xl text-[11px] text-slate-700 space-y-1">
-                  <p className="font-bold text-amber-900">⚡ POSH Strategy &amp; Passcode Notice</p>
-                  <p>Publish updates here on the pub website first, then tap &ldquo;Copy for FB&rdquo; below to share directly into Facebook with full branding.</p>
-                  <p className="font-mono text-[10px] text-slate-500">Staff Passcode: 1572 • Fallback: 7924</p>
-                </div>
+                <button
+                  type="button"
+                  onClick={() => videoOnlyInputRef.current?.click()}
+                  className={`flex flex-col items-center justify-center gap-1.5 py-3 px-2 rounded-xl border text-xs font-semibold transition cursor-pointer ${
+                    mediaTab === 'video' && videoFileUrl
+                      ? 'bg-blue-50 border-blue-300 text-blue-700'
+                      : 'bg-white border-slate-200 hover:bg-slate-50 text-slate-700'
+                  }`}
+                >
+                  <svg className="w-4.5 h-4.5 text-blue-600" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                    <rect width="18" height="18" x="3" y="3" rx="2" />
+                    <path d="m10 8 6 4-6 4V8Z" />
+                  </svg>
+                  <span>Video / Reel</span>
+                </button>
+
+                <button
+                  type="button"
+                  onClick={() => {
+                    setShowSocialInput(true)
+                    setMediaTab('social')
+                    setPhotoFile(null)
+                    setPhotoDataUrl(null)
+                    setVideoFile(null)
+                    setVideoFileUrl(null)
+                  }}
+                  className={`flex flex-col items-center justify-center gap-1.5 py-3 px-2 rounded-xl border text-xs font-semibold transition cursor-pointer ${
+                    showSocialInput
+                      ? 'bg-blue-50 border-blue-300 text-blue-700'
+                      : 'bg-white border-slate-200 hover:bg-slate-50 text-slate-700'
+                  }`}
+                >
+                  <svg className="w-4.5 h-4.5 text-indigo-600" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                    <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" />
+                    <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" />
+                  </svg>
+                  <span>Social Link</span>
+                </button>
+
+                <button
+                  type="button"
+                  onClick={() => setShowSummaryInput(!showSummaryInput)}
+                  className={`flex flex-col items-center justify-center gap-1.5 py-3 px-2 rounded-xl border text-xs font-semibold transition cursor-pointer ${
+                    showSummaryInput || extendedSummary
+                      ? 'bg-orange-50 border-orange-300 text-orange-700'
+                      : 'bg-white border-slate-200 hover:bg-slate-50 text-slate-700'
+                  }`}
+                >
+                  <svg className="w-4.5 h-4.5 text-orange-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                    <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
+                    <polyline points="14 2 14 8 20 8" />
+                    <line x1="16" x2="8" y1="13" y2="13" />
+                    <line x1="16" x2="8" y1="17" y2="17" />
+                  </svg>
+                  <span>Extra Details</span>
+                </button>
               </div>
-            )}
-          </div>
 
-          {/* Primary Submit Button */}
-          <button
-            type="button"
-            onClick={handlePostSubmit}
-            disabled={!isPostReady || isSubmitting}
-            className="w-full min-h-[48px] py-3.5 bg-gradient-to-r from-amber-500 via-amber-600 to-amber-700 hover:from-amber-600 hover:to-amber-800 text-white font-extrabold uppercase tracking-wider text-xs rounded-2xl transition-all shadow-md shadow-amber-500/25 disabled:opacity-40 disabled:cursor-not-allowed flex items-center justify-center gap-2 cursor-pointer"
-          >
-            <span>⚓</span>
-            <span>{isSubmitting ? uploadStatusText || 'Publishing Update...' : 'Post to Website'}</span>
-          </button>
+              {/* Facebook-Style Post Settings Rows */}
+              <div className="pt-2 border-t border-slate-100 space-y-1">
+                <p className="text-xs font-bold text-slate-900 px-1 pb-1">Post settings</p>
 
-          {/* Post Confirmation Toast */}
-          {postSuccessMessage && (
-            <div className="p-3.5 rounded-2xl bg-green-50 border border-green-200 text-slate-800 space-y-2 shadow-xs animate-fadeIn">
-              <div className="flex items-center gap-2 text-green-800 font-bold text-xs">
-                <span>✓</span>
-                <span>Posted to website! Your update is live on the pub website.</span>
-              </div>
-              {publishedItems[0] && (
-                <div className="flex items-center gap-2 pt-1">
+                {/* Silent Ambient Mode Toggle Switch */}
+                <div className="flex items-center justify-between gap-3 px-2 py-2.5 rounded-xl hover:bg-slate-50 transition">
+                  <div>
+                    <p className="text-xs font-bold text-slate-900">Start videos muted</p>
+                    <p className="text-[11px] text-slate-500">Clean playback without sudden sound</p>
+                  </div>
                   <button
                     type="button"
-                    onClick={() => copyFormattedSocialPost(publishedItems[0])}
-                    className="min-h-[40px] px-3 py-1.5 bg-[#1877F2] hover:bg-blue-700 text-white text-xs font-bold rounded-xl transition flex items-center gap-1.5 cursor-pointer"
+                    role="switch"
+                    aria-checked={isSilentMode}
+                    onClick={() => setIsSilentMode(!isSilentMode)}
+                    className={`relative w-11 h-6 rounded-full transition-colors cursor-pointer shrink-0 ${
+                      isSilentMode ? 'bg-[#1877F2]' : 'bg-slate-300'
+                    }`}
                   >
-                    <span>📋</span>
-                    <span>Copy Facebook Post</span>
+                    <span
+                      className={`absolute top-0.5 left-0.5 w-5 h-5 rounded-full bg-white shadow-xs transition-transform ${
+                        isSilentMode ? 'translate-x-5' : 'translate-x-0'
+                      }`}
+                    />
                   </button>
-                  <a
-                    href="https://www.facebook.com/"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="min-h-[40px] px-3 py-1.5 bg-slate-900 hover:bg-slate-800 text-white text-xs font-bold rounded-xl transition flex items-center gap-1"
+                </div>
+
+                {/* Call-to-Action Button Expandable Row */}
+                <div>
+                  <button
+                    type="button"
+                    onClick={() => setShowMoreOptions(!showMoreOptions)}
+                    className="w-full flex items-center justify-between gap-3 px-2 py-2.5 rounded-xl hover:bg-slate-50 transition cursor-pointer text-left"
                   >
-                    <span>📘</span>
-                    <span>Open FB ↗</span>
-                  </a>
+                    <div>
+                      <p className="text-xs font-bold text-slate-900">Call-to-action button</p>
+                      <p className="text-[11px] text-slate-500">
+                        {ctaPreset === 'none'
+                          ? 'No button'
+                          : ctaPreset === 'book'
+                          ? 'Reserve Table (/contact)'
+                          : ctaPreset === 'rooms'
+                          ? 'View Rooms & Stay (/rooms)'
+                          : ctaPreset === 'xmas'
+                          ? 'Festive & Christmas Menu'
+                          : ctaPreset === 'menu'
+                          ? 'Explore Food & Drink'
+                          : ctaPreset === 'gallery'
+                          ? 'View Photo Gallery'
+                          : ctaCustomText || 'Custom button link'}
+                      </p>
+                    </div>
+                    <span className="text-slate-400 text-xs">{showMoreOptions ? '▾' : '▸'}</span>
+                  </button>
+
+                  {showMoreOptions && (
+                    <div className="mt-1 mb-2 mx-2 p-3 rounded-xl bg-slate-50 border border-slate-200 space-y-2.5">
+                      <select
+                        value={ctaPreset}
+                        onChange={(e) => setCtaPreset(e.target.value)}
+                        className="w-full min-h-[40px] bg-white border border-slate-200 rounded-xl px-3 py-2 text-xs font-medium text-slate-900 focus:ring-2 focus:ring-blue-600 focus:outline-none"
+                      >
+                        <option value="none">No button</option>
+                        <option value="book">Reserve Table (/contact)</option>
+                        <option value="rooms">View Rooms &amp; Stay (/rooms)</option>
+                        <option value="xmas">Festive &amp; Christmas Menu (/xmas-preview-7924)</option>
+                        <option value="menu">Explore Food &amp; Drink (/eat-drink)</option>
+                        <option value="gallery">View Photo Gallery (/gallery)</option>
+                        <option value="custom">Custom Button Label &amp; URL</option>
+                      </select>
+
+                      {ctaPreset === 'custom' && (
+                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                          <input
+                            type="text"
+                            placeholder="Button Text"
+                            value={ctaCustomText}
+                            onChange={(e) => setCtaCustomText(e.target.value)}
+                            className="bg-white border border-slate-200 rounded-xl px-3 py-2 text-xs text-slate-900 focus:outline-none focus:border-blue-500"
+                          />
+                          <input
+                            type="url"
+                            placeholder="Button Link (/page or https://)"
+                            value={ctaCustomLink}
+                            onChange={(e) => setCtaCustomLink(e.target.value)}
+                            className="bg-white border border-slate-200 rounded-xl px-3 py-2 text-xs text-slate-900 focus:outline-none focus:border-blue-500"
+                          />
+                        </div>
+                      )}
+                    </div>
+                  )}
+                </div>
+              </div>
+            </div>
+
+            {/* Anchored Bottom Facebook-Style Action Footer */}
+            <div className="px-4 sm:px-6 py-3.5 bg-slate-50/80 border-t border-slate-200 space-y-3">
+              <button
+                type="button"
+                onClick={handlePostSubmit}
+                disabled={!isPostReady || isSubmitting}
+                className={`w-full min-h-[46px] py-3 rounded-xl font-bold text-sm transition-all flex items-center justify-center gap-2 ${
+                  isPostReady && !isSubmitting
+                    ? 'bg-[#1877F2] hover:bg-blue-700 text-white shadow-md shadow-blue-600/20 cursor-pointer'
+                    : 'bg-slate-200 text-slate-400 cursor-not-allowed'
+                }`}
+              >
+                <span>{isSubmitting ? uploadStatusText || 'Publishing...' : 'Post'}</span>
+              </button>
+
+              {postSuccessMessage && (
+                <div className="p-3.5 rounded-2xl bg-emerald-50 border border-emerald-200 text-slate-800 space-y-2">
+                  <div className="flex items-center gap-2 text-emerald-800 font-bold text-xs">
+                    <span>✓</span>
+                    <span>Posted! Your update is live on the pub website.</span>
+                  </div>
+                  {publishedItems[0] && (
+                    <div className="flex items-center gap-2 pt-1">
+                      <button
+                        type="button"
+                        onClick={() => copyFormattedSocialPost(publishedItems[0])}
+                        className="min-h-[38px] px-3 py-1.5 bg-[#1877F2] hover:bg-blue-700 text-white text-xs font-bold rounded-xl transition flex items-center gap-1.5 cursor-pointer"
+                      >
+                        <span>Copy Facebook Post</span>
+                      </button>
+                      <a
+                        href="https://www.facebook.com/"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="min-h-[38px] px-3 py-1.5 bg-slate-900 hover:bg-slate-800 text-white text-xs font-bold rounded-xl transition flex items-center gap-1"
+                      >
+                        <span>Open FB ↗</span>
+                      </a>
+                    </div>
+                  )}
                 </div>
               )}
             </div>
-          )}
-        </div>
+          </div>
 
         {/* ============================================================== */}
         {/* TIMELINE FEED MANAGEMENT BELOW COMPOSER                       */}
@@ -1192,7 +1342,8 @@ ${item.ctaText && item.ctaLink ? `\n👉 ${item.ctaText}: https://www.theshipinn
           />
           <span>The Ship Inn Porlock Weir • Staff Mobile Tool</span>
         </div>
-      </main>
+        </main>
+      </div>
     </div>
   )
 }
