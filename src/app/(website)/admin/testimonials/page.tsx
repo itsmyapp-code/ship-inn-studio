@@ -49,6 +49,7 @@ export default function AdminTestimonialsPage() {
 
   // Deleting state
   const [deletingId, setDeletingId] = useState<string | null>(null)
+  const [isLockHovered, setIsLockHovered] = useState(false)
 
   // Check auth session on mount
   useEffect(() => {
@@ -318,26 +319,29 @@ export default function AdminTestimonialsPage() {
     }
   }
 
-  // 1. Passcode Screen if not logged in
+  // 1. Passcode Screen if not logged in (Light Mode + Red Closed Padlock)
   if (isCheckingAuth) {
     return (
-      <div className="min-h-screen bg-slate-900 flex items-center justify-center">
-        <p className="text-white text-sm">Checking admin session...</p>
+      <div className="min-h-screen bg-slate-100 flex items-center justify-center">
+        <p className="text-slate-600 text-sm font-medium">Checking admin session...</p>
       </div>
     )
   }
 
   if (!isAuthenticated) {
     return (
-      <div className="min-h-screen bg-slate-950 flex items-center justify-center p-4">
-        <div className="bg-white rounded-3xl p-8 max-w-md w-full shadow-2xl border border-slate-800 text-center">
-          <div className="w-16 h-16 bg-amber-100 text-amber-700 rounded-2xl flex items-center justify-center text-3xl mx-auto mb-4">
-            ⚓
+      <div className="min-h-screen bg-slate-100 flex items-center justify-center p-4">
+        <div className="bg-white rounded-3xl p-8 max-w-md w-full shadow-lg border border-slate-200 text-center">
+          <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-red-50 border border-red-200 text-red-700 text-[11px] font-bold uppercase tracking-wider mb-4">
+            <svg className="w-3.5 h-3.5 text-red-600" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+              <rect width="18" height="11" x="3" y="11" rx="2" ry="2" />
+              <path d="M7 11V7a5 5 0 0 1 10 0v4" />
+            </svg>
+            <span>Locked • Testimonials Admin</span>
           </div>
           <h2 className="text-2xl font-serif font-bold text-slate-900">The Ship Inn</h2>
-          <p className="text-xs uppercase tracking-widest font-bold text-amber-700 mt-1">Admin Portal • Testimonials</p>
-          <p className="text-slate-600 text-sm mt-3 mb-6">
-            Please enter the pub admin passcode to manage reviews and guest testimonials.
+          <p className="text-slate-500 text-xs mt-2 mb-6">
+            Enter your admin passcode to manage guest reviews and testimonials.
           </p>
 
           <form onSubmit={handlePasscodeSubmit} className="space-y-4">
@@ -346,108 +350,121 @@ export default function AdminTestimonialsPage() {
               value={passcode}
               onChange={(e) => setPasscode(e.target.value)}
               placeholder="Enter admin passcode"
-              className="w-full px-4 py-3 border border-slate-300 rounded-xl text-center text-lg tracking-wider focus:outline-none focus:ring-2 focus:ring-amber-500"
+              className="w-full px-4 py-3.5 bg-slate-50 border-2 border-slate-200 rounded-2xl text-center text-base tracking-wider focus:outline-none focus:bg-white focus:border-blue-600 transition"
               autoFocus
             />
-            {authError && <p className="text-red-600 text-xs font-semibold">{authError}</p>}
+            {authError && <p className="text-red-600 bg-red-50 border border-red-200 rounded-xl px-3 py-2 text-xs font-semibold">{authError}</p>}
             <button
               type="submit"
               disabled={isLoggingIn}
-              className="w-full py-3 bg-slate-900 hover:bg-slate-800 text-white font-bold rounded-xl transition shadow text-sm"
+              className="w-full py-3.5 bg-[#1877F2] hover:bg-blue-700 text-white font-bold rounded-xl transition shadow-md text-sm cursor-pointer"
             >
-              {isLoggingIn ? 'Checking...' : 'Unlock Admin Portal →'}
+              {isLoggingIn ? 'Checking...' : 'Unlock Testimonials'}
             </button>
           </form>
-
-          <div className="mt-6 pt-4 border-t border-slate-100 text-xs text-slate-400">
-            Passcode: <code className="bg-slate-100 px-2 py-0.5 rounded text-slate-600 font-mono">theshipinnta248pb!</code>
-          </div>
         </div>
       </div>
     )
   }
 
-  // 2. Full Admin Dashboard
+  // 2. Full Admin Dashboard (Clean Light Mode + Large Green Open / Red Closed Padlock)
   return (
-    <div className="min-h-screen bg-slate-50 font-sans">
-      {/* Top Navigation Bar */}
-      <div className="bg-slate-900 text-white border-b border-slate-800">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex flex-wrap items-center justify-between gap-4">
-          <div className="flex items-center space-x-3">
-            <span className="text-amber-400 font-bold text-xl">⚓</span>
+    <div className="min-h-screen bg-slate-100 font-sans">
+      {/* Clean Light-Mode Header */}
+      <header className="bg-white border-b border-slate-200 sticky top-0 z-40 shadow-xs">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3 flex flex-wrap items-center justify-between gap-3">
+          <div className="flex items-center gap-3">
+            <img src="/images/the_ship_inn2.webp" alt="The Ship Inn" className="h-9 w-auto shrink-0" />
             <div>
-              <span className="font-serif font-bold text-base text-white tracking-wide block">
-                The Ship Inn Admin
+              <span className="font-extrabold text-base text-slate-900 tracking-tight block leading-tight">
+                Guest Testimonials
               </span>
-              <span className="text-xs text-amber-300 font-semibold">Testimonials &amp; Review Manager</span>
+              <span className="text-[11px] text-slate-500 font-medium">The Ship Inn, Porlock Weir</span>
             </div>
           </div>
+
           <div className="flex flex-wrap items-center gap-2 text-xs">
             <Link
-              href="/admin/menus"
-              className="px-3 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-300 transition"
+              href="/staff"
+              className="min-h-[40px] px-3 py-1.5 rounded-xl bg-slate-100 hover:bg-blue-50 text-slate-700 hover:text-blue-700 border border-slate-200 font-semibold transition flex items-center"
             >
-              PDF Menus
+              Create Post
+            </Link>
+            <Link
+              href="/admin/menus"
+              className="min-h-[40px] px-3 py-1.5 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 border border-slate-200 font-semibold transition flex items-center"
+            >
+              Menus
             </Link>
             <Link
               href="/admin/gallery"
-              className="px-3 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-300 transition"
+              className="min-h-[40px] px-3 py-1.5 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 border border-slate-200 font-semibold transition flex items-center"
             >
-              Photo Gallery
-            </Link>
-            <span className="px-3 py-1.5 rounded-lg bg-amber-500 text-slate-950 font-bold shadow">
-              Testimonials
-            </span>
-            <Link
-              href="/outstatic"
-              className="px-3 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-300 transition"
-            >
-              Outstatic CMS
+              Gallery
             </Link>
             <button
               onClick={() => setIsTokenModalOpen(true)}
-              className={`px-3 py-1.5 rounded-lg font-semibold transition flex items-center gap-1.5 ${
+              className={`min-h-[40px] px-3 py-1.5 rounded-xl font-semibold transition flex items-center gap-1.5 border cursor-pointer ${
                 tokenConfigured
-                  ? 'bg-emerald-950 text-emerald-300 border border-emerald-700 hover:bg-emerald-900'
-                  : 'bg-amber-950 text-amber-300 border border-amber-700 hover:bg-amber-900'
+                  ? 'bg-emerald-50 text-emerald-700 border-emerald-200 hover:bg-emerald-100'
+                  : 'bg-amber-50 text-amber-800 border-amber-200 hover:bg-amber-100'
               }`}
             >
-              <span className={`w-2 h-2 rounded-full ${tokenConfigured ? 'bg-emerald-400' : 'bg-amber-400 animate-pulse'}`}></span>
-              <span>{tokenConfigured ? 'GitHub Live Sync Active' : 'Setup GitHub Sync'}</span>
+              <span className={`w-2 h-2 rounded-full ${tokenConfigured ? 'bg-emerald-500' : 'bg-amber-500 animate-pulse'}`}></span>
+              <span>{tokenConfigured ? 'Sync Active' : 'Setup Sync'}</span>
             </button>
-            <Link
-              href="/"
-              target="_blank"
-              className="px-3 py-1.5 rounded-lg bg-blue-600 hover:bg-blue-500 text-white font-semibold transition"
-            >
-              View Site ↗
-            </Link>
+
+            {/* Large Visual Padlock Button: Green Open when unlocked, Red Closed on hover/lock */}
             <button
+              type="button"
+              onMouseEnter={() => setIsLockHovered(true)}
+              onMouseLeave={() => setIsLockHovered(false)}
               onClick={handleLogout}
-              className="px-2.5 py-1.5 rounded-lg bg-slate-800 hover:bg-red-950 text-slate-400 hover:text-red-300 transition"
-              title="Lock Admin Portal"
+              title="Unlocked — Click to lock Admin Portal"
+              aria-label="Lock Admin Portal"
+              className={`min-h-[42px] px-3.5 py-2 rounded-xl border-2 font-bold text-xs transition-all flex items-center gap-2 cursor-pointer shadow-xs ${
+                isLockHovered
+                  ? 'bg-red-50 border-red-400 text-red-600'
+                  : 'bg-emerald-50 border-emerald-400 text-emerald-700'
+              }`}
             >
-              🔒 Lock
+              {isLockHovered ? (
+                <>
+                  <svg className="w-5 h-5 text-red-600 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                    <rect width="18" height="11" x="3" y="11" rx="2" ry="2" />
+                    <path d="M7 11V7a5 5 0 0 1 10 0v4" />
+                  </svg>
+                  <span>Lock</span>
+                </>
+              ) : (
+                <>
+                  <svg className="w-5 h-5 text-emerald-600 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                    <rect width="18" height="11" x="3" y="11" rx="2" ry="2" />
+                    <path d="M7 11V7a5 5 0 0 1 9.9-1" />
+                  </svg>
+                  <span className="hidden sm:inline">Unlocked</span>
+                </>
+              )}
             </button>
           </div>
         </div>
-      </div>
+      </header>
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         {/* Page Title & Add Button */}
-        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-8">
+        <div className="bg-white border border-slate-200 rounded-3xl p-5 sm:p-6 shadow-sm flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6">
           <div>
-            <h1 className="text-3xl font-serif font-bold text-slate-900">Guest Reviews &amp; Testimonials</h1>
-            <p className="text-slate-600 text-sm mt-1">
-              Approve customer-submitted reviews, add Google/TripAdvisor reviews manually, or manage live testimonials.
+            <h1 className="text-2xl font-extrabold text-slate-900 tracking-tight">Guest Reviews &amp; Testimonials</h1>
+            <p className="text-slate-500 text-xs sm:text-sm mt-1">
+              Approve incoming guest reviews, add Google/TripAdvisor quotes, or manage live testimonials.
             </p>
           </div>
           <button
             onClick={openAddModal}
-            className="bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold text-sm px-6 py-3 rounded-2xl shadow-sm hover:shadow transition inline-flex items-center justify-center gap-2 shrink-0 cursor-pointer"
+            className="bg-[#1877F2] hover:bg-blue-700 text-white font-bold text-sm px-5 py-3 rounded-xl shadow-sm hover:shadow transition inline-flex items-center justify-center gap-2 shrink-0 cursor-pointer"
           >
             <span className="text-lg leading-none">+</span>
-            <span>Add Review Manually</span>
+            <span>Add Review</span>
           </button>
         </div>
 
