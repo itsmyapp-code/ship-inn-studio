@@ -27,6 +27,11 @@ export async function GET(req: NextRequest) {
       return NextResponse.redirect(DEFAULT_IMAGE)
     }
 
+    const isLatestAlias = id.toLowerCase() === 'latest'
+    const cacheHeader = isLatestAlias
+      ? 'public, max-age=300, s-maxage=300'
+      : 'public, max-age=86400, s-maxage=86400'
+
     let item: any = null
     const token = getBlobToken()
     if (token) {
@@ -37,8 +42,8 @@ export async function GET(req: NextRequest) {
           const res = await fetch(`${feedBlob.url}?t=${Date.now()}`, { cache: 'no-store' })
           if (res.ok) {
             const items = await res.json()
-            if (Array.isArray(items)) {
-              item = items.find((i: any) => i.id === id)
+            if (Array.isArray(items) && items.length > 0) {
+              item = isLatestAlias ? items[0] : items.find((i: any) => i.id === id)
             }
           }
         }
@@ -53,8 +58,8 @@ export async function GET(req: NextRequest) {
         if (fs.existsSync(dataFile)) {
           const content = fs.readFileSync(dataFile, 'utf-8')
           const items = JSON.parse(content)
-          if (Array.isArray(items)) {
-            item = items.find((i: any) => i.id === id)
+          if (Array.isArray(items) && items.length > 0) {
+            item = isLatestAlias ? items[0] : items.find((i: any) => i.id === id)
           }
         }
       } catch (e) {}
@@ -260,7 +265,7 @@ export async function GET(req: NextRequest) {
           headers: {
             'Content-Type': 'image/jpeg',
             'Content-Length': String(jpegBuffer.length),
-            'Cache-Control': 'public, max-age=86400, s-maxage=86400',
+            'Cache-Control': cacheHeader,
           },
         })
       } catch (compressErr) {
@@ -269,7 +274,7 @@ export async function GET(req: NextRequest) {
           width: 1200,
           height: 630,
           headers: {
-            'Cache-Control': 'public, max-age=86400, s-maxage=86400',
+            'Cache-Control': cacheHeader,
           },
         })
       }
