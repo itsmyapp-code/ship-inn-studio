@@ -241,13 +241,38 @@ export async function GET(req: NextRequest) {
         ...children
       )
 
-      return new ImageResponse(element, {
+      const imgRes = new ImageResponse(element, {
         width: 1200,
         height: 630,
-        headers: {
-          'Cache-Control': 'public, max-age=86400, s-maxage=86400',
-        },
       })
+
+      // Compress 1200x630 PNG (~1.2MB) to lightweight JPEG (~65KB) so WhatsApp (300KB limit), iMessage, and Facebook always render it
+      try {
+        const sharpMod = await import('sharp')
+        const sharpFn = sharpMod.default || (sharpMod as any)
+        const pngBuffer = Buffer.from(await imgRes.arrayBuffer())
+        const jpegBuffer = await sharpFn(pngBuffer)
+          .jpeg({ quality: 82, mozjpeg: true })
+          .toBuffer()
+
+        return new NextResponse(new Uint8Array(jpegBuffer), {
+          status: 200,
+          headers: {
+            'Content-Type': 'image/jpeg',
+            'Content-Length': String(jpegBuffer.length),
+            'Cache-Control': 'public, max-age=86400, s-maxage=86400',
+          },
+        })
+      } catch (compressErr) {
+        console.warn('[demo-posh/image] JPEG compression fallback to PNG:', compressErr)
+        return new ImageResponse(element, {
+          width: 1200,
+          height: 630,
+          headers: {
+            'Cache-Control': 'public, max-age=86400, s-maxage=86400',
+          },
+        })
+      }
     }
 
     if (!raw) {

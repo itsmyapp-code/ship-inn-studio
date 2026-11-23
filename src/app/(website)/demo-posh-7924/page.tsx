@@ -111,7 +111,7 @@ export async function generateMetadata({ searchParams }: Props): Promise<Metadat
   const isVideoReel = Boolean(post.videoUrl)
   const overlayVersion = post.overlayText ? `&ov=${encodeURIComponent(post.overlayStyle || 'brand')}` : ''
   let imageUrl = isVideoReel
-    ? `https://www.theshipinnporlockweir.co.uk/api/demo-posh/image?id=${post.id}&v=play${overlayVersion}`
+    ? `https://www.theshipinnporlockweir.co.uk/api/demo-posh/image?id=${post.id}&v=play2${overlayVersion}`
     : post.coverImage || DEFAULT_IMAGE
   if (imageUrl.startsWith('data:image')) {
     imageUrl = `https://www.theshipinnporlockweir.co.uk/api/demo-posh/image?id=${post.id}`
