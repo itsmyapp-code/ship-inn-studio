@@ -7,17 +7,52 @@ import { normalizeSocialUrl } from '@/lib/socialUrlHelper'
 interface SocialVideoEmbedProps {
   url: string
   title?: string
+  posterUrl?: string
   className?: string
+  musicUrl?: string
+  musicTitle?: string
+  musicArtist?: string
+  musicVolume?: number
+  muteOriginalVideo?: boolean
+  overlayText?: string
+  overlayPosition?: 'top' | 'center' | 'bottom'
+  overlayStyle?: 'brand' | 'bold' | 'clean' | 'orange'
 }
 
 export default function SocialVideoEmbed({
   url,
   title = 'Social Video',
-  className = ''
+  posterUrl,
+  className = '',
+  musicUrl,
+  musicTitle,
+  musicArtist,
+  musicVolume = 0.7,
+  muteOriginalVideo = true,
+  overlayText,
+  overlayPosition = 'bottom',
+  overlayStyle = 'brand',
 }: SocialVideoEmbedProps) {
   const [loadIframe, setLoadIframe] = useState(false)
+  const [isPlaying, setIsPlaying] = useState(false)
+  const [musicMuted, setMusicMuted] = useState(false)
   const [hasError, setHasError] = useState(false)
+  const videoRef = React.useRef<HTMLVideoElement>(null)
+  const audioRef = React.useRef<HTMLAudioElement>(null)
   const { consent } = useCookieConsent()
+
+  const hasMusic = Boolean(musicUrl && musicUrl.trim())
+  const clampedMusicVolume = Math.max(0, Math.min(1, typeof musicVolume === 'number' ? musicVolume : 0.7))
+
+  React.useEffect(() => {
+    if (videoRef.current) {
+      videoRef.current.muted = hasMusic && muteOriginalVideo
+    }
+    if (audioRef.current) {
+      audioRef.current.volume = clampedMusicVolume
+      audioRef.current.muted = musicMuted
+    }
+  }, [hasMusic, muteOriginalVideo, clampedMusicVolume, musicMuted])
 
   if (!url || typeof url !== 'string' || !url.trim()) return null
 
@@ -229,22 +264,163 @@ export default function SocialVideoEmbed({
           </div>
         </div>
       ) : isDirectVideo ? (
-        <div className="relative w-full h-full bg-black flex flex-col justify-between">
+        <div className="relative w-full h-full bg-black flex items-center justify-center group">
+          {!isPlaying && (
+            <button
+              type="button"
+              onClick={() => {
+                setIsPlaying(true)
+                setMusicMuted(false)
+                if (audioRef.current && hasMusic) {
+                  try {
+                    audioRef.current.currentTime = 0
+                  } catch {}
+                  audioRef.current.volume = clampedMusicVolume
+                  audioRef.current.muted = false
+                  audioRef.current.play().catch(() => {})
+                }
+                setTimeout(() => {
+                  if (videoRef.current) {
+                    videoRef.current.muted = hasMusic && muteOriginalVideo
+                    videoRef.current.play().catch(() => {
+                      if (videoRef.current) {
+                        videoRef.current.muted = true
+                        videoRef.current.play().catch(() => {})
+                      }
+                    })
+                  }
+                }, 0)
+              }}
+              className="relative w-full h-full block bg-slate-950 cursor-pointer overflow-hidden"
+              aria-label={`Play ${title}`}
+            >
+              {posterUrl ? (
+                <img
+                  src={posterUrl}
+                  alt={title}
+                  loading="lazy"
+                  className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                />
+              ) : (
+                <video
+                  src={`${cleanUrl}#t=0.1`}
+                  muted
+                  playsInline
+                  preload="metadata"
+                  className="absolute inset-0 w-full h-full object-cover pointer-events-none"
+                />
+              )}
+              <div className="absolute inset-0 bg-gradient-to-t from-black/65 via-black/20 to-black/30" />
+              <span className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-10 w-16 h-16 rounded-full bg-amber-400 hover:bg-amber-300 text-slate-950 flex items-center justify-center shadow-2xl ring-4 ring-black/40 transition-transform group-hover:scale-110">
+                <svg className="w-7 h-7 fill-current ml-1" viewBox="0 0 24 24" aria-hidden="true">
+                  <path d="M8 5v14l11-7z" />
+                </svg>
+              </span>
+            </button>
+          )}
+
           <video
+            ref={videoRef}
             src={cleanUrl}
-            controls
+            poster={posterUrl}
+            controls={isPlaying}
+            loop
             playsInline
-            className="w-full h-full object-contain bg-black"
+            muted={hasMusic && muteOriginalVideo}
+            onPlay={() => {
+              setIsPlaying(true)
+              if (audioRef.current && hasMusic && !musicMuted) {
+                if (videoRef.current && audioRef.current.duration && isFinite(audioRef.current.duration)) {
+                  audioRef.current.currentTime = videoRef.current.currentTime % audioRef.current.duration
+                }
+                audioRef.current.volume = clampedMusicVolume
+                audioRef.current.muted = false
+                audioRef.current.play().catch(() => {})
+              }
+            }}
+            onPause={() => {
+              if (audioRef.current) audioRef.current.pause()
+            }}
+            onSeeked={() => {
+              if (audioRef.current && videoRef.current && audioRef.current.duration && isFinite(audioRef.current.duration)) {
+                audioRef.current.currentTime = videoRef.current.currentTime % audioRef.current.duration
+              }
+            }}
+            className={`w-full h-full object-contain bg-black ${isPlaying ? 'block' : 'hidden'}`}
           />
-          <div className="bg-slate-900 border-t border-slate-800 p-2.5 flex items-center justify-between text-xs">
-            <span className="text-slate-400 text-[11px] flex items-center gap-1.5 font-medium">
-              <span>🎥</span>
-              <span>Direct Video Upload</span>
-            </span>
-            <span className="text-[11px] font-mono text-emerald-400 bg-emerald-950/80 px-2 py-0.5 rounded border border-emerald-800">
-              Native Video
-            </span>
-          </div>
+
+          {hasMusic && (
+            <audio ref={audioRef} src={musicUrl} loop preload="auto" className="hidden" />
+          )}
+
+          {hasMusic && isPlaying && (
+            <button
+              type="button"
+              onClick={(e) => {
+                e.stopPropagation()
+                const nextMuted = !musicMuted
+                setMusicMuted(nextMuted)
+                if (audioRef.current) {
+                  audioRef.current.muted = nextMuted
+                  if (nextMuted) {
+                    audioRef.current.pause()
+                  } else {
+                    audioRef.current.volume = clampedMusicVolume
+                    audioRef.current.play().catch(() => {})
+                  }
+                }
+              }}
+              className="absolute top-3 right-3 z-30 inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-black/80 hover:bg-black text-white text-[11px] font-bold border border-amber-400/50 shadow-lg backdrop-blur-md cursor-pointer transition max-w-[60%]"
+              title={musicMuted ? 'Unmute background music' : 'Mute background music'}
+            >
+              <span className={musicMuted ? 'text-slate-400' : 'text-amber-400'}>
+                {musicMuted ? '🔇' : '🔊'}
+              </span>
+              <span className="truncate">{musicTitle || 'Music'}</span>
+            </button>
+          )}
+
+          {overlayText && overlayText.trim() && (
+            <div
+              className={`absolute left-3 right-3 z-20 pointer-events-none flex justify-center ${
+                overlayPosition === 'top'
+                  ? 'top-12'
+                  : overlayPosition === 'center'
+                  ? isPlaying
+                    ? 'top-1/2 -translate-y-1/2'
+                    : 'top-[22%]'
+                  : isPlaying
+                  ? 'bottom-14'
+                  : 'bottom-11'
+              }`}
+            >
+              <span
+                className={`px-3.5 py-1.5 rounded-xl text-center text-xs sm:text-sm font-extrabold leading-snug max-w-[92%] break-words shadow-xl ${
+                  overlayStyle === 'bold'
+                    ? 'bg-black/80 text-white border border-white/25 backdrop-blur-md uppercase tracking-wide'
+                    : overlayStyle === 'clean'
+                    ? 'bg-white/95 text-slate-900 border border-slate-200'
+                    : overlayStyle === 'orange'
+                    ? 'bg-gradient-to-r from-[#FF6B00] to-[#FF9F1C] text-white border border-white/20'
+                    : 'bg-[#0A192F]/90 text-amber-300 border border-amber-400/45 backdrop-blur-md'
+                }`}
+              >
+                {overlayText.trim()}
+              </span>
+            </div>
+          )}
+
+          {hasMusic && !isPlaying && (
+            <div className="absolute bottom-2.5 left-2.5 right-2.5 z-20 pointer-events-none flex justify-start">
+              <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-black/75 backdrop-blur-md text-white text-[10px] font-bold border border-white/15 max-w-[85%] truncate shadow">
+                <span className="text-amber-400">♪</span>
+                <span className="truncate">
+                  {musicTitle || 'Background Music'}
+                  {musicArtist ? ` · ${musicArtist}` : ''}
+                </span>
+              </span>
+            </div>
+          )}
         </div>
       ) : isFacebook ? (
         <div className="relative w-full h-full bg-black flex flex-col justify-between">

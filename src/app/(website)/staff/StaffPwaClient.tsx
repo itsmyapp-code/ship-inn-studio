@@ -10,6 +10,17 @@ import { normalizeSocialUrl, NormalizedSocial } from '@/lib/socialUrlHelper'
 
 const STAFF_DEFAULT_PIN = '1572'
 
+interface MusicTrackItem {
+  id: string
+  title: string
+  artist: string
+  mood: string
+  duration: number
+  audioUrl: string
+  source: 'jamendo' | 'starter'
+  license?: string
+}
+
 interface PublishedItem {
   id: string
   type: 'event' | 'news'
@@ -24,6 +35,14 @@ interface PublishedItem {
   platform?: 'facebook' | 'instagram'
   embedUrl?: string
   isSilent?: boolean
+  musicUrl?: string
+  musicTitle?: string
+  musicArtist?: string
+  musicVolume?: number
+  muteOriginalVideo?: boolean
+  overlayText?: string
+  overlayPosition?: 'top' | 'center' | 'bottom'
+  overlayStyle?: 'brand' | 'bold' | 'clean' | 'orange'
   bookingRequired?: boolean
   pdfUrl?: string
   pdfFileName?: string
@@ -92,6 +111,30 @@ export default function StaffPwaClient() {
   const unifiedFileInputRef = useRef<HTMLInputElement | null>(null)
   const photoOnlyInputRef = useRef<HTMLInputElement | null>(null)
   const videoOnlyInputRef = useRef<HTMLInputElement | null>(null)
+  const musicFileInputRef = useRef<HTMLInputElement | null>(null)
+  const previewAudioRef = useRef<HTMLAudioElement | null>(null)
+
+  // Royalty-Free Music State
+  const [showMusicDrawer, setShowMusicDrawer] = useState(false)
+  const [musicSearchQuery, setMusicSearchQuery] = useState('')
+  const [musicMood, setMusicMood] = useState<'all' | 'upbeat' | 'corporate' | 'chill' | 'energetic' | 'cinematic'>('all')
+  const [musicTracks, setMusicTracks] = useState<MusicTrackItem[]>([])
+  const [isLoadingMusic, setIsLoadingMusic] = useState(false)
+  const [jamendoEnabled, setJamendoEnabled] = useState(false)
+  const [previewingTrackId, setPreviewingTrackId] = useState<string | null>(null)
+  const [isUploadingMusic, setIsUploadingMusic] = useState(false)
+
+  const [musicUrl, setMusicUrl] = useState('')
+  const [musicTitle, setMusicTitle] = useState('')
+  const [musicArtist, setMusicArtist] = useState('')
+  const [musicVolume, setMusicVolume] = useState(0.7)
+  const [muteOriginalVideo, setMuteOriginalVideo] = useState(true)
+
+  // Video Title / Text Overlay State
+  const [showOverlayDrawer, setShowOverlayDrawer] = useState(false)
+  const [overlayText, setOverlayText] = useState('')
+  const [overlayPosition, setOverlayPosition] = useState<'top' | 'center' | 'bottom'>('bottom')
+  const [overlayStyle, setOverlayStyle] = useState<'brand' | 'bold' | 'clean' | 'orange'>('brand')
   const [eventDate, setEventDate] = useState(() => {
     const tomorrow = new Date()
     tomorrow.setDate(tomorrow.getDate() + 1)
@@ -148,6 +191,91 @@ export default function StaffPwaClient() {
 
     return () => window.removeEventListener('beforeinstallprompt', handleBeforeInstall)
   }, [])
+
+  // Fetch Royalty-Free Music tracks from /api/studio-music
+  const fetchMusicTracks = async (moodVal = musicMood, queryVal = musicSearchQuery) => {
+    setIsLoadingMusic(true)
+    try {
+      const params = new URLSearchParams()
+      if (moodVal && moodVal !== 'all') params.set('mood', moodVal)
+      if (queryVal.trim()) params.set('q', queryVal.trim())
+      const res = await fetch(`/api/studio-music?${params.toString()}`)
+      const data = await res.json()
+      if (data?.success && Array.isArray(data.tracks)) {
+        setMusicTracks(data.tracks)
+        setJamendoEnabled(Boolean(data.jamendoEnabled))
+      }
+    } catch (err) {
+      console.error('Error fetching studio music:', err)
+    } finally {
+      setIsLoadingMusic(false)
+    }
+  }
+
+  useEffect(() => {
+    if (showMusicDrawer) {
+      fetchMusicTracks(musicMood, musicSearchQuery)
+    } else if (previewAudioRef.current) {
+      previewAudioRef.current.pause()
+      setPreviewingTrackId(null)
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [showMusicDrawer, musicMood])
+
+  useEffect(() => {
+    return () => {
+      if (previewAudioRef.current) {
+        previewAudioRef.current.pause()
+        previewAudioRef.current = null
+      }
+    }
+  }, [])
+
+  const stopMusicPreview = () => {
+    if (previewAudioRef.current) {
+      previewAudioRef.current.pause()
+    }
+    setPreviewingTrackId(null)
+  }
+
+  const toggleTrackPreview = (track: MusicTrackItem) => {
+    if (previewingTrackId === track.id) {
+      stopMusicPreview()
+      return
+    }
+    if (!previewAudioRef.current) {
+      previewAudioRef.current = new Audio()
+      previewAudioRef.current.onended = () => setPreviewingTrackId(null)
+    }
+    previewAudioRef.current.pause()
+    previewAudioRef.current.src = track.audioUrl
+    previewAudioRef.current.volume = musicVolume
+    previewAudioRef.current.play().catch(() => {})
+    setPreviewingTrackId(track.id)
+  }
+
+  const handleCustomMusicUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0]
+    e.target.value = ''
+    if (!file) return
+    setIsUploadingMusic(true)
+    try {
+      const safeName = `music-${Date.now()}-${file.name.replace(/[^a-zA-Z0-9.-]/g, '_')}`
+      const blob = await upload(safeName, file, {
+        access: 'public',
+        handleUploadUrl: '/api/upload-video',
+      })
+      stopMusicPreview()
+      const cleanTitle = file.name.replace(/\.[^/.]+$/, '').replace(/[-_]+/g, ' ')
+      setMusicUrl(blob.url)
+      setMusicTitle(cleanTitle || 'Custom Track')
+      setMusicArtist('Uploaded MP3')
+    } catch (err: any) {
+      alert('Audio upload failed: ' + (err?.message || 'Please try a smaller MP3/M4A file.'))
+    } finally {
+      setIsUploadingMusic(false)
+    }
+  }
 
   const handlePinSubmit = (e: React.FormEvent) => {
     e.preventDefault()
@@ -422,6 +550,14 @@ export default function StaffPwaClient() {
         platform: normalizedSocial?.platform,
         embedUrl: normalizedSocial?.embedUrl,
         isSilent: mediaTab === 'video' ? isSilentMode : false,
+        musicUrl: mediaTab === 'video' && musicUrl ? musicUrl : undefined,
+        musicTitle: mediaTab === 'video' && musicUrl ? musicTitle : undefined,
+        musicArtist: mediaTab === 'video' && musicUrl ? musicArtist : undefined,
+        musicVolume: mediaTab === 'video' && musicUrl ? musicVolume : undefined,
+        muteOriginalVideo: mediaTab === 'video' && musicUrl ? muteOriginalVideo : undefined,
+        overlayText: overlayText.trim() || undefined,
+        overlayPosition: overlayText.trim() ? overlayPosition : undefined,
+        overlayStyle: overlayText.trim() ? overlayStyle : undefined,
         bookingRequired: postType === 'event' ? bookingRequired : false,
         pdfUrl: finalPdfUrl,
         pdfFileName: pdfFile ? pdfFile.name : undefined,
@@ -451,6 +587,7 @@ export default function StaffPwaClient() {
       setPostSuccessMessage(true)
 
       // Reset Composer Form
+      stopMusicPreview()
       setCaption('')
       setExtendedSummary('')
       setSocialLink('')
@@ -460,6 +597,16 @@ export default function StaffPwaClient() {
       setVideoFile(null)
       setVideoFileUrl(null)
       setVideoThumbnailPreview(null)
+      setMusicUrl('')
+      setMusicTitle('')
+      setMusicArtist('')
+      setMusicVolume(0.7)
+      setMuteOriginalVideo(true)
+      setShowMusicDrawer(false)
+      setOverlayText('')
+      setOverlayPosition('bottom')
+      setOverlayStyle('brand')
+      setShowOverlayDrawer(false)
       setPdfFile(null)
       setPdfFileName(null)
       setCtaPreset('none')
@@ -622,6 +769,17 @@ ${item.ctaText && item.ctaLink ? `\n👉 ${item.ctaText}: https://www.theshipinn
               <span className="hidden sm:inline">Public Feed</span>
               <span className="sm:hidden">Feed</span>
             </Link>
+
+            <a
+              href="https://www.itsmyapp.co.uk/video-editor"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="min-h-[44px] px-3 py-2 text-xs font-bold text-slate-700 bg-slate-100 hover:bg-orange-50 hover:text-orange-700 rounded-xl border border-slate-200 hover:border-orange-200 transition flex items-center gap-1.5"
+              title="Trim, crop & edit videos locally in your browser"
+            >
+              <span>🎬</span>
+              <span className="hidden sm:inline">Video Editor</span>
+            </a>
 
             {/* Large Visual Padlock Button: Green Open when unlocked, Red Closed on hover/lock */}
             <button
@@ -884,18 +1042,21 @@ ${item.ctaText && item.ctaLink ? `\n👉 ${item.ctaText}: https://www.theshipinn
               )}
 
               {videoFileUrl && (
-                <div className="relative rounded-2xl overflow-hidden border border-slate-200 bg-slate-50 p-3">
-                  <div className="flex items-center justify-between mb-2 px-1">
+                <div className="relative rounded-2xl overflow-hidden border border-slate-200 bg-slate-50 p-3 space-y-3">
+                  <div className="flex items-center justify-between px-1">
                     <span className="text-xs font-bold text-slate-700">
                       Video Ready {videoFileSize ? `(${videoFileSize})` : ''}
                     </span>
                     <button
                       type="button"
                       onClick={() => {
+                        stopMusicPreview()
                         setVideoFile(null)
                         setVideoFileUrl(null)
                         setVideoThumbnailPreview(null)
                         setVideoFileSize(null)
+                        setShowMusicDrawer(false)
+                        setShowOverlayDrawer(false)
                       }}
                       aria-label="Remove video"
                       className="w-7 h-7 rounded-full bg-white hover:bg-red-50 text-slate-600 hover:text-red-600 border border-slate-200 flex items-center justify-center font-bold cursor-pointer transition"
@@ -904,7 +1065,338 @@ ${item.ctaText && item.ctaLink ? `\n👉 ${item.ctaText}: https://www.theshipinn
                     </button>
                   </div>
                   <div className="max-w-[260px] mx-auto">
-                    <SocialVideoEmbed url={videoFileUrl} />
+                    <SocialVideoEmbed
+                      url={videoFileUrl}
+                      posterUrl={videoThumbnailPreview || undefined}
+                      musicUrl={musicUrl || undefined}
+                      musicTitle={musicTitle || undefined}
+                      musicArtist={musicArtist || undefined}
+                      musicVolume={musicVolume}
+                      muteOriginalVideo={muteOriginalVideo}
+                      overlayText={overlayText || undefined}
+                      overlayPosition={overlayPosition}
+                      overlayStyle={overlayStyle}
+                    />
+                  </div>
+                  <div className="grid grid-cols-2 gap-2 pt-1">
+                    <button
+                      type="button"
+                      onClick={() => {
+                        setShowMusicDrawer((prev) => !prev)
+                        setShowOverlayDrawer(false)
+                      }}
+                      className={`min-h-[42px] px-3 py-2 rounded-xl border text-xs font-bold transition flex items-center justify-center gap-1.5 cursor-pointer ${
+                        musicUrl || showMusicDrawer
+                          ? 'bg-violet-50 border-violet-300 text-violet-700'
+                          : 'bg-white border-slate-200 hover:bg-slate-100 text-slate-700'
+                      }`}
+                    >
+                      <span>🎵</span>
+                      <span className="truncate">{musicUrl ? musicTitle || 'Music Added' : 'Add Music'}</span>
+                    </button>
+
+                    <button
+                      type="button"
+                      onClick={() => {
+                        setShowOverlayDrawer((prev) => !prev)
+                        setShowMusicDrawer(false)
+                      }}
+                      className={`min-h-[42px] px-3 py-2 rounded-xl border text-xs font-bold transition flex items-center justify-center gap-1.5 cursor-pointer ${
+                        overlayText.trim() || showOverlayDrawer
+                          ? 'bg-sky-50 border-sky-300 text-sky-700'
+                          : 'bg-white border-slate-200 hover:bg-slate-100 text-slate-700'
+                      }`}
+                    >
+                      <span>Aa</span>
+                      <span className="truncate">{overlayText.trim() ? 'Title Added' : 'Add Title / Text'}</span>
+                    </button>
+                  </div>
+                </div>
+              )}
+
+              {/* Attached Music Summary Bar */}
+              {musicUrl && (
+                <div className="bg-violet-50/70 border border-violet-200 rounded-2xl p-3 space-y-2">
+                  <div className="flex items-center justify-between gap-2">
+                    <div className="flex items-center gap-2 min-w-0">
+                      <span className="w-8 h-8 rounded-full bg-violet-100 text-violet-700 flex items-center justify-center shrink-0 text-sm">
+                        🎵
+                      </span>
+                      <div className="min-w-0">
+                        <p className="text-xs font-bold text-slate-900 truncate">{musicTitle}</p>
+                        <p className="text-[10px] text-slate-500 truncate">{musicArtist || 'Royalty-Free Track'}</p>
+                      </div>
+                    </div>
+                    <button
+                      type="button"
+                      onClick={() => {
+                        stopMusicPreview()
+                        setMusicUrl('')
+                        setMusicTitle('')
+                        setMusicArtist('')
+                      }}
+                      className="text-[11px] font-bold text-red-600 hover:bg-red-50 px-2 py-1 rounded-lg transition cursor-pointer shrink-0"
+                    >
+                      Remove
+                    </button>
+                  </div>
+
+                  <div className="flex items-center justify-between gap-3 pt-1.5 border-t border-violet-200/70">
+                    <label className="flex items-center gap-2 text-[11px] font-semibold text-slate-700 flex-1">
+                      <span>Vol</span>
+                      <input
+                        type="range"
+                        min={0.1}
+                        max={1}
+                        step={0.05}
+                        value={musicVolume}
+                        onChange={(e) => {
+                          const v = parseFloat(e.target.value)
+                          setMusicVolume(v)
+                          if (previewAudioRef.current) previewAudioRef.current.volume = v
+                        }}
+                        className="w-full accent-violet-600 cursor-pointer"
+                      />
+                      <span className="text-[10px] text-slate-500 w-7 text-right">{Math.round(musicVolume * 100)}%</span>
+                    </label>
+
+                    <label className="flex items-center gap-1.5 text-[11px] font-semibold text-slate-700 cursor-pointer shrink-0">
+                      <input
+                        type="checkbox"
+                        checked={muteOriginalVideo}
+                        onChange={(e) => setMuteOriginalVideo(e.target.checked)}
+                        className="accent-violet-600 rounded cursor-pointer"
+                      />
+                      <span>Mute video mic</span>
+                    </label>
+                  </div>
+                </div>
+              )}
+
+              {/* Royalty-Free Music Picker Drawer */}
+              {showMusicDrawer && (
+                <div className="bg-slate-50 border border-violet-200 rounded-2xl p-3.5 space-y-3 shadow-xs">
+                  <div className="flex items-center justify-between gap-2">
+                    <div>
+                      <p className="text-xs font-bold text-slate-900">Royalty-Free Music Library</p>
+                      <p className="text-[10px] text-slate-500">
+                        {jamendoEnabled
+                          ? 'Live Jamendo catalog • Tap play to preview'
+                          : 'Instant starter pack • Or upload your own MP3'}
+                      </p>
+                    </div>
+                    <button
+                      type="button"
+                      onClick={() => {
+                        stopMusicPreview()
+                        setShowMusicDrawer(false)
+                      }}
+                      className="p-1 text-slate-400 hover:text-slate-700 font-bold cursor-pointer"
+                      aria-label="Close music library"
+                    >
+                      ×
+                    </button>
+                  </div>
+
+                  <div className="flex items-center gap-1.5">
+                    <input
+                      type="text"
+                      value={musicSearchQuery}
+                      onChange={(e) => setMusicSearchQuery(e.target.value)}
+                      onKeyDown={(e) => {
+                        if (e.key === 'Enter') {
+                          e.preventDefault()
+                          fetchMusicTracks(musicMood, musicSearchQuery)
+                        }
+                      }}
+                      placeholder="Search mood or track..."
+                      className="flex-1 min-h-[36px] bg-white border border-slate-200 rounded-xl px-3 py-1.5 text-xs text-slate-900 focus:border-violet-500 focus:outline-none"
+                    />
+                    <button
+                      type="button"
+                      onClick={() => fetchMusicTracks(musicMood, musicSearchQuery)}
+                      className="min-h-[36px] px-3 py-1.5 bg-violet-600 hover:bg-violet-700 text-white text-xs font-bold rounded-xl transition cursor-pointer shrink-0"
+                    >
+                      Go
+                    </button>
+                    <input
+                      ref={musicFileInputRef}
+                      type="file"
+                      accept="audio/mpeg,audio/mp3,audio/mp4,audio/x-m4a,audio/wav,audio/ogg,audio/aac"
+                      onChange={handleCustomMusicUpload}
+                      className="hidden"
+                    />
+                    <button
+                      type="button"
+                      disabled={isUploadingMusic}
+                      onClick={() => musicFileInputRef.current?.click()}
+                      title="Upload your own MP3/M4A file"
+                      className="min-h-[36px] px-2.5 py-1.5 bg-white hover:bg-slate-100 text-slate-700 border border-slate-200 text-xs font-bold rounded-xl transition cursor-pointer shrink-0"
+                    >
+                      {isUploadingMusic ? '...' : 'MP3'}
+                    </button>
+                  </div>
+
+                  <div className="flex items-center gap-1.5 overflow-x-auto pb-0.5">
+                    {(['all', 'upbeat', 'corporate', 'chill', 'energetic', 'cinematic'] as const).map((m) => (
+                      <button
+                        key={m}
+                        type="button"
+                        onClick={() => setMusicMood(m)}
+                        className={`px-2.5 py-1 rounded-full text-[11px] font-bold capitalize transition shrink-0 cursor-pointer ${
+                          musicMood === m
+                            ? 'bg-violet-600 text-white'
+                            : 'bg-white border border-slate-200 text-slate-600 hover:bg-slate-100'
+                        }`}
+                      >
+                        {m}
+                      </button>
+                    ))}
+                  </div>
+
+                  <div className="max-h-[210px] overflow-y-auto divide-y divide-slate-100 border border-slate-200 bg-white rounded-xl">
+                    {isLoadingMusic ? (
+                      <p className="text-xs text-slate-500 text-center py-5 animate-pulse">Loading royalty-free tracks...</p>
+                    ) : musicTracks.length === 0 ? (
+                      <p className="text-xs text-slate-500 text-center py-5">No matching tracks found.</p>
+                    ) : (
+                      musicTracks.map((track) => {
+                        const isSelected = musicUrl === track.audioUrl
+                        const isPreviewing = previewingTrackId === track.id
+                        return (
+                          <div
+                            key={track.id}
+                            className={`flex items-center justify-between gap-2 px-2.5 py-2 transition ${
+                              isSelected ? 'bg-violet-50/80' : 'hover:bg-slate-50'
+                            }`}
+                          >
+                            <button
+                              type="button"
+                              onClick={() => toggleTrackPreview(track)}
+                              className={`w-8 h-8 rounded-full flex items-center justify-center shrink-0 text-xs font-bold transition cursor-pointer ${
+                                isPreviewing
+                                  ? 'bg-violet-600 text-white'
+                                  : 'bg-slate-100 hover:bg-violet-100 text-slate-700 hover:text-violet-700'
+                              }`}
+                            >
+                              {isPreviewing ? '❚❚' : '▶'}
+                            </button>
+
+                            <div className="min-w-0 flex-1">
+                              <p className="text-xs font-bold text-slate-900 truncate">{track.title}</p>
+                              <p className="text-[10px] text-slate-500 truncate">
+                                {track.artist} • <span className="capitalize">{track.mood}</span>
+                              </p>
+                            </div>
+
+                            <button
+                              type="button"
+                              onClick={() => {
+                                stopMusicPreview()
+                                setMusicUrl(track.audioUrl)
+                                setMusicTitle(track.title)
+                                setMusicArtist(track.artist)
+                                setShowMusicDrawer(false)
+                              }}
+                              className={`px-2.5 py-1 rounded-lg text-[11px] font-bold transition cursor-pointer shrink-0 ${
+                                isSelected
+                                  ? 'bg-emerald-600 text-white'
+                                  : 'bg-slate-900 hover:bg-violet-600 text-white'
+                              }`}
+                            >
+                              {isSelected ? 'Selected ✓' : 'Use'}
+                            </button>
+                          </div>
+                        )
+                      })
+                    )}
+                  </div>
+                </div>
+              )}
+
+              {/* Video Title / Text Overlay Drawer */}
+              {showOverlayDrawer && (
+                <div className="bg-slate-50 border border-sky-200 rounded-2xl p-3.5 space-y-3 shadow-xs">
+                  <div className="flex items-center justify-between gap-2">
+                    <div>
+                      <p className="text-xs font-bold text-slate-900">Video Title / Text Overlay</p>
+                      <p className="text-[10px] text-slate-500">
+                        Shows over your video AND is baked into the Facebook share card!
+                      </p>
+                    </div>
+                    <button
+                      type="button"
+                      onClick={() => setShowOverlayDrawer(false)}
+                      className="p-1 text-slate-400 hover:text-slate-700 font-bold cursor-pointer"
+                      aria-label="Close text overlay editor"
+                    >
+                      ×
+                    </button>
+                  </div>
+
+                  <div className="flex items-center gap-2">
+                    <input
+                      type="text"
+                      maxLength={85}
+                      value={overlayText}
+                      onChange={(e) => setOverlayText(e.target.value)}
+                      placeholder="e.g. Cosy Fireside Pints at Porlock Weir"
+                      className="flex-1 min-h-[38px] bg-white border border-slate-200 rounded-xl px-3 py-1.5 text-xs font-semibold text-slate-900 focus:border-sky-500 focus:outline-none"
+                    />
+                    {overlayText && (
+                      <button
+                        type="button"
+                        onClick={() => setOverlayText('')}
+                        className="text-[11px] font-bold text-red-600 hover:bg-red-50 px-2 py-1.5 rounded-lg cursor-pointer"
+                      >
+                        Clear
+                      </button>
+                    )}
+                  </div>
+
+                  <div className="flex items-center justify-between gap-2">
+                    <span className="text-[11px] font-bold text-slate-600">Position</span>
+                    <div className="inline-flex bg-white p-0.5 rounded-xl border border-slate-200">
+                      {(['top', 'center', 'bottom'] as const).map((pos) => (
+                        <button
+                          key={pos}
+                          type="button"
+                          onClick={() => setOverlayPosition(pos)}
+                          className={`px-3 py-1 rounded-lg text-[11px] font-bold capitalize transition cursor-pointer ${
+                            overlayPosition === pos
+                              ? 'bg-sky-600 text-white shadow-xs'
+                              : 'text-slate-600 hover:text-slate-900'
+                          }`}
+                        >
+                          {pos}
+                        </button>
+                      ))}
+                    </div>
+                  </div>
+
+                  <div className="space-y-1.5">
+                    <span className="text-[11px] font-bold text-slate-600 block">Style</span>
+                    <div className="grid grid-cols-2 sm:grid-cols-4 gap-1.5">
+                      {(
+                        [
+                          { id: 'brand', label: 'Navy + Gold', cls: 'bg-[#0A192F] text-amber-300 border-amber-400/40' },
+                          { id: 'bold', label: 'Bold Dark', cls: 'bg-black text-white border-slate-700' },
+                          { id: 'clean', label: 'Clean White', cls: 'bg-white text-slate-900 border-slate-300' },
+                          { id: 'orange', label: 'Orange Pop', cls: 'bg-gradient-to-r from-[#FF6B00] to-[#FF9F1C] text-white border-orange-400' },
+                        ] as const
+                      ).map((st) => (
+                        <button
+                          key={st.id}
+                          type="button"
+                          onClick={() => setOverlayStyle(st.id)}
+                          className={`px-2 py-1.5 rounded-xl border text-[11px] font-extrabold transition cursor-pointer ${st.cls} ${
+                            overlayStyle === st.id ? 'ring-2 ring-blue-500 ring-offset-1' : 'opacity-80 hover:opacity-100'
+                          }`}
+                        >
+                          {st.label}
+                        </button>
+                      ))}
+                    </div>
                   </div>
                 </div>
               )}
@@ -1047,6 +1539,54 @@ ${item.ctaText && item.ctaLink ? `\n👉 ${item.ctaText}: https://www.theshipinn
               {/* Facebook-Style Post Settings Rows */}
               <div className="pt-2 border-t border-slate-100 space-y-1">
                 <p className="text-xs font-bold text-slate-900 px-1 pb-1">Post settings</p>
+
+                {/* Add Music / Audio Row */}
+                <button
+                  type="button"
+                  onClick={() => {
+                    setShowMusicDrawer((prev) => !prev)
+                    setShowOverlayDrawer(false)
+                  }}
+                  className="w-full flex items-center justify-between gap-3 px-2 py-2.5 rounded-xl hover:bg-violet-50/70 transition cursor-pointer text-left"
+                >
+                  <div className="flex items-center gap-3 min-w-0">
+                    <div className="w-9 h-9 rounded-full bg-violet-100 flex items-center justify-center text-violet-700 shrink-0 text-sm">
+                      🎵
+                    </div>
+                    <div className="min-w-0">
+                      <p className="text-xs font-bold text-slate-900">Add music / audio</p>
+                      <p className="text-[11px] text-slate-500 truncate">
+                        {musicTitle ? `Selected: ${musicTitle}` : 'Pick royalty-free music or upload MP3'}
+                      </p>
+                    </div>
+                  </div>
+                  <span className="text-slate-400 text-xs">{showMusicDrawer ? '▾' : '▸'}</span>
+                </button>
+
+                {/* Video Title / Text Overlay Row */}
+                <button
+                  type="button"
+                  onClick={() => {
+                    setShowOverlayDrawer((prev) => !prev)
+                    setShowMusicDrawer(false)
+                  }}
+                  className="w-full flex items-center justify-between gap-3 px-2 py-2.5 rounded-xl hover:bg-sky-50/70 transition cursor-pointer text-left"
+                >
+                  <div className="flex items-center gap-3 min-w-0">
+                    <div className="w-9 h-9 rounded-full bg-sky-100 flex items-center justify-center text-sky-700 shrink-0 text-xs font-extrabold">
+                      Aa
+                    </div>
+                    <div className="min-w-0">
+                      <p className="text-xs font-bold text-slate-900">Video title / text overlay</p>
+                      <p className="text-[11px] text-slate-500 truncate">
+                        {overlayText.trim()
+                          ? `"${overlayText.trim()}"`
+                          : 'Shows over video & on Facebook share card'}
+                      </p>
+                    </div>
+                  </div>
+                  <span className="text-slate-400 text-xs">{showOverlayDrawer ? '▾' : '▸'}</span>
+                </button>
 
                 {/* Silent Ambient Mode Toggle Switch */}
                 <div className="flex items-center justify-between gap-3 px-2 py-2.5 rounded-xl hover:bg-slate-50 transition">
@@ -1287,7 +1827,19 @@ ${item.ctaText && item.ctaLink ? `\n👉 ${item.ctaText}: https://www.theshipinn
                     {/* Visual Media Preview */}
                     {item.videoUrl ? (
                       <div className="max-w-[280px]">
-                        <SocialVideoEmbed url={item.videoUrl} />
+                        <SocialVideoEmbed
+                          url={item.videoUrl}
+                          title={item.title}
+                          posterUrl={item.coverImage}
+                          musicUrl={item.musicUrl}
+                          musicTitle={item.musicTitle}
+                          musicArtist={item.musicArtist}
+                          musicVolume={item.musicVolume}
+                          muteOriginalVideo={item.muteOriginalVideo}
+                          overlayText={item.overlayText}
+                          overlayPosition={item.overlayPosition}
+                          overlayStyle={item.overlayStyle}
+                        />
                       </div>
                     ) : item.coverImage ? (
                       <div className="rounded-2xl overflow-hidden border border-slate-200 max-w-[280px]">

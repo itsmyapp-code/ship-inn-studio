@@ -17,6 +17,14 @@ interface DemoPostItem {
   excerpt: string
   coverImage: string
   videoUrl?: string
+  musicUrl?: string
+  musicTitle?: string
+  musicArtist?: string
+  musicVolume?: number
+  muteOriginalVideo?: boolean
+  overlayText?: string
+  overlayPosition?: 'top' | 'center' | 'bottom'
+  overlayStyle?: 'brand' | 'bold' | 'clean' | 'orange'
   pdfUrl?: string
   pdfFileName?: string
   ctaText?: string
@@ -436,7 +444,19 @@ export default function DemoPoshClient({ initialPostId }: { initialPostId?: stri
                 {/* Media Container: Either Facebook Reel or Flyer Image */}
                 {item.videoUrl ? (
                   <div className="p-4 bg-slate-900 border-b border-slate-800">
-                    <SocialVideoEmbed url={item.videoUrl} title={item.title} />
+                    <SocialVideoEmbed
+                      url={item.videoUrl}
+                      title={item.title}
+                      posterUrl={item.coverImage}
+                      musicUrl={item.musicUrl}
+                      musicTitle={item.musicTitle}
+                      musicArtist={item.musicArtist}
+                      musicVolume={item.musicVolume}
+                      muteOriginalVideo={item.muteOriginalVideo}
+                      overlayText={item.overlayText}
+                      overlayPosition={item.overlayPosition}
+                      overlayStyle={item.overlayStyle}
+                    />
                   </div>
                 ) : (
                   <div className="relative h-72 sm:h-84 w-full bg-slate-950 overflow-hidden flex items-center justify-center group">

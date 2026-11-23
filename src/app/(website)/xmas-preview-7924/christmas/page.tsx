@@ -294,6 +294,31 @@ export default function SecretChristmasPage() {
                 src="/videos/ship-inn-fireplace.mp4"
                 poster="/videos/ship-inn-fireplace-thumb.webp"
               />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-orange-950/25 to-transparent" />
+
+              {/* Animated Hearth Glow & Flame inside the fireplace opening */}
+              <div className="absolute bottom-6 left-1/2 -translate-x-1/2 w-48 h-28 pointer-events-none flex items-end justify-center">
+                <div className="w-44 h-24 rounded-full bg-orange-500/50 blur-xl animate-pulse absolute" />
+                <svg
+                  className="w-24 h-20 text-amber-400/95 animate-bounce drop-shadow-[0_0_18px_rgba(249,115,22,0.95)] relative z-10"
+                  viewBox="0 0 64 64"
+                  fill="currentColor"
+                >
+                  <path
+                    d="M32 4C24 16 14 24 14 38c0 11 8 20 18 20s18-9 18-20c0-10-6-18-10-25 0 6-3 10-6 10-3 0-4-6-2-19z"
+                    fill="#f97316"
+                  />
+                  <path
+                    d="M32 18c-5 8-10 13-10 22 0 7 4.5 12 10 12s10-5 10-12c0-7-4-13-10-22z"
+                    fill="#fde047"
+                  />
+                </svg>
+              </div>
+
+              <div className="absolute top-4 left-4 bg-slate-950/85 backdrop-blur-md border border-amber-400/40 px-3.5 py-1.5 rounded-full text-xs font-bold text-amber-300 flex items-center gap-2">
+                <span className="w-2 h-2 rounded-full bg-orange-400 animate-ping" />
+                <span>The Ship Inn Stone Hearth &amp; Specials Board</span>
+              </div>
             </div>
 
             {/* Right: Festive Interior Photos & Fireside Treat Offer */}

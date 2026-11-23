@@ -108,7 +108,11 @@ export async function generateMetadata({ searchParams }: Props): Promise<Metadat
     }
   }
 
-  let imageUrl = post.coverImage || DEFAULT_IMAGE
+  const isVideoReel = Boolean(post.videoUrl)
+  const overlayVersion = post.overlayText ? `&ov=${encodeURIComponent(post.overlayStyle || 'brand')}` : ''
+  let imageUrl = isVideoReel
+    ? `https://www.theshipinnporlockweir.co.uk/api/demo-posh/image?id=${post.id}&v=play${overlayVersion}`
+    : post.coverImage || DEFAULT_IMAGE
   if (imageUrl.startsWith('data:image')) {
     imageUrl = `https://www.theshipinnporlockweir.co.uk/api/demo-posh/image?id=${post.id}`
   } else if (imageUrl.startsWith('/')) {
