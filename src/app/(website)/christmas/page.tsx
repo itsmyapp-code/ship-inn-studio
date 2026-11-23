@@ -5,6 +5,7 @@ import SmartImage from '@/components/SmartImage'
 import { getSharedContactData } from '@/lib/outstatic'
 import { TrackedPhoneLink, TrackedEmailLink, TrackedChristmasLink } from '@/components/TrackedContactLinks'
 import ChristmasVideoPlayer from '@/components/ChristmasVideoPlayer'
+import FireplaceVideoPlayer from '@/components/FireplaceVideoPlayer'
 
 export const metadata = {
   title: 'Christmas at The Ship Inn Porlock Weir — Festive Dining, Log Fires & Holiday Magic',
@@ -237,15 +238,12 @@ Thank you`
 
           {/* Interactive Cosy Fireplace Showcase Banner (Clean Photos: No Fire Overlay, No Text on Photos) */}
           <div className="rounded-3xl overflow-hidden border-2 border-amber-500/40 bg-slate-900/90 shadow-2xl grid grid-cols-1 lg:grid-cols-12">
-            {/* Left: Real Ship Inn Brick Fireplace (Pure & Clean Photo) */}
-            <div className="lg:col-span-6 relative min-h-[360px] overflow-hidden">
-              <SmartImage
-                src="/images/shipinn-226.webp"
-                alt="The Ship Inn Cosy Brick Fireplace"
-                fill
-                className="object-cover object-bottom"
+            {/* Left: Real Ship Inn Brick Fireplace Video (Autoplay, Loop, Muted with Fireplace Sound Toggle) */}
+            <div className="lg:col-span-6 relative min-h-[360px] lg:min-h-[460px] overflow-hidden">
+              <FireplaceVideoPlayer
+                src="/videos/ship-inn-fireplace.mp4"
+                poster="/videos/ship-inn-fireplace-thumb.webp"
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
             </div>
 
             {/* Right: Festive Interior Photos & Fireside Treat Offer (Clean Photos: No Text Badges) */}
