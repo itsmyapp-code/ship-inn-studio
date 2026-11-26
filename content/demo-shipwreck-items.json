@@ -1,0 +1,108 @@
+[
+  {
+    "id": "band-longest-johns",
+    "bandName": "The Longest Johns",
+    "genre": "Maritime Folk & Modern Shanties",
+    "day": "Saturday",
+    "stage": "The Quay Stage",
+    "timeSlot": "Saturday · 8:30 PM - 10:30 PM",
+    "isHeadline": true,
+    "description": "World-famous sea shanty trailblazers bringing roaring maritime harmonies, foot-stomping footwork, and traditional sea songs to Porlock Weir quay under the stars.",
+    "photoUrl": "/images/Ship -new-thatch.webp",
+    "sampleAudioUrl": "/videos/shipwreck-theme.mp3",
+    "sampleAudioTitle": "Wellerman & Harbour Hornpipe (Live)",
+    "socialLinks": {
+      "spotify": "https://open.spotify.com/artist/5p7n5UeJ6N0Zq41EZZ93sY",
+      "instagram": "https://www.instagram.com/thelongestjohns/",
+      "facebook": "https://www.facebook.com/TheLongestJohns/",
+      "youtube": "https://www.youtube.com/@TheLongestJohns"
+    },
+    "ctaText": "Reserve Quayside Table",
+    "ctaLink": "/contact",
+    "publishedAt": "2026-11-26T12:00:00Z"
+  },
+  {
+    "id": "band-blackbeards-tea-party",
+    "bandName": "Blackbeard's Tea Party",
+    "genre": "High-Octane Pirate Folk-Rock",
+    "day": "Sunday",
+    "stage": "The Quay Stage",
+    "timeSlot": "Sunday · 8:00 PM - 9:45 PM",
+    "isHeadline": true,
+    "description": "Electrifying festival favorites fusing traditional folk songs with heavy rock beats, blistering electric fiddle solos, and infectious pirate energy.",
+    "photoUrl": "/images/bar-area.webp",
+    "sampleAudioUrl": "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3",
+    "sampleAudioTitle": "Loose Cannons & High Seas Jig",
+    "socialLinks": {
+      "spotify": "https://open.spotify.com/artist/4rG1r2d4uY8O9F12345678",
+      "instagram": "https://www.instagram.com/blackbeardsteaparty/",
+      "facebook": "https://www.facebook.com/blackbeardsteaparty/",
+      "website": "https://blackbeardsteaparty.com"
+    },
+    "ctaText": "Book Dining Table",
+    "ctaLink": "/contact",
+    "publishedAt": "2026-11-26T11:00:00Z"
+  },
+  {
+    "id": "band-exmoor-fiddlers",
+    "bandName": "The Harbour Lights Fiddle Trio",
+    "genre": "Celtic & West Country Fiddle",
+    "day": "Friday",
+    "stage": "Fireside Saloon Sessions",
+    "timeSlot": "Friday · 7:00 PM - 9:00 PM",
+    "isHeadline": false,
+    "description": "Intimate candlelit acoustic jigs, reels, and Somerset hornpipes inside the 15th-century saloon bar by the roaring hearth.",
+    "photoUrl": "/images/bar-area2.webp",
+    "sampleAudioUrl": "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-3.mp3",
+    "sampleAudioTitle": "Porlock Weir Hornpipe & Tide Reel",
+    "socialLinks": {
+      "instagram": "https://www.instagram.com/",
+      "facebook": "https://www.facebook.com/",
+      "youtube": "https://www.youtube.com/"
+    },
+    "ctaText": "Fireside Table Booking",
+    "ctaLink": "/contact",
+    "publishedAt": "2026-11-26T10:00:00Z"
+  },
+  {
+    "id": "band-salts",
+    "bandName": "The Salts",
+    "genre": "Raucous Maritime Folk & Shanties",
+    "day": "Saturday",
+    "stage": "The Quay Stage",
+    "timeSlot": "Saturday · 5:30 PM - 7:00 PM",
+    "isHeadline": false,
+    "description": "Five seasoned musicians singing stirring shanties and high-energy folk with tight 5-part vocal harmonies and banjos roaring across the water.",
+    "photoUrl": "/images/bbq board.webp",
+    "sampleAudioUrl": "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3",
+    "sampleAudioTitle": "Drunken Sailor (Full Sea Blast)",
+    "socialLinks": {
+      "spotify": "https://open.spotify.com/",
+      "facebook": "https://www.facebook.com/",
+      "instagram": "https://www.instagram.com/"
+    },
+    "ctaText": "Book Harbour Lawn",
+    "ctaLink": "/contact",
+    "publishedAt": "2026-11-26T09:00:00Z"
+  },
+  {
+    "id": "band-coastal-drift",
+    "bandName": "Coastal Drift Acoustic",
+    "genre": "Acoustic Indie & Coastal Bluegrass",
+    "day": "Sunday",
+    "stage": "Harbour Lawn Acoustic Tent",
+    "timeSlot": "Sunday · 2:00 PM - 4:00 PM",
+    "isHeadline": false,
+    "description": "Warm afternoon acoustic vibes, mandolin solos, and vocal duets accompanying local cider and fresh Porlock Bay oysters on the quayside lawn.",
+    "photoUrl": "/images/IMG_4414.webp",
+    "sampleAudioUrl": "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-4.mp3",
+    "sampleAudioTitle": "Severn Sea Breeze",
+    "socialLinks": {
+      "instagram": "https://www.instagram.com/",
+      "spotify": "https://open.spotify.com/"
+    },
+    "ctaText": "Sunday Lunch Booking",
+    "ctaLink": "/food-drink",
+    "publishedAt": "2026-11-26T08:00:00Z"
+  }
+]
