@@ -523,7 +523,7 @@ export default function ShipwreckFestivalClient() {
 
             <div className="mt-6 flex flex-wrap items-center justify-center gap-4 text-xs sm:text-sm text-amber-300/90 font-medium">
               <span className="flex items-center gap-1.5 bg-slate-900/80 px-3.5 py-1.5 rounded-full border border-amber-500/20">
-                <span className="text-amber-400">📅</span> Bank Holiday Weekend
+                <span className="text-amber-400">📅</span> 3-Day Music Festival
               </span>
               <span className="flex items-center gap-1.5 bg-slate-900/80 px-3.5 py-1.5 rounded-full border border-amber-500/20">
                 <span className="text-amber-400">📍</span> Porlock Weir Harbour, TA24 8PB
