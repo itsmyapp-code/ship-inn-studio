@@ -340,7 +340,7 @@ export async function GET() {
       .fillColor('#cbd5e1')
       .text('Torchlit quayside acoustic sessions as high tide fills the harbour basin each evening.', 38 + perkW * 2 + 10, footerY + 20, { width: perkW - 20 })
 
-    // Bottom Copyright & Live Stamp
+    // Bottom Copyright & Live Stamp (Explicit width inside Page 1)
     doc
       .font('Helvetica')
       .fontSize(6.5)
@@ -348,8 +348,8 @@ export async function GET() {
       .text(
         `The Ship Inn, Porlock Weir, Somerset, TA24 8PB | Tel: 01643 863288 | www.theshipinnporlockweir.co.uk | Live Generated: ${new Date().toLocaleDateString('en-GB')}`,
         30,
-        pageHeight - 34,
-        { align: 'center' }
+        footerY + 56,
+        { width: pageWidth - 60, align: 'center', lineBreak: false }
       )
 
     doc.end()
