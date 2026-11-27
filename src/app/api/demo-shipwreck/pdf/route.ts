@@ -36,6 +36,18 @@ function getBlobToken(): string | undefined {
   return tokenKey ? process.env[tokenKey] : undefined
 }
 
+// Helper to strictly sanitize text to ASCII so standard PDF fonts never produce mojibake/corrupted characters
+function safePdf(str: any): string {
+  if (!str) return ''
+  return String(str)
+    .replace(/[\u2022\u2023\u25E6\u2043\u2219]/g, '|') // bullets
+    .replace(/[\u2018\u2019]/g, "'") // curly single quotes
+    .replace(/[\u201C\u201D]/g, '"') // curly double quotes
+    .replace(/[\u2013\u2014]/g, '-') // en/em dashes
+    .replace(/[^\x20-\x7E]/g, '') // remove emojis, multibyte unicode
+    .trim()
+}
+
 async function readLiveBands(): Promise<any[]> {
   const token = getBlobToken()
   let rawItems: any[] = []
@@ -89,7 +101,6 @@ export async function GET() {
     const chunks: Buffer[] = []
     doc.on('data', (chunk) => chunks.push(chunk))
 
-    // Background & Decorative Border
     const pageWidth = 595.28
     const pageHeight = 841.89
 
@@ -120,13 +131,13 @@ export async function GET() {
       }
     }
 
-    // Header Typography
+    // Header Typography (Strictly ASCII safe)
     let currentY = 90
     doc
       .font('Helvetica-Bold')
       .fontSize(9)
       .fillColor('#f59e0b')
-      .text('THE SHIP INN • PORLOCK WEIR QUAYSIDE', 30, currentY, {
+      .text('THE SHIP INN  |  PORLOCK WEIR QUAYSIDE', 30, currentY, {
         align: 'center',
         characterSpacing: 2
       })
@@ -145,7 +156,7 @@ export async function GET() {
       .font('Helvetica-Bold')
       .fontSize(10)
       .fillColor('#38bdf8')
-      .text('Friday 4th – Sunday 6th June 2027', 30, currentY, {
+      .text('Friday 4th - Sunday 6th June 2027', 30, currentY, {
         align: 'center'
       })
 
@@ -154,7 +165,7 @@ export async function GET() {
       .font('Helvetica')
       .fontSize(8)
       .fillColor('#94a3b8')
-      .text('Free Quayside Admission • 3 Stages • Exmoor Ales & Porlock Bay Oysters', 30, currentY, {
+      .text('Free Quayside Admission  |  3 Stages  |  Exmoor Ales & Porlock Bay Oysters', 30, currentY, {
         align: 'center'
       })
 
@@ -193,13 +204,13 @@ export async function GET() {
         .font('Times-Bold')
         .fontSize(11)
         .fillColor('#fbbf24')
-        .text(title, x + 8, curY + 4, { width: colWidth - 70 })
+        .text(safePdf(title), x + 8, curY + 4, { width: colWidth - 70 })
 
       doc
         .font('Helvetica-Bold')
         .fontSize(7.5)
         .fillColor('#38bdf8')
-        .text(sub, x + colWidth - 65, curY + 5, { width: 55, align: 'right' })
+        .text(safePdf(sub), x + colWidth - 65, curY + 5, { width: 55, align: 'right' })
 
       curY += 26
 
@@ -217,45 +228,49 @@ export async function GET() {
         doc.rect(x, curY, colWidth, 48).fill('#090e17')
         doc.rect(x, curY, colWidth, 48).strokeColor('#1e293b').lineWidth(0.5).stroke()
 
-        // Band Name & Headline
+        // Band Name
         doc
           .font('Times-Bold')
           .fontSize(10.5)
           .fillColor('#ffffff')
-          .text(b.bandName, x + 8, curY + 5, { width: colWidth - 80 })
+          .text(safePdf(b.bandName), x + 8, curY + 5, { width: colWidth - 85 })
 
         if (b.isHeadline) {
           doc
             .font('Helvetica-Bold')
-            .fontSize(6.5)
+            .fontSize(6)
             .fillColor('#f59e0b')
-            .text('★ HEADLINE', x + 8, curY + 17)
+            .text('[HEADLINE ACT]', x + 8, curY + 17)
         }
 
         // Time slot badge
+        const cleanSlot = safePdf(b.timeSlot) || 'Schedule TBC'
         doc
           .font('Helvetica-Bold')
           .fontSize(7)
           .fillColor('#fbbf24')
-          .text(b.timeSlot || 'Schedule TBC', x + colWidth - 95, curY + 5, {
-            width: 87,
+          .text(cleanSlot, x + colWidth - 110, curY + 5, {
+            width: 102,
             align: 'right'
           })
 
         // Stage & Genre
+        const cleanStage = safePdf(b.stage) || 'The Quay Stage'
+        const cleanGenre = safePdf(b.genre) || 'Maritime Folk'
         doc
           .font('Helvetica')
           .fontSize(7)
           .fillColor('#94a3b8')
           .text(
-            `📍 ${b.stage || 'The Quay Stage'} • ${b.genre || 'Maritime Folk'}`,
+            `${cleanStage}  |  ${cleanGenre}`,
             x + 8,
             curY + (b.isHeadline ? 26 : 19),
             { width: colWidth - 16 }
           )
 
         // Description preview
-        const shortDesc = (b.description || '').slice(0, 65) + ((b.description || '').length > 65 ? '...' : '')
+        const cleanDesc = safePdf(b.description)
+        const shortDesc = cleanDesc.slice(0, 65) + (cleanDesc.length > 65 ? '...' : '')
         doc
           .font('Helvetica')
           .fontSize(6)
@@ -293,7 +308,7 @@ export async function GET() {
       .font('Helvetica-Bold')
       .fontSize(7.5)
       .fillColor('#fbbf24')
-      .text('🍺 16 GUEST REAL ALES', 38 + 10, footerY + 8)
+      .text('16 GUEST REAL ALES', 38 + 10, footerY + 8)
     doc
       .font('Helvetica')
       .fontSize(6.5)
@@ -305,7 +320,7 @@ export async function GET() {
       .font('Helvetica-Bold')
       .fontSize(7.5)
       .fillColor('#fbbf24')
-      .text('🦪 PORLOCK BAY OYSTERS', 38 + perkW + 10, footerY + 8)
+      .text('PORLOCK BAY OYSTERS', 38 + perkW + 10, footerY + 8)
     doc
       .font('Helvetica')
       .fontSize(6.5)
@@ -317,7 +332,7 @@ export async function GET() {
       .font('Helvetica-Bold')
       .fontSize(7.5)
       .fillColor('#fbbf24')
-      .text('🌊 HIGH TIDE SESSIONS', 38 + perkW * 2 + 10, footerY + 8)
+      .text('HIGH TIDE SESSIONS', 38 + perkW * 2 + 10, footerY + 8)
     doc
       .font('Helvetica')
       .fontSize(6.5)
@@ -330,7 +345,7 @@ export async function GET() {
       .fontSize(6.5)
       .fillColor('#64748b')
       .text(
-        `The Ship Inn, Porlock Weir, Somerset, TA24 8PB • Tel: 01643 863288 • www.theshipinnporlockweir.co.uk • Live Schedule Generated: ${new Date().toLocaleDateString('en-GB')}`,
+        `The Ship Inn, Porlock Weir, Somerset, TA24 8PB | Tel: 01643 863288 | www.theshipinnporlockweir.co.uk | Live Generated: ${new Date().toLocaleDateString('en-GB')}`,
         30,
         pageHeight - 34,
         { align: 'center' }
