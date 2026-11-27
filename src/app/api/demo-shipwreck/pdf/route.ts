@@ -91,7 +91,8 @@ export async function GET() {
 
     const doc = new PDFDocument({
       size: 'A4',
-      margin: 36,
+      margin: 0,
+      autoFirstPage: true,
       info: {
         Title: 'ShipWreck Music Festival 2027 Lineup Guide',
         Author: 'The Ship Inn, Porlock Weir'
@@ -296,7 +297,7 @@ export async function GET() {
     y2 = renderDaySection(col2X, y2, 'Additional Acts & Sessions', 'TBC', tbcBands)
 
     // Bottom Hospitality Strip
-    const footerY = 724
+    const footerY = 718
 
     doc.rect(38, footerY, pageWidth - 76, 52).fill('#0f172a')
     doc.rect(38, footerY, pageWidth - 76, 52).strokeColor('#d97706').lineWidth(0.5).stroke()
