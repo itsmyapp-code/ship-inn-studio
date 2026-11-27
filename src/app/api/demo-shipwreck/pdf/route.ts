@@ -3,7 +3,24 @@ import fs from 'fs'
 import path from 'path'
 import { list } from '@vercel/blob'
 import PDFDocument from 'pdfkit'
+// @ts-ignore
+import Helvetica from 'pdfkit/standard-fonts/Helvetica'
+// @ts-ignore
+import HelveticaBold from 'pdfkit/standard-fonts/HelveticaBold'
+// @ts-ignore
+import TimesBold from 'pdfkit/standard-fonts/TimesBold'
+// @ts-ignore
+import TimesRoman from 'pdfkit/standard-fonts/TimesRoman'
 import sharp from 'sharp'
+
+try {
+  const register = (PDFDocument as any).registerStdFonts || (PDFDocument as any).default?.registerStdFonts
+  if (typeof register === 'function') {
+    register(Helvetica, HelveticaBold, TimesBold, TimesRoman)
+  }
+} catch (e) {
+  // Already registered or fallback
+}
 
 export const dynamic = 'force-dynamic'
 
