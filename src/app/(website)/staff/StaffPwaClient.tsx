@@ -770,14 +770,6 @@ ${item.ctaText && item.ctaLink ? `\n👉 ${item.ctaText}: https://www.theshipinn
               <span className="sm:hidden">Feed</span>
             </Link>
 
-            <Link
-              href="/demo-shipwreck-7924"
-              target="_blank"
-              className="min-h-[44px] px-3 py-2 text-xs font-bold text-amber-900 bg-amber-50 hover:bg-amber-100 rounded-xl border border-amber-200 transition flex items-center gap-1.5"
-            >
-              <span>🎸 ShipWreck</span>
-            </Link>
-
             <a
               href="https://www.itsmyapp.co.uk/video-editor"
               target="_blank"

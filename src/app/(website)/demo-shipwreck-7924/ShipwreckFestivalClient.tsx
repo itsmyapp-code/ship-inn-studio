@@ -17,10 +17,11 @@ interface FestivalBandItem {
   id: string
   bandName: string
   genre: string
-  day: 'Friday' | 'Saturday' | 'Sunday' | string
+  day: 'Friday' | 'Saturday' | 'Sunday' | 'TBC' | string
   stage: string
   timeSlot: string
   isHeadline?: boolean
+  isTbc?: boolean
   description: string
   photoUrl: string
   sampleAudioUrl?: string
@@ -40,6 +41,7 @@ const INITIAL_BANDS: FestivalBandItem[] = [
     stage: 'The Quay Stage',
     timeSlot: 'Saturday · 8:30 PM - 10:30 PM',
     isHeadline: true,
+    isTbc: false,
     description: 'World-famous sea shanty trailblazers bringing roaring maritime harmonies, foot-stomping rhythm, and traditional sea songs to Porlock Weir quay under the stars.',
     photoUrl: '/images/Ship -new-thatch.webp',
     sampleAudioUrl: '/videos/shipwreck-theme.mp3',
@@ -62,6 +64,7 @@ const INITIAL_BANDS: FestivalBandItem[] = [
     stage: 'The Quay Stage',
     timeSlot: 'Sunday · 8:00 PM - 9:45 PM',
     isHeadline: true,
+    isTbc: false,
     description: 'Electrifying festival favorites fusing traditional folk melodies with driving rock drums, blistering electric fiddle solos, and infectious pirate energy.',
     photoUrl: '/images/bar-area.webp',
     sampleAudioUrl: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3',
@@ -84,6 +87,7 @@ const INITIAL_BANDS: FestivalBandItem[] = [
     stage: 'Fireside Saloon Sessions',
     timeSlot: 'Friday · 7:00 PM - 9:00 PM',
     isHeadline: false,
+    isTbc: false,
     description: 'Intimate candlelit acoustic jigs, reels, and Somerset hornpipes inside the 15th-century saloon bar beside the roaring open hearth.',
     photoUrl: '/images/bar-area2.webp',
     sampleAudioUrl: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-3.mp3',
@@ -105,10 +109,9 @@ const INITIAL_BANDS: FestivalBandItem[] = [
     stage: 'The Quay Stage',
     timeSlot: 'Saturday · 5:30 PM - 7:00 PM',
     isHeadline: false,
+    isTbc: false,
     description: 'Five seasoned musicians singing stirring shanties and high-energy folk with tight 5-part vocal harmonies and banjos roaring across the harbour water.',
     photoUrl: '/images/bbq board.webp',
-    sampleAudioUrl: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3',
-    sampleAudioTitle: 'Drunken Sailor (Full Sea Blast)',
     socialLinks: {
       spotify: 'https://open.spotify.com/',
       facebook: 'https://www.facebook.com/',
@@ -122,14 +125,13 @@ const INITIAL_BANDS: FestivalBandItem[] = [
     id: 'band-coastal-drift',
     bandName: 'Coastal Drift Acoustic',
     genre: 'Acoustic Indie & Coastal Bluegrass',
-    day: 'Sunday',
+    day: 'TBC',
     stage: 'Harbour Lawn Acoustic Tent',
-    timeSlot: 'Sunday · 2:00 PM - 4:00 PM',
+    timeSlot: 'Date & Time TBC',
     isHeadline: false,
+    isTbc: true,
     description: 'Warm afternoon acoustic vibes, mandolin solos, and vocal duets accompanying cold West Country cider and fresh Porlock Bay oysters on the quayside lawn.',
     photoUrl: '/images/IMG_4414.webp',
-    sampleAudioUrl: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-4.mp3',
-    sampleAudioTitle: 'Severn Sea Breeze',
     socialLinks: {
       instagram: 'https://www.instagram.com/',
       spotify: 'https://open.spotify.com/'
@@ -156,18 +158,21 @@ export default function ShipwreckFestivalClient() {
   const [audioProgress, setAudioProgress] = useState<number>(0)
   const currentAudioRef = useRef<HTMLAudioElement | null>(null)
 
-  // Composer Modal State
+  // Composer Modal State (Add or Edit)
   const [showComposer, setShowComposer] = useState(false)
+  const [editingBandId, setEditingBandId] = useState<string | null>(null)
+
   const [formBandName, setFormBandName] = useState('')
   const [formGenre, setFormGenre] = useState('Maritime Folk & Sea Shanties')
-  const [formDay, setFormDay] = useState<'Friday' | 'Saturday' | 'Sunday'>('Saturday')
+  const [formDay, setFormDay] = useState<string>('Saturday')
   const [formStage, setFormStage] = useState('The Quay Stage')
   const [formTimeSlot, setFormTimeSlot] = useState('8:00 PM - 10:00 PM')
   const [formIsHeadline, setFormIsHeadline] = useState(false)
+  const [formIsTbc, setFormIsTbc] = useState(false)
   const [formDescription, setFormDescription] = useState('')
   const [formPhotoUrl, setFormPhotoUrl] = useState('/images/bar-area.webp')
-  const [formAudioUrl, setFormAudioUrl] = useState('/videos/shipwreck-theme.mp3')
-  const [formAudioTitle, setFormAudioTitle] = useState('Sample Track')
+  const [formAudioUrl, setFormAudioUrl] = useState('')
+  const [formAudioTitle, setFormAudioTitle] = useState('')
   const [formSpotify, setFormSpotify] = useState('')
   const [formInstagram, setFormInstagram] = useState('')
   const [formFacebook, setFormFacebook] = useState('')
@@ -190,9 +195,8 @@ export default function ShipwreckFestivalClient() {
 
   // Audio playback handler
   const handleTogglePlayAudio = (band: FestivalBandItem) => {
-    if (!band.sampleAudioUrl) return
+    if (!band.sampleAudioUrl || band.sampleAudioUrl.trim() === '') return
 
-    // If currently playing this band's track, pause it
     if (playingTrackId === band.id) {
       if (currentAudioRef.current) {
         currentAudioRef.current.pause()
@@ -201,13 +205,11 @@ export default function ShipwreckFestivalClient() {
       return
     }
 
-    // Stop existing audio if playing
     if (currentAudioRef.current) {
       currentAudioRef.current.pause()
       currentAudioRef.current = null
     }
 
-    // Start new audio
     const audio = new Audio(band.sampleAudioUrl)
     audio.volume = 0.85
     audio.play().catch((e) => console.warn('Audio play error:', e))
@@ -267,6 +269,51 @@ export default function ShipwreckFestivalClient() {
     }
   }
 
+  // Open modal for NEW band
+  const handleOpenAddModal = () => {
+    setEditingBandId(null)
+    setFormBandName('')
+    setFormGenre('Maritime Folk & Sea Shanties')
+    setFormDay('Saturday')
+    setFormStage('The Quay Stage')
+    setFormTimeSlot('8:00 PM - 10:00 PM')
+    setFormIsHeadline(false)
+    setFormIsTbc(false)
+    setFormDescription('')
+    setFormPhotoUrl('/images/bar-area.webp')
+    setFormAudioUrl('')
+    setFormAudioTitle('')
+    setFormSpotify('')
+    setFormInstagram('')
+    setFormFacebook('')
+    setFormYoutube('')
+    setFormWebsite('')
+    setShowComposer(true)
+  }
+
+  // Open modal for EDIT band
+  const handleOpenEditModal = (band: FestivalBandItem) => {
+    setEditingBandId(band.id)
+    setFormBandName(band.bandName || '')
+    setFormGenre(band.genre || 'Maritime Folk & Sea Shanties')
+    setFormDay(band.day || 'Saturday')
+    setFormStage(band.stage || 'The Quay Stage')
+    const rawTime = (band.timeSlot || '').replace(/^(Friday|Saturday|Sunday|TBC)\s*·\s*/i, '')
+    setFormTimeSlot(rawTime)
+    setFormIsHeadline(Boolean(band.isHeadline))
+    setFormIsTbc(band.day === 'TBC' || Boolean(band.isTbc) || (band.timeSlot || '').includes('TBC'))
+    setFormDescription(band.description || '')
+    setFormPhotoUrl(band.photoUrl || '/images/bar-area.webp')
+    setFormAudioUrl(band.sampleAudioUrl || '')
+    setFormAudioTitle(band.sampleAudioTitle || '')
+    setFormSpotify(band.socialLinks?.spotify || '')
+    setFormInstagram(band.socialLinks?.instagram || '')
+    setFormFacebook(band.socialLinks?.facebook || '')
+    setFormYoutube(band.socialLinks?.youtube || '')
+    setFormWebsite(band.socialLinks?.website || '')
+    setShowComposer(true)
+  }
+
   // Photo file upload
   const handlePhotoUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0]
@@ -283,26 +330,40 @@ export default function ShipwreckFestivalClient() {
     }
   }
 
-  // Submit new band
+  // Submit band (Create or Edit)
   const handleFormSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     if (!formBandName.trim()) return
 
     setIsSubmitting(true)
-    const newBand: FestivalBandItem = {
-      id: `band-${Date.now()}`,
+
+    // Calculate timeSlot string based on TBC
+    let finalDay = formIsTbc ? 'TBC' : formDay
+    let finalTimeSlot = formIsTbc
+      ? 'Date & Time TBC'
+      : formTimeSlot.trim()
+        ? `${formDay} · ${formTimeSlot.trim()}`
+        : `${formDay} · Schedule TBC`
+
+    const targetId = editingBandId || `band-${Date.now()}`
+
+    const updatedBand: FestivalBandItem = {
+      id: targetId,
       bandName: formBandName.trim(),
       genre: formGenre.trim(),
-      day: formDay,
+      day: finalDay,
       stage: formStage,
-      timeSlot: `${formDay} · ${formTimeSlot.trim()}`,
+      timeSlot: finalTimeSlot,
       isHeadline: formIsHeadline,
+      isTbc: formIsTbc,
       description:
         formDescription.trim() ||
         'Live festival performance at The Ship Inn Porlock Weir on the historic quayside.',
       photoUrl: formPhotoUrl,
       sampleAudioUrl: formAudioUrl.trim() || undefined,
-      sampleAudioTitle: formAudioTitle.trim() || `${formBandName} Live Preview`,
+      sampleAudioTitle: formAudioUrl.trim()
+        ? formAudioTitle.trim() || `${formBandName} Live Preview`
+        : undefined,
       socialLinks: {
         spotify: formSpotify.trim() || undefined,
         instagram: formInstagram.trim() || undefined,
@@ -319,36 +380,37 @@ export default function ShipwreckFestivalClient() {
       const res = await fetch('/api/demo-shipwreck', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ item: newBand })
+        body: JSON.stringify({ item: updatedBand })
       })
       const data = await res.json()
       if (data.success) {
-        setBands((prev) => [newBand, ...prev])
+        if (editingBandId) {
+          setBands((prev) => prev.map((b) => (b.id === editingBandId ? updatedBand : b)))
+          setSuccessMsg(`"${updatedBand.bandName}" updated successfully!`)
+        } else {
+          setBands((prev) => [updatedBand, ...prev])
+          setSuccessMsg(`"${updatedBand.bandName}" added to the ShipWreck Festival Lineup!`)
+        }
         setShowComposer(false)
-        setSuccessMsg(`"${newBand.bandName}" added to the ShipWreck Festival Lineup!`)
+        setEditingBandId(null)
         setTimeout(() => setSuccessMsg(null), 5000)
-        // Reset form
-        setFormBandName('')
-        setFormDescription('')
-        setFormSpotify('')
-        setFormInstagram('')
-        setFormFacebook('')
-        setFormYoutube('')
-        setFormWebsite('')
-        setFormIsHeadline(false)
       }
     } catch (err) {
-      console.error('Error adding band:', err)
+      console.error('Error saving band:', err)
       alert('Could not save band. Please try again.')
     } finally {
       setIsSubmitting(false)
     }
   }
 
-  // Delete band item (for demo testing)
+  // Delete band item
   const handleDeleteBand = async (bandId: string, name: string) => {
-    if (!window.confirm(`Remove "${name}" from the ShipWreck schedule?`)) return
+    if (!window.confirm(`Are you sure you want to remove "${name}" from the ShipWreck schedule?`)) {
+      return
+    }
     setBands((prev) => prev.filter((b) => b.id !== bandId))
+    setSuccessMsg(`"${name}" was removed from the festival lineup.`)
+    setTimeout(() => setSuccessMsg(null), 4000)
     try {
       await fetch('/api/demo-shipwreck', {
         method: 'POST',
@@ -362,8 +424,18 @@ export default function ShipwreckFestivalClient() {
 
   // Filter bands
   const filteredBands = bands.filter((b) => {
-    const matchesDay = activeDay === 'All' || b.day === activeDay
-    const matchesStage = activeStage === 'All' || b.stage.toLowerCase().includes(activeStage.toLowerCase())
+    const isBandTbc = b.day === 'TBC' || Boolean(b.isTbc) || (b.timeSlot || '').includes('TBC')
+    let matchesDay = true
+    if (activeDay === 'All') {
+      matchesDay = true
+    } else if (activeDay === 'TBC') {
+      matchesDay = isBandTbc
+    } else {
+      matchesDay = b.day === activeDay
+    }
+
+    const matchesStage =
+      activeStage === 'All' || b.stage.toLowerCase().includes(activeStage.toLowerCase())
     return matchesDay && matchesStage
   })
 
@@ -377,21 +449,33 @@ export default function ShipwreckFestivalClient() {
               Private Client Demo
             </span>
             <span className="font-bold">
-              ShipWreck Music Festival Experience &amp; Dedicated Band Lineup Engine
+              ShipWreck Music Festival Hub &amp; Dedicated Lineup Engine
             </span>
             <span className="hidden sm:inline text-amber-950 font-medium text-xs">
-              • Updates ONLY the ShipWreck Festival Page
+              • Updates ONLY ShipWreck
             </span>
           </div>
 
           <div className="flex items-center gap-2">
             <button
-              onClick={() => setShowComposer(true)}
+              onClick={handleOpenAddModal}
               className="bg-slate-950 hover:bg-slate-900 text-amber-300 font-bold px-3 py-1.5 rounded-lg transition text-xs flex items-center gap-1.5 cursor-pointer shadow-sm"
             >
               <span>+</span>
               <span>Create Band Post</span>
             </button>
+
+            <a
+              href="/docs/ShipWreck_Festival_Lineup_Guide.pdf"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="bg-slate-900/90 hover:bg-slate-900 text-white font-semibold px-3 py-1.5 rounded-lg transition text-xs flex items-center gap-1.5 border border-white/20"
+              title="Download printable A4 timetable"
+            >
+              <span>📄</span>
+              <span>Download PDF Guide</span>
+            </a>
+
             <Link
               href="/demo-posh-7924"
               className="bg-amber-800/80 hover:bg-amber-900 text-white font-semibold px-3 py-1.5 rounded-lg transition text-xs"
@@ -408,9 +492,9 @@ export default function ShipwreckFestivalClient() {
         </div>
       </div>
 
-      {/* Success Banner */}
+      {/* Success Notification Banner */}
       {successMsg && (
-        <div className="bg-emerald-600 text-white text-sm font-semibold py-3 px-4 text-center sticky top-12 z-40 shadow-lg flex items-center justify-center gap-2">
+        <div className="bg-emerald-600 text-white text-sm font-semibold py-3 px-4 text-center sticky top-12 z-40 shadow-lg flex items-center justify-center gap-2 animate-fade-in">
           <span>✓</span>
           <span>{successMsg}</span>
         </div>
@@ -418,12 +502,10 @@ export default function ShipwreckFestivalClient() {
 
       {/* 2. Hero Section: Cinematic Video Spotlight */}
       <section className="relative overflow-hidden bg-slate-950 border-b border-amber-900/40">
-        {/* Ambient Glows */}
         <div className="absolute top-0 left-1/4 w-96 h-96 bg-amber-500/10 rounded-full blur-3xl pointer-events-none" />
         <div className="absolute bottom-0 right-1/4 w-96 h-96 bg-blue-600/10 rounded-full blur-3xl pointer-events-none" />
 
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-10 pb-16">
-          {/* Header Title & Festival Meta */}
           <div className="text-center max-w-4xl mx-auto mb-8">
             <div className="inline-flex items-center gap-2 bg-amber-500/10 border border-amber-500/30 text-amber-300 text-xs uppercase tracking-widest font-bold px-4 py-1.5 rounded-full mb-4">
               <span>⚓</span>
@@ -454,7 +536,6 @@ export default function ShipwreckFestivalClient() {
 
           {/* Cinematic Festival Video Frame */}
           <div className="relative max-w-4xl mx-auto rounded-3xl overflow-hidden shadow-2xl border-2 border-amber-500/40 bg-slate-900 group">
-            {/* Aspect ratio container */}
             <div className="relative aspect-[4/3] sm:aspect-[16/9] w-full bg-slate-950 flex items-center justify-center">
               <video
                 key={currentVideoSrc}
@@ -468,7 +549,6 @@ export default function ShipwreckFestivalClient() {
                 className="w-full h-full object-contain"
               />
 
-              {/* Video Overlay Controls */}
               <div className="absolute inset-x-0 bottom-0 p-4 bg-gradient-to-t from-slate-950 via-slate-950/70 to-transparent flex items-center justify-between gap-3 text-white">
                 <div className="flex items-center gap-3">
                   <button
@@ -487,7 +567,6 @@ export default function ShipwreckFestivalClient() {
                   </button>
                 </div>
 
-                {/* Video Intro Variant Switcher */}
                 <div className="flex items-center gap-1.5 bg-slate-900/90 p-1 rounded-xl border border-white/20 text-[11px] sm:text-xs">
                   <span className="text-slate-400 px-2 hidden sm:inline">Intro:</span>
                   <button
@@ -516,19 +595,29 @@ export default function ShipwreckFestivalClient() {
           {/* Quick Action CTAs */}
           <div className="mt-8 flex flex-wrap items-center justify-center gap-4">
             <button
-              onClick={() => setShowComposer(true)}
+              onClick={handleOpenAddModal}
               className="bg-gradient-to-r from-amber-500 to-yellow-500 hover:from-amber-400 hover:to-yellow-400 text-slate-950 font-bold px-6 py-3 rounded-2xl transition shadow-xl flex items-center gap-2 cursor-pointer transform hover:scale-[1.02]"
             >
               <span className="text-lg">🎸</span>
-              <span>+ Add Band / Update Lineup (ShipWreck Only)</span>
+              <span>+ Add Band / Announcement (ShipWreck Only)</span>
             </button>
+
+            <a
+              href="/docs/ShipWreck_Festival_Lineup_Guide.pdf"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="bg-slate-900 hover:bg-slate-800 text-amber-300 border border-amber-500/40 font-bold px-6 py-3 rounded-2xl transition flex items-center gap-2 cursor-pointer"
+            >
+              <span>📄</span>
+              <span>Download Printable Pocket Schedule (PDF)</span>
+            </a>
 
             <Link
               href="/contact"
-              className="bg-slate-900 hover:bg-slate-800 text-amber-300 border border-amber-500/40 font-bold px-6 py-3 rounded-2xl transition flex items-center gap-2 cursor-pointer"
+              className="bg-slate-900 hover:bg-slate-800 text-slate-300 border border-slate-700 font-bold px-6 py-3 rounded-2xl transition flex items-center gap-2 cursor-pointer"
             >
               <span>🍺</span>
-              <span>Reserve Quayside Festival Table</span>
+              <span>Reserve Quayside Table</span>
             </Link>
           </div>
         </div>
@@ -542,7 +631,7 @@ export default function ShipwreckFestivalClient() {
             <span className="text-xs text-slate-400 mt-1 block">Quay, Saloon &amp; Lawn</span>
           </div>
           <div className="p-3">
-            <span className="text-2xl sm:text-3xl font-serif font-extrabold text-amber-400 block">18+ Acts</span>
+            <span className="text-2xl sm:text-3xl font-serif font-extrabold text-amber-400 block">{bands.length} Acts</span>
             <span className="text-xs text-slate-400 mt-1 block">Shanties, Folk-Rock, Jigs</span>
           </div>
           <div className="p-3">
@@ -573,7 +662,7 @@ export default function ShipwreckFestivalClient() {
 
           {/* Interactive Day Filter Pills */}
           <div className="flex flex-wrap items-center gap-2 bg-slate-900 p-1.5 rounded-2xl border border-slate-800 shrink-0">
-            {['All', 'Friday', 'Saturday', 'Sunday'].map((day) => (
+            {['All', 'Friday', 'Saturday', 'Sunday', 'TBC'].map((day) => (
               <button
                 key={day}
                 type="button"
@@ -583,33 +672,50 @@ export default function ShipwreckFestivalClient() {
                   : 'text-slate-400 hover:text-white'
                   }`}
               >
-                {day === 'All' ? 'All Days' : day}
+                {day === 'All' ? 'All Days' : day === 'TBC' ? '⏳ TBC / Upcoming' : day}
               </button>
             ))}
           </div>
         </div>
 
         {/* Stage Filter Chips */}
-        <div className="flex flex-wrap items-center gap-2 mb-8 text-xs font-semibold text-slate-400">
-          <span>Filter Stage:</span>
-          {['All', 'The Quay Stage', 'Fireside Saloon', 'Harbour Lawn'].map((stg) => (
-            <button
-              key={stg}
-              onClick={() => setActiveStage(stg)}
-              className={`px-3 py-1 rounded-lg border transition cursor-pointer ${activeStage === stg
-                ? 'bg-slate-800 text-amber-300 border-amber-500/50'
-                : 'bg-slate-900 text-slate-400 border-slate-800 hover:text-white'
-                }`}
-            >
-              {stg}
-            </button>
-          ))}
+        <div className="flex flex-wrap items-center justify-between gap-4 mb-8">
+          <div className="flex flex-wrap items-center gap-2 text-xs font-semibold text-slate-400">
+            <span>Filter Stage:</span>
+            {['All', 'The Quay Stage', 'Fireside Saloon', 'Harbour Lawn'].map((stg) => (
+              <button
+                key={stg}
+                onClick={() => setActiveStage(stg)}
+                className={`px-3 py-1 rounded-lg border transition cursor-pointer ${activeStage === stg
+                  ? 'bg-slate-800 text-amber-300 border-amber-500/50'
+                  : 'bg-slate-900 text-slate-400 border-slate-800 hover:text-white'
+                  }`}
+              >
+                {stg}
+              </button>
+            ))}
+          </div>
+
+          <a
+            href="/docs/ShipWreck_Festival_Lineup_Guide.pdf"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-xs text-amber-400 hover:text-amber-300 font-semibold flex items-center gap-1.5 transition"
+          >
+            <span>📥 Download Printable Pocket Schedule (PDF)</span>
+            <span>↗</span>
+          </a>
         </div>
 
         {/* Band Cards Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {filteredBands.map((band) => {
             const isPlayingThis = playingTrackId === band.id
+            const isTbcBand =
+              band.day === 'TBC' ||
+              Boolean(band.isTbc) ||
+              (band.timeSlot && band.timeSlot.includes('TBC'))
+            const hasAudio = Boolean(band.sampleAudioUrl && band.sampleAudioUrl.trim() !== '')
 
             return (
               <div
@@ -617,38 +723,65 @@ export default function ShipwreckFestivalClient() {
                 className="bg-slate-900/90 rounded-3xl overflow-hidden border border-slate-800 hover:border-amber-500/50 transition-all duration-300 shadow-xl flex flex-col justify-between group"
               >
                 <div>
-                  {/* Band Photo Container */}
-                  <div className="relative aspect-[16/10] w-full overflow-hidden bg-slate-950">
+                  {/* Band Photo Container: Adaptive, uncropped fitting with ambient blurred background */}
+                  <div className="relative aspect-[4/3] sm:aspect-[16/11] w-full overflow-hidden bg-slate-950 flex items-center justify-center">
+                    {/* Ambient blurred backdrop */}
+                    <div className="absolute inset-0 overflow-hidden">
+                      <SmartImage
+                        src={band.photoUrl}
+                        alt=""
+                        fill
+                        className="object-cover blur-xl scale-125 opacity-35"
+                      />
+                    </div>
+
+                    {/* Crisp uncropped foreground image */}
                     <SmartImage
                       src={band.photoUrl}
                       alt={band.bandName}
                       fill
-                      className="object-cover group-hover:scale-105 transition-transform duration-500"
+                      className="object-contain relative z-10 p-2 group-hover:scale-[1.02] transition-transform duration-300"
                     />
 
-                    {/* Gradient Overlay */}
-                    <div className="absolute inset-0 bg-gradient-to-t from-slate-900 via-transparent to-transparent" />
+                    {/* Subtle gradient vignette at bottom */}
+                    <div className="absolute inset-x-0 bottom-0 h-16 bg-gradient-to-t from-slate-900 via-slate-900/60 to-transparent z-10 pointer-events-none" />
 
                     {/* Headline Badge */}
                     {band.isHeadline && (
-                      <span className="absolute top-3 left-3 bg-gradient-to-r from-amber-500 to-yellow-500 text-slate-950 text-[11px] font-extrabold px-3 py-1 rounded-full uppercase tracking-wider shadow-lg">
+                      <span className="absolute top-3 left-3 z-20 bg-gradient-to-r from-amber-500 to-yellow-500 text-slate-950 text-[11px] font-extrabold px-3 py-1 rounded-full uppercase tracking-wider shadow-lg">
                         ⭐ Headline Act
                       </span>
                     )}
 
                     {/* Stage & Time Pill */}
-                    <span className="absolute bottom-3 left-3 bg-slate-950/80 backdrop-blur-md text-amber-300 text-xs font-semibold px-3 py-1 rounded-full border border-amber-500/30">
-                      {band.timeSlot}
+                    <span
+                      className={`absolute bottom-3 left-3 z-20 text-xs font-semibold px-3 py-1 rounded-full backdrop-blur-md border shadow-md ${isTbcBand
+                        ? 'bg-amber-950/80 text-amber-300 border-amber-500/50'
+                        : 'bg-slate-950/80 text-amber-300 border-amber-500/30'
+                        }`}
+                    >
+                      {isTbcBand ? '⏳ Date & Time TBC' : band.timeSlot}
                     </span>
 
-                    {/* Delete button (for demo testing) */}
-                    <button
-                      onClick={() => handleDeleteBand(band.id, band.bandName)}
-                      className="absolute top-3 right-3 bg-red-950/80 hover:bg-red-900 text-red-200 text-xs px-2.5 py-1 rounded-lg border border-red-500/30 transition opacity-0 group-hover:opacity-100 cursor-pointer"
-                      title="Remove from demo"
-                    >
-                      Delete
-                    </button>
+                    {/* Management Action Bar (Edit & Delete) */}
+                    <div className="absolute top-3 right-3 z-20 flex items-center gap-1.5 opacity-90 group-hover:opacity-100 transition-opacity">
+                      <button
+                        onClick={() => handleOpenEditModal(band)}
+                        className="bg-slate-950/90 hover:bg-amber-500 text-slate-200 hover:text-slate-950 text-xs px-2.5 py-1 rounded-lg border border-white/20 transition cursor-pointer flex items-center gap-1 font-semibold shadow-md"
+                        title="Edit band details"
+                      >
+                        <span>✏️</span>
+                        <span>Edit</span>
+                      </button>
+
+                      <button
+                        onClick={() => handleDeleteBand(band.id, band.bandName)}
+                        className="bg-slate-950/90 hover:bg-red-600 text-slate-200 hover:text-white text-xs px-2.5 py-1 rounded-lg border border-white/20 transition cursor-pointer flex items-center gap-1 font-semibold shadow-md"
+                        title="Delete act"
+                      >
+                        <span>🗑️</span>
+                      </button>
+                    </div>
                   </div>
 
                   {/* Card Content */}
@@ -672,8 +805,8 @@ export default function ShipwreckFestivalClient() {
                       {band.description}
                     </p>
 
-                    {/* Interactive Audio Preview Player */}
-                    {band.sampleAudioUrl && (
+                    {/* Interactive Audio Preview Player: ONLY shown if audio URL exists */}
+                    {hasAudio && (
                       <div className="bg-slate-950 p-4 rounded-2xl border border-slate-800 mb-6">
                         <div className="flex items-center justify-between gap-3 mb-2">
                           <button
@@ -839,7 +972,7 @@ export default function ShipwreckFestivalClient() {
         </div>
       </section>
 
-      {/* 6. Composer Modal ("Add Band / Lineup Announcement") */}
+      {/* 6. Composer Modal (Add OR Edit Band Announcement) */}
       {showComposer && (
         <div className="fixed inset-0 z-50 bg-slate-950/80 backdrop-blur-md flex items-center justify-center p-4 overflow-y-auto">
           <div className="bg-slate-900 border-2 border-amber-500/50 rounded-3xl max-w-2xl w-full p-6 sm:p-8 shadow-2xl relative my-8">
@@ -849,7 +982,7 @@ export default function ShipwreckFestivalClient() {
                   Dedicated ShipWreck Composer
                 </span>
                 <h3 className="text-xl sm:text-2xl font-serif font-bold text-white">
-                  Add Band / Artist Announcement
+                  {editingBandId ? 'Edit Band / Artist Announcement' : 'Add Band / Artist Announcement'}
                 </h3>
                 <p className="text-xs text-slate-400 mt-1">
                   Updates <strong>only</strong> the ShipWreck Music Festival page.
@@ -858,7 +991,10 @@ export default function ShipwreckFestivalClient() {
 
               <button
                 type="button"
-                onClick={() => setShowComposer(false)}
+                onClick={() => {
+                  setShowComposer(false)
+                  setEditingBandId(null)
+                }}
                 className="w-8 h-8 rounded-full bg-slate-800 hover:bg-slate-700 text-slate-300 flex items-center justify-center font-bold text-sm cursor-pointer"
               >
                 ✕
@@ -895,6 +1031,26 @@ export default function ShipwreckFestivalClient() {
                 </div>
               </div>
 
+              {/* TBC Schedule Checkbox Option */}
+              <div className="bg-slate-950/70 p-3 rounded-xl border border-amber-500/30">
+                <label className="flex items-center gap-2.5 cursor-pointer">
+                  <input
+                    type="checkbox"
+                    checked={formIsTbc}
+                    onChange={(e) => setFormIsTbc(e.target.checked)}
+                    className="accent-amber-500 w-4 h-4"
+                  />
+                  <div>
+                    <span className="text-amber-300 font-bold text-xs block">
+                      ⏳ Date &amp; Time to be confirmed (TBC / TBA)
+                    </span>
+                    <span className="text-[11px] text-slate-400 block">
+                      Check this if set times aren&apos;t finalized yet. You can easily edit it later once confirmed.
+                    </span>
+                  </div>
+                </label>
+              </div>
+
               {/* Genre & Day & Stage */}
               <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
                 <div>
@@ -915,13 +1071,15 @@ export default function ShipwreckFestivalClient() {
                     Festival Day
                   </label>
                   <select
-                    value={formDay}
-                    onChange={(e) => setFormDay(e.target.value as any)}
-                    className="w-full bg-slate-950 border border-slate-700 rounded-xl px-3.5 py-2 text-white focus:outline-none focus:border-amber-500"
+                    disabled={formIsTbc}
+                    value={formIsTbc ? 'TBC' : formDay}
+                    onChange={(e) => setFormDay(e.target.value)}
+                    className="w-full bg-slate-950 border border-slate-700 rounded-xl px-3.5 py-2 text-white focus:outline-none focus:border-amber-500 disabled:opacity-50 disabled:cursor-not-allowed"
                   >
                     <option value="Friday">Friday</option>
                     <option value="Saturday">Saturday</option>
                     <option value="Sunday">Sunday</option>
+                    <option value="TBC">TBC / Not yet set</option>
                   </select>
                 </div>
 
@@ -949,10 +1107,11 @@ export default function ShipwreckFestivalClient() {
                   </label>
                   <input
                     type="text"
-                    value={formTimeSlot}
+                    disabled={formIsTbc}
+                    value={formIsTbc ? 'Date & Time TBC' : formTimeSlot}
                     onChange={(e) => setFormTimeSlot(e.target.value)}
                     placeholder="e.g. 7:30 PM - 9:30 PM"
-                    className="w-full bg-slate-950 border border-slate-700 rounded-xl px-3.5 py-2 text-white placeholder-slate-500 focus:outline-none focus:border-amber-500"
+                    className="w-full bg-slate-950 border border-slate-700 rounded-xl px-3.5 py-2 text-white placeholder-slate-500 focus:outline-none focus:border-amber-500 disabled:opacity-50 disabled:cursor-not-allowed"
                   />
                 </div>
 
@@ -1011,21 +1170,38 @@ export default function ShipwreckFestivalClient() {
                 </div>
 
                 <div>
-                  <label className="block text-slate-300 font-semibold mb-1">
-                    Sample Music Audio URL (.mp3)
-                  </label>
+                  <div className="flex items-center justify-between mb-1">
+                    <label className="block text-slate-300 font-semibold">
+                      Sample Music Audio (.mp3) <span className="text-slate-400 font-normal">(Optional)</span>
+                    </label>
+                    {formAudioUrl && (
+                      <button
+                        type="button"
+                        onClick={() => {
+                          setFormAudioUrl('')
+                          setFormAudioTitle('')
+                        }}
+                        className="text-[11px] text-red-400 hover:text-red-300 underline"
+                      >
+                        Clear Audio
+                      </button>
+                    )}
+                  </div>
                   <input
                     type="text"
                     value={formAudioUrl}
                     onChange={(e) => setFormAudioUrl(e.target.value)}
-                    placeholder="https://.../song.mp3"
+                    placeholder="Leave blank if no audio clip available"
                     className="w-full bg-slate-950 border border-slate-700 rounded-xl px-3.5 py-2 text-white placeholder-slate-500 focus:outline-none focus:border-amber-500 text-xs"
                   />
                   <div className="mt-1 flex items-center gap-2 text-[11px] text-slate-400">
                     <span>Quick Clip:</span>
                     <button
                       type="button"
-                      onClick={() => setFormAudioUrl('/videos/shipwreck-theme.mp3')}
+                      onClick={() => {
+                        setFormAudioUrl('/videos/shipwreck-theme.mp3')
+                        setFormAudioTitle('Festival Theme Mix')
+                      }}
                       className="underline hover:text-amber-300"
                     >
                       Festival Theme
@@ -1033,7 +1209,10 @@ export default function ShipwreckFestivalClient() {
                     <span>•</span>
                     <button
                       type="button"
-                      onClick={() => setFormAudioUrl('https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3')}
+                      onClick={() => {
+                        setFormAudioUrl('https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3')
+                        setFormAudioTitle('High Seas Hornpipe')
+                      }}
                       className="underline hover:text-amber-300"
                     >
                       Hornpipe Reel
@@ -1083,7 +1262,10 @@ export default function ShipwreckFestivalClient() {
               <div className="pt-4 flex items-center justify-end gap-3 border-t border-slate-800">
                 <button
                   type="button"
-                  onClick={() => setShowComposer(false)}
+                  onClick={() => {
+                    setShowComposer(false)
+                    setEditingBandId(null)
+                  }}
                   className="px-4 py-2 rounded-xl text-slate-400 hover:text-white text-xs font-semibold cursor-pointer"
                 >
                   Cancel
@@ -1093,7 +1275,11 @@ export default function ShipwreckFestivalClient() {
                   disabled={isSubmitting}
                   className="bg-gradient-to-r from-amber-500 to-yellow-500 hover:from-amber-400 hover:to-yellow-400 text-slate-950 font-bold px-6 py-2.5 rounded-xl transition shadow-lg text-xs sm:text-sm cursor-pointer disabled:opacity-50"
                 >
-                  {isSubmitting ? 'Publishing...' : 'Publish to ShipWreck Festival'}
+                  {isSubmitting
+                    ? 'Saving...'
+                    : editingBandId
+                      ? 'Save Changes'
+                      : 'Publish to ShipWreck Festival'}
                 </button>
               </div>
             </form>
