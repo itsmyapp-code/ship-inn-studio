@@ -280,7 +280,7 @@ async function generateShipwreckPdf() {
         <div class="sub-title">The Ship Inn • Porlock Weir Quayside</div>
         <h1 class="main-title">ShipWreck Music Festival</h1>
         <div class="meta-strip">
-          <span>📅 3-Day Music Festival</span>
+          <span>📅 Friday 4th – Sunday 6th June 2027</span>
           <span>📍 Porlock Weir, Somerset, TA24 8PB</span>
           <span>🎟️ Free Quayside Admission</span>
         </div>

@@ -305,7 +305,9 @@ async function buildReport() {
             [
               ['Client / Venue', 'The Ship Inn, Porlock Weir, Somerset (TA24 8PB)'],
               ['Feature Title', 'ShipWreck Music Festival Digital Hub & Dedicated Lineup Engine'],
+              ['Festival Dates', 'Friday 4th – Sunday 6th June 2027'],
               ['Staged URL', 'https://www.theshipinnporlockweir.co.uk/demo-shipwreck-7924'],
+              ['Dynamic Live PDF Timetable', '/api/demo-shipwreck/pdf (Generated on-demand from live database)'],
               ['Staff Publishing Tool', 'https://www.theshipinnporlockweir.co.uk/staff (Direct Shortcut: 🎸 ShipWreck)'],
               ['Dedicated API Feed', '/api/demo-shipwreck (Edge Blob Storage + JSON Backup)'],
               ['Report Date', 'November 2026'],

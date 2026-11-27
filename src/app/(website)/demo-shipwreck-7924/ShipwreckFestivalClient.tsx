@@ -466,7 +466,7 @@ export default function ShipwreckFestivalClient() {
             </button>
 
             <a
-              href="/docs/ShipWreck_Festival_Lineup_Guide.pdf"
+              href="/api/demo-shipwreck/pdf"
               target="_blank"
               rel="noopener noreferrer"
               className="bg-slate-900/90 hover:bg-slate-900 text-white font-semibold px-3 py-1.5 rounded-lg transition text-xs flex items-center gap-1.5 border border-white/20"
@@ -523,7 +523,7 @@ export default function ShipwreckFestivalClient() {
 
             <div className="mt-6 flex flex-wrap items-center justify-center gap-4 text-xs sm:text-sm text-amber-300/90 font-medium">
               <span className="flex items-center gap-1.5 bg-slate-900/80 px-3.5 py-1.5 rounded-full border border-amber-500/20">
-                <span className="text-amber-400">📅</span> 3-Day Music Festival
+                <span className="text-amber-400">📅</span> 4th – 6th June 2027
               </span>
               <span className="flex items-center gap-1.5 bg-slate-900/80 px-3.5 py-1.5 rounded-full border border-amber-500/20">
                 <span className="text-amber-400">📍</span> Porlock Weir Harbour, TA24 8PB
@@ -603,7 +603,7 @@ export default function ShipwreckFestivalClient() {
             </button>
 
             <a
-              href="/docs/ShipWreck_Festival_Lineup_Guide.pdf"
+              href="/api/demo-shipwreck/pdf"
               target="_blank"
               rel="noopener noreferrer"
               className="bg-slate-900 hover:bg-slate-800 text-amber-300 border border-amber-500/40 font-bold px-6 py-3 rounded-2xl transition flex items-center gap-2 cursor-pointer"
@@ -697,7 +697,7 @@ export default function ShipwreckFestivalClient() {
           </div>
 
           <a
-            href="/docs/ShipWreck_Festival_Lineup_Guide.pdf"
+            href="/api/demo-shipwreck/pdf"
             target="_blank"
             rel="noopener noreferrer"
             className="text-xs text-amber-400 hover:text-amber-300 font-semibold flex items-center gap-1.5 transition"
